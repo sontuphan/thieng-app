@@ -1,0 +1,73 @@
+span.link {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+span.link:before,
+span.link:after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 1px;
+  top: 50%;
+  margin-top: -0.5px;
+  background: #000;
+}
+
+span.link:before {
+  left: -5px;
+}
+span.link:after {
+  right: -5px;
+  background: #000;
+  transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+span.link:hover:before {
+  background: #000;
+  width: calc(100% + 10px);
+  transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+span.link:hover:after {
+  background: transparent;
+  width: calc(100% + 10px);
+  transition: 0s;
+}
+
+span.scroll {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+@keyframes linethrought {
+  0% {
+    left: -10px;
+  }
+  40% {
+    width: calc(100% + 20px);
+  }
+  60% {
+    background: transparent;
+    width: 0%
+  }
+  100% {
+    right: -10px;
+  }
+}
+
+span.scroll:before,
+span.scroll:after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 1px;
+  top: 50%;
+  background: #fff;
+
+  animation-duration: 2s;
+  animation-name: linethrought;
+  animation-iteration-count: infinite;
+}
