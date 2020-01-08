@@ -11,7 +11,23 @@ import Drain from 'components/drain';
 import Carousel from 'components/carousel';
 
 import styles from './styles';
+import interiorImg1 from 'static/images/interior-1.jpg';
+import interiorImg2 from 'static/images/interior-2.jpg';
 
+const OBJECTS = [
+  {
+    displayname: 'Mirror',
+    avatar: interiorImg1,
+    noOfhearts: 2245,
+    noOfProducts: 35
+  },
+  {
+    displayname: 'Lamp',
+    avatar: interiorImg2,
+    noOfhearts: 1234,
+    noOfProducts: 186
+  },
+]
 class Policy extends Component {
   render() {
     return <Fragment>
@@ -33,6 +49,7 @@ class Policy extends Component {
         <Carousel
           title="Top 10"
           subtitle="Sản phẩm"
+          objects={OBJECTS}
         />
         <Drain />
       </Grid>

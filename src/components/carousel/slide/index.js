@@ -30,7 +30,7 @@ class CarouselSlide extends Component {
       this.setState({ animation: " animated zoomIn" }, () => {
         setTimeout(() => {
           this.setState({ animation: null });
-        }, 1000);
+        }, 1200);
       });
     }
   }
@@ -42,7 +42,7 @@ class CarouselSlide extends Component {
     for (let i = 0; i < objs.length; i++) {
       let obj = objs[i]
       slides.push(
-        <Grid item key={i} xs={8} lg={8} className={this.state.animation ? classes.slide + this.state.animation : classes.slide}>
+        <Grid item key={i} className={this.state.animation ? classes.slide + this.state.animation : classes.slide}>
           <Card className={classes.card}>
             <CardMedia image={obj.avatar} className={classes.cardMedia} />
             <CardHeader className={classes.cardHeader}

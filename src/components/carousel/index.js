@@ -8,9 +8,6 @@ import CarouselPagination from './pagination';
 import CarouselSlide from './slide';
 
 import styles from './styles';
-import designerImg1 from 'static/images/designer-1.jpg';
-import designerImg2 from 'static/images/designer-2.jpg';
-import designerImg3 from 'static/images/designer-3.jpg';
 
 class Carousel extends Component {
   constructor(props) {
@@ -20,29 +17,10 @@ class Carousel extends Component {
       pagination: {
         title: props.title,
         subtitle: props.subtitle,
-        paging: { page: 0, total: 3 },
+        paging: { page: 0, total: props.objects.length },
       },
       slide: {
-        objs: [
-          {
-            displayname: 'Maria Guys',
-            avatar: designerImg1,
-            noOfhearts: 2245,
-            noOfProducts: 35
-          },
-          {
-            displayname: 'Philip Martin',
-            avatar: designerImg2,
-            noOfhearts: 1234,
-            noOfProducts: 186
-          },
-          {
-            displayname: 'Aiony Haust',
-            avatar: designerImg3,
-            noOfhearts: 2345,
-            noOfProducts: 65
-          },
-        ]
+        objs: props.objects
       }
     }
   }
@@ -91,6 +69,7 @@ class Carousel extends Component {
 Carousel.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
+  objects: PropTypes.array.isRequired,
 }
 
 export default withStyles(styles)(Carousel);

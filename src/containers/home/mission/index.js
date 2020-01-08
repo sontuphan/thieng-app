@@ -11,6 +11,30 @@ import Drain from 'components/drain';
 import Carousel from 'components/carousel';
 
 import styles from './styles';
+import designerImg1 from 'static/images/designer-1.jpg';
+import designerImg2 from 'static/images/designer-2.jpg';
+import designerImg3 from 'static/images/designer-3.jpg';
+
+const OBJECTS = [
+  {
+    displayname: 'Maria Guys',
+    avatar: designerImg1,
+    noOfhearts: 2245,
+    noOfProducts: 35
+  },
+  {
+    displayname: 'Philip Martin',
+    avatar: designerImg2,
+    noOfhearts: 1234,
+    noOfProducts: 186
+  },
+  {
+    displayname: 'Aiony Haust',
+    avatar: designerImg3,
+    noOfhearts: 2345,
+    noOfProducts: 65
+  },
+]
 
 class Mission extends Component {
   render() {
@@ -33,6 +57,7 @@ class Mission extends Component {
         <Carousel
           title="Top 10"
           subtitle="Nhà thiết kế"
+          objects={OBJECTS}
         />
         <Drain />
       </Grid>

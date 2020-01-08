@@ -33,6 +33,6 @@ export default theme => ({
     overflow: 'hidden'
   },
   slide: {
-    minWidth: '83.333333%'
+    minWidth: window.innerWidth >= 960 ? '66.666667%' : '83.333333%'
   }
 });
