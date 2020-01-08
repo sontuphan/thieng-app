@@ -8,6 +8,9 @@ import CarouselPagination from './pagination';
 import CarouselSlide from './slide';
 
 import styles from './styles';
+import designerImg1 from 'static/images/designer-1.jpg';
+import designerImg2 from 'static/images/designer-2.jpg';
+import designerImg3 from 'static/images/designer-3.jpg';
 
 class Carousel extends Component {
   constructor(props) {
@@ -17,17 +20,66 @@ class Carousel extends Component {
       pagination: {
         title: props.title,
         subtitle: props.subtitle,
-        pagination: props.pagination,
+        paging: { page: 0, total: 3 },
       },
       slide: {
-        objs: [1, 2, 3]
+        objs: [
+          {
+            displayname: 'Maria Guys',
+            avatar: designerImg1,
+            noOfhearts: 2245,
+            noOfProducts: 35
+          },
+          {
+            displayname: 'Philip Martin',
+            avatar: designerImg2,
+            noOfhearts: 1234,
+            noOfProducts: 186
+          },
+          {
+            displayname: 'Aiony Haust',
+            avatar: designerImg3,
+            noOfhearts: 2345,
+            noOfProducts: 65
+          },
+        ]
       }
     }
   }
+
+  onNext = () => {
+    let { slide, pagination } = this.state;
+    // Update slide
+    let objs = JSON.parse(JSON.stringify(slide.objs));
+    let firstObj = objs.shift();
+    objs.push(firstObj);
+    slide.objs = objs
+    // Update pagination
+    pagination.paging.page = (pagination.paging.page + 1) % pagination.paging.total
+    this.setState({ slide, pagination });
+  }
+
+  onBack = () => {
+    let { slide, pagination } = this.state;
+    // Update slide
+    let objs = JSON.parse(JSON.stringify(slide.objs));
+    let lastObj = objs.pop();
+    objs.unshift(lastObj);
+    slide.objs = objs
+    // Update pagination
+    pagination.paging.page = (pagination.paging.page - 1 + pagination.paging.total) % pagination.paging.total;
+    this.setState({ slide, pagination });
+  }
+
+  onMore = () => {
+    console.log('onMore');
+  }
+
+
   render() {
     return <Grid container direction="row" spacing={2}>
       <Grid item xs={4}>
-        <CarouselPagination {...this.state.pagination} />
+        <CarouselPagination {...this.state.pagination} onNext={this.onNext} onBack={this.onBack} onMore={this.onMore} />
       </Grid>
       <Grid item xs={8}>
         <CarouselSlide {...this.state.slide} />
@@ -39,7 +91,6 @@ class Carousel extends Component {
 Carousel.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
-  pagination: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(Carousel);

@@ -5,6 +5,7 @@ export default theme => ({
     position: 'relative'
   },
   cardHeader: {
+    width: `calc(100% - ${theme.spacing(4)}px)`,
     position: 'absolute',
     top: 0,
     left: 0
@@ -20,6 +21,7 @@ export default theme => ({
     position: 'absolute',
     bottom: 0,
     right: 0,
+    width: `calc(100% - ${theme.spacing(6)}px)`,
     margin: theme.spacing(1),
     padding: `${theme.spacing(2)}px !important`,
     background: 'rgba(255, 255, 255, 0.4)',

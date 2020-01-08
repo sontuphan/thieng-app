@@ -10,53 +10,64 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 
-import { ThumbUp, LocalGroceryStore, Settings, Message } from '@material-ui/icons';
+import { Favorite, LocalGroceryStore, Settings, Message } from '@material-ui/icons';
 
 import Divider from 'components/divider';
 
 import styles from './styles';
-import designerImg from 'static/images/designer.jpg';
 
 class CarouselSlide extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
-      objs: props.objs
+      animation: null
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.objs[0].displayname !== prevProps.objs[0].displayname) {
+      this.setState({ animation: " animated zoomIn" }, () => {
+        setTimeout(() => {
+          this.setState({ animation: null });
+        }, 1000);
+      });
     }
   }
 
   renderSlides() {
+    let { classes, objs } = this.props;
+
     let slides = [];
-    let { classes } = this.props;
-    for (let i = 0; i < this.state.objs.length; i++) {
+    for (let i = 0; i < objs.length; i++) {
+      let obj = objs[i]
       slides.push(
-        <Grid item key={i} xs={10} className={classes.slide}>
+        <Grid item key={i} xs={8} lg={8} className={this.state.animation ? classes.slide + this.state.animation : classes.slide}>
           <Card className={classes.card}>
-            <CardMedia image={designerImg} className={classes.cardMedia} />
+            <CardMedia image={obj.avatar} className={classes.cardMedia} />
             <CardHeader className={classes.cardHeader}
-              title={<Typography variant="body2">Lena</Typography>}
+              title={<Typography variant="body2">{obj.displayname}</Typography>}
               disableTypography
             />
             <CardContent className={classes.cardContent}>
-              <Grid container direction="row" spacing={1}>
-                <Grid item xs={6}>
-                  <Grid container direction="row" justify="flex-start" alignItems="center" spacing={1}>
+              <Grid container direction="row" alignItems="center" spacing={1}>
+                <Grid item xs={8}>
+                  <Grid container direction="row" justify="flex-start" spacing={1}>
                     <Grid item>
-                      <ThumbUp fontSize="small" />
+                      <Favorite fontSize="small" />
                     </Grid>
                     <Grid item>
-                      <Typography>Thích</Typography>
+                      <Typography>Tim</Typography>
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                  <Grid container direction="row" justify="flex-end" alignItems="center" spacing={1}>
-                    <Typography>31.257</Typography>
+                <Grid item xs={4}>
+                  <Grid container direction="row" justify="flex-end" spacing={1}>
+                    <Typography>{obj.noOfhearts}</Typography>
                   </Grid>
                 </Grid>
                 <Grid item xs={8}>
-                  <Grid container direction="row" justify="flex-start" alignItems="center" spacing={1}>
+                  <Grid container direction="row" justify="flex-start" spacing={1}>
                     <Grid item>
                       <LocalGroceryStore fontSize="small" />
                     </Grid>
@@ -66,22 +77,18 @@ class CarouselSlide extends Component {
                   </Grid>
                 </Grid>
                 <Grid item xs={4}>
-                  <Grid container direction="row" justify="flex-end" alignItems="center" spacing={1}>
-                    <Typography>57</Typography>
+                  <Grid container direction="row" justify="flex-end" spacing={1}>
+                    <Typography>{obj.noOfProducts}</Typography>
                   </Grid>
                 </Grid>
                 <Grid item xs={12}>
                   <Divider />
                 </Grid>
-                <Grid item xs={8}>
-                  <Grid container direction="row" justify="flex-start" alignItems="center" spacing={1}>
+                <Grid item xs={12}>
+                  <Grid container direction="row" justify="space-between" alignItems="center" spacing={1}>
                     <IconButton color="secondary" size="small">
                       <Message fontSize="small" />
                     </IconButton>
-                  </Grid>
-                </Grid>
-                <Grid item xs={4}>
-                  <Grid container direction="row" justify="flex-end" alignItems="center" spacing={1}>
                     <IconButton color="secondary" size="small">
                       <Settings fontSize="small" />
                     </IconButton>

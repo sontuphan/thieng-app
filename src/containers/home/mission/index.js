@@ -33,7 +33,6 @@ class Mission extends Component {
         <Carousel
           title="Top 10"
           subtitle="Nhà thiết kế"
-          pagination={{ page: 2, total: 10 }}
         />
         <Drain />
       </Grid>

@@ -33,7 +33,6 @@ class Policy extends Component {
         <Carousel
           title="Top 10"
           subtitle="Sản phẩm"
-          pagination={{ page: 2, total: 10 }}
         />
         <Drain />
       </Grid>
