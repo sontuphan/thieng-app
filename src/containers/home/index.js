@@ -15,16 +15,14 @@ import styles from './styles';
 
 class Header extends Component {
   render() {
-    let { classes } = this.props;
-
     return <Fragment>
       <Drain />
       <Welcome />
-      <Drain />
+      <Drain large/>
       <Mission />
-      <Drain />
+      <Drain large/>
       <Policy />
-      <Drain />
+      <Drain large/>
       <Contact />
     </Fragment >
   }

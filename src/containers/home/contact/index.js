@@ -15,10 +15,7 @@ import styles from './styles';
 
 class Contact extends Component {
   render() {
-    let { classes } = this.props;
-
     return <Fragment>
-      <Drain />
       <Grid item xs={12} md={6}>
         <Grid container direction="row" justify="center" spacing={2}>
           <Grid item xs={10} md={8}>

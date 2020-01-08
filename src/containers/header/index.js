@@ -30,33 +30,39 @@ class Header extends Component {
 
   render() {
     let { classes } = this.props;
-
     return <Fragment>
-      <Grid item xs={10} className={classes.row}>
-        <Grid container className={classes.maxHeight}>
-          <Grid item xs={6}>
-            <Grid container alignItems="center" className={classes.maxHeight}>
-              <Typography variant="h3" className={classes.link}>Thiêng</Typography>
-            </Grid>
+      <Grid item xs={10}>
+        <Grid container
+          direction="row"
+          alignItems="center">
+          <Grid item xs={4}>
+            <Typography variant="h3">Thiêng</Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={8}>
             {this.state.matches ? <Grid
               container
               direction="row"
               justify="flex-end"
               alignItems="center"
-              className={classes.maxHeight}>
-              <Typography className={classes.link}><span className="link">Thiết kế</span></Typography>
-              <Typography className={classes.link}><span className="link">Mua sắm</span></Typography>
-              <Typography className={classes.link}><span className="link">Liên hệ</span></Typography>
-              <Typography className={classes.link}><span className="link">Đăng nhập</span></Typography>
+              spacing={2}>
+              <Grid item>
+                <Typography className={classes.route}><span className="link">Thiết kế</span></Typography>
+              </Grid>
+              <Grid item>
+                <Typography className={classes.route}><span className="link">Mua sắm</span></Typography>
+              </Grid>
+              <Grid item>
+                <Typography className={classes.route}><span className="link">Liên hệ</span></Typography>
+              </Grid>
+              <Grid item>
+                <Typography className={classes.route}><span className="link">Đăng nhập</span></Typography>
+              </Grid>
             </Grid>
               : <Grid
                 container
                 direction="row"
                 justify="flex-end"
-                alignItems="center"
-                className={classes.maxHeight}>
+                alignItems="center">
                 <IconButton color="secondary">
                   <Menu />
                 </IconButton>

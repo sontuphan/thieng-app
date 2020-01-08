@@ -5,21 +5,17 @@ import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Image from 'material-ui-image';
 import Typography from '@material-ui/core/Typography';
 
 import Drain from 'components/drain';
+import Carousel from 'components/carousel';
 
 import styles from './styles';
-import peopleImg from 'static/images/people.svg';
 
 class Mission extends Component {
   render() {
-    let { classes } = this.props;
-
     return <Fragment>
       <Grid item xs={12} md={6}>
-        <Drain />
         <Grid container direction="row" justify="center" spacing={2}>
           <Grid item xs={10} md={8}>
             <Typography variant="h1">Sứ mệnh</Typography>
@@ -34,7 +30,12 @@ class Mission extends Component {
         </Grid>
       </Grid>
       <Grid item xs={12} md={6}>
-        <Image src={peopleImg} aspectRatio={(568 / 485)} />
+        <Carousel
+          title="Top 10"
+          subtitle="Nhà thiết kế"
+          pagination={{ page: 2, total: 10 }}
+        />
+        <Drain />
       </Grid>
     </Fragment >
   }

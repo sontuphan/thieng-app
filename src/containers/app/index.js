@@ -15,9 +15,6 @@ import theme from './theme';
 import 'static/styles/index.css';
 
 class App extends Component {
-  constructor() {
-    super();
-  }
 
   render() {
     return (
