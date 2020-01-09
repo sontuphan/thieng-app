@@ -35,6 +35,7 @@ class Header extends Component {
       routes: [
         { text: "Thiết kế", link: '/design' },
         { text: "Mua sắm", link: '/market' },
+        { text: "Đối tác", link: '/partner' },
         { text: "Liên hệ", link: '/contact' },
       ],
       search: null

@@ -37,7 +37,7 @@ class CarouselPagination extends Component {
           <Grid container direction="row" alignItems="center" spacing={1}>
             <Grid item>
               <IconButton color="secondary" size="small" onClick={this.props.onNext}>
-                <ArrowBack size="small" />
+                <ArrowBack />
               </IconButton>
             </Grid>
             <Grid item>
@@ -45,7 +45,7 @@ class CarouselPagination extends Component {
             </Grid>
             <Grid item>
               <IconButton color="secondary" size="small" onClick={this.props.onBack}>
-                <ArrowForward size="small" />
+                <ArrowForward />
               </IconButton>
             </Grid>
           </Grid>

@@ -11,7 +11,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 
-import { Favorite, LocalGroceryStore, Settings, Message } from '@material-ui/icons';
+import { Favorite, LocalGroceryStore, Visibility, Message } from '@material-ui/icons';
 
 import Divider from 'components/divider';
 
@@ -98,7 +98,7 @@ class CarouselSlide extends Component {
                       <Message fontSize="small" />
                     </IconButton>
                     <IconButton color="secondary" size="small">
-                      <Settings fontSize="small" />
+                      <Visibility fontSize="small" />
                     </IconButton>
                   </Grid>
                 </Grid>

@@ -21,7 +21,7 @@ const theme = createMuiTheme({
     h1: {
       fontFamily: ['"Playfair Display"', 'serif'].join(','),
       fontWeight: 700,
-      fontSize: 36,
+      fontSize: 48,
       letterSpacing: 0,
       textTransform: 'None'
     },

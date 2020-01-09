@@ -1,5 +1,5 @@
 export default theme => ({
   maxHeight: {
-    height: '100%'
+    height: '100%',
   }
 });
