@@ -63,7 +63,7 @@ class Carousel extends Component {
         <CarouselPagination {...this.state.pagination} onNext={this.onNext} onBack={this.onBack} onMore={this.onMore} />
       </Grid>
       <Grid item xs={8}>
-        <CarouselSlide {...this.state.slide} />
+        <CarouselSlide {...this.state.slide} onNext={this.onNext} onBack={this.onBack} />
       </Grid>
     </Grid>
   }

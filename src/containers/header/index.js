@@ -108,12 +108,6 @@ class Header extends Component {
           </ListItemSecondaryAction>
         </ListItem>
         <Divider />
-        <ListItem>
-          <TextField color="secondary" placeholder="Search" onChange={this.input} fullWidth
-            onKeyPress={e => e.key === 'Enter' ? this.search() : null} />
-          <IconButton size="small" onClick={this.search}><Search /></IconButton>
-        </ListItem>
-        <Divider />
         {
           this.state.routes.map((route, index) =>
             <ListItem key={index} button onClick={() => this.redirect(route.link)}>
@@ -122,6 +116,12 @@ class Header extends Component {
           )
         }
         <Divider />
+        <ListItem>
+          <TextField color="secondary" placeholder="Search" onChange={this.input} fullWidth
+            onKeyPress={e => e.key === 'Enter' ? this.search() : null} />
+          <IconButton size="small" onClick={this.search}><Search /></IconButton>
+        </ListItem>
+        {/* <Divider /> */}
         <ListItem>
           {this.renderProfile()}
         </ListItem>

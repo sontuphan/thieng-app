@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Swipeable } from 'react-swipeable';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -25,16 +26,20 @@ class CarouselSlide extends Component {
     }
   }
 
+  slide = () => {
+    let animation = " animated slideInRight";
+    if (this.props.direction === "right")
+      animation = " animated slideInLeft";
+    this.setState({ animation: animation }, () => {
+      setTimeout(() => {
+        this.setState({ animation: null });
+      }, 1100);
+    });
+  }
+
   componentDidUpdate(prevProps) {
-    if (this.props.objs[0].displayname !== prevProps.objs[0].displayname) {
-      let animation = " animated slideInRight";
-      if (this.props.direction === "right")
-        animation = " animated slideInLeft";
-      this.setState({ animation: animation }, () => {
-        setTimeout(() => {
-          this.setState({ animation: null });
-        }, 1100);
-      });
+    if (JSON.stringify(this.props.objs[0]) !== JSON.stringify(prevProps.objs[0])) {
+      this.slide()
     }
   }
 
@@ -108,14 +113,18 @@ class CarouselSlide extends Component {
 
   render() {
     let { classes } = this.props;
-    return <Grid container spacing={2} className={classes.slides}>
-      {this.renderSlides()}
-    </Grid>
+    return <Swipeable onSwipedLeft={this.props.onNext} onSwipedRight={this.props.onBack}>
+      <Grid container spacing={2} className={classes.slides}>
+        {this.renderSlides()}
+      </Grid>
+    </Swipeable>
   }
 }
 
 CarouselSlide.propTypes = {
-  objs: PropTypes.array,
+  objs: PropTypes.array.isRequired,
+  onNext: PropTypes.func.isRequired,
+  onBack: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(CarouselSlide);
