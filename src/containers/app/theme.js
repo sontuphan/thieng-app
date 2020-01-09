@@ -4,10 +4,20 @@ const theme = createMuiTheme({
   palette: {
     primary: { main: '#FF3E3C' },
     secondary: { main: '#2C2C2C' },
-    textPrimary: {main: '#000000'},
-    textSecondary: {main: '#FFFFFF'},
+    textPrimary: { main: '#000000' },
+    textSecondary: { main: '#FFFFFF' },
   },
   typography: {
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      '"Playfair Display"',
+      'serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
     h1: {
       fontFamily: ['"Playfair Display"', 'serif'].join(','),
       fontWeight: 700,
