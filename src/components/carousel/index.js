@@ -20,7 +20,8 @@ class Carousel extends Component {
         paging: { page: 0, total: props.objects.length },
       },
       slide: {
-        objs: props.objects
+        objs: props.objects,
+        direction: 'left'
       }
     }
   }
@@ -31,9 +32,10 @@ class Carousel extends Component {
     let objs = JSON.parse(JSON.stringify(slide.objs));
     let firstObj = objs.shift();
     objs.push(firstObj);
-    slide.objs = objs
+    slide.objs = objs;
+    slide.direction = 'left';
     // Update pagination
-    pagination.paging.page = (pagination.paging.page + 1) % pagination.paging.total
+    pagination.paging.page = (pagination.paging.page + 1) % pagination.paging.total;
     this.setState({ slide, pagination });
   }
 
@@ -43,7 +45,8 @@ class Carousel extends Component {
     let objs = JSON.parse(JSON.stringify(slide.objs));
     let lastObj = objs.pop();
     objs.unshift(lastObj);
-    slide.objs = objs
+    slide.objs = objs;
+    slide.direction = 'right';
     // Update pagination
     pagination.paging.page = (pagination.paging.page - 1 + pagination.paging.total) % pagination.paging.total;
     this.setState({ slide, pagination });

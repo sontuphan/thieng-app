@@ -27,10 +27,13 @@ class CarouselSlide extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.objs[0].displayname !== prevProps.objs[0].displayname) {
-      this.setState({ animation: " animated zoomIn" }, () => {
+      let animation = " animated slideInRight";
+      if (this.props.direction === "right")
+        animation = " animated slideInLeft";
+      this.setState({ animation: animation }, () => {
         setTimeout(() => {
           this.setState({ animation: null });
-        }, 1200);
+        }, 1100);
       });
     }
   }
