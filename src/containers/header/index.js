@@ -22,6 +22,7 @@ import { Menu, Person, Close, Search } from '@material-ui/icons';
 import styles from './styles';
 
 import { search } from 'modules/search.reducer';
+import { logIn, logOut } from 'modules/auth.reducer';
 
 class Header extends Component {
   constructor() {
@@ -29,7 +30,7 @@ class Header extends Component {
 
     this.state = {
       matches: window.innerWidth >= 960,
-      isLoggedIn: false,
+      user: {},
       visible: false,
       routes: [
         { text: "Thiết kế", link: '/design' },
@@ -47,16 +48,14 @@ class Header extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (JSON.stringify(prevProps.auth) !== JSON.stringify(this.props.auth)) {
+      this.setState({ user: this.props.auth });
+    }
+  }
+
   redirect = (to) => {
     return this.props.history.push(to);
-  }
-
-  logIn = () => {
-    this.setState({ isLoggedIn: true });
-  }
-
-  logOut = () => {
-    this.setState({ isLoggedIn: false });
   }
 
   open = () => {
@@ -81,17 +80,17 @@ class Header extends Component {
   }
 
   renderProfile() {
-    if (this.state.isLoggedIn)
+    if (this.state.user.isLoggedIn)
       return <ButtonGroup>
         <Button variant="outlined" size="small" startIcon={<Person />}>
           <Typography>Cá nhân</Typography>
         </Button>
-        <Button variant="outlined" size="small" onClick={this.logOut}>
+        <Button variant="outlined" size="small" onClick={this.props.logOut}>
           <Typography>Đăng xuất</Typography>
         </Button>
       </ButtonGroup>
     else
-      return <Button variant="outlined" size="small" onClick={this.logIn}>
+      return <Button variant="outlined" size="small" onClick={this.props.logIn}>
         <Typography>Đăng nhập</Typography>
       </Button>
   }
@@ -101,7 +100,7 @@ class Header extends Component {
     return <Drawer anchor="top" open={this.state.visible} onClose={this.close}>
       <List className={classes.drawer}>
         <ListItem>
-          <ListItemText primary={"Hi Tự !"} />
+          <ListItemText primary={'Good morning!'} />
           <ListItemSecondaryAction>
             <IconButton color="secondary" size="small" onClick={this.close}>
               <Close />
@@ -180,10 +179,12 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
+  auth: state.auth
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   search,
+  logIn, logOut,
 }, dispatch);
 
 export default withRouter(connect(

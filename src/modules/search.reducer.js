@@ -24,7 +24,7 @@ export const search = (value) => {
       if (!value) {
         dispatch({
           type: SEARCH_FAIL,
-          reason: 'Empty string',
+          reason: 'Input is null.',
           data: { ...defaultState }
         });
         return reject('Input is null.');
