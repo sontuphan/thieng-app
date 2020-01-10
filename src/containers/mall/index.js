@@ -52,22 +52,18 @@ class Mall extends Component {
           <Grid item xs={10}>
             <img alt="alt" src={product} height="auto" width="100%" />
           </Grid>
-          <Grid item xs={12}>
-            <Grid container direction="row" justify="space-between" alignItems="center" spacing={2}>
+          <Grid item xs={6}>
+            <Grid container direction="row" alignItems="center" spacing={1}>
               <Grid item>
-                <Grid container spacing={1} direction="row" alignItems="center">
-                  <Grid item>
-                    <Avatar alt="Remy Sharp" src={designerImg4} className={classes.avatar} />
-                  </Grid>
-                  <Grid item>
-                    <Typography>Remy Sharp</Typography>
-                  </Grid>
-                </Grid>
+                <Avatar alt="Remy Sharp" src={designerImg4} className={classes.avatar} />
               </Grid>
               <Grid item>
-                <ColorSelect colors={["#B28B67", "#915B3C", "#1C1D1A"]} onChange={this.onColor} />
+                <Typography>Remy Sharp</Typography>
               </Grid>
             </Grid>
+          </Grid>
+          <Grid item xs={6}>
+            <ColorSelect colors={["#B28B67", "#915B3C", "#1C1D1A"]} onChange={this.onColor} />
           </Grid>
         </Grid>
       </Grid>
@@ -99,7 +95,7 @@ class Mall extends Component {
           </Grid>
           <Drain />
           <Grid item xs={10} md={8}>
-            <TextField label="Số lượng" variant="outlined" color="secondary" value={this.state.amount} fullWidth />
+            <TextField label="Số lượng" size="small" variant="outlined" color="secondary" value={this.state.amount} fullWidth />
           </Grid>
           <Grid item xs={10} md={8}>
             <Grid container direction="row" spacing={2}>
@@ -117,6 +113,7 @@ class Mall extends Component {
           </Grid>
         </Grid>
       </Grid>
+      <Drain />
     </Fragment>
   }
 }
