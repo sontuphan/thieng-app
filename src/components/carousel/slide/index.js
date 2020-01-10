@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Swipeable } from 'react-swipeable';
 
@@ -11,7 +11,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 
-import { Favorite, LocalGroceryStore, Visibility, Message } from '@material-ui/icons';
+import { Favorite, LocalFlorist, LocalGroceryStore, Visibility, Message } from '@material-ui/icons';
 
 import Divider from 'components/divider';
 
@@ -43,12 +43,45 @@ class CarouselSlide extends Component {
     }
   }
 
+  renderIcon = (type) => {
+    switch (type) {
+      case 'like':
+        return <Favorite fontSize="small" />;
+      case 'flower':
+        return <LocalFlorist fontSize="small" />;
+      case 'product':
+        return <LocalGroceryStore fontSize="small" />;
+      default:
+        return null;
+    }
+  }
+
+  renderContent = (content) => {
+    return content.map((item, i) => <Fragment key={i}>
+      <Grid item xs={8}>
+        <Grid container direction="row" justify="flex-start" spacing={1}>
+          <Grid item>
+            {this.renderIcon(item.icon)}
+          </Grid>
+          <Grid item>
+            <Typography>{item.key}</Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={4}>
+        <Grid container direction="row" justify="flex-end" spacing={1}>
+          <Typography>{item.value}</Typography>
+        </Grid>
+      </Grid>
+    </Fragment>);
+  }
+
   renderSlides() {
     let { classes, objs } = this.props;
 
     let slides = [];
     for (let i = 0; i < objs.length; i++) {
-      let obj = objs[i]
+      let obj = objs[i];
       slides.push(
         <Grid item key={i} className={this.state.animation ? classes.slide + this.state.animation : classes.slide}>
           <Card className={classes.card}>
@@ -59,36 +92,7 @@ class CarouselSlide extends Component {
             />
             <CardContent className={classes.cardContent}>
               <Grid container direction="row" alignItems="center" spacing={1}>
-                <Grid item xs={8}>
-                  <Grid container direction="row" justify="flex-start" spacing={1}>
-                    <Grid item>
-                      <Favorite fontSize="small" />
-                    </Grid>
-                    <Grid item>
-                      <Typography>Tim</Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <Grid item xs={4}>
-                  <Grid container direction="row" justify="flex-end" spacing={1}>
-                    <Typography>{obj.noOfhearts}</Typography>
-                  </Grid>
-                </Grid>
-                <Grid item xs={8}>
-                  <Grid container direction="row" justify="flex-start" spacing={1}>
-                    <Grid item>
-                      <LocalGroceryStore fontSize="small" />
-                    </Grid>
-                    <Grid item>
-                      <Typography>Sản phẩm</Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <Grid item xs={4}>
-                  <Grid container direction="row" justify="flex-end" spacing={1}>
-                    <Typography>{obj.noOfProducts}</Typography>
-                  </Grid>
-                </Grid>
+                {this.renderContent(obj.content)}
                 <Grid item xs={12}>
                   <Divider />
                 </Grid>
@@ -106,7 +110,7 @@ class CarouselSlide extends Component {
             </CardContent>
           </Card>
         </Grid>
-      )
+      );
     }
     return slides;
   }

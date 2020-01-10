@@ -17,7 +17,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import TextField from '@material-ui/core/TextField';
 
-import { Menu, Person, Close, Search } from '@material-ui/icons';
+import { Menu, Person, Close, Search, LocalGroceryStore } from '@material-ui/icons';
 
 import styles from './styles';
 
@@ -83,6 +83,9 @@ class Header extends Component {
   renderProfile() {
     if (this.state.user.isLoggedIn)
       return <ButtonGroup>
+        <Button variant="outlined" size="small" startIcon={<LocalGroceryStore />}>
+          <Typography> Giỏ hàng</Typography>
+        </Button>
         <Button variant="outlined" size="small" startIcon={<Person />}>
           <Typography>Cá nhân</Typography>
         </Button>

@@ -19,20 +19,50 @@ const OBJECTS = [
   {
     displayname: 'Maria Guys',
     avatar: designerImg1,
-    noOfhearts: 2245,
-    noOfProducts: 35
+    content: [
+      {
+        icon: 'like',
+        key: 'Thích',
+        value: 2245
+      },
+      {
+        icon: 'flower',
+        key: 'Thiết kế',
+        value: 35
+      }
+    ]
   },
   {
     displayname: 'Philip Martin',
     avatar: designerImg2,
-    noOfhearts: 1234,
-    noOfProducts: 186
+    content: [
+      {
+        icon: 'like',
+        key: 'Thích',
+        value: 2245
+      },
+      {
+        icon: 'flower',
+        key: 'Thiết kế',
+        value: 35
+      }
+    ]
   },
   {
     displayname: 'Aiony Haust',
     avatar: designerImg3,
-    noOfhearts: 2345,
-    noOfProducts: 65
+    content: [
+      {
+        icon: 'like',
+        key: 'Thích',
+        value: 2245
+      },
+      {
+        icon: 'flower',
+        key: 'Thiết kế',
+        value: 35
+      }
+    ]
   },
 ]
 

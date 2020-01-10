@@ -21,14 +21,34 @@ const OBJECTS = [
   {
     displayname: 'Mirror',
     avatar: interiorImg1,
-    noOfhearts: 2245,
-    noOfProducts: 35
+    content: [
+      {
+        icon: 'like',
+        key: 'Thích',
+        value: 2245
+      },
+      {
+        icon: 'product',
+        key: 'Đã bán',
+        value: 35
+      }
+    ]
   },
   {
     displayname: 'Lamp',
     avatar: interiorImg2,
-    noOfhearts: 1234,
-    noOfProducts: 186
+    content: [
+      {
+        icon: 'like',
+        key: 'Thích',
+        value: 2245
+      },
+      {
+        icon: 'product',
+        key: 'Đã bán',
+        value: 35
+      }
+    ]
   },
 ]
 class Policy extends Component {
