@@ -2,10 +2,10 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
+import Image from 'material-ui-image';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Image from 'material-ui-image';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 

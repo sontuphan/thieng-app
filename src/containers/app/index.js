@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 
 import Header from 'containers/header';
 import Home from 'containers/home';
+import Mall from 'containers/mall';
 import Footer from 'containers/footer';
 
 import theme from './theme';
@@ -24,6 +25,7 @@ class App extends Component {
           <Switch>
             <Redirect exact from="/" to="/home" />
             <Route exact path="/home" component={Home} />
+            <Route exact path="/mall" component={Mall} />
 
           </Switch>
           <Footer />

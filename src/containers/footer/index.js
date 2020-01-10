@@ -15,7 +15,7 @@ class Header extends Component {
 
     return <Fragment>
       <Grid item xs={10} className={classes.row}>
-        <Grid container alignItems="center" className={classes.maxHeight} spacing={2}>
+        <Grid container direction="row" alignItems="center" className={classes.maxHeight} spacing={2}>
           <Grid item xs={12} className={classes.row}>
             <Typography>Copyright © 2020 Thiêng Việt</Typography>
           </Grid>

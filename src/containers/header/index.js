@@ -16,6 +16,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import TextField from '@material-ui/core/TextField';
+import Badge from '@material-ui/core/Badge';
+
 
 import { Menu, Person, Close, Search, LocalGroceryStore } from '@material-ui/icons';
 
@@ -34,11 +36,12 @@ class Header extends Component {
       visible: false,
       routes: [
         { text: "Thiết kế", link: '/design' },
-        { text: "Mua sắm", link: '/market' },
-        { text: "Đối tác", link: '/partner' },
+        { text: "Siêu thị", link: '/mall' },
+        // { text: "Đối tác", link: '/partner' },
         { text: "Liên hệ", link: '/contact' },
       ],
-      search: null
+      search: null,
+      grocery: 3
     }
   }
 
@@ -56,7 +59,8 @@ class Header extends Component {
   }
 
   redirect = (to) => {
-    return this.props.history.push(to);
+    this.props.history.push(to);
+    this.close();
   }
 
   open = () => {
@@ -83,8 +87,11 @@ class Header extends Component {
   renderProfile() {
     if (this.state.user.isLoggedIn)
       return <ButtonGroup>
-        <Button variant="outlined" size="small" startIcon={<LocalGroceryStore />}>
-          <Typography> Giỏ hàng</Typography>
+        <Button variant="outlined" size="small"
+          startIcon={<Badge badgeContent={this.state.grocery} color="primary">
+            <LocalGroceryStore fontSize="small" />
+          </Badge>}>
+          <Typography>Giỏ hàng</Typography>
         </Button>
         <Button variant="outlined" size="small" startIcon={<Person />}>
           <Typography>Cá nhân</Typography>
@@ -112,6 +119,9 @@ class Header extends Component {
           </ListItemSecondaryAction>
         </ListItem>
         <Divider />
+        <ListItem button onClick={() => this.redirect('/home')}>
+          <ListItemText primary={<Typography variant="h3">Thiêng</Typography>} />
+        </ListItem>
         {
           this.state.routes.map((route, index) =>
             <ListItem key={index} button onClick={() => this.redirect(route.link)}>
@@ -125,7 +135,6 @@ class Header extends Component {
             onKeyPress={e => e.key === 'Enter' ? this.search() : null} />
           <IconButton size="small" onClick={this.search}><Search /></IconButton>
         </ListItem>
-        {/* <Divider /> */}
         <ListItem>
           {this.renderProfile()}
         </ListItem>
@@ -158,7 +167,9 @@ class Header extends Component {
     else
       return <Grid container direction="row" justify="flex-end" alignItems="center">
         <IconButton color="secondary" onClick={this.open}>
-          <Menu />
+          <Badge badgeContent={this.state.grocery} color="primary">
+            <Menu />
+          </Badge>
         </IconButton>
       </Grid>
   }
