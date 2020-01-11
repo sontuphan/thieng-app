@@ -108,7 +108,7 @@ class Showcase extends Component {
           </Grid>
         </Grid>
         <Grid item xs={8} md={10}>
-          <SwipeableViews index={showing} onChangeIndex={this.onChange} containerStyle={{ alignItems: "center", transform: `translate(${this.state.translate}%, 0px)` }} slideClassName={classes.slide}>
+          <SwipeableViews index={showing} onChangeIndex={this.onChange} containerStyle={{ alignItems: "center", transform: `translate(${this.state.translate}%, 0px)` }} slideClassName={classes.slide} disabled>
             {
               objects.map((object, i) => {
                 return <Grid item key={i}>
