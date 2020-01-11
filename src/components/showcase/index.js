@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
+import { Swipeable } from 'react-swipeable';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -58,80 +59,82 @@ class Showcase extends Component {
     let { showing, author, objects } = this.state;
 
     return <Fragment>
-      <Grid container spacing={2} justify="center"
-        style={objects[showing].type !== 'png' ? {
-          backgroundImage: `url('${objects[showing].url}')`,
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover'
-        } : null}
-        className={classes.showcase}>
-        <Grid item xs={12}>
-          <Grid container direction="row" justify="flex-end" spacing={2}>
-            <Grid item>
-              <IconButton>
-                <ThreeDRotation color="secondary" />
+      <Swipeable onSwipedLeft={this.onNext} onSwipedRight={this.onBack}>
+        <Grid container spacing={2} justify="center"
+          style={objects[showing].type !== 'png' ? {
+            backgroundImage: `url('${objects[showing].url}')`,
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover'
+          } : null}
+          className={classes.showcase}>
+          <Grid item xs={12}>
+            <Grid container direction="row" justify="flex-end" spacing={2}>
+              <Grid item>
+                <IconButton>
+                  <ThreeDRotation color="secondary" />
+                </IconButton>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={10} className={classes.imageShelf} style={objects[showing].type === 'png' ? {
+            backgroundImage: `url('${objects[showing].url}')`,
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'contain'
+          } : null}>
+            {/* {objects[showing].type === 'png' ? <img alt={objects[showing].url}
+            src={objects[showing].url} className={classes.image} /> : null} */}
+          </Grid>
+          <Grid item xs={6}>
+            <Grid container direction="row" alignItems="center" spacing={1}>
+              <Grid item>
+                <Avatar alt={author.displayname} src={author.avatar} className={classes.avatar} />
+              </Grid>
+              <Grid item xs={8}>
+                <Typography noWrap>{author.displayname}</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={6}>
+            <ColorSelect colors={objects.map(obj => obj.color).filter(color => color !== null)} onChange={this.onColor} />
+          </Grid>
+        </Grid>
+        <Drain small />
+        <Grid container direction="row" alignItems="center" spacing={2}>
+          <Grid item xs={2} md={1}>
+            <Grid container justify="flex-start">
+              <IconButton onClick={this.onBack}>
+                <ArrowBack />
+              </IconButton>
+            </Grid>
+          </Grid>
+          <Grid item xs={8} md={10}>
+            <SwipeableViews index={showing} onChangeIndex={this.onChange} containerStyle={{ alignItems: "center", transform: `translate(${this.state.translate}%, 0px)` }} slideClassName={classes.slide} disabled>
+              {
+                objects.map((object, i) => {
+                  return <Grid item key={i}>
+                    <Grid container justify="center">
+                      {this.state.showing === i ? <Badge overlap="circle" variant="dot" color="primary">
+                        <Avatar alt={object.url} src={object.url} onClick={() => this.onChange(i)} />
+                      </Badge>
+                        : <Avatar alt={object.url} src={object.url} onClick={() => this.onChange(i)} />
+                      }
+                    </Grid>
+                  </Grid>
+                })
+              }
+            </SwipeableViews>
+          </Grid>
+          <Grid item xs={2} md={1}>
+            <Grid container justify="flex-end">
+              <IconButton onClick={this.onNext}>
+                <ArrowForward />
               </IconButton>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={10} className={classes.imageShelf} style={objects[showing].type === 'png' ? {
-          backgroundImage: `url('${objects[showing].url}')`,
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'contain'
-        } : null}>
-          {/* {objects[showing].type === 'png' ? <img alt={objects[showing].url}
-            src={objects[showing].url} className={classes.image} /> : null} */}
-        </Grid>
-        <Grid item xs={6}>
-          <Grid container direction="row" alignItems="center" spacing={1}>
-            <Grid item>
-              <Avatar alt={author.displayname} src={author.avatar} className={classes.avatar} />
-            </Grid>
-            <Grid item xs={8}>
-              <Typography noWrap>{author.displayname}</Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={6}>
-          <ColorSelect colors={objects.map(obj => obj.color).filter(color => color !== null)} onChange={this.onColor} />
-        </Grid>
-      </Grid>
-      <Drain small />
-      <Grid container direction="row" alignItems="center" spacing={2}>
-        <Grid item xs={2} md={1}>
-          <Grid container justify="flex-start">
-            <IconButton onClick={this.onBack}>
-              <ArrowBack />
-            </IconButton>
-          </Grid>
-        </Grid>
-        <Grid item xs={8} md={10}>
-          <SwipeableViews index={showing} onChangeIndex={this.onChange} containerStyle={{ alignItems: "center", transform: `translate(${this.state.translate}%, 0px)` }} slideClassName={classes.slide} disabled>
-            {
-              objects.map((object, i) => {
-                return <Grid item key={i}>
-                  <Grid container justify="center">
-                    {this.state.showing === i ? <Badge overlap="circle" variant="dot" color="primary">
-                      <Avatar alt={object.url} src={object.url} onClick={() => this.onChange(i)} />
-                    </Badge>
-                      : <Avatar alt={object.url} src={object.url} onClick={() => this.onChange(i)} />
-                    }
-                  </Grid>
-                </Grid>
-              })
-            }
-          </SwipeableViews>
-        </Grid>
-        <Grid item xs={2} md={1}>
-          <Grid container justify="flex-end">
-            <IconButton onClick={this.onNext}>
-              <ArrowForward />
-            </IconButton>
-          </Grid>
-        </Grid>
-      </Grid>
+      </Swipeable>
     </Fragment>
   }
 }
