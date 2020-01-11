@@ -72,7 +72,7 @@ class Showcase extends Component {
             <Grid container direction="row" justify="flex-end" spacing={2}>
               <Grid item>
                 <IconButton>
-                  <ThreeDRotation color="secondary" />
+                  <ThreeDRotation style={{color: "#ffffff"}} />
                 </IconButton>
               </Grid>
             </Grid>
@@ -83,8 +83,6 @@ class Showcase extends Component {
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain'
           } : null}>
-            {/* {objects[showing].type === 'png' ? <img alt={objects[showing].url}
-            src={objects[showing].url} className={classes.image} /> : null} */}
           </Grid>
           <Grid item xs={6}>
             <Grid container direction="row" alignItems="center" spacing={1}>
@@ -92,7 +90,7 @@ class Showcase extends Component {
                 <Avatar alt={author.displayname} src={author.avatar} className={classes.avatar} />
               </Grid>
               <Grid item xs={8}>
-                <Typography noWrap>{author.displayname}</Typography>
+                <Typography variant="body2" noWrap>{author.displayname}</Typography>
               </Grid>
             </Grid>
           </Grid>
