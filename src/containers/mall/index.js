@@ -7,26 +7,64 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Avatar from '@material-ui/core/Avatar';
 
-import { ThreeDRotation } from '@material-ui/icons';
+import { } from '@material-ui/icons';
 
 import Drain from 'components/drain';
-import ColorSelect from 'components/colorSelect';
+import Showcase from 'components/showcase';
 
 import styles from './styles';
 import designerImg4 from 'static/images/designer-4.jpg';
 import product from 'static/images/product.png';
+import interior1 from 'static/images/interior-1.jpg';
+import interior2 from 'static/images/interior-2.jpg';
+import interior3 from 'static/images/interior-3.jpg';
 
 class Mall extends Component {
   constructor() {
     super();
 
     this.state = {
-      amount: 1
+      amount: 1,
+      author: {
+        displayname: "Remy Sharp lajsdb asnbli asdbkl",
+        avatar: designerImg4,
+        link: '/artist/remy-sharp'
+      },
+      objects: [
+        {
+          name: "Tellus lacus vitae nisl.",
+          description1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sem amet sem mus in in fermentum gravida id luctus.",
+          description2: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum urna tempus adipiscing amet dignissim.",
+          price: "6.490.000",
+          unit: "vnd",
+          tags: ["New", "20%"],
+          images: [
+            {
+              url: product,
+              type: 'png',
+              color: "#B28B67"
+            },
+            {
+              url: interior1,
+              type: 'jpg',
+              color: "#915B3C"
+            },
+            {
+              url: interior2,
+              type: 'jpg',
+              color: "#1C1D1A"
+            },
+            {
+              url: interior3,
+              type: 'jpg',
+              color: null
+            }
+          ]
+        }
+      ]
     }
   }
 
@@ -35,63 +73,37 @@ class Mall extends Component {
   }
 
   render() {
-    let { classes } = this.props;
+    // let { classes } = this.props;
+    let object = this.state.objects[0];
 
     return <Fragment>
       <Grid item xs={12} md={6}>
-        <Grid container spacing={2} justify="center" className={classes.showcase}>
-          <Grid item xs={12}>
-            <Grid container direction="row" justify="flex-end" spacing={2}>
-              <Grid item>
-                <IconButton>
-                  <ThreeDRotation color="secondary" />
-                </IconButton>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={10}>
-            <img alt="alt" src={product} height="auto" width="100%" />
-          </Grid>
-          <Grid item xs={6}>
-            <Grid container direction="row" alignItems="center" spacing={1}>
-              <Grid item>
-                <Avatar alt="Remy Sharp" src={designerImg4} className={classes.avatar} />
-              </Grid>
-              <Grid item>
-                <Typography>Remy Sharp</Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={6}>
-            <ColorSelect colors={["#B28B67", "#915B3C", "#1C1D1A"]} onChange={this.onColor} />
-          </Grid>
-        </Grid>
+        <Showcase author={this.state.author} objects={object.images} />
       </Grid>
       <Grid item xs={12} md={6}>
         <Drain />
         <Grid container direction="row" justify="center" spacing={2}>
           <Grid item xs={10} md={8}>
             <Grid container spacing={1}>
-              <Grid item>
-                <Chip color="primary" label="New" size="small" />
-              </Grid>
-              <Grid item>
-                <Chip color="primary" label="20%" size="small" />
-              </Grid>
+              {
+                object.tags.map(tag => <Grid item key={tag}>
+                  <Chip color="primary" label={tag} size="small" />
+                </Grid>)
+              }
             </Grid>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography variant="h1">Tellus lacus vitae nisl.</Typography>
+            <Typography variant="h1">{object.name}</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sem amet sem mus in in fermentum gravida id luctus.</Typography>
+            <Typography>{object.description1}</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum urna tempus adipiscing amet dignissim.</Typography>
+            <Typography>{object.description2}</Typography>
           </Grid>
           <Drain />
           <Grid item xs={10} md={8}>
-            <Typography variant="h1">6.490.000 vnd</Typography>
+            <Typography variant="h1">{object.price} {object.unit}</Typography>
           </Grid>
           <Drain />
           <Grid item xs={10} md={8}>
