@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { Swipeable } from 'react-swipeable';
@@ -30,7 +31,9 @@ class Showcase extends Component {
   }
 
   onColor = (color) => {
-    console.log(color);
+    this.state.objects.forEach((obj, step) => {
+      if (obj.color === color) this.onChange(step);
+    });
   }
 
   onChange = (step) => {
@@ -54,6 +57,10 @@ class Showcase extends Component {
     this.onChange(step);
   }
 
+  onAuthor = () => {
+    this.props.history.push(this.state.author.link);
+  }
+
   render() {
     let { classes } = this.props;
     let { showing, author, objects } = this.state;
@@ -71,8 +78,8 @@ class Showcase extends Component {
           <Grid item xs={12}>
             <Grid container direction="row" justify="flex-end" spacing={2}>
               <Grid item>
-                <IconButton>
-                  <ThreeDRotation style={{color: "#ffffff"}} />
+                <IconButton onClick={this.props.on3D}>
+                  <ThreeDRotation />
                 </IconButton>
               </Grid>
             </Grid>
@@ -86,11 +93,11 @@ class Showcase extends Component {
           </Grid>
           <Grid item xs={6}>
             <Grid container direction="row" alignItems="center" spacing={1}>
-              <Grid item>
+              <Grid item onClick={this.onAuthor} className={classes.pointer}>
                 <Avatar alt={author.displayname} src={author.avatar} className={classes.avatar} />
               </Grid>
-              <Grid item xs={8}>
-                <Typography variant="body2" noWrap>{author.displayname}</Typography>
+              <Grid item xs={8} onClick={this.onAuthor} className={classes.pointer}>
+                <Typography noWrap>{author.displayname}</Typography>
               </Grid>
             </Grid>
           </Grid>
@@ -140,6 +147,7 @@ class Showcase extends Component {
 Showcase.propTypes = {
   author: PropTypes.object.isRequired,
   objects: PropTypes.array.isRequired,
+  on3D: PropTypes.func.isRequired,
 }
 
-export default withStyles(styles)(Showcase);
+export default withRouter(withStyles(styles)(Showcase));

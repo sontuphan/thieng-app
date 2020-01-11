@@ -1,4 +1,7 @@
 export default theme => ({
+  pointer: {
+    cursor: 'pointer'
+  },
   avatar: {
     width: '41px',
     height: '41px',

@@ -64,8 +64,8 @@ class Mall extends Component {
     }
   }
 
-  onColor = (color) => {
-    console.log(color);
+  on3D = () => {
+    console.log('Turn on 3D');
   }
 
   render() {
@@ -74,7 +74,7 @@ class Mall extends Component {
 
     return <Fragment>
       <Grid item xs={12} md={6}>
-        <Showcase author={this.state.author} objects={object.images} />
+        <Showcase author={this.state.author} objects={object.images} on3D={this.on3D} />
       </Grid>
       <Grid item xs={12} md={6}>
         <Drain />
