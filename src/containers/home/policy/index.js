@@ -70,7 +70,9 @@ class Policy extends Component {
               <Typography>Nhiều hơn</Typography>
             </Button>
           </Grid>
-          <Drain />
+          <Grid item xs={12}>
+            <Drain />
+          </Grid>
         </Grid>
       </Grid>
       <Grid item xs={12} md={6}>

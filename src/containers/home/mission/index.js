@@ -80,7 +80,9 @@ class Mission extends Component {
           <Grid item xs={10} md={8}>
             <Typography>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet turpis sed gravida amet. Luctus sed parturient lacus vestibulum nisl neque. Vehicula risus tellus viverra cursus et. Porta arcu tincidunt enim ut platea in amet, at. Aliquet risus sem arcu pretium rutrum. Sit enim nec viverra sapien semper imperdiet. A cursus.</Typography>
           </Grid>
-          <Drain />
+          <Grid item xs={12}>
+            <Drain />
+          </Grid>
         </Grid>
       </Grid>
       <Grid item xs={12} md={6}>

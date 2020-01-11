@@ -20,18 +20,24 @@ class Welcome extends Component {
     return <Fragment>
       <Grid item xs={12} md={6}>
         <Grid container direction="row" justify="center" spacing={2}>
-          <Drain />
+          <Grid item xs={12}>
+            <Drain />
+          </Grid>
           <Grid item xs={10} md={8}>
             <Typography variant="h1">Chào mừng</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
             <Typography>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quam congue leo gravida morbi. Fusce tortor laoreet nunc eu. Scelerisque enim scelerisque velit scelerisque sagittis, cursus posuere viverra. Gravida id mauris nisi et. Laoreet sed quis turpis sit eu enim. Duis etiam hendrerit eu non cras fermentum neque aliquam. Facilisis purus.</Typography>
           </Grid>
-          <Drain />
+          <Grid item xs={12}>
+            <Drain />
+          </Grid>
           <Grid item xs={10} md={8}>
             <Divider />
           </Grid>
-          <Drain />
+          <Grid item xs={12}>
+            <Drain />
+          </Grid>
           <Grid item xs={10} md={8}>
             <Typography variant="h2">Tôi là</Typography>
           </Grid>
@@ -49,7 +55,9 @@ class Welcome extends Component {
               </Grid>
             </Grid>
           </Grid>
-          <Drain />
+          <Grid item xs={12}>
+            <Drain />
+          </Grid>
         </Grid>
       </Grid>
       <Grid item xs={12} md={6}>

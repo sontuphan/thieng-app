@@ -97,11 +97,15 @@ class Mall extends Component {
           <Grid item xs={10} md={8}>
             <Typography>{object.description2}</Typography>
           </Grid>
-          <Drain />
+          <Grid item xs={12}>
+            <Drain />
+          </Grid>
           <Grid item xs={10} md={8}>
             <Typography variant="h1">{object.price} {object.unit}</Typography>
           </Grid>
-          <Drain />
+          <Grid item xs={12}>
+            <Drain />
+          </Grid>
           <Grid item xs={10} md={8}>
             <TextField label="Số lượng" size="small" variant="outlined" color="secondary" value={this.state.amount} fullWidth />
           </Grid>
@@ -121,7 +125,9 @@ class Mall extends Component {
           </Grid>
         </Grid>
       </Grid>
-      <Drain />
+      <Grid item xs={12}>
+        <Drain />
+      </Grid>
     </Fragment>
   }
 }

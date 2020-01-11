@@ -24,7 +24,9 @@ class Contact extends Component {
           <Grid item xs={10} md={8}>
             <Typography>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu vestibulum, lorem felis eget. Gravida auctor risus erat pharetra vel odio molestie mi. Ipsum vitae urna porta amet potenti mi pellentesque eu. Est, integer gravida felis eget dolor turpis vitae adipiscing massa. Nulla adipiscing amet, ipsum mattis amet volutpat ac. Dolor pellentesque volutpat massa nibh tincidunt bibendum a, quisque massa. Duis nulla malesuada vulputate nunc egestas elit habitasse bibendum id. Hendrerit dapibus lectus vel id parturient. At sed porttitor vestibulum commodo, sed quam. Amet.</Typography>
           </Grid>
-          <Drain />
+          <Grid item xs={12}>
+            <Drain />
+          </Grid>
         </Grid>
       </Grid>
       <Grid item xs={12} md={6}>
@@ -55,7 +57,9 @@ class Contact extends Component {
               </Grid>
             </Grid>
           </Grid>
-          <Drain />
+          <Grid item xs={12}>
+            <Drain />
+          </Grid>
         </Grid>
       </Grid>
     </Fragment >
