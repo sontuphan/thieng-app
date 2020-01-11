@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
+import Badge from '@material-ui/core/Badge';
 
 import { ThreeDRotation, ArrowBack, ArrowForward } from '@material-ui/icons';
 
@@ -74,11 +75,14 @@ class Showcase extends Component {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={10}>
-             <img alt={objects[showing].url} 
-             src={objects[showing].url} 
-             height="auto" width="100%" 
-             style={{visibility: objects[showing].type === 'png' ? "unset": "hidden"}}/>
+        <Grid item xs={10} className={classes.imageShelf} style={objects[showing].type === 'png' ? {
+          backgroundImage: `url('${objects[showing].url}')`,
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'contain'
+        } : null}>
+          {/* {objects[showing].type === 'png' ? <img alt={objects[showing].url}
+            src={objects[showing].url} className={classes.image} /> : null} */}
         </Grid>
         <Grid item xs={6}>
           <Grid container direction="row" alignItems="center" spacing={1}>
@@ -98,17 +102,23 @@ class Showcase extends Component {
       <Grid container direction="row" alignItems="center" spacing={2}>
         <Grid item xs={2} md={1}>
           <Grid container justify="flex-start">
-            <IconButton onClick={this.onNext}>
+            <IconButton onClick={this.onBack}>
               <ArrowBack />
             </IconButton>
           </Grid>
         </Grid>
         <Grid item xs={8} md={10}>
-          <SwipeableViews index={showing} onChangeIndex={this.onChange} containerStyle={{ alignItems: "center", transform: `translate(${this.state.translate}%, 0px)` }} slideClassName={classes.slide} enableMouseEvents>
+          <SwipeableViews index={showing} onChangeIndex={this.onChange} containerStyle={{ alignItems: "center", transform: `translate(${this.state.translate}%, 0px)` }} slideClassName={classes.slide}>
             {
               objects.map((object, i) => {
                 return <Grid item key={i}>
-                  <img onClick={() => this.onChange(i)} alt={object.url} src={object.url} className={classes.image} />
+                  <Grid container justify="center">
+                    {this.state.showing === i ? <Badge overlap="circle" variant="dot" color="primary">
+                      <Avatar alt={object.url} src={object.url} onClick={() => this.onChange(i)} />
+                    </Badge>
+                      : <Avatar alt={object.url} src={object.url} onClick={() => this.onChange(i)} />
+                    }
+                  </Grid>
                 </Grid>
               })
             }
@@ -116,7 +126,7 @@ class Showcase extends Component {
         </Grid>
         <Grid item xs={2} md={1}>
           <Grid container justify="flex-end">
-            <IconButton onClick={this.onBack}>
+            <IconButton onClick={this.onNext}>
               <ArrowForward />
             </IconButton>
           </Grid>

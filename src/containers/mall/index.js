@@ -18,9 +18,15 @@ import Showcase from 'components/showcase';
 import styles from './styles';
 import designerImg4 from 'static/images/designer-4.jpg';
 import product from 'static/images/product.png';
+import chair from 'static/images/chair.png';
 import interior1 from 'static/images/interior-1.jpg';
 import interior2 from 'static/images/interior-2.jpg';
 import interior3 from 'static/images/interior-3.jpg';
+import interior4 from 'static/images/interior-4.jpg';
+import interior5 from 'static/images/interior-5.jpg';
+import interior6 from 'static/images/interior-6.jpg';
+import interior7 from 'static/images/interior-7.jpg';
+import interior8 from 'static/images/interior-8.jpg';
 
 class Mall extends Component {
   constructor() {
@@ -42,26 +48,16 @@ class Mall extends Component {
           unit: "vnd",
           tags: ["New", "20%"],
           images: [
-            {
-              url: product,
-              type: 'png',
-              color: "#B28B67"
-            },
-            {
-              url: interior1,
-              type: 'jpg',
-              color: "#915B3C"
-            },
-            {
-              url: interior2,
-              type: 'jpg',
-              color: "#1C1D1A"
-            },
-            {
-              url: interior3,
-              type: 'jpg',
-              color: null
-            }
+            { url: product, type: 'png', color: "#B28B67" },
+            { url: chair, type: 'png', color: "#915B3C" },
+            { url: interior1, type: 'jpg', color: null },
+            { url: interior2, type: 'jpg', color: "#1C1D1A" },
+            { url: interior3, type: 'jpg', color: null },
+            { url: interior4, type: 'jpg', color: null },
+            { url: interior5, type: 'jpg', color: null },
+            { url: interior6, type: 'jpg', color: null },
+            { url: interior7, type: 'jpg', color: null },
+            { url: interior8, type: 'jpg', color: null }
           ]
         }
       ]
