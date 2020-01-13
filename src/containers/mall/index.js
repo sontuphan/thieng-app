@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
@@ -89,7 +89,7 @@ class Mall extends Component {
     // let { classes } = this.props;
     let object = this.state.objects[0];
 
-    return <Fragment>
+    return <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
       <Grid item xs={12} md={6}>
         <Showcase author={this.state.author} objects={object.images} on3D={this.on3D} />
       </Grid>
@@ -145,15 +145,23 @@ class Mall extends Component {
       <Grid item xs={12}>
         <Drain />
       </Grid>
-      <Grid item xs={12}>
-        <Comment user={this.props.auth} comments={this.state.comments} onSend={this.onSend} />
-      </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={10}>
+        <Grid container direction="row" justify="center" spacing={2}>
+          <Grid item xs={12}>
+            <Typography variant="h1">Gợi ý</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            abc
+          </Grid>
+        </Grid>
       </Grid>
       <Grid item xs={12}>
         <Drain />
       </Grid>
-    </Fragment>
+      <Grid item xs={10}>
+        <Comment user={this.props.auth} comments={this.state.comments} onSend={this.onSend} />
+      </Grid>
+    </Grid>
   }
 }
 

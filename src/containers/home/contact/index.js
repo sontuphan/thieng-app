@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
@@ -15,7 +15,7 @@ import styles from './styles';
 
 class Contact extends Component {
   render() {
-    return <Fragment>
+    return <Grid container spacing={2}>
       <Grid item xs={12} md={6}>
         <Grid container direction="row" justify="center" spacing={2}>
           <Grid item xs={10} md={8}>
@@ -57,12 +57,9 @@ class Contact extends Component {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Drain />
-          </Grid>
         </Grid>
       </Grid>
-    </Fragment >
+    </Grid >
   }
 }
 

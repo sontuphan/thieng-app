@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
+import Drain from 'components/drain';
 import Header from 'containers/header';
 import Home from 'containers/home';
 import Mall from 'containers/mall';
@@ -22,12 +23,17 @@ class App extends Component {
       <ThemeProvider theme={theme}>
         <Grid container direction="row" justify="center" spacing={2}>
           <Header />
-          <Switch>
-            <Redirect exact from="/" to="/home" />
-            <Route exact path="/home" component={Home} />
-            <Route exact path="/mall" component={Mall} />
+          <Grid item xs={12}>
+            <Switch>
+              <Redirect exact from="/" to="/home" />
+              <Route exact path="/home" component={Home} />
+              <Route exact path="/mall" component={Mall} />
 
-          </Switch>
+            </Switch>
+          </Grid>
+          <Grid item xs={12}>
+            <Drain large />
+          </Grid>
           <Footer />
         </Grid>
       </ThemeProvider>
