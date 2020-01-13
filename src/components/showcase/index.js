@@ -67,7 +67,7 @@ class Showcase extends Component {
 
     return <Fragment>
       <Swipeable onSwipedLeft={this.onNext} onSwipedRight={this.onBack}>
-        <Grid container spacing={2} justify="center"
+        <Grid container spacing={2} justify="center" alignItems="center"
           style={objects[showing].type !== 'png' ? {
             backgroundImage: `url('${objects[showing].url}')`,
             backgroundPosition: 'center',
@@ -102,7 +102,7 @@ class Showcase extends Component {
             </Grid>
           </Grid>
           <Grid item xs={6}>
-            <ColorSelect colors={objects.map(obj => obj.color).filter(color => color !== null)} onChange={this.onColor} />
+            <ColorSelect colors={objects.map(obj => obj.color).filter(color => color !== null)} value={objects[showing].color} onChange={this.onColor} />
           </Grid>
         </Grid>
         <Drain small />

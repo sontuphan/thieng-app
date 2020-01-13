@@ -17,15 +17,9 @@ import Divider from 'components/divider';
 import styles from './styles';
 
 class Comment extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-    }
-  }
 
   renderInput = (user) => {
-    if (!user) return null;
+    if (!user || !user.isLoggedIn) return null;
 
     let { classes } = this.props;
     return <Grid container spacing={2}>

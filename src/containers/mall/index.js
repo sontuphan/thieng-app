@@ -81,6 +81,10 @@ class Mall extends Component {
     console.log('Turn on 3D');
   }
 
+  onSend = () => {
+    console.log('Submit comment');
+  }
+
   render() {
     // let { classes } = this.props;
     let object = this.state.objects[0];
@@ -142,7 +146,7 @@ class Mall extends Component {
         <Drain />
       </Grid>
       <Grid item xs={12}>
-        <Comment user={this.props.auth} comments={this.state.comments} />
+        <Comment user={this.props.auth} comments={this.state.comments} onSend={this.onSend} />
       </Grid>
       <Grid item xs={12}>
       </Grid>

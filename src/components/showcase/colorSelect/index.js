@@ -10,13 +10,6 @@ import { FiberManualRecord } from '@material-ui/icons';
 import styles from './styles';
 
 class ColorSelect extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      color: props.colors[0]
-    }
-  }
 
   onSelect = (color) => {
     this.setState({ color }, () => {
@@ -29,7 +22,7 @@ class ColorSelect extends Component {
     return <Grid container direction="row" justify="flex-end" alignItems="center" spacing={1}>
       {this.props.colors.map(color => <Grid item key={color}>
         <IconButton size="small" onClick={() => { this.onSelect(color) }}>
-          <FiberManualRecord className={classes.effect} style={{ color }} fontSize={color === this.state.color ? "large" : "small"} />
+          <FiberManualRecord className={classes.effect} style={{ color }} fontSize={color === this.props.value ? "large" : "small"} />
         </IconButton>
       </Grid>)}
     </Grid>
@@ -38,6 +31,7 @@ class ColorSelect extends Component {
 
 ColorSelect.propTypes = {
   colors: PropTypes.array.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 }
 
