@@ -1,3 +1,6 @@
+
+import designerImg1 from 'static/images/designer-1.jpg';
+
 /**
  * Documents
  * @default defaultData
@@ -6,7 +9,17 @@
 const defaultState = {
   displayname: null,
   email: null,
+  link: null,
+  avatar: null,
   isLoggedIn: null
+}
+
+const TEST_DATA = {
+  displayname: 'Thiêng Việt',
+  email: 'thiengviet@gmail.com',
+  link: '/user/thieng-viet',
+  avatar: designerImg1,
+  isLoggedIn: true
 }
 
 /**
@@ -21,12 +34,6 @@ export const logIn = () => {
     return new Promise((resolve, reject) => {
       dispatch({ type: LOG_IN });
 
-      let data = {
-        displayname: 'Thiêng Việt',
-        email: 'thiengviet@gmail.com',
-        isLoggedIn: true
-      }
-
       let random = Math.floor(Math.random() * 10);
       if (random % 2) {
         dispatch({
@@ -40,9 +47,9 @@ export const logIn = () => {
       dispatch({
         type: LOG_IN_OK,
         reason: null,
-        data: data
+        data: TEST_DATA
       });
-      return resolve(data);
+      return resolve(TEST_DATA);
     });
   }
 }
@@ -59,18 +66,12 @@ export const logOut = () => {
     return new Promise((resolve, reject) => {
       dispatch({ type: LOG_OUT });
 
-      let data = {
-        displayname: 'Thiêng Việt',
-        email: 'thiengviet@gmail.com',
-        isLoggedIn: true
-      }
-
       let random = Math.floor(Math.random() * 10);
       if (random % 2) {
         dispatch({
           type: LOG_OUT_FAIL,
           reason: 'Failed connection.',
-          data: data
+          data: TEST_DATA
         });
         return reject('Failed connection.');
       }
@@ -80,7 +81,7 @@ export const logOut = () => {
         reason: null,
         data: { ...defaultState }
       });
-      return resolve(data);
+      return resolve(TEST_DATA);
     });
   }
 }

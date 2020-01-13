@@ -10,12 +10,13 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import { } from '@material-ui/icons';
-
 import Drain from 'components/drain';
 import Showcase from 'components/showcase';
+import Comment from 'components/comment';
 
 import styles from './styles';
+import designerImg2 from 'static/images/designer-2.jpg';
+import designerImg3 from 'static/images/designer-3.jpg';
 import designerImg4 from 'static/images/designer-4.jpg';
 import product from 'static/images/product.png';
 import chair from 'static/images/chair.png';
@@ -23,10 +24,6 @@ import interior1 from 'static/images/interior-1.jpg';
 import interior2 from 'static/images/interior-2.jpg';
 import interior3 from 'static/images/interior-3.jpg';
 import interior4 from 'static/images/interior-4.jpg';
-import interior5 from 'static/images/interior-5.jpg';
-import interior6 from 'static/images/interior-6.jpg';
-import interior7 from 'static/images/interior-7.jpg';
-import interior8 from 'static/images/interior-8.jpg';
 
 class Mall extends Component {
   constructor() {
@@ -54,11 +51,27 @@ class Mall extends Component {
             { url: interior2, type: 'jpg', color: "#1C1D1A" },
             { url: interior3, type: 'jpg', color: null },
             { url: interior4, type: 'jpg', color: null },
-            { url: interior5, type: 'jpg', color: null },
-            { url: interior6, type: 'jpg', color: null },
-            { url: interior7, type: 'jpg', color: null },
-            { url: interior8, type: 'jpg', color: null }
           ]
+        }
+      ],
+      comments: [
+        {
+          user: {
+            displayname: 'Bob',
+            email: 'bob@gmail.com',
+            link: '/user/bob',
+            avatar: designerImg2
+          },
+          comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Felis vel consectetur amet, felis. Ullamcorper est lectus faucibus augue feugiat maecenas sed id. Ornare sit egestas eget luctus aenean malesuada a. Feugiat gravida aenean quam ante purus erat interdum orci. Et vel ut sit ut tristique. In vel fusce suspendisse sit enim aliquam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet turpis sed gravida amet. Luctus sed parturient lacus vestibulum nisl neque. Vehicula risus tellus viverra cursus et. Porta arcu tincidunt enim ut platea in amet, at. Aliquet risus sem arcu pretium rutrum. Sit enim nec viverra sapien semper imperdiet. A cursus."
+        },
+        {
+          user: {
+            displayname: 'Alice',
+            email: 'alice@gmail.com',
+            link: '/user/alice',
+            avatar: designerImg3
+          },
+          comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum urna tempus adipiscing amet dignissim."
         }
       ]
     }
@@ -128,12 +141,20 @@ class Mall extends Component {
       <Grid item xs={12}>
         <Drain />
       </Grid>
+      <Grid item xs={12}>
+        <Comment user={this.props.auth} comments={this.state.comments} />
+      </Grid>
+      <Grid item xs={12}>
+      </Grid>
+      <Grid item xs={12}>
+        <Drain />
+      </Grid>
     </Fragment>
   }
 }
 
 const mapStateToProps = state => ({
-
+  auth: state.auth
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
