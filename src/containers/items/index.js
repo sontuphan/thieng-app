@@ -132,7 +132,7 @@ class Items extends Component {
           <Grid item xs={12}>
             <Drain small />
           </Grid>
-          {this.state.recommendation.map(i => <Grid key={i} item xs={6} md={3} xl={2}>
+          {this.state.recommendation.map(i => <Grid key={i} item xs={6} md={2}>
             <MiniShowcase object={objects[0]} />
           </Grid>)}
           <Grid item xs={12}>
@@ -160,7 +160,7 @@ class Items extends Component {
           <Grid item xs={12}>
             <Drain small />
           </Grid>
-          {this.state.recommendation.map(i => <Grid key={i} item xs={6} md={3} xl={2}>
+          {this.state.recommendation.map(i => <Grid key={i} item xs={6} md={2}>
             <MiniShowcase object={objects[1]} />
           </Grid>)}
           <Grid item xs={12}>

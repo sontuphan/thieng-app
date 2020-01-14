@@ -14,6 +14,11 @@ import Divider from 'components/divider';
 import styles from './styles';
 
 class Welcome extends Component {
+
+  redirect = (to) => {
+    this.props.history.push(to);
+  }
+
   render() {
     return <Grid container direction="row" justify="center" spacing={2}>
       <Grid item xs={10} md={8}>
@@ -37,12 +42,12 @@ class Welcome extends Component {
       <Grid item xs={10} md={8}>
         <Grid container direction="row" spacing={2}>
           <Grid item xs={6}>
-            <Button variant="contained" color="primary" size="large" fullWidth>
+            <Button onClick={() => this.redirect('/design')} variant="contained" color="primary" size="large" fullWidth>
               <Typography>Nhà thiết kế</Typography>
             </Button>
           </Grid>
           <Grid item xs={6}>
-            <Button variant="contained" color="primary" size="large" fullWidth>
+            <Button onClick={() => this.redirect('/mall')} variant="contained" color="primary" size="large" fullWidth>
               <Typography>Khách hàng</Typography>
             </Button>
           </Grid>
