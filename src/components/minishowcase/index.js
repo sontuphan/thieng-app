@@ -17,20 +17,24 @@ class MiniShowcase extends Component {
     let image = object.images[random];
     return <Grid container direction="row" justify="center" spacing={1}>
       <Grid item xs={12}>
-        <div className={classes.image}
-          style={image.type !== 'png' ? {
-            backgroundImage: `url('${image.url}')`,
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover'
-          } : null}>
-          <div className={classes.imageShelf}
-            style={image.type === 'png' ? {
-              backgroundImage: `url('${image.url}')`,
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'contain'
-            } : null} />
+        <div className={classes.image}>
+          {image.type !== 'png' ?
+            <div className={classes.imageJPG}
+              style={{
+                backgroundImage: `url('${image.url}')`,
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover'
+              }} />
+            :
+            <div className={classes.imagePNG}
+              style={{
+                backgroundImage: `url('${image.url}')`,
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'contain'
+              }} />
+          }
         </div>
       </Grid>
       <Grid item xs={12}>
@@ -42,7 +46,7 @@ class MiniShowcase extends Component {
           }
         </Grid>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} className={classes.cursor}>
         <Typography>{object.name}</Typography>
         <Typography variant="h3">{object.price} {object.unit}</Typography>
       </Grid>
