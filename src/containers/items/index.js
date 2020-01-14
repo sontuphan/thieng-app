@@ -5,17 +5,14 @@ import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 
 import { ArrowForwardIos } from '@material-ui/icons';
 
 import Drain from 'components/drain';
-import Showcase from 'components/showcase';
 import MiniShowcase from 'components/minishowcase';
-import Comment from 'components/comment';
+import Divider from 'components/divider';
 
 import styles from './styles';
 import designerImg2 from 'static/images/designer-2.jpg';
@@ -34,13 +31,12 @@ import interior6 from 'static/images/interior-6.jpg';
 import interior7 from 'static/images/interior-7.jpg';
 import interior8 from 'static/images/interior-8.jpg';
 
-class Item extends Component {
+class Items extends Component {
   constructor() {
     super();
 
     this.state = {
-      amount: 1,
-      recommendation: [0, 1, 2, 3, 4, 5],
+      recommendation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
       objects: [
         {
           id: 1,
@@ -108,18 +104,10 @@ class Item extends Component {
     }
   }
 
-  on3D = () => {
-    console.log('Turn on 3D');
-  }
-
-  onSend = () => {
-    console.log('Submit comment');
-  }
-
   onMore = () => {
     let recommendation = JSON.parse(JSON.stringify(this.state.recommendation));
     let last = recommendation[recommendation.length - 1];
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 12; i++) {
       recommendation.push(last + i + 1);
     }
     this.setState({ recommendation });
@@ -130,52 +118,28 @@ class Item extends Component {
     let { objects } = this.state;
 
     return <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
-      <Grid item xs={12} md={6}>
-        <Showcase author={objects[0].author} objects={objects[0].images} on3D={this.on3D} />
-      </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12}>
         <Drain />
+      </Grid>
+      <Grid item xs={10}>
         <Grid container direction="row" justify="center" spacing={2}>
-          <Grid item xs={10} md={8}>
-            <Grid container spacing={1}>
-              {
-                objects[0].tags.map(tag => <Grid item key={tag}>
-                  <Chip color="primary" label={tag} size="small" />
-                </Grid>)
-              }
-            </Grid>
-          </Grid>
-          <Grid item xs={10} md={8}>
-            <Typography variant="h1">{objects[0].name}</Typography>
-          </Grid>
-          <Grid item xs={10} md={8}>
-            <Typography>{objects[0].description1}</Typography>
-          </Grid>
-          <Grid item xs={10} md={8}>
-            <Typography>{objects[0].description2}</Typography>
+          <Grid item xs={12}>
+            <Typography variant="h1">Bàn</Typography>
           </Grid>
           <Grid item xs={12}>
-            <Drain />
-          </Grid>
-          <Grid item xs={10} md={8}>
-            <Typography variant="h1">{objects[0].price} {objects[0].unit}</Typography>
+            <Divider />
           </Grid>
           <Grid item xs={12}>
-            <Drain />
+            <Drain small />
           </Grid>
-          <Grid item xs={10} md={8}>
-            <TextField label="Số lượng" size="small" variant="outlined" color="secondary" value={this.state.amount} fullWidth />
-          </Grid>
-          <Grid item xs={10} md={8}>
-            <Grid container direction="row" spacing={2}>
-              <Grid item xs={6}>
-                <Button variant="contained" color="primary" size="large" fullWidth>
-                  <Typography>Mua</Typography>
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Button variant="contained" color="secondary" size="large" fullWidth>
-                  <Typography>Huỷ</Typography>
+          {this.state.recommendation.map(i => <Grid key={i} item xs={4} md={2} xl={1}>
+            <MiniShowcase object={objects[0]} />
+          </Grid>)}
+          <Grid item xs={12}>
+            <Grid container direction="row" justify="flex-end" spacing={2}>
+              <Grid item>
+                <Button variant="outlined" color="primary" size="large" endIcon={<ArrowForwardIos />} onClick={this.onMore}>
+                  <Typography>Nhiều hơn</Typography>
                 </Button>
               </Grid>
             </Grid>
@@ -188,7 +152,10 @@ class Item extends Component {
       <Grid item xs={10}>
         <Grid container direction="row" justify="center" spacing={2}>
           <Grid item xs={12}>
-            <Typography variant="h1">Gợi ý</Typography>
+            <Typography variant="h1">Ghế</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
           </Grid>
           <Grid item xs={12}>
             <Drain small />
@@ -210,9 +177,6 @@ class Item extends Component {
       <Grid item xs={12}>
         <Drain />
       </Grid>
-      <Grid item xs={10}>
-        <Comment user={this.props.auth} comments={objects[0].comments} onSend={this.onSend} />
-      </Grid>
     </Grid>
   }
 }
@@ -228,4 +192,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Item)));
+)(withStyles(styles)(Items)));
