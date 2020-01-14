@@ -191,7 +191,7 @@ class Mall extends Component {
           <Grid item xs={12}>
             <Drain small />
           </Grid>
-          {this.state.recommendation.map(i => <Grid key={i} item xs={4} md={2}>
+          {this.state.recommendation.map(i => <Grid key={i} item xs={4} md={2} xl={1}>
             <MiniShowcase object={objects[1]} />
           </Grid>)}
           <Grid item xs={12}>
