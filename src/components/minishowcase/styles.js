@@ -9,6 +9,9 @@ export default theme => ({
     '&:hover': {
       transform: 'scale(1.05)'
     },
+    '&:active': {
+      transform: 'scale(1.05)'
+    },
     overflow: 'hidden',
     cursor: 'pointer',
   },
@@ -21,6 +24,9 @@ export default theme => ({
     transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
     '&:hover': {
       transform: 'scale(1.075)'
+    },
+    '&:active': {
+      transform: 'scale(1.075)'
     }
   },
   imagePNG: {
@@ -32,6 +38,9 @@ export default theme => ({
     margin: theme.spacing(2),
     transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
     '&:hover': {
+      transform: 'scale(1.075)'
+    },
+    '&:active': {
       transform: 'scale(1.075)'
     }
   },
