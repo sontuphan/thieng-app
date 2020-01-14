@@ -43,6 +43,7 @@ class Mall extends Component {
       recommendation: [0, 1, 2, 3, 4, 5],
       objects: [
         {
+          id: "1287154961",
           name: "Tellus lacus vitae nisl.",
           description1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sem amet sem mus in in fermentum gravida id luctus.",
           description2: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum urna tempus adipiscing amet dignissim.",
@@ -82,6 +83,7 @@ class Mall extends Component {
             }
           ]
         }, {
+          id: "1187334161",
           name: "Elementum urna tempus.",
           description1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sem amet sem mus in in fermentum gravida id luctus.",
           description2: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum urna tempus adipiscing amet dignissim.",

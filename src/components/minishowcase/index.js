@@ -11,13 +11,17 @@ import styles from './styles';
 
 class MiniShowcase extends Component {
 
+  onView = () => {
+    this.props.history.push('/mall/' + this.props.object.id);
+  }
+
   render() {
     let { classes, object } = this.props;
     let random = Math.floor(Math.random() * object.images.length);
     let image = object.images[random];
     return <Grid container direction="row" justify="center" spacing={1}>
       <Grid item xs={12}>
-        <div className={classes.image}>
+        <div className={classes.image} onClick={this.onView}>
           {image.type !== 'png' ?
             <div className={classes.imageJPG}
               style={{
@@ -46,7 +50,7 @@ class MiniShowcase extends Component {
           }
         </Grid>
       </Grid>
-      <Grid item xs={12} className={classes.cursor}>
+      <Grid item xs={12} className={classes.cursor} onClick={this.onView}>
         <Typography>{object.name}</Typography>
         <Typography variant="h3">{object.price} {object.unit}</Typography>
       </Grid>

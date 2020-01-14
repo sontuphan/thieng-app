@@ -20,7 +20,7 @@ export default theme => ({
     height: '100%',
     transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
     '&:hover': {
-      transform: 'scale(1.1)'
+      transform: 'scale(1.075)'
     }
   },
   imagePNG: {
@@ -32,7 +32,7 @@ export default theme => ({
     margin: theme.spacing(2),
     transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
     '&:hover': {
-      transform: 'scale(1.1)'
+      transform: 'scale(1.075)'
     }
   },
   cursor: {
