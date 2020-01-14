@@ -34,7 +34,7 @@ import interior6 from 'static/images/interior-6.jpg';
 import interior7 from 'static/images/interior-7.jpg';
 import interior8 from 'static/images/interior-8.jpg';
 
-class Mall extends Component {
+class Item extends Component {
   constructor() {
     super();
 
@@ -228,4 +228,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Mall)));
+)(withStyles(styles)(Item)));
