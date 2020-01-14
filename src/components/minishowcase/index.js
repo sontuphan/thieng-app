@@ -7,6 +7,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 
+import Drain from 'components/drain';
+
 import styles from './styles';
 
 class MiniShowcase extends Component {
@@ -53,6 +55,9 @@ class MiniShowcase extends Component {
       <Grid item xs={12} className={classes.cursor} onClick={this.onView}>
         <Typography>{object.name}</Typography>
         <Typography variant="h3">{object.price} {object.unit}</Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Drain small />
       </Grid>
     </Grid>
   }

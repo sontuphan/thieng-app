@@ -36,7 +36,7 @@ class Items extends Component {
     super();
 
     this.state = {
-      recommendation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+      recommendation: [0, 1, 2, 3, 4, 5,],
       objects: [
         {
           id: 1,
@@ -107,7 +107,7 @@ class Items extends Component {
   onMore = () => {
     let recommendation = JSON.parse(JSON.stringify(this.state.recommendation));
     let last = recommendation[recommendation.length - 1];
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 6; i++) {
       recommendation.push(last + i + 1);
     }
     this.setState({ recommendation });
@@ -122,7 +122,7 @@ class Items extends Component {
         <Drain />
       </Grid>
       <Grid item xs={10}>
-        <Grid container direction="row" justify="center" spacing={2}>
+        <Grid container direction="row" spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h1">Bàn</Typography>
           </Grid>
@@ -132,7 +132,7 @@ class Items extends Component {
           <Grid item xs={12}>
             <Drain small />
           </Grid>
-          {this.state.recommendation.map(i => <Grid key={i} item xs={4} md={2} xl={1}>
+          {this.state.recommendation.map(i => <Grid key={i} item xs={6} md={3} xl={2}>
             <MiniShowcase object={objects[0]} />
           </Grid>)}
           <Grid item xs={12}>
@@ -150,7 +150,7 @@ class Items extends Component {
         <Drain />
       </Grid>
       <Grid item xs={10}>
-        <Grid container direction="row" justify="center" spacing={2}>
+        <Grid container direction="row" spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h1">Ghế</Typography>
           </Grid>
@@ -160,7 +160,7 @@ class Items extends Component {
           <Grid item xs={12}>
             <Drain small />
           </Grid>
-          {this.state.recommendation.map(i => <Grid key={i} item xs={4} md={2} xl={1}>
+          {this.state.recommendation.map(i => <Grid key={i} item xs={6} md={3} xl={2}>
             <MiniShowcase object={objects[1]} />
           </Grid>)}
           <Grid item xs={12}>
@@ -173,9 +173,6 @@ class Items extends Component {
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-      <Grid item xs={12}>
-        <Drain />
       </Grid>
     </Grid>
   }
