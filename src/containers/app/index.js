@@ -19,25 +19,23 @@ import 'static/styles/index.css';
 class App extends Component {
 
   render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <Grid container direction="row" justify="center" spacing={2}>
-          <Header />
-          <Grid item xs={12}>
-            <Switch>
-              <Redirect exact from="/" to="/home" />
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/mall" component={Mall} />
+    return <ThemeProvider theme={theme}>
+      <Grid container direction="row" justify="center" spacing={2}>
+        <Header />
+        <Grid item xs={12}>
+          <Switch>
+            <Redirect exact from="/" to="/home" />
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/mall" component={Mall} />
 
-            </Switch>
-          </Grid>
-          <Grid item xs={12}>
-            <Drain large />
-          </Grid>
-          <Footer />
+          </Switch>
         </Grid>
-      </ThemeProvider>
-    );
+        <Grid item xs={12}>
+          <Drain large />
+        </Grid>
+        <Footer />
+      </Grid>
+    </ThemeProvider>
   }
 }
 

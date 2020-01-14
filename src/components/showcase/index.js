@@ -89,8 +89,7 @@ class Showcase extends Component {
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain'
-          } : null}>
-          </Grid>
+          } : null} />
           <Grid item xs={6}>
             <Grid container direction="row" alignItems="center" spacing={1}>
               <Grid item onClick={this.onAuthor} className={classes.pointer}>
