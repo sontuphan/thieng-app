@@ -7,10 +7,10 @@ export default theme => ({
     position: 'relative',
     transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
     '&:hover': {
-      transform: 'scale(1.05)'
+      transform: 'scale(1.04)'
     },
     '&:active': {
-      transform: 'scale(1.05)'
+      transform: 'scale(1.04)'
     },
     overflow: 'hidden',
     cursor: 'pointer',
@@ -23,10 +23,10 @@ export default theme => ({
     height: '100%',
     transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
     '&:hover': {
-      transform: 'scale(1.075)'
+      transform: 'scale(1.06)'
     },
     '&:active': {
-      transform: 'scale(1.075)'
+      transform: 'scale(1.06)'
     }
   },
   imagePNG: {
@@ -38,10 +38,10 @@ export default theme => ({
     margin: theme.spacing(2),
     transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
     '&:hover': {
-      transform: 'scale(1.075)'
+      transform: 'scale(1.06)'
     },
     '&:active': {
-      transform: 'scale(1.075)'
+      transform: 'scale(1.06)'
     }
   },
   cursor: {
