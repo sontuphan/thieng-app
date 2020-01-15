@@ -26,7 +26,7 @@ class Mall extends Component {
     return <Fragment>
       <Switch>
         <Route exact path="/mall" component={Items} />
-        <Route exact path="/mall/:item" component={Item} />
+        <Route exact path="/mall/:id" component={Item} />
       </Switch>
     </Fragment>
   }

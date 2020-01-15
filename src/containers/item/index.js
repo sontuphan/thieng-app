@@ -17,6 +17,8 @@ import Showcase from 'components/showcase';
 import MiniShowcase from 'components/minishowcase';
 import Comment from 'components/comment';
 
+import utils from 'helpers/utils';
+
 import styles from './styles';
 import designerImg2 from 'static/images/designer-2.jpg';
 import designerImg3 from 'static/images/designer-3.jpg';
@@ -41,9 +43,10 @@ class Item extends Component {
     this.state = {
       amount: 1,
       recommendation: [0, 1, 2, 3, 4, 5],
+      showing: 0,
       objects: [
         {
-          id: 1,
+          id: 0,
           name: "Tellus lacus vitae nisl.",
           description1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sem amet sem mus in in fermentum gravida id luctus.",
           description2: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum urna tempus adipiscing amet dignissim.",
@@ -83,7 +86,7 @@ class Item extends Component {
             }
           ]
         }, {
-          id: 2,
+          id: 1,
           name: "Elementum urna tempus.",
           description1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sem amet sem mus in in fermentum gravida id luctus.",
           description2: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum urna tempus adipiscing amet dignissim.",
@@ -102,9 +105,47 @@ class Item extends Component {
             avatar: designerImg4,
             link: '/artist/remy-sharp'
           },
-          comments: null
+          comments: [
+            {
+              user: {
+                displayname: 'Bob',
+                email: 'bob@gmail.com',
+                link: '/user/bob',
+                avatar: designerImg2
+              },
+              comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Felis vel consectetur amet, felis. Ullamcorper est lectus faucibus augue feugiat maecenas sed id. Ornare sit egestas eget luctus aenean malesuada a. Feugiat gravida aenean quam ante purus erat interdum orci. Et vel ut sit ut tristique. In vel fusce suspendisse sit enim aliquam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet turpis sed gravida amet. Luctus sed parturient lacus vestibulum nisl neque. Vehicula risus tellus viverra cursus et. Porta arcu tincidunt enim ut platea in amet, at. Aliquet risus sem arcu pretium rutrum. Sit enim nec viverra sapien semper imperdiet. A cursus."
+            },
+            {
+              user: {
+                displayname: 'Alice',
+                email: 'alice@gmail.com',
+                link: '/user/alice',
+                avatar: designerImg3
+              },
+              comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum urna tempus adipiscing amet dignissim."
+            }
+          ]
         }
       ],
+    }
+  }
+
+  handleId = () => {
+    let { match: { params: { id } } } = this.props;
+    id = Number(id)
+    if (typeof id !== 'number') id = 0;
+    this.setState({ showing: id }, () => {
+      utils.scrollTop();
+    });
+  }
+
+  componentDidMount() {
+    this.handleId();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (JSON.stringify(prevProps.match) !== JSON.stringify(this.props.match)) {
+      this.handleId();
     }
   }
 
@@ -127,11 +168,11 @@ class Item extends Component {
 
   render() {
     // let { classes } = this.props;
-    let { objects } = this.state;
+    let { objects, showing } = this.state;
 
     return <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
       <Grid item xs={12} md={6}>
-        <Showcase author={objects[0].author} objects={objects[0].images} on3D={this.on3D} />
+        <Showcase author={objects[showing].author} objects={objects[showing].images} on3D={this.on3D} />
       </Grid>
       <Grid item xs={12} md={6}>
         <Drain />
@@ -139,26 +180,26 @@ class Item extends Component {
           <Grid item xs={10} md={8}>
             <Grid container spacing={1}>
               {
-                objects[0].tags.map(tag => <Grid item key={tag}>
+                objects[showing].tags.map(tag => <Grid item key={tag}>
                   <Chip color="primary" label={tag} size="small" />
                 </Grid>)
               }
             </Grid>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography variant="h1">{objects[0].name}</Typography>
+            <Typography variant="h1">{objects[showing].name}</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography>{objects[0].description1}</Typography>
+            <Typography>{objects[showing].description1}</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography>{objects[0].description2}</Typography>
+            <Typography>{objects[showing].description2}</Typography>
           </Grid>
           <Grid item xs={12}>
             <Drain />
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography variant="h1">{objects[0].price} {objects[0].unit}</Typography>
+            <Typography variant="h1">{objects[showing].price} {objects[showing].unit}</Typography>
           </Grid>
           <Grid item xs={12}>
             <Drain />
@@ -194,7 +235,7 @@ class Item extends Component {
             <Drain small />
           </Grid>
           {this.state.recommendation.map(i => <Grid key={i} item xs={4} md={2} xl={1}>
-            <MiniShowcase object={objects[1]} />
+            <MiniShowcase object={objects[1 - showing]} />
           </Grid>)}
           <Grid item xs={12}>
             <Grid container direction="row" justify="flex-end" spacing={2}>
@@ -211,7 +252,7 @@ class Item extends Component {
         <Drain />
       </Grid>
       <Grid item xs={10}>
-        <Comment user={this.props.auth} comments={objects[0].comments} onSend={this.onSend} />
+        <Comment user={this.props.auth} comments={objects[showing].comments} onSend={this.onSend} />
       </Grid>
     </Grid>
   }

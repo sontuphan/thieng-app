@@ -39,7 +39,7 @@ class Items extends Component {
       recommendation: [0, 1, 2, 3, 4, 5,],
       objects: [
         {
-          id: 1,
+          id: 0,
           name: "Tellus lacus vitae nisl.",
           description1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sem amet sem mus in in fermentum gravida id luctus.",
           description2: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum urna tempus adipiscing amet dignissim.",
@@ -79,7 +79,7 @@ class Items extends Component {
             }
           ]
         }, {
-          id: 2,
+          id: 1,
           name: "Elementum urna tempus.",
           description1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sem amet sem mus in in fermentum gravida id luctus.",
           description2: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum urna tempus adipiscing amet dignissim.",
@@ -98,7 +98,26 @@ class Items extends Component {
             avatar: designerImg4,
             link: '/artist/remy-sharp'
           },
-          comments: null
+          comments: [
+            {
+              user: {
+                displayname: 'Bob',
+                email: 'bob@gmail.com',
+                link: '/user/bob',
+                avatar: designerImg2
+              },
+              comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Felis vel consectetur amet, felis. Ullamcorper est lectus faucibus augue feugiat maecenas sed id. Ornare sit egestas eget luctus aenean malesuada a. Feugiat gravida aenean quam ante purus erat interdum orci. Et vel ut sit ut tristique. In vel fusce suspendisse sit enim aliquam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet turpis sed gravida amet. Luctus sed parturient lacus vestibulum nisl neque. Vehicula risus tellus viverra cursus et. Porta arcu tincidunt enim ut platea in amet, at. Aliquet risus sem arcu pretium rutrum. Sit enim nec viverra sapien semper imperdiet. A cursus."
+            },
+            {
+              user: {
+                displayname: 'Alice',
+                email: 'alice@gmail.com',
+                link: '/user/alice',
+                avatar: designerImg3
+              },
+              comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum urna tempus adipiscing amet dignissim."
+            }
+          ]
         }
       ],
     }

@@ -1,2 +1,6 @@
 @import "./link.css";
 @import "./animate.css";
+
+html {
+  scroll-behavior: smooth;
+}
