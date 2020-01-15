@@ -15,7 +15,8 @@ export default theme => ({
   },
   imageShelf: {
     height: '500px',
-    lineHeight: '500px'
+    lineHeight: '500px',
+    filter: 'drop-shadow(6px 12px 8px rgba(0, 0, 0, 0.48)) drop-shadow(6px 12px 4px rgba(0, 0, 0, 0.24))',
   },
   image: {
     maxWidth: '100%',
