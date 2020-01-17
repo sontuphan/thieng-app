@@ -35,7 +35,7 @@ class Header extends Component {
       user: {},
       visible: false,
       routes: [
-        { text: "Thiết kế", link: '/design' },
+        { text: "Bảng tin", link: '/newsfeed' },
         { text: "Siêu thị", link: '/mall' },
         // { text: "Đối tác", link: '/partner' },
         { text: "Liên hệ", link: '/contact' },
@@ -89,7 +89,8 @@ class Header extends Component {
           </Badge>}>
           <Typography>Giỏ hàng</Typography>
         </Button>
-        <Button variant="outlined" size="small" startIcon={<Person />}>
+        <Button variant="outlined" size="small" startIcon={<Person />}
+          onClick={() => this.redirect('/user/remy-sharp')}>
           <Typography>Cá nhân</Typography>
         </Button>
         <Button variant="outlined" size="small" onClick={this.props.logOut}>

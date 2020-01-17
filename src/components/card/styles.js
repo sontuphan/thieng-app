@@ -1,4 +1,8 @@
 export default theme => ({
+  link: {
+    width: '100%',
+    height: '100%'
+  },
   card: {
     padding: theme.spacing(2),
     width: `calc(100% - ${theme.spacing(4)}px)`,

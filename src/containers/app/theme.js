@@ -9,11 +9,13 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: [
+      '"Open Sans"',
+      'sans-serif',
+      '"Playfair Display"',
+      'serif',
       '-apple-system',
       'BlinkMacSystemFont',
       '"Segoe UI"',
-      '"Playfair Display"',
-      'serif',
       '"Apple Color Emoji"',
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
