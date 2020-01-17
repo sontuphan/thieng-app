@@ -11,12 +11,26 @@ import Drain from 'components/drain';
 import Header from 'containers/header';
 import Home from 'containers/home';
 import Mall from 'containers/mall';
+import User from 'containers/user';
 import Footer from 'containers/footer';
 
 import theme from './theme';
 import 'static/styles/index.css';
 
+import { setScreen } from 'modules/ui.reducer';
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    props.setScreen(window.innerWidth);
+  }
+
+  componentDidMount() {
+    window.onresize = () => {
+      this.props.setScreen(window.innerWidth);
+    }
+  }
 
   render() {
     return <ThemeProvider theme={theme}>
@@ -27,6 +41,7 @@ class App extends Component {
             <Redirect exact from="/" to="/home" />
             <Route exact path="/home" component={Home} />
             <Route path="/mall" component={Mall} />
+            <Route exact path="/user/:id" component={User} />
 
           </Switch>
         </Grid>
@@ -40,11 +55,11 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-
+  ui: state.ui,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-
+  setScreen,
 }, dispatch);
 
 export default withRouter(connect(

@@ -21,25 +21,24 @@ import utils from 'helpers/utils';
 
 import styles from './styles';
 
+const DEFAULT_STATE = {
+  amount: 1,
+  recommendation: [0, 1, 2, 3, 4, 5],
+  showing: 0,
+  objects: utils.dummy(),
+}
 class Item extends Component {
   constructor() {
     super();
 
-    this.state = {
-      amount: 1,
-      recommendation: [0, 1, 2, 3, 4, 5],
-      showing: 0,
-      objects: utils.dummy(),
-    }
+    this.state = { ...DEFAULT_STATE }
   }
 
   handleId = () => {
     let { match: { params: { id } } } = this.props;
     id = Number(id)
     if (typeof id !== 'number') id = 0;
-    this.setState({ showing: id }, () => {
-      utils.scrollTop();
-    });
+    this.setState({ ...DEFAULT_STATE, showing: id });
   }
 
   componentDidMount() {

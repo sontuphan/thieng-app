@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -14,7 +13,7 @@ import styles from './styles';
 class MiniShowcase extends Component {
 
   onView = () => {
-    this.props.history.push('/mall/' + this.props.object.id);
+    window.open('/mall/' + this.props.object.id, '_blank');
   }
 
   render() {
@@ -67,4 +66,4 @@ MiniShowcase.propTypes = {
   object: PropTypes.object.isRequired,
 }
 
-export default withRouter(withStyles(styles)(MiniShowcase));
+export default withStyles(styles)(MiniShowcase);

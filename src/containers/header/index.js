@@ -27,11 +27,11 @@ import { search } from 'modules/search.reducer';
 import { logIn, logOut } from 'modules/auth.reducer';
 
 class Header extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      matches: window.innerWidth >= 960,
+      matches: props.ui.width >= 960,
       user: {},
       visible: false,
       routes: [
@@ -45,16 +45,12 @@ class Header extends Component {
     }
   }
 
-  componentDidMount() {
-    // md : min-width 960px
-    window.onresize = () => {
-      this.setState({ matches: window.innerWidth >= 960 })
-    }
-  }
-
   componentDidUpdate(prevProps) {
     if (JSON.stringify(prevProps.auth) !== JSON.stringify(this.props.auth)) {
       this.setState({ user: this.props.auth });
+    }
+    if (JSON.stringify(prevProps.ui) !== JSON.stringify(this.props.ui)) {
+      this.setState({ matches: this.props.ui.width >= 960 })
     }
   }
 
@@ -194,6 +190,7 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
+  ui: state.ui,
   auth: state.auth
 });
 

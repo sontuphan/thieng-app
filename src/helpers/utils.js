@@ -38,11 +38,12 @@ Utils.dummy = () => {
         { url: interior2, type: 'jpg', color: "#1C1D1A" },
         { url: interior3, type: 'jpg', color: null },
         { url: interior4, type: 'jpg', color: null },
+        { url: interior5, type: 'jpg', color: null },
       ],
       author: {
         displayname: "Remy Sharp lajsdb asnbli asdbkl",
         avatar: designerImg4,
-        link: '/artist/remy-sharp'
+        link: '/user/remy-sharp'
       },
       comments: [
         {
@@ -74,15 +75,14 @@ Utils.dummy = () => {
       tags: ["Best Seller", "25%", "Artist Choice"],
       images: [
         { url: chair, type: 'png', color: "#1C1D1A" },
-        { url: interior5, type: 'jpg', color: "#B28B67" },
-        { url: interior6, type: 'jpg', color: "#915B3C" },
-        { url: interior7, type: 'jpg', color: null },
+        { url: interior6, type: 'jpg', color: "#B28B67" },
+        { url: interior7, type: 'jpg', color: "#915B3C" },
         { url: interior8, type: 'jpg', color: null },
       ],
       author: {
         displayname: "Remy Sharp",
         avatar: designerImg4,
-        link: '/artist/remy-sharp'
+        link: '/user/remy-sharp'
       },
       comments: [
         {
