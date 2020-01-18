@@ -111,7 +111,7 @@ class User extends Component {
           {
             this.state.menu.map(
               (card, i) => <Grid key={i} item xs={10} md={2}>
-                <Card {...card} width={this.props.ui.width} />
+                <Card {...card} width={this.props.ui.width} disable />
               </Grid>
             )
           }

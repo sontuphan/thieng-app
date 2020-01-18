@@ -1,7 +1,9 @@
 export default theme => ({
-  link: {
-    width: '100%',
-    height: '100%'
+  disbaleCard: {
+    padding: theme.spacing(2),
+    width: `calc(100% - ${theme.spacing(4)}px)`,
+    filter: 'grayscale(100%)',
+    cursor: 'not-allowed',
   },
   card: {
     padding: theme.spacing(2),

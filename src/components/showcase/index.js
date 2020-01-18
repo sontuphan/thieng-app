@@ -60,7 +60,7 @@ class Showcase extends Component {
 
   onAuthor = () => {
     let { author } = this.props;
-    window.open(author.link, '_blank');
+    this.props.history.push(author.link);
   }
 
   render() {
