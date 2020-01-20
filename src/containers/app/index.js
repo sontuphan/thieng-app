@@ -41,8 +41,7 @@ class App extends Component {
             <Redirect exact from="/" to="/home" />
             <Route exact path="/home" component={Home} />
             <Route path="/mall" component={Mall} />
-            <Route exact path="/user/:id" component={User} />
-
+            <Route exact path="/user/:code" component={User} />
           </Switch>
         </Grid>
         <Grid item xs={12}>

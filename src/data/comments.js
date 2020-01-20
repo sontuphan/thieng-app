@@ -6,28 +6,28 @@ const CommentSchema = [
     id: 0,
     item: 0,
     user: 1,
-    comment: loremIpsum(),
+    comment: loremIpsum({ units: "paragraphs" }),
     createdAt: dateformat()
   },
   {
     id: 1,
     item: 0,
     user: 2,
-    comment: loremIpsum(),
+    comment: loremIpsum({ units: "paragraphs" }),
     createdAt: dateformat()
   },
   {
     id: 2,
     item: 1,
     user: 1,
-    comment: loremIpsum(),
+    comment: loremIpsum({ units: "paragraphs" }),
     createdAt: dateformat()
   },
   {
     id: 3,
     item: 1,
     user: 2,
-    comment: loremIpsum(),
+    comment: loremIpsum({ units: "paragraphs" }),
     createdAt: dateformat()
   }
 ]

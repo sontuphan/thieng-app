@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import dateformat from 'dateformat';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -14,8 +13,6 @@ import { Favorite, Message, Bookmark } from '@material-ui/icons';
 import Comment from 'components/comment';
 import Drain from 'components/drain';
 
-import utils from 'helpers/utils';
-
 import styles from './styles';
 
 class Project extends Component {
@@ -26,7 +23,7 @@ class Project extends Component {
 
   render() {
     let { classes } = this.props;
-    let { status, imgs, author } = this.props;
+    let { author, project, comments } = this.props;
 
     return <Grid container spacing={2}>
       <Grid item xs={12} md={6}>
@@ -47,14 +44,14 @@ class Project extends Component {
                 <Grid item xs={12}>
                   <Grid container justify="flex-end" alignItems="center" spacing={2}>
                     <Grid item>
-                      <Typography>{dateformat()}</Typography>
+                      <Typography>{project.createdAt}</Typography>
                     </Grid>
                   </Grid>
                 </Grid>
                 <Grid item xs={12}>
                   <Grid container spacing={2}>
                     <Grid item>
-                      <Typography>{status}</Typography>
+                      <Typography>{project.status}</Typography>
                     </Grid>
                   </Grid>
                 </Grid>
@@ -63,7 +60,7 @@ class Project extends Component {
                     <Grid item xs={12}>
                       <div className={classes.image}
                         style={{
-                          backgroundImage: `url('${imgs[0]}')`,
+                          backgroundImage: `url('${project.images[0]}')`,
                           backgroundPosition: 'center top',
                           backgroundRepeat: 'no-repeat',
                           backgroundSize: 'cover'
@@ -98,7 +95,7 @@ class Project extends Component {
       <Grid item xs={12} md={6}>
         <Grid container justify="center" spacing={2}>
           <Grid item xs={12} md={8}>
-            <Comment user={this.props.auth} comments={utils.dummy()[0].comments} onSend={this.onSend} />
+            <Comment user={this.props.auth} comments={comments} onSend={this.onSend} />
           </Grid>
         </Grid>
       </Grid>
@@ -112,8 +109,8 @@ class Project extends Component {
 
 Project.propTypes = {
   author: PropTypes.object.isRequired,
-  status: PropTypes.string.isRequired,
-  imgs: PropTypes.array.isRequired,
+  project: PropTypes.object.isRequired,
+  comments: PropTypes.array.isRequired,
   auth: PropTypes.object.isRequired,
 }
 

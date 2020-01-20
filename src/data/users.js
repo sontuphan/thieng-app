@@ -5,7 +5,8 @@ import designerImg4 from 'static/images/designer-4.jpg';
 const UserSchema = [
   {
     id: 0,
-    displayname: "Remy Junior Sharpionica",
+    displayname: "Remy Sharp",
+    code: 'remy-sharp',
     email: 'remy@gmail.com',
     avatar: designerImg4,
     link: '/user/remy-sharp',
@@ -13,6 +14,7 @@ const UserSchema = [
   {
     id: 1,
     displayname: 'Bob',
+    code: 'bob',
     email: 'bob@gmail.com',
     avatar: designerImg2,
     link: '/user/bob',
@@ -20,6 +22,7 @@ const UserSchema = [
   {
     id: 2,
     displayname: 'Alice',
+    code: 'alice',
     email: 'alice@gmail.com',
     avatar: designerImg3,
     link: '/user/alice',

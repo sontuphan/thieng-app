@@ -10,15 +10,17 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import { ArrowForwardIos } from '@material-ui/icons';
+import { Shuffle } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import Showcase from 'components/showcase';
 import MiniShowcase from 'components/minishowcase';
 import Comment from 'components/comment';
 
-import { getItemById, getComments } from 'modules/items.reducer';
+import { getItemById } from 'modules/items.reducer';
+import { getComments } from 'modules/comments.reducer';
 import { getUserById } from 'modules/users.reducer';
+import { recommendItems } from 'modules/recommendation.reducer';
 
 import styles from './styles';
 
@@ -46,6 +48,8 @@ class Item extends Component {
       return this.props.getUserById(item.author);
     }).then(re => {
       return this.props.getComments(item.id);
+    }).then(re => {
+      return this.props.recommendItems(6);
     }).catch(er => {
       return console.error(er);
     });
@@ -71,19 +75,20 @@ class Item extends Component {
     console.log('Submit comment');
   }
 
-  onMore = () => {
-
+  onShuffle = () => {
+    this.props.recommendItems(6);
   }
 
   render() {
     // let { classes } = this.props;
     let object = this.props.items.data[0];
-    let comments = this.props.items.comments;
+    let comments = this.props.comments.data;
     let author = this.props.users.data[0];
+    let recommendation = this.props.recommendation.data;
 
-    if (!object || !author) return null;
+    if (!object || !comments || !author || !recommendation) return null;
 
-    return <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
+    return <Grid container direction="row" justify="center" spacing={2}>
       <Grid item xs={12} md={6}>
         <Showcase author={author} objects={object.images} on3D={this.on3D} />
       </Grid>
@@ -147,14 +152,14 @@ class Item extends Component {
           <Grid item xs={12}>
             <Drain small />
           </Grid>
-          {/* {this.state.recommendation.map(i => <Grid key={i} item xs={4} md={2} xl={1}>
-            <MiniShowcase object={object} />
-          </Grid>)} */}
+          {recommendation.map((obj, index) => <Grid key={index} item xs={4} md={2} xl={1}>
+            <MiniShowcase object={obj} />
+          </Grid>)}
           <Grid item xs={12}>
             <Grid container direction="row" justify="flex-end" spacing={2}>
               <Grid item>
-                <Button variant="outlined" color="primary" size="large" endIcon={<ArrowForwardIos />} onClick={this.onMore}>
-                  <Typography>Nhiều hơn</Typography>
+                <Button variant="outlined" color="primary" size="large" endIcon={<Shuffle />} onClick={this.onShuffle}>
+                  <Typography>Khác</Typography>
                 </Button>
               </Grid>
             </Grid>
@@ -180,12 +185,15 @@ const mapStateToProps = state => ({
   auth: state.auth,
   items: state.items,
   users: state.users,
+  comments: state.comments,
+  recommendation: state.recommendation,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getItemById,
   getComments,
   getUserById,
+  recommendItems,
 }, dispatch);
 
 export default withRouter(connect(

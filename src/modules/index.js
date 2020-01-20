@@ -6,6 +6,9 @@ import search from './search.reducer';
 import auth from './auth.reducer';
 import items from './items.reducer';
 import users from './users.reducer';
+import comments from './comments.reducer';
+import recommendation from './recommendation.reducer';
+import projects from './projects.reducer';
 
 export default (history) => combineReducers({
   router: connectRouter(history),
@@ -14,4 +17,7 @@ export default (history) => combineReducers({
   auth,
   items,
   users,
+  comments,
+  recommendation,
+  projects,
 });

@@ -13,9 +13,9 @@ export const randInterior = (jpgOnly) => {
 export const getRandomItems = () => [
   {
     id: 0,
-    name: "Tellus lacus vitae nisl.",
-    description1: loremIpsum(),
-    description2: loremIpsum(),
+    name: loremIpsum(),
+    description1: loremIpsum({ units: "paragraphs" }),
+    description2: loremIpsum({ units: "paragraphs" }),
     price: "6.490.000",
     unit: "vnd",
     tags: ["New", "20%"],
@@ -32,9 +32,9 @@ export const getRandomItems = () => [
     comments: [0, 1]
   }, {
     id: 1,
-    name: "Elementum urna tempus.",
-    description1: loremIpsum(),
-    description2: loremIpsum(),
+    name: loremIpsum(),
+    description1: loremIpsum({ units: "paragraphs" }),
+    description2: loremIpsum({ units: "paragraphs" }),
     price: "1.990.000",
     unit: "vnd",
     tags: ["Best Seller", "25%", "Artist Choice"],
