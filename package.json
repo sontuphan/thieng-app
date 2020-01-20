@@ -12,6 +12,7 @@
     "connected-react-router": "^6.6.1",
     "dateformat": "^3.0.3",
     "history": "^4.10.1",
+    "lorem-ipsum": "^2.0.3",
     "material-ui-image": "^3.2.2",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",

@@ -79,9 +79,6 @@ class Comment extends Component {
     return <Fragment>
       <Grid container direction="row" justify="center" spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h1">Nhận xét</Typography>
-        </Grid>
-        <Grid item xs={12}>
           {this.renderInput(this.props.user)}
         </Grid>
         <Grid item xs={12}>

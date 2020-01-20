@@ -7,14 +7,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-
-import { ArrowForwardIos } from '@material-ui/icons';
 
 import Drain from 'components/drain';
-import MiniShowcase from 'components/minishowcase';
 import Divider from 'components/divider';
 import Card from 'components/card';
+import Project from 'components/project';
 
 import utils from 'helpers/utils';
 
@@ -30,7 +27,6 @@ class User extends Component {
     super();
 
     this.state = {
-      recommendation: [0, 1, 2, 3, 4, 5],
       likes: '12.853',
       products: 32,
       data: utils.dummy()[1],
@@ -69,18 +65,9 @@ class User extends Component {
     }
   }
 
-  onMore = () => {
-    let recommendation = JSON.parse(JSON.stringify(this.state.recommendation));
-    let last = recommendation[recommendation.length - 1];
-    for (let i = 0; i < 6; i++) {
-      recommendation.push(last + i + 1);
-    }
-    this.setState({ recommendation });
-  }
-
   render() {
     let { classes } = this.props;
-    let { data, recommendation } = this.state;
+    let { data } = this.state;
 
     return <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
       <Grid item xs={12}>
@@ -111,7 +98,7 @@ class User extends Component {
           {
             this.state.menu.map(
               (card, i) => <Grid key={i} item xs={10} md={2}>
-                <Card {...card} width={this.props.ui.width} disable />
+                <Card {...card} width={this.props.ui.width} />
               </Grid>
             )
           }
@@ -123,7 +110,7 @@ class User extends Component {
       <Grid item xs={10}>
         <Grid container direction="row" spacing={2}>
           <Grid item xs={12}>
-            <Typography variant="h1">Sản phẩm</Typography>
+            <Typography variant="h1">Bảng tin</Typography>
           </Grid>
           <Grid item xs={12}>
             <Divider />
@@ -131,26 +118,22 @@ class User extends Component {
           <Grid item xs={12}>
             <Drain small />
           </Grid>
-          {recommendation.map(i => <Grid key={i} item xs={6} md={2}>
-            <MiniShowcase object={data} />
-          </Grid>)}
-          <Grid item xs={12}>
-            <Grid container direction="row" justify="flex-end" spacing={2}>
-              <Grid item>
-                <Button variant="outlined" color="primary" size="large" endIcon={<ArrowForwardIos />} onClick={this.onMore}>
-                  <Typography>Nhiều hơn</Typography>
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
         </Grid>
       </Grid>
+      {[0, 1, 2, 3, 4].map(index => <Grid item key={index} xs={12}>
+        <Project
+          author={data.author}
+          status="This time I wanted to show the contrast between torn black matte surface and the new glossy rainbow layer."
+          imgs={[human1, human2, human3, human4, human5]}
+          auth={this.props.auth} />
+      </Grid>)}
     </Grid>
   }
 }
 
 const mapStateToProps = state => ({
-  ui: state.ui
+  ui: state.ui,
+  auth: state.auth
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

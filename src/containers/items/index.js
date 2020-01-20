@@ -14,7 +14,7 @@ import Drain from 'components/drain';
 import MiniShowcase from 'components/minishowcase';
 import Divider from 'components/divider';
 
-import utils from 'helpers/utils';
+import { getItems } from 'modules/items.reducer';
 
 import styles from './styles';
 
@@ -23,23 +23,35 @@ class Items extends Component {
     super();
 
     this.state = {
-      recommendation: [0, 1, 2, 3, 4, 5,],
-      objects: utils.dummy(),
+      items: [],
+      page: 0,
+      limit: 6,
+    }
+  }
+
+  componentDidMount() {
+    this.props.getItems(this.state.page, this.state.limit);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.page !== this.state.page)
+      this.props.getItems(this.state.page, this.state.limit);
+    if (prevState.limit !== this.state.limit)
+      this.props.getItems(this.state.page, this.state.limit);
+
+    if (JSON.stringify(prevProps.items.data) !== JSON.stringify(this.props.items.data)) {
+      let newItems = prevState.items.concat(this.props.items.data)
+      this.setState({ items: newItems });
     }
   }
 
   onMore = () => {
-    let recommendation = JSON.parse(JSON.stringify(this.state.recommendation));
-    let last = recommendation[recommendation.length - 1];
-    for (let i = 0; i < 6; i++) {
-      recommendation.push(last + i + 1);
-    }
-    this.setState({ recommendation });
+    this.setState({ page: this.state.page + 1 });
   }
 
   render() {
     // let { classes } = this.props;
-    let { objects } = this.state;
+    let { items } = this.state;
 
     return <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
       <Grid item xs={12}>
@@ -56,8 +68,8 @@ class Items extends Component {
           <Grid item xs={12}>
             <Drain small />
           </Grid>
-          {this.state.recommendation.map(i => <Grid key={i} item xs={6} md={2}>
-            <MiniShowcase object={objects[0]} />
+          {items.map((obj, i) => <Grid key={i} item xs={6} md={2}>
+            <MiniShowcase object={obj} />
           </Grid>)}
           <Grid item xs={12}>
             <Grid container direction="row" justify="flex-end" spacing={2}>
@@ -84,8 +96,8 @@ class Items extends Component {
           <Grid item xs={12}>
             <Drain small />
           </Grid>
-          {this.state.recommendation.map(i => <Grid key={i} item xs={6} md={2}>
-            <MiniShowcase object={objects[1]} />
+          {items.map((obj, i) => <Grid key={i} item xs={6} md={2}>
+            <MiniShowcase object={obj} />
           </Grid>)}
           <Grid item xs={12}>
             <Grid container direction="row" justify="flex-end" spacing={2}>
@@ -103,11 +115,12 @@ class Items extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  items: state.items,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-
+  getItems
 }, dispatch);
 
 export default withRouter(connect(

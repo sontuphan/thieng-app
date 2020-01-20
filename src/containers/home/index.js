@@ -19,8 +19,8 @@ import peopleImg from 'static/images/people.svg';
 import designerImg1 from 'static/images/designer-1.jpg';
 import designerImg2 from 'static/images/designer-2.jpg';
 import designerImg3 from 'static/images/designer-3.jpg';
-import interiorImg1 from 'static/images/interior-1.jpg';
-import interiorImg2 from 'static/images/interior-2.jpg';
+
+import { randInterior } from 'data/items';
 
 const DESIGNERS = [
   {
@@ -76,7 +76,7 @@ const DESIGNERS = [
 const PRODUCTS = [
   {
     displayname: 'Mirror',
-    avatar: interiorImg1,
+    avatar: randInterior(true).url,
     content: [
       {
         icon: 'like',
@@ -92,7 +92,7 @@ const PRODUCTS = [
   },
   {
     displayname: 'Lamp',
-    avatar: interiorImg2,
+    avatar: randInterior(true).url,
     content: [
       {
         icon: 'like',

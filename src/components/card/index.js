@@ -11,11 +11,11 @@ import styles from './styles';
 class Card extends Component {
   render() {
     let { classes } = this.props;
-    let { title, subtitle, color, img, width, disable } = this.props;
+    let { title, subtitle, color, img, width, disabled } = this.props;
 
     return <Grid container spacing={2} >
       <Grid item xs={12}>
-        <Paper className={disable ? classes.disbaleCard : classes.card} style={{ background: color }}>
+        <Paper className={disabled ? classes.disbaleCard : classes.card} style={{ background: color }}>
           <Grid container alignItems="center" spacing={2}>
             <Grid item xs={7} md={12}>
               <Grid container justify="center" alignItems="center" spacing={2}>

@@ -18,8 +18,7 @@ class MiniShowcase extends Component {
 
   render() {
     let { classes, object } = this.props;
-    let random = Math.floor(Math.random() * object.images.length);
-    let image = object.images[random];
+    let image = object.images[0];
     return <Grid container direction="row" justify="center" spacing={1}>
       <Grid item xs={12}>
         <div className={classes.image} onClick={this.onView}>

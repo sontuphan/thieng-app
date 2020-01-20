@@ -17,38 +17,50 @@ import Showcase from 'components/showcase';
 import MiniShowcase from 'components/minishowcase';
 import Comment from 'components/comment';
 
-import utils from 'helpers/utils';
+import { getItemById, getComments } from 'modules/items.reducer';
+import { getUserById } from 'modules/users.reducer';
 
 import styles from './styles';
 
-const DEFAULT_STATE = {
-  amount: 1,
-  recommendation: [0, 1, 2, 3, 4, 5],
-  showing: 0,
-  objects: utils.dummy(),
-}
 class Item extends Component {
   constructor() {
     super();
 
-    this.state = { ...DEFAULT_STATE }
+    this.state = {
+      id: 0,
+      amount: 1
+    }
   }
 
   handleId = () => {
     let { match: { params: { id } } } = this.props;
     id = Number(id)
     if (typeof id !== 'number') id = 0;
-    this.setState({ ...DEFAULT_STATE, showing: id });
+    this.setState({ id });
+  }
+
+  loadData = () => {
+    let item = null;
+    this.props.getItemById(this.state.id).then(re => {
+      item = re.data[0];
+      return this.props.getUserById(item.author);
+    }).then(re => {
+      return this.props.getComments(item.id);
+    }).catch(er => {
+      return console.error(er);
+    });
   }
 
   componentDidMount() {
     this.handleId();
+    this.loadData();
   }
 
-  componentDidUpdate(prevProps) {
-    if (JSON.stringify(prevProps.match) !== JSON.stringify(this.props.match)) {
+  componentDidUpdate(prevProps, prevState) {
+    if (JSON.stringify(prevProps.match) !== JSON.stringify(this.props.match))
       this.handleId();
-    }
+    if (prevState.id !== this.state.id)
+      this.loadData();
   }
 
   on3D = () => {
@@ -60,21 +72,20 @@ class Item extends Component {
   }
 
   onMore = () => {
-    let recommendation = JSON.parse(JSON.stringify(this.state.recommendation));
-    let last = recommendation[recommendation.length - 1];
-    for (let i = 0; i < 6; i++) {
-      recommendation.push(last + i + 1);
-    }
-    this.setState({ recommendation });
+
   }
 
   render() {
     // let { classes } = this.props;
-    let { objects, showing } = this.state;
+    let object = this.props.items.data[0];
+    let comments = this.props.items.comments;
+    let author = this.props.users.data[0];
+
+    if (!object || !author) return null;
 
     return <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
       <Grid item xs={12} md={6}>
-        <Showcase author={objects[showing].author} objects={objects[showing].images} on3D={this.on3D} />
+        <Showcase author={author} objects={object.images} on3D={this.on3D} />
       </Grid>
       <Grid item xs={12} md={6}>
         <Drain />
@@ -82,26 +93,26 @@ class Item extends Component {
           <Grid item xs={10} md={8}>
             <Grid container spacing={1}>
               {
-                objects[showing].tags.map(tag => <Grid item key={tag}>
+                object.tags.map(tag => <Grid item key={tag}>
                   <Chip color="primary" label={tag} size="small" />
                 </Grid>)
               }
             </Grid>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography variant="h1">{objects[showing].name}</Typography>
+            <Typography variant="h1">{object.name}</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography>{objects[showing].description1}</Typography>
+            <Typography>{object.description1}</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography>{objects[showing].description2}</Typography>
+            <Typography>{object.description2}</Typography>
           </Grid>
           <Grid item xs={12}>
             <Drain />
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography variant="h1">{objects[showing].price} {objects[showing].unit}</Typography>
+            <Typography variant="h1">{object.price} {object.unit}</Typography>
           </Grid>
           <Grid item xs={12}>
             <Drain />
@@ -136,9 +147,9 @@ class Item extends Component {
           <Grid item xs={12}>
             <Drain small />
           </Grid>
-          {this.state.recommendation.map(i => <Grid key={i} item xs={4} md={2} xl={1}>
-            <MiniShowcase object={objects[1 - showing]} />
-          </Grid>)}
+          {/* {this.state.recommendation.map(i => <Grid key={i} item xs={4} md={2} xl={1}>
+            <MiniShowcase object={object} />
+          </Grid>)} */}
           <Grid item xs={12}>
             <Grid container direction="row" justify="flex-end" spacing={2}>
               <Grid item>
@@ -154,18 +165,27 @@ class Item extends Component {
         <Drain />
       </Grid>
       <Grid item xs={10}>
-        <Comment user={this.props.auth} comments={objects[showing].comments} onSend={this.onSend} />
+        <Grid container direction="row" justify="center" spacing={2}>
+          <Grid item xs={12}>
+            <Typography variant="h1">Nhận xét</Typography>
+          </Grid>
+        </Grid>
+        <Comment user={this.props.auth} comments={comments} onSend={this.onSend} />
       </Grid>
     </Grid>
   }
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  items: state.items,
+  users: state.users,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-
+  getItemById,
+  getComments,
+  getUserById,
 }, dispatch);
 
 export default withRouter(connect(
