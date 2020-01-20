@@ -10,6 +10,8 @@ const UserSchema = [
     email: 'remy@gmail.com',
     avatar: designerImg4,
     link: '/user/remy-sharp',
+    hearts: 13573,
+    products: 53,
   },
   {
     id: 1,
@@ -18,6 +20,8 @@ const UserSchema = [
     email: 'bob@gmail.com',
     avatar: designerImg2,
     link: '/user/bob',
+    hearts: 53573,
+    products: 51,
   },
   {
     id: 2,
@@ -26,6 +30,8 @@ const UserSchema = [
     email: 'alice@gmail.com',
     avatar: designerImg3,
     link: '/user/alice',
+    hearts: 58573,
+    products: 12,
   }
 ]
 

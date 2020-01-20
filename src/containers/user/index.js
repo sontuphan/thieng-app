@@ -124,7 +124,7 @@ class User extends Component {
       <Grid item xs={10} md={5}>
         <Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
           <Grid item>
-            <Typography>{this.state.likes} Thích - {this.state.products} Sản phẩm</Typography>
+            <Typography>{user.hearts} Thích - {user.products} Sản phẩm</Typography>
           </Grid>
         </Grid>
       </Grid>
