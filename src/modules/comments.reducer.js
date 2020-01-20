@@ -36,6 +36,7 @@ const _getComments = (itemId) => {
       comments.push(CommentSchema[i]);
   }
   for (let i = 0; i < comments.length; i++) {
+    if (typeof comments[i].user === 'object') break;
     let user = _getUserById(comments[i].user);
     comments[i].user = user
   }

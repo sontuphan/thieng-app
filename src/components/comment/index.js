@@ -48,7 +48,7 @@ class Comment extends Component {
     </Grid>
   }
 
-  rederOutput = (comments) => {
+  renderOutput = (comments) => {
     return <Grid container spacing={2}>
       {comments.map((comment, i) => <Fragment key={i}>
         <Grid item xs={12}>
@@ -82,7 +82,7 @@ class Comment extends Component {
           {this.renderInput(this.props.user)}
         </Grid>
         <Grid item xs={12}>
-          {this.rederOutput(this.props.comments)}
+          {this.renderOutput(this.props.comments)}
         </Grid>
       </Grid>
     </Fragment>
