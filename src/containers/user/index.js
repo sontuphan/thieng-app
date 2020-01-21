@@ -15,7 +15,6 @@ import Project from 'components/project';
 
 import { getUserByCode } from 'modules/users.reducer';
 import { getProjects } from 'modules/projects.reducer';
-import { getComments } from 'modules/comments.reducer';
 
 import styles from './styles';
 import human1 from 'static/images/human-1.svg';
@@ -85,15 +84,9 @@ class User extends Component {
   }
 
   loadData = () => {
-    let user = null;
-    let project = null;
-
     this.props.getUserByCode(this.state.code).then(re => {
-      user = re.data[0];
+      let user = re.data[0];
       return this.props.getProjects(user.id);
-    }).then(re => {
-      project = re.data[0];
-      return this.props.getComments(project.id);
     }).catch(er => {
       return console.error(er);
     });
@@ -103,9 +96,8 @@ class User extends Component {
     let { classes } = this.props;
     let user = this.props.users.data[0];
     let projects = this.props.projects.data;
-    let comments = this.props.comments.data;
 
-    if (!user || !projects || !comments) return null;
+    if (!user || !projects) return null;
 
     return <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
       <Grid item xs={12}>
@@ -158,13 +150,18 @@ class User extends Component {
           </Grid>
         </Grid>
       </Grid>
-      {projects.map((project, index) => <Grid item key={index} xs={12}>
-        <Project
-          author={user}
-          project={project}
-          comments={comments}
-          auth={this.props.auth} />
-      </Grid>)}
+      {
+        projects.map((project, index) => {
+          if (!project.user || !project.comments) return null;
+          return <Grid item key={index} xs={12}>
+            <Project
+              author={project.user}
+              project={project}
+              comments={project.comments}
+              auth={this.props.auth} />
+          </Grid>
+        })
+      }
     </Grid>
   }
 }
@@ -174,13 +171,11 @@ const mapStateToProps = state => ({
   auth: state.auth,
   users: state.users,
   projects: state.projects,
-  comments: state.comments,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getUserByCode,
   getProjects,
-  getComments,
 }, dispatch);
 
 export default withRouter(connect(

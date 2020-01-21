@@ -6,7 +6,12 @@ Utils.scrollTop = () => {
   root.scrollIntoView();
 }
 
-Utils.dummy = () => []
+Utils.onTheEnd = (cb) => {
+  window.onscroll = () => {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)
+      return cb();
+  }
+}
 
 
 export default Utils;

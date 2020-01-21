@@ -1,4 +1,6 @@
 import { getRandomProjects } from 'data/projects';
+import UserSchema from 'data/users';
+import CommentSchema from 'data/comments';
 
 /**
  * Documents
@@ -21,10 +23,41 @@ export const GET_PROJECTS = 'GET_PROJECTS';
 export const GET_PROJECTS_OK = 'GET_PROJECTS_OK';
 export const GET_PROJECTS_FAIL = 'GET_PROJECTS_FAIL';
 
+const _getUserById = (id) => {
+  for (let i = 0; i < UserSchema.length; i++) {
+    if (id === UserSchema[i].id) {
+      return UserSchema[i];
+    }
+  }
+}
+
+const _getComments = (itemId) => {
+  let comments = [];
+  for (let i = 0; i < CommentSchema.length; i++) {
+    if (itemId === CommentSchema[i].item)
+      comments.push(CommentSchema[i]);
+  }
+  for (let i = 0; i < comments.length; i++) {
+    if (typeof comments[i].user === 'object') break;
+    let user = _getUserById(comments[i].user);
+    comments[i].user = user
+  }
+  return comments;
+}
+
 const _getProjects = (userId, page, limit) => {
+  if (!userId) userId = Math.floor(Math.random() * 4);
+  let projects = getRandomProjects(userId);
+  let user = _getUserById(userId);
+  projects = projects.map(project => {
+    let comments = _getComments(project.id)
+    project.user = user;
+    project.comments = comments;
+    return project;
+  });
   return {
     status: 'OK',
-    data: getRandomProjects(userId),
+    data: projects,
     pagination: { page, limit }
   };
 }
