@@ -40,7 +40,7 @@ class Newsfeed extends Component {
   }
 
   render() {
-    let { classes } = this.props;
+    // let { classes } = this.props;
     let { projects } = this.state;
 
     if (!projects) return null;
