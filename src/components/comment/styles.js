@@ -1,9 +1,12 @@
 export default theme => ({
+  font: {
+    ...theme.typography.body1
+  },
   denseAvatar: {
     width: '24px',
     height: '24px'
   },
   adornment: {
-    margin: -theme.spacing(1)
+    marginRight: -theme.spacing(1)
   },
 });

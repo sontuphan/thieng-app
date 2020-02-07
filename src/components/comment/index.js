@@ -26,8 +26,11 @@ class Comment extends Component {
       <Grid item xs={12}>
         <TextField label="Nhận xét" variant="outlined" color="secondary" size="small"
           InputProps={{
+            classes: {
+              input: classes.font,
+            },
             startAdornment: (
-              <InputAdornment position="start" className={classes.adornment}>
+              <InputAdornment position="start">
                 <Avatar className={classes.denseAvatar} alt={user.avatar} src={user.avatar} />
               </InputAdornment>
             ),
@@ -56,6 +59,9 @@ class Comment extends Component {
       <Grid item xs={12}>
         <TextField label="Nhận xét" variant="outlined" color="secondary" size="small"
           InputProps={{
+            classes: {
+              input: classes.font,
+            },
             endAdornment: (
               <InputAdornment position="start" className={classes.adornment}>
                 <IconButton size="small" onClick={this.props.onSend}>

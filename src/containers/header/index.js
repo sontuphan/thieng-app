@@ -15,6 +15,7 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import Badge from '@material-ui/core/Badge';
 
@@ -80,7 +81,30 @@ class Header extends Component {
     });
   }
 
-  renderProfile() {
+  renderSearch = () => {
+    let { classes } = this.props;
+    console.log(this.state.matches)
+    return <TextField
+      color="secondary"
+      placeholder="Search"
+      onChange={this.input}
+      InputProps={{
+        classes: {
+          input: classes.font,
+        },
+        endAdornment: (
+          <InputAdornment position="start" className={classes.adornment}>
+            <IconButton size="small" onClick={this.search}>
+              <Search />
+            </IconButton>
+          </InputAdornment>
+        ),
+      }}
+      onKeyPress={e => e.key === 'Enter' ? this.search() : null}
+      fullWidth={!this.state.matches} />
+  }
+
+  renderProfile = () => {
     if (this.state.user.isLoggedIn)
       return <ButtonGroup>
         <Button variant="outlined" size="small"
@@ -128,9 +152,7 @@ class Header extends Component {
         }
         <Divider />
         <ListItem>
-          <TextField color="secondary" placeholder="Search" onChange={this.input} fullWidth
-            onKeyPress={e => e.key === 'Enter' ? this.search() : null} />
-          <IconButton size="small" onClick={this.search}><Search /></IconButton>
+          {this.renderSearch()}
         </ListItem>
         <ListItem>
           {this.renderProfile()}
@@ -144,9 +166,7 @@ class Header extends Component {
     if (this.state.matches)
       return <Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
         <Grid item className={classes.route}>
-          <TextField color="secondary" placeholder="Search" onChange={this.input}
-            onKeyPress={e => e.key === 'Enter' ? this.search() : null} />
-          <IconButton size="small" onClick={this.search}><Search /></IconButton>
+          {this.renderSearch()}
         </Grid>
         {
           this.state.routes.map((route, index) =>
