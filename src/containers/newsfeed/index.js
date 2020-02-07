@@ -65,7 +65,7 @@ class Newsfeed extends Component {
       {
         projects.map((project, index) => {
           if (!project.user || !project.comments) return null;
-          return <Grid key={index} item xs={12}>
+          return <Grid key={index} item xs={12} md={6}>
             <Project
               author={project.user}
               project={project}

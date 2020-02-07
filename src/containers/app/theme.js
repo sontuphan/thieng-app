@@ -37,21 +37,21 @@ const theme = createMuiTheme({
     h3: {
       fontFamily: ['"Playfair Display"', 'serif'].join(','),
       fontWeight: 700,
-      fontSize: 18,
+      fontSize: 17,
       letterSpacing: 0,
       textTransform: 'None'
     },
     body1: {
       fontFamily: ['"Open Sans"', 'sans-serif'].join(','),
       fontWeight: 300,
-      fontSize: 14,
+      fontSize: 13,
       letterSpacing: 0,
       textTransform: 'None'
     },
     body2: {
       fontFamily: ['"Open Sans"', 'sans-serif'].join(','),
       fontWeight: 300,
-      fontSize: 14,
+      fontSize: 13,
       letterSpacing: 0,
       textTransform: 'None',
       color: '#FFFFFF'

@@ -15,7 +15,7 @@ export const getRandomProjects = (userId) => [
   {
     id: 0,
     item: 0,
-    status: loremIpsum({ units: "paragraphs" }),
+    status: loremIpsum({ units: "sentences" }),
     images: [
       randInterior().url,
       randInterior().url,
@@ -26,11 +26,11 @@ export const getRandomProjects = (userId) => [
     ],
     author: userId,
     comments: [0, 1],
-    createdAt: dateformat(),
+    createdAt: dateformat("d mmmm yyyy"),
   }, {
     id: 1,
     item: 1,
-    status: loremIpsum({ units: "paragraphs" }),
+    status: loremIpsum({ units: "sentences" }),
     images: [
       randInterior().url,
       randInterior().url,
@@ -39,6 +39,19 @@ export const getRandomProjects = (userId) => [
     ],
     author: userId,
     comments: [2, 3],
-    createdAt: dateformat(),
+    createdAt: dateformat("d mmmm yyyy"),
+  }, {
+    id: 2,
+    item: 2,
+    status: loremIpsum({ units: "sentences" }),
+    images: [
+      randInterior().url,
+      randInterior().url,
+      randInterior().url,
+      randInterior().url,
+    ],
+    author: userId,
+    comments: [4, 5],
+    createdAt: dateformat("d mmmm yyyy"),
   }
 ]

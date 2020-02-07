@@ -11,7 +11,6 @@ import IconButton from '@material-ui/core/IconButton';
 import { Favorite, Message, Bookmark } from '@material-ui/icons';
 
 import Comment from 'components/comment';
-import Drain from 'components/drain';
 
 import styles from './styles';
 
@@ -26,81 +25,66 @@ class Project extends Component {
     let { author, project, comments } = this.props;
 
     return <Grid container spacing={2}>
-      <Grid item xs={12} md={6}>
-        <Grid container justify="flex-end" spacing={2}>
-          <Grid item xs={12} md={10}>
-            <Paper className={classes.project}>
+      <Grid item xs={12}>
+        <Paper className={classes.project}>
+          <Grid container alignItems="center" spacing={2}>
+            <Grid item xs={6}>
               <Grid container alignItems="center" spacing={2}>
-                <Grid item xs={12}>
-                  <Grid container alignItems="center" spacing={2}>
-                    <Grid item>
-                      <Avatar alt={author.displayname} src={author.avatar} />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="h3">{author.displayname}</Typography>
-                    </Grid>
-                  </Grid>
+                <Grid item>
+                  <Avatar alt={author.displayname} src={author.avatar} />
                 </Grid>
-                <Grid item xs={12}>
-                  <Grid container justify="flex-end" alignItems="center" spacing={2}>
-                    <Grid item>
-                      <Typography>{project.createdAt}</Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid container spacing={2}>
-                    <Grid item>
-                      <Typography>{project.status}</Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <div className={classes.image}
-                        style={{
-                          backgroundImage: `url('${project.images[0]}')`,
-                          backgroundPosition: 'center top',
-                          backgroundRepeat: 'no-repeat',
-                          backgroundSize: 'cover'
-                        }} />
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid container justify="flex-end" alignItems="center" spacing={2}>
-                    <Grid item>
-                      <IconButton size="small">
-                        <Favorite color="primary" fontSize="small" />
-                      </IconButton>
-                    </Grid>
-                    <Grid item>
-                      <IconButton size="small">
-                        <Message fontSize="small" />
-                      </IconButton>
-                    </Grid>
-                    <Grid item>
-                      <IconButton size="small">
-                        <Bookmark fontSize="small" />
-                      </IconButton>
-                    </Grid>
-                  </Grid>
+                <Grid item>
+                  <Typography variant="h3">{author.displayname}</Typography>
                 </Grid>
               </Grid>
-            </Paper>
+            </Grid>
+            <Grid item xs={6}>
+              <Grid container justify="flex-end" alignItems="center" spacing={2}>
+                <Grid item>
+                  <Typography>{project.createdAt}</Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <div className={classes.image}
+                    style={{
+                      backgroundImage: `url('${project.images[0]}')`,
+                      backgroundPosition: 'center top',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: 'cover'
+                    }} />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container justify="flex-end" alignItems="center" spacing={2}>
+                <Grid item>
+                  <IconButton size="small">
+                    <Favorite color="primary" fontSize="small" />
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <IconButton size="small">
+                    <Message fontSize="small" />
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <IconButton size="small">
+                    <Bookmark fontSize="small" />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>{project.status}</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Comment user={this.props.auth} comments={comments} onSend={this.onSend} />
+            </Grid>
           </Grid>
-        </Grid>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <Grid container justify="center" spacing={2}>
-          <Grid item xs={12} md={8}>
-            <Comment user={this.props.auth} comments={comments} onSend={this.onSend} />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item xs={12}>
-        <Drain small />
+        </Paper>
       </Grid>
     </Grid >
 
