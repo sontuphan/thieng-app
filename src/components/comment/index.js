@@ -23,7 +23,23 @@ class Comment extends Component {
 
     let { classes, dense } = this.props;
     if (dense) return <Grid container spacing={2}>
-
+      <Grid item xs={12}>
+        <TextField label="Nhận xét" variant="outlined" color="secondary" size="small"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start" className={classes.adornment}>
+                <Avatar className={classes.denseAvatar} alt={user.avatar} src={user.avatar} />
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment position="start" className={classes.adornment}>
+                <IconButton size="small" onClick={this.props.onSend}>
+                  <Send />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }} multiline fullWidth />
+      </Grid>
     </Grid>
 
     return <Grid container spacing={2}>
