@@ -21,10 +21,10 @@ class Card extends Component {
               <Grid container justify="center" alignItems="center" spacing={2}>
                 {width >= 960 ? <Grid item xs={12} /> : null}
                 <Grid item xs={12}>
-                  <Typography align="center" variant="h3" style={{ color: "#FFFFFF" }}>{title}</Typography>
+                  <Typography align="center" variant="h3" style={{ color: "#FFF" }}>{title}</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography align="center" variant="body2">{subtitle}</Typography>
+                  <Typography align="center" style={{ color: "#FFF" }}>{subtitle}</Typography>
                 </Grid>
               </Grid>
             </Grid>

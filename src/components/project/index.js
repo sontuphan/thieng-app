@@ -58,7 +58,10 @@ class Project extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
+              <Typography style={{ fontWeight: "bold" }}>12,345 lượt thích</Typography>
+            </Grid>
+            <Grid item xs={6}>
               <Grid container justify="flex-end" alignItems="center" spacing={2}>
                 <Grid item>
                   <IconButton size="small">
@@ -81,7 +84,7 @@ class Project extends Component {
               <Typography>{project.status}</Typography>
             </Grid>
             <Grid item xs={12}>
-              <Comment user={this.props.auth} comments={comments} onSend={this.onSend} />
+              <Comment user={this.props.auth} comments={comments} onSend={this.onSend} dense/>
             </Grid>
           </Grid>
         </Paper>

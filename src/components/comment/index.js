@@ -21,7 +21,11 @@ class Comment extends Component {
   renderInput = (user) => {
     if (!user || !user.isLoggedIn) return null;
 
-    let { classes } = this.props;
+    let { classes, dense } = this.props;
+    if (dense) return <Grid container spacing={2}>
+
+    </Grid>
+
     return <Grid container spacing={2}>
       <Grid item xs={12}>
         <Grid container spacing={1} alignItems="center">
@@ -48,7 +52,7 @@ class Comment extends Component {
     </Grid>
   }
 
-  renderOutput = (comments) => {
+  renderRichOutput = (comments) => {
     return <Grid container spacing={2}>
       {comments.map((comment, i) => <Fragment key={i}>
         <Grid item xs={12}>
@@ -75,6 +79,16 @@ class Comment extends Component {
     </Grid>
   }
 
+  renderDenseOutput = (comments) => {
+    return <Grid container spacing={2}>
+      {comments.map((comment, i) => <Fragment key={i}>
+        <Grid item xs={12}>
+          <Typography><span style={{ fontWeight: "bold" }}>{comment.user.displayname}</span> - {comment.comment}</Typography>
+        </Grid>
+      </Fragment>)}
+    </Grid>
+  }
+
   render() {
     return <Fragment>
       <Grid container direction="row" justify="center" spacing={2}>
@@ -82,7 +96,7 @@ class Comment extends Component {
           {this.renderInput(this.props.user)}
         </Grid>
         <Grid item xs={12}>
-          {this.renderOutput(this.props.comments)}
+          {this.props.dense ? this.renderDenseOutput(this.props.comments) : this.renderRichOutput(this.props.comments)}
         </Grid>
       </Grid>
     </Fragment>
