@@ -62,18 +62,22 @@ class Newsfeed extends Component {
           </Grid>
         </Grid>
       </Grid>
-      {
-        projects.map((project, index) => {
-          if (!project.user || !project.comments) return null;
-          return <Grid key={index} item xs={12} md={6}>
-            <Project
-              author={project.user}
-              project={project}
-              comments={project.comments}
-              auth={this.props.auth} />
-          </Grid>
-        })
-      }
+      <Grid item xs={12} sm={10} md={10}>
+        <Grid container direction="row" spacing={2}>
+          {
+            projects.map((project, index) => {
+              if (!project.user || !project.comments) return null;
+              return <Grid key={index} item xs={12} sm={6} md={4}>
+                <Project
+                  author={project.user}
+                  project={project}
+                  comments={project.comments}
+                  auth={this.props.auth} />
+              </Grid>
+            })
+          }
+        </Grid>
+      </Grid>
     </Grid>
   }
 }

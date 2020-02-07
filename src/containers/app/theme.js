@@ -51,10 +51,9 @@ const theme = createMuiTheme({
     body2: {
       fontFamily: ['"Open Sans"', 'sans-serif'].join(','),
       fontWeight: 300,
-      fontSize: 13,
+      fontSize: 17,
       letterSpacing: 0,
       textTransform: 'None',
-      color: '#FFFFFF'
     }
   }
 });

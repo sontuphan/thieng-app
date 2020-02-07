@@ -28,7 +28,7 @@ class Project extends Component {
       <Grid item xs={12}>
         <Paper className={classes.project}>
           <Grid container alignItems="center" spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={8}>
               <Grid container alignItems="center" spacing={2}>
                 <Grid item>
                   <Avatar alt={author.displayname} src={author.avatar} />
@@ -38,7 +38,7 @@ class Project extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Grid container justify="flex-end" alignItems="center" spacing={2}>
                 <Grid item>
                   <Typography>{project.createdAt}</Typography>

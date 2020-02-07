@@ -87,7 +87,7 @@ class CarouselSlide extends Component {
           <Card className={classes.card}>
             <CardMedia image={obj.avatar} className={classes.cardMedia} />
             <CardHeader className={classes.cardHeader}
-              title={<Typography variant="body2">{obj.displayname}</Typography>}
+              title={<Typography style={{ color: "#FFF" }}>{obj.displayname}</Typography>}
               disableTypography
             />
             <CardContent className={classes.cardContent}>
