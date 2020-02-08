@@ -27,9 +27,9 @@ class CarouselSlide extends Component {
   }
 
   slide = () => {
-    let animation = " animated slideInRight";
-    if (this.props.direction === "right")
-      animation = " animated slideInLeft";
+    let animation = ' animated slideInRight';
+    if (this.props.direction === 'right')
+      animation = ' animated slideInLeft';
     this.setState({ animation: animation }, () => {
       setTimeout(() => {
         this.setState({ animation: null });

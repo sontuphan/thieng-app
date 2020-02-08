@@ -13,6 +13,7 @@ import Divider from 'components/divider';
 import Card from 'components/card';
 import Project from 'components/project';
 
+import utils from 'helpers/utils';
 import { getUserByCode } from 'modules/users.reducer';
 import { getProjects } from 'modules/projects.reducer';
 
@@ -63,8 +64,11 @@ class User extends Component {
     this.state = {
       likes: '12.853',
       products: 32,
-      code: null
+      code: null,
+      projects: []
     }
+
+    utils.onTheEnd(this.loadData);
   }
 
   componentDidMount() {
@@ -86,18 +90,21 @@ class User extends Component {
   loadData = () => {
     this.props.getUserByCode(this.state.code).then(re => {
       let user = re.data[0];
-      return this.props.getProjects(user.id);
+      return this.props.getProjects(user.id).then(re => {
+        let newData = this.state.projects.concat(re.data);
+        return this.setState({ projects: newData });
+      }).catch(er => {
+        return console.error(er);
+      });
     }).catch(er => {
       return console.error(er);
     });
   }
-
   render() {
     let { classes } = this.props;
     let user = this.props.users.data[0];
-    let projects = this.props.projects.data;
 
-    if (!user || !projects) return null;
+    if (!user) return null;
 
     return <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
       <Grid item xs={12}>
@@ -153,7 +160,7 @@ class User extends Component {
       <Grid item xs={12} sm={10} md={10}>
         <Grid container direction="row" spacing={2}>
           {
-            projects.map((project, index) => {
+            this.state.projects.map((project, index) => {
               if (!project.user || !project.comments) return null;
               return <Grid item key={index} xs={12} sm={6} md={4}>
                 <Project

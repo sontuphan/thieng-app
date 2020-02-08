@@ -1,6 +1,5 @@
 export default theme => ({
   row: {
-    minHeight: '10px',
     width: '100%'
   },
   divider: {

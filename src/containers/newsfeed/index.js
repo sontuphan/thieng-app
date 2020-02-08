@@ -23,6 +23,7 @@ class Newsfeed extends Component {
     this.state = {
       projects: []
     }
+    
     utils.onTheEnd(this.loadData);
   }
 
