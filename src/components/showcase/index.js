@@ -92,11 +92,11 @@ class Showcase extends Component {
           backgroundSize: 'contain'
         } : null} />
         <Grid item xs={6}>
-          <Grid container direction="row" alignItems="center" spacing={1}>
-            <Grid item onClick={this.onAuthor} className={classes.pointer}>
+          <Grid container direction="row" alignItems="center" spacing={1} onClick={this.onAuthor}>
+            <Grid item className={classes.pointer}>
               <Avatar alt={author.displayname} src={author.avatar} className={classes.avatar} />
             </Grid>
-            <Grid item xs={8} onClick={this.onAuthor} className={classes.pointer}>
+            <Grid item xs={8} className={classes.pointer}>
               <Typography noWrap>{author.displayname}</Typography>
             </Grid>
           </Grid>

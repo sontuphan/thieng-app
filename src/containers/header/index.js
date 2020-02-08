@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
+import { Link as RouterLink, withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -22,6 +22,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Link from '@material-ui/core/Link';
 
 import { Menu, Person, Close, Search, LocalGroceryStore } from '@material-ui/icons';
 
@@ -128,30 +129,33 @@ class Header extends Component {
           size="small"
           startIcon={<Badge badgeContent={this.state.grocery} color="primary">
             <LocalGroceryStore fontSize="small" />
-          </Badge>}>
+          </Badge>}
+          component={RouterLink}
+          to="/grocery">
           <Typography>Giỏ hàng</Typography>
         </Button>
         <Button
           variant="outlined"
           size="small"
           startIcon={<Person />}
-          onClick={() => this.redirect('/user/remy-sharp')}>
+          component={RouterLink}
+          to="/user/remy-sharp">
           <Typography>{user.displayname}</Typography>
-        </Button>
+        </Button >
         <Button
           variant="outlined"
           size="small"
           onClick={() => this.props.logOut(user.service)}>
           <Typography>Đăng xuất</Typography>
         </Button>
-      </ButtonGroup>
+      </ButtonGroup >
     else
       return <Button
         variant="outlined"
         size="small"
         onClick={this.onToggleLogInModal}>
         <Typography>Đăng nhập</Typography>
-      </Button>
+      </Button >
   }
 
   renderDrawer = () => {
@@ -167,15 +171,18 @@ class Header extends Component {
           </ListItemSecondaryAction>
         </ListItem>
         <Divider />
-        <ListItem button onClick={() => this.redirect('/home')}>
+        <ListItem button component={RouterLink} to="/home" onClick={this.onToggleDrawer} >
           <ListItemText primary={<Typography variant="h3">Thiêng</Typography>} />
         </ListItem>
         {
-          this.state.routes.map((route, index) =>
-            <ListItem key={index} button onClick={() => this.redirect(route.link)}>
-              <ListItemText primary={route.text} />
-            </ListItem>
-          )
+          this.state.routes.map((route, index) => <ListItem
+            key={index}
+            button
+            component={RouterLink}
+            to={route.link}
+            onClick={this.onToggleDrawer} >
+            <ListItemText primary={route.text} />
+          </ListItem>)
         }
         <Divider />
         <ListItem>
@@ -198,9 +205,11 @@ class Header extends Component {
         {
           this.state.routes.map((route, index) =>
             <Grid item key={index} className={classes.route}>
-              <Typography onClick={() => this.redirect(route.link)}>
-                <span className="link">{route.text}</span>
-              </Typography>
+              <Link color="textPrimary" underline="none" component={RouterLink} to={route.link}>
+                <Typography >
+                  <span className="link">{route.text}</span>
+                </Typography>
+              </Link>
             </Grid>
           )
         }
