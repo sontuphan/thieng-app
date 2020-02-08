@@ -45,7 +45,7 @@ class MiniShowcase extends Component {
         <Grid container spacing={1}>
           {
             object.tags.map(tag => <Grid item key={tag}>
-              <Chip color="primary" label={tag} size="small" />
+              <Chip className={classes.font} color="primary" label={tag} size="small" />
             </Grid>)
           }
         </Grid>

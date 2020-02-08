@@ -80,7 +80,7 @@ class Item extends Component {
   }
 
   render() {
-    // let { classes } = this.props;
+    let { classes } = this.props;
     let object = this.props.items.data[0];
     let comments = this.props.comments.data;
     let author = this.props.users.data[0];
@@ -99,7 +99,7 @@ class Item extends Component {
             <Grid container spacing={1}>
               {
                 object.tags.map(tag => <Grid item key={tag}>
-                  <Chip color="primary" label={tag} size="small" />
+                  <Chip className={classes.font} color="primary" label={tag} size="small" />
                 </Grid>)
               }
             </Grid>

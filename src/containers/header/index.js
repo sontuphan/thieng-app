@@ -83,7 +83,6 @@ class Header extends Component {
 
   renderSearch = () => {
     let { classes } = this.props;
-    console.log(this.state.matches)
     return <TextField
       color="secondary"
       placeholder="Search"

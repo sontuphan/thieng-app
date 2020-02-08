@@ -1,4 +1,5 @@
 export default theme => ({
+  font: { ...theme.typography.body1 },
   image: {
     background: 'linear-gradient(42.13deg, #FF9B21 0%, #FF3E3C 50%, #FF3E3C 100%)',
     width: '100%',
