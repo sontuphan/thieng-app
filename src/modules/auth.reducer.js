@@ -9,17 +9,26 @@ import designerImg1 from 'static/images/designer-1.jpg';
 const defaultState = {
   displayname: null,
   email: null,
-  link: null,
+  service: null,
   avatar: null,
   isLoggedIn: null
 }
 
 const TEST_DATA = {
-  displayname: 'Thiêng Việt',
-  email: 'thiengviet@gmail.com',
-  link: '/user/thieng-viet',
-  avatar: designerImg1,
-  isLoggedIn: true
+  google: {
+    displayname: 'Sơn Tự',
+    email: 'sontu@gmail.com',
+    service: 'google',
+    avatar: designerImg1,
+    isLoggedIn: true
+  },
+  facebook: {
+    displayname: 'Tự Phan',
+    email: 'tuphan@facebook.com',
+    service: 'facebook',
+    avatar: designerImg1,
+    isLoggedIn: true
+  }
 }
 
 /**
@@ -29,13 +38,12 @@ export const LOG_IN = 'LOG_IN';
 export const LOG_IN_OK = 'LOG_IN_OK';
 export const LOG_IN_FAIL = 'LOG_IN_FAIL';
 
-export const logIn = () => {
+export const logIn = (service) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
       dispatch({ type: LOG_IN });
 
-      let random = Math.floor(Math.random() * 10);
-      if (random % 2) {
+      if (service === 'apple') {
         dispatch({
           type: LOG_IN_FAIL,
           reason: 'Failed connection.',
@@ -47,9 +55,9 @@ export const logIn = () => {
       dispatch({
         type: LOG_IN_OK,
         reason: null,
-        data: TEST_DATA
+        data: TEST_DATA[service]
       });
-      return resolve(TEST_DATA);
+      return resolve(TEST_DATA[service]);
     });
   }
 }
@@ -61,17 +69,16 @@ export const LOG_OUT = 'LOG_OUT';
 export const LOG_OUT_OK = 'LOG_OUT_OK';
 export const LOG_OUT_FAIL = 'LOG_OUT_FAIL';
 
-export const logOut = () => {
+export const logOut = (service) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
       dispatch({ type: LOG_OUT });
 
-      let random = Math.floor(Math.random() * 10);
-      if (random % 2) {
+      if (!service) {
         dispatch({
           type: LOG_OUT_FAIL,
           reason: 'Failed connection.',
-          data: TEST_DATA
+          data: null
         });
         return reject('Failed connection.');
       }
@@ -81,7 +88,7 @@ export const logOut = () => {
         reason: null,
         data: { ...defaultState }
       });
-      return resolve(TEST_DATA);
+      return resolve(TEST_DATA[service]);
     });
   }
 }

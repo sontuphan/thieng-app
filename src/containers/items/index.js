@@ -25,7 +25,7 @@ class Items extends Component {
     this.state = {
       items: [],
       page: 0,
-      limit: 6,
+      limit: 12,
     }
   }
 

@@ -51,7 +51,7 @@ const theme = createMuiTheme({
     body2: {
       fontFamily: ['"Open Sans"', 'sans-serif'].join(','),
       fontWeight: 300,
-      fontSize: 17,
+      fontSize: 15,
       letterSpacing: 0,
       textTransform: 'None',
     }

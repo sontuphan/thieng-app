@@ -18,7 +18,10 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import Badge from '@material-ui/core/Badge';
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { Menu, Person, Close, Search, LocalGroceryStore } from '@material-ui/icons';
 
@@ -34,7 +37,6 @@ class Header extends Component {
     this.state = {
       matches: props.ui.width >= 960,
       user: {},
-      visible: false,
       routes: [
         { text: "Bảng tin", link: '/newsfeed' },
         { text: "Siêu thị", link: '/mall' },
@@ -42,7 +44,10 @@ class Header extends Component {
         { text: "Liên hệ", link: '/contact' },
       ],
       search: null,
-      grocery: 3
+      grocery: 3,
+      visibleDrawer: false,
+      visibleLogInModal: false,
+      errorLogInModal: false,
     }
   }
 
@@ -55,17 +60,18 @@ class Header extends Component {
     }
   }
 
+  logIn = (service) => {
+    this.props.logIn(service).then(re => {
+      this.setState({ errorLogInModal: null })
+      this.onToggleLogInModal();
+    }).catch(er => {
+      this.setState({ errorLogInModal: er })
+    });
+  }
+
   redirect = (to) => {
     this.props.history.push(to);
-    this.close();
-  }
-
-  open = () => {
-    this.setState({ visible: true });
-  }
-
-  close = () => {
-    this.setState({ visible: false });
+    this.onToggleDrawer(false);
   }
 
   input = (e) => {
@@ -75,10 +81,21 @@ class Header extends Component {
 
   search = () => {
     this.props.search(this.state.search).then(re => {
-      this.setState({ visible: false });
+      this.setState({ visibleDrawer: false });
     }).catch(er => {
       console.error(er);
     });
+  }
+
+  onToggleDrawer = (visible) => {
+    if (typeof visible === 'boolean') return this.setState({ visibleDrawer: visible });
+    return this.setState({ visibleDrawer: !this.state.visibleDrawer });
+  }
+
+
+  onToggleLogInModal = (visible) => {
+    if (typeof visible === 'boolean') return this.setState({ visibleLogInModal: visible });
+    this.setState({ visibleLogInModal: !this.state.visibleLogInModal });
   }
 
   renderSearch = () => {
@@ -88,9 +105,7 @@ class Header extends Component {
       placeholder="Search"
       onChange={this.input}
       InputProps={{
-        classes: {
-          input: classes.font,
-        },
+        classes: { input: classes.font },
         endAdornment: (
           <InputAdornment position="start" className={classes.adornment}>
             <IconButton size="small" onClick={this.search}>
@@ -104,36 +119,48 @@ class Header extends Component {
   }
 
   renderProfile = () => {
-    if (this.state.user.isLoggedIn)
+    let { user } = this.state;
+    if (user.isLoggedIn)
       return <ButtonGroup>
-        <Button variant="outlined" size="small"
+        <Button
+          variant="outlined"
+          size="small"
           startIcon={<Badge badgeContent={this.state.grocery} color="primary">
             <LocalGroceryStore fontSize="small" />
           </Badge>}>
           <Typography>Giỏ hàng</Typography>
         </Button>
-        <Button variant="outlined" size="small" startIcon={<Person />}
+        <Button
+          variant="outlined"
+          size="small"
+          startIcon={<Person />}
           onClick={() => this.redirect('/user/remy-sharp')}>
-          <Typography>Cá nhân</Typography>
+          <Typography>{user.displayname}</Typography>
         </Button>
-        <Button variant="outlined" size="small" onClick={this.props.logOut}>
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={() => this.props.logOut(user.service)}>
           <Typography>Đăng xuất</Typography>
         </Button>
       </ButtonGroup>
     else
-      return <Button variant="outlined" size="small" onClick={this.props.logIn}>
+      return <Button
+        variant="outlined"
+        size="small"
+        onClick={this.onToggleLogInModal}>
         <Typography>Đăng nhập</Typography>
       </Button>
   }
 
   renderDrawer = () => {
     let { classes } = this.props;
-    return <Drawer anchor="top" open={this.state.visible} onClose={this.close}>
+    return <Drawer anchor="top" open={this.state.visibleDrawer} onClose={this.onToggleDrawer}>
       <List className={classes.drawer}>
         <ListItem>
           <ListItemText primary={'Good morning!'} />
           <ListItemSecondaryAction>
-            <IconButton color="secondary" size="small" onClick={this.close}>
+            <IconButton color="secondary" size="small" onClick={this.onToggleDrawer}>
               <Close />
             </IconButton>
           </ListItemSecondaryAction>
@@ -182,12 +209,82 @@ class Header extends Component {
       </Grid>
     else
       return <Grid container direction="row" justify="flex-end" alignItems="center">
-        <IconButton color="secondary" onClick={this.open}>
+        <IconButton color="secondary" onClick={this.onToggleDrawer}>
           <Badge badgeContent={this.state.grocery} color="primary">
             <Menu />
           </Badge>
         </IconButton>
       </Grid>
+  }
+
+  renderLogInModal = () => {
+    return <Dialog
+      open={this.state.visibleLogInModal}
+      onClose={this.onToggleLogInModal}
+      fullScreen={!this.state.matches}
+    >
+      <DialogTitle>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={8}>
+            <Typography variant="h3">Đăng nhập</Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Grid container justify="flex-end" spacing={2}>
+              <Grid item>
+                <IconButton color="secondary" size="small" onClick={this.onToggleLogInModal}>
+                  <Close />
+                </IconButton>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </DialogTitle>
+      <DialogContent>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Typography>You can easily log in to the website with your favourite service and skip the inconvenience of registration.</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            {this.state.errorLogInModal ? <Typography color="primary">{this.state.errorLogInModal} Please try again!</Typography> : null}
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<i className="fab fa-google" />}
+              onClick={() => this.logIn('google')}
+              fullWidth>
+              <Typography>Log in with Google</Typography>
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<i className="fab fa-facebook-f" />}
+              onClick={() => this.logIn('facebook')}
+              fullWidth>
+              <Typography>Log in with Facebook</Typography>
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<i className="fab fa-apple" />}
+              onClick={() => this.logIn('apple')}
+              fullWidth>
+              <Typography>Log in with Apple</Typography>
+            </Button>
+          </Grid>
+        </Grid>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={this.onToggleLogInModal} color="primary" autoFocus>
+          <Typography>Bạn cần sự giúp đỡ ?</Typography>
+        </Button>
+      </DialogActions>
+    </Dialog>
   }
 
   render() {
@@ -205,6 +302,7 @@ class Header extends Component {
         </Grid>
       </Grid>
       {this.renderDrawer()}
+      {this.renderLogInModal()}
     </Fragment>
   }
 }

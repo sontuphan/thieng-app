@@ -15,6 +15,6 @@ export default theme => {
     },
     drawer: {
       minWidth: '240px'
-    }
+    },
   }
 };
