@@ -27,6 +27,7 @@ import { Menu, Person, Close, Search, LocalGroceryStore } from '@material-ui/ico
 
 import styles from './styles';
 
+import utils from 'helpers/utils';
 import { search } from 'modules/search.reducer';
 import { logIn, logOut } from 'modules/auth.reducer';
 
@@ -158,7 +159,7 @@ class Header extends Component {
     return <Drawer anchor="top" open={this.state.visibleDrawer} onClose={this.onToggleDrawer}>
       <List className={classes.drawer}>
         <ListItem>
-          <ListItemText primary={'Good morning!'} />
+          <ListItemText primary={utils.greet()} />
           <ListItemSecondaryAction>
             <IconButton color="secondary" size="small" onClick={this.onToggleDrawer}>
               <Close />
