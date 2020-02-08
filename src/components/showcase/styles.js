@@ -1,6 +1,7 @@
 export default theme => ({
-  pointer: {
-    cursor: 'pointer'
+  link: {
+    color: '#000000',
+    textDecoration: 'none'
   },
   avatar: {
     width: '41px',

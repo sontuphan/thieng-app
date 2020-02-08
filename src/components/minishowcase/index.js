@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link as RouterLink, withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -12,16 +13,12 @@ import styles from './styles';
 
 class MiniShowcase extends Component {
 
-  onView = () => {
-    window.open('/mall/' + this.props.object.id, '_blank');
-  }
-
   render() {
     let { classes, object } = this.props;
     let image = object.images[0];
     return <Grid container direction="row" justify="center" spacing={1}>
-      <Grid item xs={12}>
-        <div className={classes.image} onClick={this.onView}>
+      <Grid item xs={12} component={RouterLink} to={"/mall/" + object.id}>
+        <div className={classes.image}>
           {image.type !== 'png' ?
             <div className={classes.imageJPG}
               style={{
@@ -65,4 +62,4 @@ MiniShowcase.propTypes = {
   object: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(MiniShowcase);
+export default withRouter(withStyles(styles)(MiniShowcase));

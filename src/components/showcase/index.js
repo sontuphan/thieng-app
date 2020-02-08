@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { Swipeable } from 'react-swipeable';
@@ -58,11 +58,6 @@ class Showcase extends Component {
     this.onChange(step);
   }
 
-  onAuthor = () => {
-    let { author } = this.props;
-    this.props.history.push(author.link);
-  }
-
   render() {
     let { classes, author, objects } = this.props;
     let { showing } = this.state;
@@ -92,11 +87,11 @@ class Showcase extends Component {
           backgroundSize: 'contain'
         } : null} />
         <Grid item xs={6}>
-          <Grid container direction="row" alignItems="center" spacing={1} onClick={this.onAuthor}>
-            <Grid item className={classes.pointer}>
+          <Grid container direction="row" alignItems="center" spacing={1} >
+            <Grid item className={classes.link} component={RouterLink} to={author.link}>
               <Avatar alt={author.displayname} src={author.avatar} className={classes.avatar} />
             </Grid>
-            <Grid item xs={8} className={classes.pointer}>
+            <Grid item xs={8} className={classes.link} component={RouterLink} to={author.link}>
               <Typography noWrap>{author.displayname}</Typography>
             </Grid>
           </Grid>
