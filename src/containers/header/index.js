@@ -71,11 +71,6 @@ class Header extends Component {
     });
   }
 
-  redirect = (to) => {
-    this.props.history.push(to);
-    this.onToggleDrawer(false);
-  }
-
   input = (e) => {
     let search = e.target.value;
     this.setState({ search });
@@ -131,7 +126,8 @@ class Header extends Component {
             <LocalGroceryStore fontSize="small" />
           </Badge>}
           component={RouterLink}
-          to="/grocery">
+          to="/grocery"
+          onClick={() => this.onToggleDrawer(false)}>
           <Typography>Giỏ hàng</Typography>
         </Button>
         <Button
@@ -139,7 +135,8 @@ class Header extends Component {
           size="small"
           startIcon={<Person />}
           component={RouterLink}
-          to="/user/remy-sharp">
+          to="/user/remy-sharp"
+          onClick={() => this.onToggleDrawer(false)}>
           <Typography>{user.displayname}</Typography>
         </Button >
         <Button
@@ -290,7 +287,7 @@ class Header extends Component {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={this.onToggleLogInModal} color="primary" autoFocus>
+        <Button onClick={this.onToggleLogInModal} color="primary">
           <Typography>Bạn cần sự giúp đỡ ?</Typography>
         </Button>
       </DialogActions>
@@ -303,8 +300,10 @@ class Header extends Component {
     return <Fragment>
       <Grid item xs={10}>
         <Grid container direction="row" justify="space-between" alignItems="center">
-          <Grid item className={classes.logo} onClick={() => this.redirect('/home')}>
-            <Typography variant="h3">Thiêng</Typography>
+          <Grid item className={classes.logo}>
+            <Link color="textPrimary" underline="none" component={RouterLink} to={'/home'}>
+              <Typography variant="h3">Thiêng</Typography>
+            </Link>
           </Grid>
           <Grid item>
             {this.renderRoute()}

@@ -13,8 +13,8 @@ import TextField from '@material-ui/core/TextField';
 import { Shuffle } from '@material-ui/icons';
 
 import Drain from 'components/drain';
-import Showcase from 'components/showcase';
-import MiniShowcase from 'components/minishowcase';
+import Shelf from 'components/shelf';
+import Minishelf from 'components/minishelf';
 import Comment from 'components/comment';
 
 import { getItemById } from 'modules/items.reducer';
@@ -90,7 +90,7 @@ class Item extends Component {
 
     return <Grid container direction="row" justify="center" spacing={2}>
       <Grid item xs={12} md={6}>
-        <Showcase author={author} objects={object.images} on3D={this.on3D} />
+        <Shelf author={author} objects={object.images} on3D={this.on3D} />
       </Grid>
       <Grid item xs={12} md={6}>
         <Drain />
@@ -153,7 +153,7 @@ class Item extends Component {
             <Drain small />
           </Grid>
           {recommendation.map((obj, index) => <Grid key={index} item xs={4} md={2} xl={1}>
-            <MiniShowcase object={obj} />
+            <Minishelf object={obj} />
           </Grid>)}
           <Grid item xs={12}>
             <Grid container direction="row" justify="flex-end" spacing={2}>

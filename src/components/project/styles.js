@@ -13,7 +13,7 @@ export default theme => ({
     },
     cursor: 'pointer',
   },
-  image: {
+  thumbnail: {
     width: '100%',
     paddingTop: '100%'
   }

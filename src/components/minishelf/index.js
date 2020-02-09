@@ -11,7 +11,7 @@ import Drain from 'components/drain';
 
 import styles from './styles';
 
-class MiniShowcase extends Component {
+class Minishelf extends Component {
 
   render() {
     let { classes, object } = this.props;
@@ -58,8 +58,8 @@ class MiniShowcase extends Component {
   }
 }
 
-MiniShowcase.propTypes = {
+Minishelf.propTypes = {
   object: PropTypes.object.isRequired,
 }
 
-export default withRouter(withStyles(styles)(MiniShowcase));
+export default withRouter(withStyles(styles)(Minishelf));

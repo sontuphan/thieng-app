@@ -5,8 +5,8 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import Item from 'containers/item';
-import Items from 'containers/items';
+import Item from 'containers/mall/item';
+import Items from 'containers/mall/items';
 
 import styles from './styles';
 

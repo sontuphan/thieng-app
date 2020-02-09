@@ -16,13 +16,10 @@ import styles from './styles';
 
 class Project extends Component {
 
-  onSend = (msg) => {
-    console.log(msg);
-  }
-
   render() {
     let { classes } = this.props;
     let { author, project, comments } = this.props;
+    let { onClick, onSend } = this.props;
 
     return <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -47,10 +44,10 @@ class Project extends Component {
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <div className={classes.image}
+                <Grid item xs={12} onClick={onClick}>
+                  <div className={classes.thumbnail}
                     style={{
-                      backgroundImage: `url('${project.images[0]}')`,
+                      backgroundImage: `url('${project.thumbnail}')`,
                       backgroundPosition: 'center top',
                       backgroundRepeat: 'no-repeat',
                       backgroundSize: 'cover'
@@ -69,7 +66,7 @@ class Project extends Component {
                   </IconButton>
                 </Grid>
                 <Grid item>
-                  <IconButton size="small">
+                  <IconButton size="small" onClick={onClick}>
                     <Message fontSize="small" />
                   </IconButton>
                 </Grid>
@@ -84,7 +81,7 @@ class Project extends Component {
               <Typography>{project.status}</Typography>
             </Grid>
             <Grid item xs={12}>
-              <Comment user={this.props.auth} comments={comments} onSend={this.onSend} dense/>
+              <Comment user={this.props.auth} comments={comments} onSend={onSend} dense />
             </Grid>
           </Grid>
         </Paper>
@@ -99,6 +96,8 @@ Project.propTypes = {
   project: PropTypes.object.isRequired,
   comments: PropTypes.array.isRequired,
   auth: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+  onSend: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(Project);

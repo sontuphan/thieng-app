@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 import { ArrowForwardIos } from '@material-ui/icons';
 
 import Drain from 'components/drain';
-import MiniShowcase from 'components/minishowcase';
+import Minishelf from 'components/minishelf';
 import Divider from 'components/divider';
 
 import { getItems } from 'modules/items.reducer';
@@ -69,7 +69,7 @@ class Items extends Component {
             <Drain small />
           </Grid>
           {items.map((obj, i) => <Grid key={i} item xs={6} md={2}>
-            <MiniShowcase object={obj} />
+            <Minishelf object={obj} />
           </Grid>)}
           <Grid item xs={12}>
             <Grid container direction="row" justify="flex-end" spacing={2}>
@@ -97,7 +97,7 @@ class Items extends Component {
             <Drain small />
           </Grid>
           {items.map((obj, i) => <Grid key={i} item xs={6} md={2}>
-            <MiniShowcase object={obj} />
+            <Minishelf object={obj} />
           </Grid>)}
           <Grid item xs={12}>
             <Grid container direction="row" justify="flex-end" spacing={2}>

@@ -18,7 +18,7 @@ import Drain from 'components/drain';
 
 import styles from './styles';
 
-class Showcase extends Component {
+class Shelf extends Component {
   constructor() {
     super();
 
@@ -70,7 +70,7 @@ class Showcase extends Component {
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover'
         } : null}
-        className={classes.showcase}>
+        className={classes.shelf}>
         <Grid item xs={12}>
           <Grid container direction="row" justify="flex-end" spacing={2}>
             <Grid item>
@@ -143,10 +143,10 @@ class Showcase extends Component {
   }
 }
 
-Showcase.propTypes = {
+Shelf.propTypes = {
   author: PropTypes.object.isRequired,
   objects: PropTypes.array.isRequired,
   on3D: PropTypes.func.isRequired,
 }
 
-export default withRouter(withStyles(styles)(Showcase));
+export default withRouter(withStyles(styles)(Shelf));
