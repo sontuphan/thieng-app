@@ -21,7 +21,6 @@ import Project from 'components/project';
 import Gallery from 'components/gallery';
 import Comment from 'components/comment';
 
-import utils from 'helpers/utils';
 import { getUserByCode } from 'modules/users.reducer';
 import { getProjects } from 'modules/projects.reducer';
 
@@ -35,33 +34,38 @@ import human5 from 'static/images/human-5.svg';
 const MENU = [
   {
     title: "Xưởng thiết kế",
-    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    subtitle: "Tạo ra những ý tưởng sáng tạo và cảm hứng cho mọi người.",
     color: "linear-gradient(71.34deg, #9B51E0 0%, #BB6BD9 100%)",
-    img: human1
+    img: human1,
+    disabled: false,
   },
   {
     title: "Kệ hàng",
-    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    subtitle: "Quản lý sản phẩm, tối ưu hoá quá trình kinh doanh.",
     color: "linear-gradient(71.34deg, #2D9CDB 0%, #56CCF2 100%)",
-    img: human2
+    img: human2,
+    disabled: false,
   },
   {
-    title: "Khách hàng",
-    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    title: "Tin nhắn",
+    subtitle: "Kết nối, trò chuyện với khách hàng và chuyên gia.",
     color: "linear-gradient(71.34deg, #27AE60 0%, #6FCF97 100%)",
-    img: human3
+    img: human3,
+    disabled: false,
   },
   {
     title: "Ví",
-    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    subtitle: "Quản lý tài khoản và lịch sử thanh toán. (Comming soon)",
     color: "linear-gradient(71.34deg, #F2994A 0%, #F2C94C 100%)",
-    img: human4
+    img: human4,
+    disabled: true,
   },
   {
     title: "Cài đặt",
-    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    subtitle: "Điều chỉnh thông tin cá nhân và bảo mật dữ liệu.",
     color: "linear-gradient(71.34deg, #DB2721 0%, #FF3E3C 100%)",
-    img: human5
+    img: human5,
+    disabled: false,
   }
 ]
 
@@ -75,12 +79,20 @@ class User extends Component {
       code: null,
       projects: []
     }
+  }
 
-    utils.onTheEnd(this.loadData);
+  onTheEnd = () => {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)
+      return this.loadData();
   }
 
   componentDidMount() {
     this.handleParams();
+    window.addEventListener('scroll', this.onTheEnd);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onTheEnd);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -132,12 +144,13 @@ class User extends Component {
     let comments = project.comments;
     if (!author) return null;
 
+    let { classes } = this.props;
     return <Dialog
       open={true}
       onClose={this.onToogleGallery}
-      fullScreen={true}
+      fullScreen
     >
-      <DialogTitle>
+      <DialogTitle className={classes.padding}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={8}>
             <Grid container alignItems="center" spacing={2}>

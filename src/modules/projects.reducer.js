@@ -46,7 +46,7 @@ const _getComments = (itemId) => {
 }
 
 const _getProjects = (userId, page, limit) => {
-  if (!userId) userId = Math.floor(Math.random() * 4);
+  if (!userId) userId = Math.floor(Math.random() * 3);
   let projects = getRandomProjects(userId);
   let user = _getUserById(userId);
   projects = projects.map(project => {

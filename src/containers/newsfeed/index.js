@@ -12,7 +12,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 
-import { Close } from '@material-ui/icons';
+import { Close, ShoppingCart, Bookmark } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import Divider from 'components/divider';
@@ -20,7 +20,6 @@ import Project from 'components/project';
 import Gallery from 'components/gallery';
 import Comment from 'components/comment';
 
-import utils from 'helpers/utils';
 import { getProjects } from 'modules/projects.reducer';
 
 import styles from './styles';
@@ -35,9 +34,18 @@ class Newsfeed extends Component {
     }
   }
 
+  onTheEnd = () => {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)
+      return this.loadData();
+  }
+
   componentDidMount() {
     this.loadData();
-    utils.onTheEnd(this.loadData);
+    window.addEventListener('scroll', this.onTheEnd);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onTheEnd);
   }
 
   loadData = () => {
@@ -59,8 +67,16 @@ class Newsfeed extends Component {
     return this.props.history.push('/newsfeed/' + projectId);
   }
 
-  onSend = (comment) => {
+  onComment = (comment) => {
     console.log(comment);
+  }
+
+  onBuy = (projectId) => {
+    this.props.history.push(`/mall/${projectId}`);
+  }
+
+  onBookmark = (projectId) => {
+    console.log(projectId)
   }
 
   renderGallery = () => {
@@ -72,12 +88,13 @@ class Newsfeed extends Component {
     let comments = project.comments;
     if (!author) return null;
 
+    let { classes } = this.props;
     return <Dialog
       open={true}
       onClose={this.onToogleGallery}
-      fullScreen={true}
+      fullScreen
     >
-      <DialogTitle>
+      <DialogTitle className={classes.padding}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={8}>
             <Grid container alignItems="center" spacing={2}>
@@ -91,6 +108,16 @@ class Newsfeed extends Component {
           </Grid>
           <Grid item xs={4}>
             <Grid container justify="flex-end" spacing={2}>
+              <Grid item>
+                <IconButton color="secondary" size="small" onClick={() => this.onBuy(project.id)}>
+                  <ShoppingCart />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <IconButton color="secondary" size="small" onClick={() => this.onBookmark(project.id)}>
+                  <Bookmark />
+                </IconButton>
+              </Grid>
               <Grid item>
                 <IconButton color="secondary" size="small" onClick={this.onToogleGallery}>
                   <Close />
@@ -112,7 +139,10 @@ class Newsfeed extends Component {
             <Typography variant="h1">Nhận xét</Typography>
           </Grid>
           <Grid item xs={12}>
-            <Comment user={this.props.auth} comments={comments} onSend={this.onSend} />
+            <Comment user={this.props.auth} comments={comments} onSend={this.onComment} />
+          </Grid>
+          <Grid item xs={12}>
+            <Drain small/>
           </Grid>
         </Grid>
       </DialogContent>
@@ -122,7 +152,6 @@ class Newsfeed extends Component {
   render() {
     // let { classes } = this.props;
     let { projects } = this.state;
-
     if (!projects || !projects.length) return null;
 
     return <Fragment>
@@ -155,7 +184,7 @@ class Newsfeed extends Component {
                     comments={project.comments}
                     auth={this.props.auth}
                     onClick={() => this.onToogleGallery(`${project.id}`)}
-                    onSend={this.onSend} />
+                    onSend={this.onComment} />
                 </Grid>
               })
             }

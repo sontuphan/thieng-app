@@ -54,6 +54,7 @@ Card.propTypes = {
   color: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
+  disabled: PropTypes.bool,
 }
 
 export default withStyles(styles)(Card);

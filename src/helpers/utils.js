@@ -6,13 +6,6 @@ Utils.scrollTop = () => {
   root.scrollIntoView();
 }
 
-Utils.onTheEnd = (cb) => {
-  window.onscroll = () => {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)
-      return cb();
-  }
-}
-
 Utils.greet = () => {
   let hour = (new Date()).getHours();
   if (hour >= 5 && hour < 12) {
