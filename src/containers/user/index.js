@@ -12,7 +12,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 
-import { Close } from '@material-ui/icons';
+import { Close, ShoppingCart, Bookmark } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import Divider from 'components/divider';
@@ -62,7 +62,7 @@ const MENU = [
   },
   {
     title: "Cài đặt",
-    subtitle: "Điều chỉnh thông tin cá nhân và bảo mật dữ liệu.",
+    subtitle: "Điều chỉnh thông tin cá nhân và cài đặt dữ liệu bảo mật.",
     color: "linear-gradient(71.34deg, #DB2721 0%, #FF3E3C 100%)",
     img: human5,
     disabled: false,
@@ -131,9 +131,18 @@ class User extends Component {
     return this.props.history.push(`/user/${this.state.code}/${projectId}`);
   }
 
-  onSend = (comment) => {
+  onComment = (comment) => {
     console.log(comment);
   }
+
+  onBuy = (projectId) => {
+    this.props.history.push(`/mall/${projectId}`);
+  }
+
+  onBookmark = (projectId) => {
+    console.log(projectId)
+  }
+
 
   renderGallery = () => {
     let { projectId } = this.props.match.params;
@@ -152,18 +161,28 @@ class User extends Component {
     >
       <DialogTitle className={classes.padding}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={8}>
+          <Grid item xs={6}>
             <Grid container alignItems="center" spacing={2}>
               <Grid item>
                 <Avatar alt={author.displayname} src={author.avatar} />
               </Grid>
-              <Grid item>
-                <Typography variant="h3">{author.displayname}</Typography>
+              <Grid item xs={8}>
+                <Typography variant="h3" noWrap>{author.displayname}</Typography>
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <Grid container justify="flex-end" spacing={2}>
+              <Grid item>
+                <IconButton color="secondary" size="small" onClick={() => this.onBuy(project.id)}>
+                  <ShoppingCart />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <IconButton color="secondary" size="small" onClick={() => this.onBookmark(project.id)}>
+                  <Bookmark />
+                </IconButton>
+              </Grid>
               <Grid item>
                 <IconButton color="secondary" size="small" onClick={this.onToogleGallery}>
                   <Close />
@@ -185,7 +204,7 @@ class User extends Component {
             <Typography variant="h1">Nhận xét</Typography>
           </Grid>
           <Grid item xs={12}>
-            <Comment user={this.props.auth} comments={comments} onSend={this.onSend} />
+            <Comment user={this.props.auth} comments={comments} onSend={this.onComment} />
           </Grid>
         </Grid>
       </DialogContent>
@@ -264,7 +283,7 @@ class User extends Component {
                     comments={project.comments}
                     auth={this.props.auth}
                     onClick={() => this.onToogleGallery(`${project.id}`)}
-                    onSend={this.onSend} />
+                    onSend={this.onComment} />
                 </Grid>
               })
             }

@@ -96,17 +96,17 @@ class Newsfeed extends Component {
     >
       <DialogTitle className={classes.padding}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={8}>
+          <Grid item xs={6}>
             <Grid container alignItems="center" spacing={2}>
               <Grid item>
                 <Avatar alt={author.displayname} src={author.avatar} />
               </Grid>
-              <Grid item>
-                <Typography variant="h3">{author.displayname}</Typography>
+              <Grid item xs={8}>
+                <Typography variant="h3" noWrap>{author.displayname}</Typography>
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <Grid container justify="flex-end" spacing={2}>
               <Grid item>
                 <IconButton color="secondary" size="small" onClick={() => this.onBuy(project.id)}>

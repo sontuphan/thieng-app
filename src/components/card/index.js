@@ -17,7 +17,7 @@ class Card extends Component {
       <Grid item xs={12}>
         <Paper className={disabled ? classes.disbaleCard : classes.card} style={{ background: color }}>
           <Grid container alignItems="center" spacing={2}>
-            <Grid item xs={7} md={12}>
+            <Grid item xs={7} sm={9} md={12}>
               <Grid container justify="center" alignItems="center" spacing={2}>
                 {width >= 960 ? <Grid item xs={12} /> : null}
                 <Grid item xs={12}>
@@ -28,7 +28,7 @@ class Card extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={5} md={12}>
+            <Grid item xs={5} sm={3} md={12}>
               <Grid container justify="center" alignItems="center" spacing={2}>
                 <Grid item xs={12}>
                   <div id="image" className={classes.image}
