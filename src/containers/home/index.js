@@ -109,6 +109,27 @@ const PRODUCTS = [
 ]
 
 class Home extends Component {
+
+  componentDidMount() {
+    this.scrollToHash();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (JSON.stringify(prevProps.location) !== JSON.stringify(this.props.location))
+      this.scrollToHash();
+  }
+
+  scrollToHash = () => {
+    let hash = this.props.location.hash;
+    if (!hash) return;
+    let id = hash.replace('#', '');
+    let e = window.document.getElementById(id);
+    if (!e) return;
+    setTimeout(() => {
+      e.scrollIntoView();
+    }, 100);
+  }
+
   render() {
     return <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -149,7 +170,7 @@ class Home extends Component {
       <Grid item xs={12}>
         <Drain large />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} id="contact">
         <Contact />
       </Grid>
     </Grid >

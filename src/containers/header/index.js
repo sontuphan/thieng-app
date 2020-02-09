@@ -43,7 +43,7 @@ class Header extends Component {
         { text: "Bảng tin", link: '/newsfeed' },
         { text: "Siêu thị", link: '/mall' },
         // { text: "Đối tác", link: '/partner' },
-        { text: "Liên hệ", link: '/contact' },
+        { text: "Liên hệ", link: '/home#contact' },
       ],
       search: null,
       grocery: 3,
