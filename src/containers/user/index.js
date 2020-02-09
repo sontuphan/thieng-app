@@ -206,6 +206,9 @@ class User extends Component {
           <Grid item xs={12}>
             <Comment user={this.props.auth} comments={comments} onSend={this.onComment} />
           </Grid>
+          <Grid item xs={12}>
+            <Drain small/>
+          </Grid>
         </Grid>
       </DialogContent>
     </Dialog>
