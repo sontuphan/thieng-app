@@ -18,6 +18,7 @@ import Drain from 'components/drain';
 import Divider from 'components/divider';
 import Project from 'components/project';
 import Gallery from 'components/gallery';
+import Comment from 'components/comment';
 
 import utils from 'helpers/utils';
 import { getProjects } from 'modules/projects.reducer';
@@ -29,6 +30,7 @@ class Newsfeed extends Component {
     super();
 
     this.state = {
+      goBack: false,
       projects: []
     }
   }
@@ -48,9 +50,17 @@ class Newsfeed extends Component {
   }
 
   onToogleGallery = (projectId) => {
-    if (typeof projectId !== 'string')
+    if (typeof projectId !== 'string') {
+      if (this.state.goBack)
+        return this.props.history.goBack();
       return this.props.history.push('/newsfeed');
+    }
+    this.setState({ goBack: true });
     return this.props.history.push('/newsfeed/' + projectId);
+  }
+
+  onSend = (comment) => {
+    console.log(comment);
   }
 
   renderGallery = () => {
@@ -59,12 +69,12 @@ class Newsfeed extends Component {
 
     let project = this.state.projects[Number(projectId)];
     let author = project.user;
-
+    let comments = project.comments;
     if (!author) return null;
 
     return <Dialog
       open={true}
-      onClose={console.log}
+      onClose={this.onToogleGallery}
       fullScreen={true}
     >
       <DialogTitle>
@@ -94,6 +104,15 @@ class Newsfeed extends Component {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Gallery project={project} />
+          </Grid>
+          <Grid item xs={12}>
+            <Drain />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h1">Nhận xét</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Comment user={this.props.auth} comments={comments} onSend={this.onSend} />
           </Grid>
         </Grid>
       </DialogContent>
@@ -136,7 +155,7 @@ class Newsfeed extends Component {
                     comments={project.comments}
                     auth={this.props.auth}
                     onClick={() => this.onToogleGallery(`${project.id}`)}
-                    onSend={console.log} />
+                    onSend={this.onSend} />
                 </Grid>
               })
             }

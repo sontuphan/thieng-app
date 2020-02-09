@@ -17,6 +17,19 @@ import Divider from 'components/divider';
 import styles from './styles';
 
 class Comment extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      comment: ''
+    }
+  }
+
+  onChange = (e) => {
+    let comment = e.target.value;
+    if (!comment) comment = '';
+    this.setState({ comment });
+  }
 
   renderInput = (user) => {
     if (!user || !user.isLoggedIn) return null;
@@ -24,7 +37,12 @@ class Comment extends Component {
     let { classes, dense } = this.props;
     if (dense) return <Grid container spacing={2}>
       <Grid item xs={12}>
-        <TextField label="Nhận xét" variant="outlined" color="secondary" size="small"
+        <TextField
+          label="Nhận xét"
+          variant="outlined"
+          color="secondary"
+          size="small"
+          onChange={this.onChange}
           InputProps={{
             classes: {
               input: classes.font,
@@ -36,7 +54,7 @@ class Comment extends Component {
             ),
             endAdornment: (
               <InputAdornment position="start" className={classes.adornment}>
-                <IconButton size="small" onClick={this.props.onSend}>
+                <IconButton size="small" onClick={() => this.props.onSend(this.state.comment)}>
                   <Send />
                 </IconButton>
               </InputAdornment>
@@ -57,14 +75,19 @@ class Comment extends Component {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <TextField label="Nhận xét" variant="outlined" color="secondary" size="small"
+        <TextField
+          label="Nhận xét"
+          variant="outlined"
+          color="secondary"
+          size="small"
+          onChange={this.onChange}
           InputProps={{
             classes: {
               input: classes.font,
             },
             endAdornment: (
               <InputAdornment position="start" className={classes.adornment}>
-                <IconButton size="small" onClick={this.props.onSend}>
+                <IconButton size="small" onClick={() => this.props.onSend(this.state.comment)}>
                   <Send />
                 </IconButton>
               </InputAdornment>

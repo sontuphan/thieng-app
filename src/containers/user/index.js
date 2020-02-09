@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
@@ -6,12 +6,20 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
+
+import { Close } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import Divider from 'components/divider';
 import Card from 'components/card';
 import Project from 'components/project';
+import Gallery from 'components/gallery';
+import Comment from 'components/comment';
 
 import utils from 'helpers/utils';
 import { getUserByCode } from 'modules/users.reducer';
@@ -100,80 +108,158 @@ class User extends Component {
       return console.error(er);
     });
   }
+
+  onToogleGallery = (projectId) => {
+    if (typeof projectId !== 'string') {
+      if (this.state.goBack)
+        return this.props.history.goBack();
+      return this.props.history.push(`/user/${this.state.code}`);
+    }
+    this.setState({ goBack: true });
+    return this.props.history.push(`/user/${this.state.code}/${projectId}`);
+  }
+
+  onSend = (comment) => {
+    console.log(comment);
+  }
+
+  renderGallery = () => {
+    let { projectId } = this.props.match.params;
+    if (!projectId) return null;
+
+    let project = this.state.projects[Number(projectId)];
+    let author = project.user;
+    let comments = project.comments;
+    if (!author) return null;
+
+    return <Dialog
+      open={true}
+      onClose={this.onToogleGallery}
+      fullScreen={true}
+    >
+      <DialogTitle>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={8}>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item>
+                <Avatar alt={author.displayname} src={author.avatar} />
+              </Grid>
+              <Grid item>
+                <Typography variant="h3">{author.displayname}</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={4}>
+            <Grid container justify="flex-end" spacing={2}>
+              <Grid item>
+                <IconButton color="secondary" size="small" onClick={this.onToogleGallery}>
+                  <Close />
+                </IconButton>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </DialogTitle>
+      <DialogContent>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Gallery project={project} />
+          </Grid>
+          <Grid item xs={12}>
+            <Drain />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h1">Nhận xét</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Comment user={this.props.auth} comments={comments} onSend={this.onSend} />
+          </Grid>
+        </Grid>
+      </DialogContent>
+    </Dialog>
+  }
+
   render() {
     let { classes } = this.props;
     let user = this.props.users.data[0];
+    let { projects } = this.state;
 
     if (!user) return null;
+    if (!projects || !projects.length) return null;
 
-    return <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
-      <Grid item xs={12}>
-        <Drain />
-      </Grid>
-      <Grid item xs={10} md={5}>
-        <Grid container direction="row" justify="flex-start" alignItems="center" spacing={2}>
-          <Grid item>
-            <Avatar alt={user.displayname} src={user.avatar} className={classes.avatar} />
+    return <Fragment>
+      <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
+        <Grid item xs={12}>
+          <Drain />
+        </Grid>
+        <Grid item xs={10} md={5}>
+          <Grid container direction="row" justify="flex-start" alignItems="center" spacing={2}>
+            <Grid item>
+              <Avatar alt={user.displayname} src={user.avatar} className={classes.avatar} />
+            </Grid>
+            <Grid item>
+              <Typography variant="h1">{user.displayname}</Typography>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Typography variant="h1">{user.displayname}</Typography>
+        </Grid>
+        <Grid item xs={10} md={5}>
+          <Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
+            <Grid item>
+              <Typography>{user.hearts} Thích - {user.products} Sản phẩm</Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Drain />
+        </Grid>
+        <Grid item xs={12}>
+          <Grid container direction="row" justify="center" spacing={2}>
+            {
+              MENU.map(
+                (card, i) => <Grid key={i} item xs={10} md={2}>
+                  <Card {...card} width={this.props.ui.width} />
+                </Grid>
+              )
+            }
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Drain />
+        </Grid>
+        <Grid item xs={10}>
+          <Grid container direction="row" spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant="h1">Bảng tin</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Divider />
+            </Grid>
+            <Grid item xs={12}>
+              <Drain small />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} sm={10} md={10}>
+          <Grid container direction="row" spacing={2}>
+            {
+              projects.map((project, index) => {
+                if (!project.user || !project.comments) return null;
+                return <Grid item key={index} xs={12} sm={6} md={4}>
+                  <Project
+                    author={project.user}
+                    project={project}
+                    comments={project.comments}
+                    auth={this.props.auth}
+                    onClick={() => this.onToogleGallery(`${project.id}`)}
+                    onSend={this.onSend} />
+                </Grid>
+              })
+            }
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={10} md={5}>
-        <Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
-          <Grid item>
-            <Typography>{user.hearts} Thích - {user.products} Sản phẩm</Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item xs={12}>
-        <Drain />
-      </Grid>
-      <Grid item xs={12}>
-        <Grid container direction="row" justify="center" spacing={2}>
-          {
-            MENU.map(
-              (card, i) => <Grid key={i} item xs={10} md={2}>
-                <Card {...card} width={this.props.ui.width} />
-              </Grid>
-            )
-          }
-        </Grid>
-      </Grid>
-      <Grid item xs={12}>
-        <Drain />
-      </Grid>
-      <Grid item xs={10}>
-        <Grid container direction="row" spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant="h1">Bảng tin</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Divider />
-          </Grid>
-          <Grid item xs={12}>
-            <Drain small />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item xs={12} sm={10} md={10}>
-        <Grid container direction="row" spacing={2}>
-          {
-            this.state.projects.map((project, index) => {
-              if (!project.user || !project.comments) return null;
-              return <Grid item key={index} xs={12} sm={6} md={4}>
-                <Project
-                  author={project.user}
-                  project={project}
-                  comments={project.comments}
-                  auth={this.props.auth} />
-              </Grid>
-            })
-          }
-        </Grid>
-      </Grid>
-    </Grid>
+      {this.renderGallery()}
+    </Fragment>
   }
 }
 
