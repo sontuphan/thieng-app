@@ -45,7 +45,7 @@ class App extends Component {
             <Route path="/newsfeed/:projectId?" component={Newsfeed} />
             <Route path="/mall" component={Mall} />
             <Route exact path="/user/:code/:projectId?" component={User} />
-            <Route exact path="/factory/:code/:projectId?" component={Factory} />
+            <Route exact path="/factory/:projectId?" component={Factory} />
           </Switch>
         </Grid>
         <Grid item xs={12}>

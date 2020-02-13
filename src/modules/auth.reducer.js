@@ -7,7 +7,9 @@ import designerImg1 from 'static/images/designer-1.jpg';
  */
 
 const defaultState = {
+  id: null,
   displayname: null,
+  code: null,
   email: null,
   service: null,
   avatar: null,
@@ -16,15 +18,19 @@ const defaultState = {
 
 const TEST_DATA = {
   google: {
-    displayname: 'Sơn Tự',
-    email: 'sontu@gmail.com',
+    id: 0,
+    displayname: 'Remy Sharp',
+    code: 'remy-sharp',
+    email: 'remy@gmail.com',
     service: 'google',
     avatar: designerImg1,
     isLoggedIn: true
   },
   facebook: {
-    displayname: 'Tự Phan',
-    email: 'tuphan@facebook.com',
+    id: 0,
+    displayname: 'Remy Sharp',
+    code: 'remy-sharp',
+    email: 'remy@facebook.com',
     service: 'facebook',
     avatar: designerImg1,
     isLoggedIn: true

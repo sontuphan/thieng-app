@@ -17,16 +17,6 @@ import Item from './item';
 import Drain from 'components/drain';
 
 class Gallery extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      likes: '12.853',
-      products: 32,
-      code: null,
-      projects: []
-    }
-  }
 
   render = () => {
     let { classes } = this.props;

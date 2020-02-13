@@ -120,7 +120,7 @@ class User extends Component {
     });
   }
 
-  onToogleGallery = (projectId) => {
+  onGallery = (projectId) => {
     if (typeof projectId !== 'string') {
       if (this.state.goBack)
         return this.props.history.goBack();
@@ -141,7 +141,6 @@ class User extends Component {
   onBookmark = (projectId) => {
     console.log(projectId)
   }
-
 
   renderGallery = () => {
     let { projectId } = this.props.match.params;
@@ -164,7 +163,7 @@ class User extends Component {
     return <Gallery visible={true}
       project={project}
       author={author}
-      onClose={this.onToogleGallery}
+      onClose={this.onGallery}
       onBuy={() => this.onBuy(projectId)}
       onBookmark={() => this.onBookmark(projectId)}
       dialogContent={dialogContent} />
@@ -208,9 +207,7 @@ class User extends Component {
             {
               MENU.map(
                 (card, i) => <Grid key={i} item xs={10} md={2}>
-                  <Card {...card}
-                    width={this.props.ui.width}
-                    to={i === 0 ? `/factory/${user.code}` : null} />
+                  <Card {...card} width={this.props.ui.width} to={i === 0 ? '/factory' : '#'} />
                 </Grid>
               )
             }
@@ -243,7 +240,7 @@ class User extends Component {
                     project={project}
                     comments={project.comments}
                     auth={this.props.auth}
-                    onClick={() => this.onToogleGallery(`${project.id}`)}
+                    onClick={() => this.onGallery(`${project.id}`)}
                     onSend={this.onComment} />
                 </Grid>
               })
