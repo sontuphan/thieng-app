@@ -130,7 +130,7 @@ export const getRandomProjects = (userId) => [
     },
     author: userId,
     comments: [0, 1],
-    createdAt: dateformat("d mmmm yyyy"),
+    createdAt: dateformat("d mmm yyyy"),
   },
   {
     id: 1,
@@ -197,7 +197,7 @@ export const getRandomProjects = (userId) => [
     },
     author: userId,
     comments: [2, 3],
-    createdAt: dateformat("d mmmm yyyy"),
+    createdAt: dateformat("d mmm yyyy"),
   },
   {
     id: 2,
@@ -264,6 +264,6 @@ export const getRandomProjects = (userId) => [
     },
     author: userId,
     comments: [4, 5],
-    createdAt: dateformat("d mmmm yyyy"),
+    createdAt: dateformat("d mmm yyyy"),
   }
 ]

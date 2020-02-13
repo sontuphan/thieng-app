@@ -6,10 +6,13 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
-import { } from '@material-ui/icons';
+import { Add } from '@material-ui/icons';
 
 import Drain from 'components/drain';
+import Divider from 'components/divider';
 import Project from 'components/project';
 import Gallery from 'components/gallery';
 
@@ -50,18 +53,62 @@ class Factory extends Component {
     return this.props.history.push(`/factory/${projectId}`);
   }
 
+  onAddProject = () => {
+    console.log('add new project')
+  }
+
+  onStatus = () => {
+
+  }
+
+  onSave = () => {
+
+  }
+
+  onPublish = () => {
+
+  }
+
   renderGallery = () => {
     let { projectId } = this.props.match.params;
     if (!projectId) return null;
 
     let project = this.props.projects.data[Number(projectId)];
     let author = project.user;
-    let comments = project.comments;
     if (!author) return null;
 
     let dialogContent = <Fragment>
       <Grid item xs={12} md={10}>
-        <Typography variant="h1">Nhận xét</Typography>
+        <Typography variant="h1">Status</Typography>
+      </Grid>
+      <Grid item xs={12} md={10}>
+        <TextField
+          label="Hãy giới thiệu về dự án của bạn nào!"
+          variant="outlined"
+          color="secondary"
+          size="small"
+          onChange={this.onStatus}
+          multiline fullWidth />
+      </Grid>
+      <Grid item xs={12} md={10}>
+        <Grid container justify="flex-end" spacing={2}>
+          <Grid item>
+            <Button
+              color="primary"
+              variant="outlined"
+              onClick={this.onSave}>
+              <Typography>Lưu nháp</Typography>
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={this.onPublish}>
+              <Typography>Xuất bản</Typography>
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
     </Fragment>
 
@@ -72,8 +119,14 @@ class Factory extends Component {
       dialogContent={dialogContent} />
   }
 
+  renderProject = (project) => {
+    return <Project
+      author={project.user}
+      project={project}
+      onClick={() => this.onGallery(`${project.id}`)} />
+  }
+
   render() {
-    // let { classes } = this.props;
     let { auth, projects } = this.props;
     projects = projects.data;
 
@@ -86,10 +139,30 @@ class Factory extends Component {
           <Drain />
         </Grid>
         <Grid item xs={10}>
-          <Typography variant="h1">Xưởng thiết kế</Typography>
+          <Grid container direction="row" spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant="h1">Xưởng thiết kế</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Divider />
+            </Grid>
+            <Grid item xs={12}>
+              <Drain small />
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Drain />
+        <Grid item xs={12} sm={10} md={10}>
+          <Grid container justify="flex-end" spacing={2}>
+            <Grid item>
+              <Button
+                color="primary"
+                variant="contained"
+                startIcon={<Add />}
+                onClick={this.onAddProject}>
+                <Typography>Tạo mới</Typography>
+              </Button>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12} sm={10} md={10}>
           <Grid container direction="row" spacing={2}>
@@ -97,13 +170,7 @@ class Factory extends Component {
               projects.map((project, index) => {
                 if (!project.user || !project.comments) return null;
                 return <Grid item key={index} xs={12} sm={6} md={4}>
-                  <Project
-                    author={project.user}
-                    project={project}
-                    comments={project.comments}
-                    auth={this.props.auth}
-                    onClick={() => this.onGallery(`${project.id}`)}
-                    onSend={this.onComment} />
+                  {this.renderProject(project)}
                 </Grid>
               })
             }

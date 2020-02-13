@@ -10,7 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 
-import { Close, ShoppingCart, Bookmark } from '@material-ui/icons';
+import { Close, ShoppingCart, Share } from '@material-ui/icons';
 
 import styles from './styles';
 import Item from './item';
@@ -47,7 +47,7 @@ class Gallery extends Component {
               </Grid>
               <Grid item>
                 <IconButton color="secondary" size="small" onClick={this.props.onBookmark}>
-                  <Bookmark />
+                  <Share />
                 </IconButton>
               </Grid>
               <Grid item>

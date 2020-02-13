@@ -50,7 +50,7 @@ class Newsfeed extends Component {
     });
   }
 
-  onToogleGallery = (projectId) => {
+  onGallery = (projectId) => {
     if (typeof projectId !== 'string') {
       if (this.state.goBack)
         return this.props.history.goBack();
@@ -70,6 +70,18 @@ class Newsfeed extends Component {
 
   onBookmark = (projectId) => {
     console.log(projectId)
+  }
+
+  renderProject = (project) => {
+    let commentSession = <Grid item xs={12}>
+      <Comment user={this.props.auth} comments={project.comments} onSend={this.onComment} dense />
+    </Grid>
+
+    return <Project
+      author={project.user}
+      project={project}
+      onClick={() => this.onGallery(`${project.id}`)}
+      commentSession={commentSession} />
   }
 
   renderGallery = () => {
@@ -93,7 +105,7 @@ class Newsfeed extends Component {
     return <Gallery visible={true}
       project={project}
       author={author}
-      onClose={this.onToogleGallery}
+      onClose={this.onGallery}
       onBuy={() => this.onBuy(projectId)}
       onBookmark={() => this.onBookmark(projectId)}
       dialogContent={dialogContent} />
@@ -128,13 +140,7 @@ class Newsfeed extends Component {
               projects.map((project, index) => {
                 if (!project.user || !project.comments) return null;
                 return <Grid key={index} item xs={12} sm={6} md={4}>
-                  <Project
-                    author={project.user}
-                    project={project}
-                    comments={project.comments}
-                    auth={this.props.auth}
-                    onClick={() => this.onToogleGallery(`${project.id}`)}
-                    onSend={this.onComment} />
+                  {this.renderProject(project)}
                 </Grid>
               })
             }

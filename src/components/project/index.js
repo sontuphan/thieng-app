@@ -8,9 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 
-import { Favorite, Message, Bookmark } from '@material-ui/icons';
-
-import Comment from 'components/comment';
+import { Favorite, Share, Settings } from '@material-ui/icons';
 
 import styles from './styles';
 
@@ -18,14 +16,13 @@ class Project extends Component {
 
   render() {
     let { classes } = this.props;
-    let { author, project, comments } = this.props;
-    let { onClick, onSend } = this.props;
+    let { author, project, onClick } = this.props;
 
     return <Grid container spacing={2}>
       <Grid item xs={12}>
         <Paper className={classes.project}>
           <Grid container alignItems="center" spacing={2}>
-            <Grid item xs={8}>
+            <Grid item xs={10}>
               <Grid container alignItems="center" spacing={2}>
                 <Grid item>
                   <Avatar alt={author.displayname} src={author.avatar} />
@@ -35,10 +32,12 @@ class Project extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={2}>
               <Grid container justify="flex-end" alignItems="center" spacing={2}>
                 <Grid item>
-                  <Typography>{project.createdAt}</Typography>
+                  <IconButton size="small">
+                    <Settings fontSize="small" />
+                  </IconButton>
                 </Grid>
               </Grid>
             </Grid>
@@ -55,10 +54,10 @@ class Project extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={8}>
               <Typography style={{ fontWeight: "bold" }}>12,345 lượt thích</Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Grid container justify="flex-end" alignItems="center" spacing={2}>
                 <Grid item>
                   <IconButton size="small">
@@ -66,23 +65,16 @@ class Project extends Component {
                   </IconButton>
                 </Grid>
                 <Grid item>
-                  <IconButton size="small" onClick={onClick}>
-                    <Message fontSize="small" />
-                  </IconButton>
-                </Grid>
-                <Grid item>
                   <IconButton size="small">
-                    <Bookmark fontSize="small" />
+                    <Share fontSize="small" />
                   </IconButton>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={12}>
-              <Typography>{project.status}</Typography>
+              <Typography>{project.createdAt} - {project.status}</Typography>
             </Grid>
-            <Grid item xs={12}>
-              <Comment user={this.props.auth} comments={comments} onSend={onSend} dense />
-            </Grid>
+            {this.props.commentSession}
           </Grid>
         </Paper>
       </Grid>
@@ -93,11 +85,9 @@ class Project extends Component {
 
 Project.propTypes = {
   author: PropTypes.object.isRequired,
-  project: PropTypes.object.isRequired,
-  comments: PropTypes.array.isRequired,
-  auth: PropTypes.object.isRequired,
+  project: PropTypes.object,
   onClick: PropTypes.func.isRequired,
-  onSend: PropTypes.func.isRequired,
+  commentSession: PropTypes.object,
 }
 
 export default withStyles(styles)(Project);
