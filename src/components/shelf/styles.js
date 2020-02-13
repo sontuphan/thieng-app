@@ -1,4 +1,8 @@
 export default theme => ({
+  link: {
+    color: 'inherit',
+    textDecoration: 'none'
+  },
   avatar: {
     width: '41px',
     height: '41px',

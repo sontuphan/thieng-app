@@ -1,6 +1,6 @@
 export default theme => ({
   link: {
-    color: '#000000',
+    color: 'inherit',
     textDecoration: 'none'
   },
   disbaleCard: {

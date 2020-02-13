@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { Close } from '@material-ui/icons';
+import {  } from '@material-ui/icons';
 
 import styles from './styles';
 
@@ -21,7 +21,7 @@ class Factory extends Component {
   }
 
   render() {
-    let { classes } = this.props;
+    // let { classes } = this.props;
 
     return <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
       <Typography>Factory</Typography>
