@@ -1,6 +1,5 @@
 export default theme => ({
-  img: {
-    width: '100%',
-    height: 'auto'
+  padding: {
+    padding: `${theme.spacing(1)}px ${theme.spacing(3)}px`
   }
 });

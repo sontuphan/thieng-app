@@ -6,13 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
-
-import { Close, ShoppingCart, Bookmark } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import Divider from 'components/divider';
@@ -158,65 +152,22 @@ class User extends Component {
     let comments = project.comments;
     if (!author) return null;
 
-    let { classes } = this.props;
-    return <Dialog
-      open={true}
+    let dialogContent = <Fragment>
+      <Grid item xs={12} md={10}>
+        <Typography variant="h1">Nhận xét</Typography>
+      </Grid>
+      <Grid item xs={12} md={10}>
+        <Comment user={this.props.auth} comments={comments} onSend={this.onComment} />
+      </Grid>
+    </Fragment>
+
+    return <Gallery visible={true}
+      project={project}
+      author={author}
       onClose={this.onToogleGallery}
-      fullScreen
-    >
-      <DialogTitle className={classes.padding}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={6}>
-            <Grid container alignItems="center" spacing={2}>
-              <Grid item>
-                <Avatar alt={author.displayname} src={author.avatar} />
-              </Grid>
-              <Grid item xs={8}>
-                <Typography variant="h3" noWrap>{author.displayname}</Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={6}>
-            <Grid container justify="flex-end" spacing={2}>
-              <Grid item>
-                <IconButton color="secondary" size="small" onClick={() => this.onBuy(project.id)}>
-                  <ShoppingCart />
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <IconButton color="secondary" size="small" onClick={() => this.onBookmark(project.id)}>
-                  <Bookmark />
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <IconButton color="secondary" size="small" onClick={this.onToogleGallery}>
-                  <Close />
-                </IconButton>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </DialogTitle>
-      <DialogContent>
-        <Grid container justify="center" spacing={2}>
-          <Grid item xs={12}>
-            <Gallery project={project} />
-          </Grid>
-          <Grid item xs={12}>
-            <Drain />
-          </Grid>
-          <Grid item xs={12} md={10}>
-            <Typography variant="h1">Nhận xét</Typography>
-          </Grid>
-          <Grid item xs={12} md={10}>
-            <Comment user={this.props.auth} comments={comments} onSend={this.onComment} />
-          </Grid>
-          <Grid item xs={12}>
-            <Drain small />
-          </Grid>
-        </Grid>
-      </DialogContent>
-    </Dialog>
+      onBuy={() => this.onBuy(projectId)}
+      onBookmark={() => this.onBookmark(projectId)}
+      dialogContent={dialogContent} />
   }
 
   render() {
@@ -259,7 +210,7 @@ class User extends Component {
                 (card, i) => <Grid key={i} item xs={10} md={2}>
                   <Card {...card}
                     width={this.props.ui.width}
-                    to={i === 0 ? `/factory/${user.code}/1` : null} />
+                    to={i === 0 ? `/factory/${user.code}` : null} />
                 </Grid>
               )
             }
