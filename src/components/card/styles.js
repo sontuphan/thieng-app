@@ -1,4 +1,8 @@
 export default theme => ({
+  link: {
+    color: '#000000',
+    textDecoration: 'none'
+  },
   disbaleCard: {
     padding: theme.spacing(2),
     width: `calc(100% - ${theme.spacing(4)}px)`,

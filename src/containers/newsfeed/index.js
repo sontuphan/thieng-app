@@ -138,11 +138,14 @@ class Newsfeed extends Component {
           <Grid item xs={12} md={10}>
             <Typography variant="h1">Nhận xét</Typography>
           </Grid>
+          <Grid item xs={12}>
+            <Drain small />
+          </Grid>
           <Grid item xs={12} md={10}>
             <Comment user={this.props.auth} comments={comments} onSend={this.onComment} />
           </Grid>
           <Grid item xs={12}>
-            <Drain small/>
+            <Drain small />
           </Grid>
         </Grid>
       </DialogContent>

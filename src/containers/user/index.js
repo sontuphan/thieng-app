@@ -34,38 +34,43 @@ import human5 from 'static/images/human-5.svg';
 const MENU = [
   {
     title: "Xưởng thiết kế",
-    subtitle: "Tạo ra những ý tưởng sáng tạo và cảm hứng cho mọi người.",
+    subtitle: "Tạo ra ý tưởng và truyền cảm hứng.",
     color: "linear-gradient(71.34deg, #9B51E0 0%, #BB6BD9 100%)",
     img: human1,
     disabled: false,
+    tooltip: '',
   },
   {
     title: "Kệ hàng",
-    subtitle: "Quản lý sản phẩm, tối ưu hoá quá trình kinh doanh.",
+    subtitle: "Quản lý sản phẩm, quá trình kinh doanh.",
     color: "linear-gradient(71.34deg, #2D9CDB 0%, #56CCF2 100%)",
     img: human2,
-    disabled: false,
+    disabled: true,
+    tooltip: 'Comming soon',
   },
   {
     title: "Tin nhắn",
-    subtitle: "Kết nối, trò chuyện với khách hàng và chuyên gia.",
+    subtitle: "Kết nối với khách hàng và chuyên gia.",
     color: "linear-gradient(71.34deg, #27AE60 0%, #6FCF97 100%)",
     img: human3,
-    disabled: false,
+    disabled: true,
+    tooltip: 'Comming soon',
   },
   {
     title: "Ví",
-    subtitle: "Quản lý tài khoản và lịch sử thanh toán. (Comming soon)",
+    subtitle: "Quản lý tài khoản và lịch sử thanh toán.",
     color: "linear-gradient(71.34deg, #F2994A 0%, #F2C94C 100%)",
     img: human4,
     disabled: true,
+    tooltip: 'Comming soon',
   },
   {
     title: "Cài đặt",
-    subtitle: "Điều chỉnh thông tin cá nhân và cài đặt dữ liệu bảo mật.",
+    subtitle: "Điều chỉnh, bảo mật thông tin cá nhân.",
     color: "linear-gradient(71.34deg, #DB2721 0%, #FF3E3C 100%)",
     img: human5,
-    disabled: false,
+    disabled: true,
+    tooltip: 'Comming soon',
   }
 ]
 
@@ -252,7 +257,9 @@ class User extends Component {
             {
               MENU.map(
                 (card, i) => <Grid key={i} item xs={10} md={2}>
-                  <Card {...card} width={this.props.ui.width} />
+                  <Card {...card}
+                    width={this.props.ui.width}
+                    to={i === 0 ? `/factory/${user.code}/1` : null} />
                 </Grid>
               )
             }

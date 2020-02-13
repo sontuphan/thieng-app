@@ -174,6 +174,9 @@ class Item extends Component {
           <Grid item xs={12}>
             <Typography variant="h1">Nhận xét</Typography>
           </Grid>
+          <Grid item xs={12}>
+            <Drain small />
+          </Grid>
         </Grid>
         <Comment user={this.props.auth} comments={comments} onSend={this.onSend} />
       </Grid>
