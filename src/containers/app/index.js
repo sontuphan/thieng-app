@@ -14,6 +14,7 @@ import Newsfeed from 'containers/newsfeed';
 import Mall from 'containers/mall';
 import User from 'containers/user';
 import Factory from 'containers/factory';
+import BluePrint from 'containers/blueprint';
 import Footer from 'containers/footer';
 
 import theme from './theme';
@@ -45,6 +46,7 @@ class App extends Component {
             <Route path="/newsfeed/:projectId?" component={Newsfeed} />
             <Route path="/mall" component={Mall} />
             <Route exact path="/user/:code/:projectId?" component={User} />
+            <Route exact path="/factory/blueprint" component={BluePrint} />
             <Route exact path="/factory/:projectId?" component={Factory} />
           </Switch>
         </Grid>

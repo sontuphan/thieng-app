@@ -23,7 +23,7 @@ const DEFAULT_CONTAINER = {
 const DEFAULT_IMAGE = {
   type: 'image',
   width: 12,
-  url: randInterior().url,
+  url: randInterior(true).url,
 }
 
 const DEFAULT_TEXT = {
@@ -43,7 +43,7 @@ export const getRandomProjects = (userId) => [
     id: 0,
     item: 0,
     status: loremIpsum({ units: "sentences" }),
-    thumbnail: randInterior().url,
+    thumbnail: randInterior(true).url,
     render: {
       ...DEFAULT_CONTAINER,
       items: [
@@ -52,7 +52,7 @@ export const getRandomProjects = (userId) => [
           items: [
             {
               ...DEFAULT_IMAGE,
-              url: randInterior().url,
+              url: randInterior(true).url,
               width: 6,
             },
             {
@@ -61,12 +61,12 @@ export const getRandomProjects = (userId) => [
               items: [
                 {
                   ...DEFAULT_IMAGE,
-                  url: randInterior().url,
+                  url: randInterior(true).url,
                   width: 12,
                 },
                 {
                   ...DEFAULT_IMAGE,
-                  url: randInterior().url,
+                  url: randInterior(true).url,
                   width: 12,
                 },
               ]
@@ -87,7 +87,7 @@ export const getRandomProjects = (userId) => [
           items: [
             {
               ...DEFAULT_IMAGE,
-              url: randInterior().url,
+              url: randInterior(true).url,
             }
           ]
         },
@@ -112,17 +112,17 @@ export const getRandomProjects = (userId) => [
             {
               ...DEFAULT_IMAGE,
               width: 4,
-              url: randInterior().url,
+              url: randInterior(true).url,
             },
             {
               ...DEFAULT_IMAGE,
               width: 4,
-              url: randInterior().url,
+              url: randInterior(true).url,
             },
             {
               ...DEFAULT_IMAGE,
               width: 4,
-              url: randInterior().url,
+              url: randInterior(true).url,
             }
           ]
         },
@@ -136,7 +136,7 @@ export const getRandomProjects = (userId) => [
     id: 1,
     item: 1,
     status: loremIpsum({ units: "sentences" }),
-    thumbnail: randInterior().url,
+    thumbnail: randInterior(true).url,
     render: {
       ...DEFAULT_CONTAINER,
       items: [
@@ -145,12 +145,12 @@ export const getRandomProjects = (userId) => [
           items: [
             {
               ...DEFAULT_IMAGE,
-              url: randInterior().url,
+              url: randInterior(true).url,
               width: 6,
             },
             {
               ...DEFAULT_IMAGE,
-              url: randInterior().url,
+              url: randInterior(true).url,
               width: 6,
             }
           ]
@@ -169,7 +169,7 @@ export const getRandomProjects = (userId) => [
           items: [
             {
               ...DEFAULT_IMAGE,
-              url: randInterior().url,
+              url: randInterior(true).url,
             }
           ]
         },
@@ -179,17 +179,17 @@ export const getRandomProjects = (userId) => [
             {
               ...DEFAULT_IMAGE,
               width: 4,
-              url: randInterior().url,
+              url: randInterior(true).url,
             },
             {
               ...DEFAULT_IMAGE,
               width: 4,
-              url: randInterior().url,
+              url: randInterior(true).url,
             },
             {
               ...DEFAULT_IMAGE,
               width: 4,
-              url: randInterior().url,
+              url: randInterior(true).url,
             }
           ]
         },
@@ -203,7 +203,7 @@ export const getRandomProjects = (userId) => [
     id: 2,
     item: 2,
     status: loremIpsum({ units: "sentences" }),
-    thumbnail: randInterior().url,
+    thumbnail: randInterior(true).url,
     render: {
       ...DEFAULT_CONTAINER,
       items: [
@@ -212,12 +212,12 @@ export const getRandomProjects = (userId) => [
           items: [
             {
               ...DEFAULT_IMAGE,
-              url: randInterior().url,
+              url: randInterior(true).url,
               width: 6,
             },
             {
               ...DEFAULT_IMAGE,
-              url: randInterior().url,
+              url: randInterior(true).url,
               width: 6,
             }
           ]
@@ -236,7 +236,7 @@ export const getRandomProjects = (userId) => [
           items: [
             {
               ...DEFAULT_IMAGE,
-              url: randInterior().url,
+              url: randInterior(true).url,
             }
           ]
         },
@@ -246,17 +246,17 @@ export const getRandomProjects = (userId) => [
             {
               ...DEFAULT_IMAGE,
               width: 4,
-              url: randInterior().url,
+              url: randInterior(true).url,
             },
             {
               ...DEFAULT_IMAGE,
               width: 4,
-              url: randInterior().url,
+              url: randInterior(true).url,
             },
             {
               ...DEFAULT_IMAGE,
               width: 4,
-              url: randInterior().url,
+              url: randInterior(true).url,
             }
           ]
         },
