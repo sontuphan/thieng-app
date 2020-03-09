@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import storage from 'helpers/storage';
+import authentication from 'helpers/authentication';
 
 /**
  * Documents
@@ -16,11 +16,37 @@ const defaultState = {
 }
 
 /**
- * Init
+ * Refesh session
  */
-let data = storage.get('auth');
-console.log(data.accessToken)
-console.log(jwt.decode(data.accessToken))
+export const REFRESH_SESSION = 'REFRESH_SESSION';
+export const REFRESH_SESSION_OK = 'REFRESH_SESSION_OK';
+export const REFRESH_SESSION_FAIL = 'REFRESH_SESSION_FAIL';
+
+export const refreshSession = () => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: REFRESH_SESSION });
+
+      let data = authentication.get();
+      if (!data || typeof data !== 'object') {
+        dispatch({
+          type: REFRESH_SESSION_FAIL,
+          reason: 'Storage is empty.',
+          data: { ...defaultState }
+        });
+        return reject('Storage is empty.');
+      }
+
+      console.log('JWT:', jwt.decode(data.accessToken));
+      dispatch({
+        type: REFRESH_SESSION_OK,
+        reason: null,
+        data: { isValid: true, ...data }
+      });
+      return resolve(data);
+    });
+  }
+}
 
 /**
  * Log in
@@ -43,7 +69,7 @@ export const logIn = (data) => {
         return reject('Failed connection.');
       }
 
-      storage.set('auth', data);
+      authentication.set(data);
       dispatch({
         type: LOG_IN_OK,
         reason: null,
@@ -62,20 +88,22 @@ export const LOG_OUT = 'LOG_OUT';
 export const LOG_OUT_OK = 'LOG_OUT_OK';
 export const LOG_OUT_FAIL = 'LOG_OUT_FAIL';
 
-export const logOut = (service) => {
+export const logOut = () => {
   return dispatch => {
     return new Promise((resolve, reject) => {
       dispatch({ type: LOG_OUT });
 
-      if (!service) {
+      let data = authentication.get();
+      if (!data) {
         dispatch({
           type: LOG_OUT_FAIL,
-          reason: 'Failed connection.',
+          reason: 'Empty storage.',
           data: null
         });
-        return reject('Failed connection.');
+        return reject('Empty storage.');
       }
 
+      authentication.clear();
       dispatch({
         type: LOG_OUT_OK,
         reason: null,
@@ -91,6 +119,10 @@ export const logOut = (service) => {
  */
 export default (state = defaultState, action) => {
   switch (action.type) {
+    case REFRESH_SESSION_OK:
+      return { ...state, ...action.data };
+    case REFRESH_SESSION_FAIL:
+      return { ...state, ...action.data };
     case LOG_IN_OK:
       return { ...state, ...action.data };
     case LOG_IN_FAIL:

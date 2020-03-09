@@ -15,19 +15,18 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import TextField from '@material-ui/core/TextField';
 import Badge from '@material-ui/core/Badge';
 import Link from '@material-ui/core/Link';
 
-import { Menu, Person, Close, Search, LocalGroceryStore } from '@material-ui/icons';
+import { Menu, Person, Close, Notifications } from '@material-ui/icons';
 
 import styles from './styles';
 import LogIn from './login';
+import SearchToolbar from './search';
 
 import utils from 'helpers/utils';
 import { search } from 'modules/search.reducer';
-import { logIn, logOut } from 'modules/auth.reducer';
+import { refreshSession, logIn, logOut } from 'modules/auth.reducer';
 
 class Header extends Component {
   constructor(props) {
@@ -42,14 +41,16 @@ class Header extends Component {
         // { text: "Đối tác", link: '/partner' },
         { text: "Liên hệ", link: '/home#contact' },
       ],
-      search: null,
       grocery: 3,
       visibleDrawer: false,
       visibleLogInModal: false,
-      errorLogInModal: false,
     }
 
-    this.logo = <Typography variant="h3">Thiêng Việt</Typography>
+    this.logo = <Typography variant="h3">Thiêng</Typography>
+  }
+
+  componentDidMount() {
+    this.props.refreshSession();
   }
 
   componentDidUpdate(prevProps) {
@@ -61,13 +62,8 @@ class Header extends Component {
     }
   }
 
-  input = (e) => {
-    let search = e.target.value;
-    this.setState({ search });
-  }
-
-  search = () => {
-    this.props.search(this.state.search).then(re => {
+  search = (data) => {
+    this.props.search(data).then(re => {
       this.setState({ visibleDrawer: false });
     }).catch(er => {
       console.error(er);
@@ -79,7 +75,6 @@ class Header extends Component {
     return this.setState({ visibleDrawer: !this.state.visibleDrawer });
   }
 
-
   onToggleLogInModal = (visible) => {
     if (typeof visible === 'boolean') return this.setState({ visibleLogInModal: visible });
     this.setState({ visibleLogInModal: !this.state.visibleLogInModal });
@@ -90,26 +85,6 @@ class Header extends Component {
     return this.props.logIn(re);
   }
 
-  renderSearch = () => {
-    let { classes } = this.props;
-    return <TextField
-      color="secondary"
-      placeholder="Search"
-      onChange={this.input}
-      InputProps={{
-        classes: { input: classes.font },
-        endAdornment: (
-          <InputAdornment position="start" className={classes.adornment}>
-            <IconButton size="small" onClick={this.search}>
-              <Search />
-            </IconButton>
-          </InputAdornment>
-        ),
-      }}
-      onKeyPress={e => e.key === 'Enter' ? this.search() : null}
-      fullWidth={!this.state.matches} />
-  }
-
   renderProfile = () => {
     let { user } = this.state;
     if (user.isValid)
@@ -118,7 +93,7 @@ class Header extends Component {
           variant="outlined"
           size="small"
           startIcon={<Badge badgeContent={this.state.grocery} color="primary">
-            <LocalGroceryStore fontSize="small" />
+            <Notifications fontSize="small" />
           </Badge>}
           component={RouterLink}
           to="/grocery"
@@ -137,7 +112,7 @@ class Header extends Component {
         <Button
           variant="outlined"
           size="small"
-          onClick={() => this.props.logOut(user.service)}>
+          onClick={this.props.logOut}>
           <Typography>Đăng xuất</Typography>
         </Button>
       </ButtonGroup >
@@ -178,7 +153,7 @@ class Header extends Component {
         }
         <Divider />
         <ListItem>
-          {this.renderSearch()}
+          <SearchToolbar onChange={this.search} fullWidth={!this.state.matches} />
         </ListItem>
         <ListItem>
           {this.renderProfile()}
@@ -192,7 +167,7 @@ class Header extends Component {
     if (this.state.matches)
       return <Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
         <Grid item className={classes.route}>
-          {this.renderSearch()}
+          <SearchToolbar onChange={this.search} fullWidth={!this.state.matches} />
         </Grid>
         {
           this.state.routes.map((route, index) =>
@@ -253,7 +228,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   search,
-  logIn, logOut,
+  refreshSession, logIn, logOut,
 }, dispatch);
 
 export default withRouter(connect(
