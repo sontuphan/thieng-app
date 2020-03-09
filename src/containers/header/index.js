@@ -18,15 +18,12 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import Badge from '@material-ui/core/Badge';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Link from '@material-ui/core/Link';
 
 import { Menu, Person, Close, Search, LocalGroceryStore } from '@material-ui/icons';
 
 import styles from './styles';
+import LogIn from './login';
 
 import utils from 'helpers/utils';
 import { search } from 'modules/search.reducer';
@@ -51,6 +48,8 @@ class Header extends Component {
       visibleLogInModal: false,
       errorLogInModal: false,
     }
+
+    this.logo = <Typography variant="h3">Thiêng Việt</Typography>
   }
 
   componentDidUpdate(prevProps) {
@@ -60,15 +59,6 @@ class Header extends Component {
     if (JSON.stringify(prevProps.ui) !== JSON.stringify(this.props.ui)) {
       this.setState({ matches: this.props.ui.width >= 960 })
     }
-  }
-
-  logIn = (service) => {
-    this.props.logIn(service).then(re => {
-      this.setState({ errorLogInModal: null })
-      this.onToggleLogInModal();
-    }).catch(er => {
-      this.setState({ errorLogInModal: er })
-    });
   }
 
   input = (e) => {
@@ -95,6 +85,11 @@ class Header extends Component {
     this.setState({ visibleLogInModal: !this.state.visibleLogInModal });
   }
 
+  logIn = (er, re) => {
+    if (er) return console.error(er);
+    return this.props.logIn(re);
+  }
+
   renderSearch = () => {
     let { classes } = this.props;
     return <TextField
@@ -117,7 +112,7 @@ class Header extends Component {
 
   renderProfile = () => {
     let { user } = this.state;
-    if (user.isLoggedIn)
+    if (user.isValid)
       return <ButtonGroup>
         <Button
           variant="outlined"
@@ -128,7 +123,7 @@ class Header extends Component {
           component={RouterLink}
           to="/grocery"
           onClick={() => this.onToggleDrawer(false)}>
-          <Typography>Giỏ hàng</Typography>
+          <Typography>Thông báo</Typography>
         </Button>
         <Button
           variant="outlined"
@@ -169,7 +164,7 @@ class Header extends Component {
         </ListItem>
         <Divider />
         <ListItem button component={RouterLink} to="/home" onClick={this.onToggleDrawer} >
-          <ListItemText primary={<Typography variant="h3">Thiêng</Typography>} />
+          <ListItemText primary={this.logo} />
         </ListItem>
         {
           this.state.routes.map((route, index) => <ListItem
@@ -224,76 +219,6 @@ class Header extends Component {
       </Grid>
   }
 
-  renderLogInModal = () => {
-    return <Dialog
-      open={this.state.visibleLogInModal}
-      onClose={this.onToggleLogInModal}
-      fullScreen={!this.state.matches}
-    >
-      <DialogTitle>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={8}>
-            <Typography variant="h3">Đăng nhập</Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Grid container justify="flex-end" spacing={2}>
-              <Grid item>
-                <IconButton color="secondary" size="small" onClick={this.onToggleLogInModal}>
-                  <Close />
-                </IconButton>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </DialogTitle>
-      <DialogContent>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Typography>You can easily log in to the website with your favourite service and skip the inconvenience of registration.</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            {this.state.errorLogInModal ? <Typography color="primary">{this.state.errorLogInModal} Please try again!</Typography> : null}
-          </Grid>
-          <Grid item xs={6}>
-            <Button
-              variant="outlined"
-              size="large"
-              startIcon={<i className="fab fa-google" />}
-              onClick={() => this.logIn('google')}
-              fullWidth>
-              <Typography>Log in with Google</Typography>
-            </Button>
-          </Grid>
-          <Grid item xs={6}>
-            <Button
-              variant="outlined"
-              size="large"
-              startIcon={<i className="fab fa-facebook-f" />}
-              onClick={() => this.logIn('facebook')}
-              fullWidth>
-              <Typography>Log in with Facebook</Typography>
-            </Button>
-          </Grid>
-          <Grid item xs={6}>
-            <Button
-              variant="outlined"
-              size="large"
-              startIcon={<i className="fab fa-apple" />}
-              onClick={() => this.logIn('apple')}
-              fullWidth>
-              <Typography>Log in with Apple</Typography>
-            </Button>
-          </Grid>
-        </Grid>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={this.onToggleLogInModal} color="primary">
-          <Typography>Bạn cần sự giúp đỡ ?</Typography>
-        </Button>
-      </DialogActions>
-    </Dialog>
-  }
-
   render() {
     let { classes } = this.props;
 
@@ -302,7 +227,7 @@ class Header extends Component {
         <Grid container direction="row" justify="space-between" alignItems="center">
           <Grid item className={classes.logo}>
             <Link color="textPrimary" underline="none" component={RouterLink} to={'/home'}>
-              <Typography variant="h3">Thiêng</Typography>
+              {this.logo}
             </Link>
           </Grid>
           <Grid item>
@@ -311,7 +236,12 @@ class Header extends Component {
         </Grid>
       </Grid>
       {this.renderDrawer()}
-      {this.renderLogInModal()}
+      <LogIn
+        visible={this.state.visibleLogInModal}
+        onToggle={this.onToggleLogInModal}
+        callback={this.logIn}
+        fullWidth={!this.state.matches}
+      />
     </Fragment>
   }
 }

@@ -130,7 +130,7 @@ class Factory extends Component {
     let { auth, projects } = this.props;
     projects = projects.data;
 
-    if (!auth.isLoggedIn) return null;
+    if (!auth.isValid) return null;
     if (!projects || !projects.length) return null;
 
     return <Fragment>

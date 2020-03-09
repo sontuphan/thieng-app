@@ -39,7 +39,7 @@ const MENU = [
     subtitle: "Quản lý sản phẩm, quá trình kinh doanh.",
     color: "linear-gradient(71.34deg, #2D9CDB 0%, #56CCF2 100%)",
     img: human2,
-    disabled: true,
+    disabled: false,
     tooltip: 'Comming soon',
   },
   {
@@ -47,7 +47,7 @@ const MENU = [
     subtitle: "Kết nối với khách hàng và chuyên gia.",
     color: "linear-gradient(71.34deg, #27AE60 0%, #6FCF97 100%)",
     img: human3,
-    disabled: true,
+    disabled: false,
     tooltip: 'Comming soon',
   },
   {
@@ -55,7 +55,7 @@ const MENU = [
     subtitle: "Quản lý tài khoản và lịch sử thanh toán.",
     color: "linear-gradient(71.34deg, #F2994A 0%, #F2C94C 100%)",
     img: human4,
-    disabled: true,
+    disabled: false,
     tooltip: 'Comming soon',
   },
   {
@@ -63,7 +63,7 @@ const MENU = [
     subtitle: "Điều chỉnh, bảo mật thông tin cá nhân.",
     color: "linear-gradient(71.34deg, #DB2721 0%, #FF3E3C 100%)",
     img: human5,
-    disabled: true,
+    disabled: false,
     tooltip: 'Comming soon',
   }
 ]

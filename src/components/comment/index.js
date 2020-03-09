@@ -32,7 +32,7 @@ class Comment extends Component {
   }
 
   renderInput = (user) => {
-    if (!user || !user.isLoggedIn) return null;
+    if (!user || !user.isValid) return null;
 
     let { classes, dense } = this.props;
     if (dense) return <Grid container spacing={2}>

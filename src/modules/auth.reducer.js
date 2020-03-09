@@ -1,5 +1,5 @@
-
-import designerImg1 from 'static/images/designer-1.jpg';
+import jwt from 'jsonwebtoken';
+import storage from 'helpers/storage';
 
 /**
  * Documents
@@ -7,35 +7,20 @@ import designerImg1 from 'static/images/designer-1.jpg';
  */
 
 const defaultState = {
-  id: null,
-  displayname: null,
-  code: null,
-  email: null,
+  isValid: null,
   service: null,
+  accessToken: null,
+  email: null,
+  displayname: null,
   avatar: null,
-  isLoggedIn: null
 }
 
-const TEST_DATA = {
-  google: {
-    id: 0,
-    displayname: 'Remy Sharp',
-    code: 'remy-sharp',
-    email: 'remy@gmail.com',
-    service: 'google',
-    avatar: designerImg1,
-    isLoggedIn: true
-  },
-  facebook: {
-    id: 0,
-    displayname: 'Remy Sharp',
-    code: 'remy-sharp',
-    email: 'remy@facebook.com',
-    service: 'facebook',
-    avatar: designerImg1,
-    isLoggedIn: true
-  }
-}
+/**
+ * Init
+ */
+let data = storage.get('auth');
+console.log(data.accessToken)
+console.log(jwt.decode(data.accessToken))
 
 /**
  * Log in
@@ -44,12 +29,12 @@ export const LOG_IN = 'LOG_IN';
 export const LOG_IN_OK = 'LOG_IN_OK';
 export const LOG_IN_FAIL = 'LOG_IN_FAIL';
 
-export const logIn = (service) => {
+export const logIn = (data) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
       dispatch({ type: LOG_IN });
 
-      if (service === 'apple') {
+      if (false) {
         dispatch({
           type: LOG_IN_FAIL,
           reason: 'Failed connection.',
@@ -58,15 +43,17 @@ export const logIn = (service) => {
         return reject('Failed connection.');
       }
 
+      storage.set('auth', data);
       dispatch({
         type: LOG_IN_OK,
         reason: null,
-        data: TEST_DATA[service]
+        data: { isValid: true, ...data }
       });
-      return resolve(TEST_DATA[service]);
+      return resolve(data);
     });
   }
 }
+
 
 /**
  * Log out
@@ -94,7 +81,7 @@ export const logOut = (service) => {
         reason: null,
         data: { ...defaultState }
       });
-      return resolve(TEST_DATA[service]);
+      return resolve();
     });
   }
 }
