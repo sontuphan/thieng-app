@@ -95,8 +95,6 @@ class Header extends Component {
           startIcon={<Badge badgeContent={this.state.grocery} color="primary">
             <Notifications fontSize="small" />
           </Badge>}
-          component={RouterLink}
-          to="/grocery"
           onClick={() => this.onToggleDrawer(false)}>
           <Typography>Thông báo</Typography>
         </Button>

@@ -22,6 +22,12 @@ authentication.verifyAccessToken = (accessToken) => {
   return true;
 }
 
+authentication.getAuthHeader = () => {
+  let data = authentication.get();
+  if (!data) return null;
+  return data.service + ' ' + data.accessToken;
+}
+
 authentication.clear = () => {
   storage.clear('auth');
 }

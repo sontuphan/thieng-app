@@ -5,11 +5,11 @@ import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import Tooltip from '@material-ui/core/Tooltip';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+// import Button from '@material-ui/core/Button';
+// import TextField from '@material-ui/core/TextField';
 
 import { CropFree, TextFields, Image, VideoLibrary } from '@material-ui/icons';
 
@@ -25,23 +25,23 @@ const DEFAULT_CONTAINER = {
   items: []
 }
 
-const DEFAULT_IMAGE = {
-  type: 'image',
-  width: 12,
-  url: null,
-}
+// const DEFAULT_IMAGE = {
+//   type: 'image',
+//   width: 12,
+//   url: null,
+// }
 
-const DEFAULT_TEXT = {
-  type: 'text',
-  width: 12,
-  contents: null,
-  font: {
-    fontSize: 13,
-    fontWeight: 400,
-    fontFamily: ['"Open Sans"', 'sans-serif'],
-    textAlign: 'start',
-  }
-}
+// const DEFAULT_TEXT = {
+//   type: 'text',
+//   width: 12,
+//   contents: null,
+//   font: {
+//     fontSize: 13,
+//     fontWeight: 400,
+//     fontFamily: ['"Open Sans"', 'sans-serif'],
+//     textAlign: 'start',
+//   }
+// }
 
 
 class BluePrint extends Component {

@@ -1,3 +1,5 @@
+import api from 'helpers/api';
+
 /**
  * Documents
  * @default defaultData
@@ -29,6 +31,12 @@ export const search = (value) => {
         });
         return reject('Input is null.');
       }
+
+      api.get('http://localhost:3001/user', {}, true).then(re => {
+        console.log(re);
+      }).catch(er => {
+        console.log(er);
+      });
 
       let prevState = getState();
       let data = null;
