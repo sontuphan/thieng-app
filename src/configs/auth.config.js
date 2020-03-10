@@ -7,6 +7,7 @@ var configs = {};
  * Development configurations
  */
 configs.development = {
+  api: 'http://localhost:3001/authentication',
   google: {
     "client_id": "114004784341-bk6g9beaf47m6tlkldi22f5vg7lu1k3m.apps.googleusercontent.com",
     "project_id": "thieng-1583675924547",

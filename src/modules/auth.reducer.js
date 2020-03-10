@@ -1,4 +1,6 @@
 import jwt from 'jsonwebtoken';
+import configs from 'configs';
+import api from 'helpers/api';
 import authentication from 'helpers/authentication';
 
 /**
@@ -60,22 +62,23 @@ export const logIn = (data) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: LOG_IN });
 
-      if (false) {
+      authentication.set(data);
+      api.get(configs.auth.api, {}, true).then(re => {
+        authentication.set(re); // Set new thieng's token
+        dispatch({
+          type: LOG_IN_OK,
+          reason: null,
+          data: { isValid: true, ...re }
+        });
+        return resolve(data);
+      }).catch(er => {
         dispatch({
           type: LOG_IN_FAIL,
           reason: 'Failed connection.',
           data: { ...defaultState }
         });
-        return reject('Failed connection.');
-      }
-
-      authentication.set(data);
-      dispatch({
-        type: LOG_IN_OK,
-        reason: null,
-        data: { isValid: true, ...data }
+        return reject(er);
       });
-      return resolve(data);
     });
   }
 }
