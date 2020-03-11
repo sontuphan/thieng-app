@@ -15,7 +15,7 @@ import Project from 'components/project';
 import Gallery from 'components/gallery';
 import Comment from 'components/comment';
 
-import { getUserByCode } from 'modules/users.reducer';
+import { getUserByCode } from 'modules/user.reducer';
 import { getProjects } from 'modules/projects.reducer';
 
 import styles from './styles';

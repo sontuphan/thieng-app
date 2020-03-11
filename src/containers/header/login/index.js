@@ -28,7 +28,6 @@ class LogIn extends Component {
     if (data.googleId) {
       this.setState({ error: null });
       this.props.onToggle();
-      console.log('Google', data);
       let user = {
         service: 'google',
         accessToken: data.tokenId,
@@ -41,7 +40,6 @@ class LogIn extends Component {
     else if (data.graphDomain === 'facebook') {
       this.setState({ error: null });
       this.props.onToggle();
-      console.log('Facebook', data);
       let user = {
         service: 'facebook',
         accessToken: data.accessToken,

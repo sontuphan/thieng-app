@@ -5,7 +5,7 @@ import ui from './ui.reducer';
 import search from './search.reducer';
 import auth from './auth.reducer';
 import items from './items.reducer';
-import users from './users.reducer';
+import users from './user.reducer';
 import comments from './comments.reducer';
 import recommendation from './recommendation.reducer';
 import projects from './projects.reducer';

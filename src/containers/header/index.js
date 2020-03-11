@@ -27,6 +27,7 @@ import SearchToolbar from './search';
 import utils from 'helpers/utils';
 import { search } from 'modules/search.reducer';
 import { refreshSession, logIn, logOut } from 'modules/auth.reducer';
+import { syncUser } from 'modules/user.reducer';
 
 class Header extends Component {
   constructor(props) {
@@ -76,9 +77,12 @@ class Header extends Component {
     this.setState({ visibleLogInModal: !this.state.visibleLogInModal });
   }
 
-  logIn = (er, re) => {
+  syncAuth = (er, re) => {
     if (er) return console.error(er);
-    return this.props.logIn(re);
+
+    return this.props.logIn(re).then(this.props.syncUser).catch(er => {
+      return console.error(er);
+    });
   }
 
   renderProfile = () => {
@@ -208,7 +212,7 @@ class Header extends Component {
       <LogIn
         visible={this.state.visibleLogInModal}
         onToggle={this.onToggleLogInModal}
-        callback={this.logIn}
+        callback={this.syncAuth}
         fullWidth={!this.state.matches}
       />
     </Fragment>
@@ -223,6 +227,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   search,
   refreshSession, logIn, logOut,
+  syncUser,
 }, dispatch);
 
 export default withRouter(connect(

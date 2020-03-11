@@ -1,3 +1,5 @@
+import configs from 'configs';
+import api from 'helpers/api';
 import UserSchema from 'data/users';
 
 /**
@@ -41,9 +43,9 @@ export const getUser = (userId) => {
       if (!data) {
         dispatch({
           type: GET_USER_FAIL,
-          reason: 'Input is null.',
+          reason: 'Input is null',
         });
-        return reject('Input is null.');
+        return reject('Input is null');
       }
 
       dispatch({
@@ -57,7 +59,39 @@ export const getUser = (userId) => {
       return resolve(data);
     });
   };
-};
+}
+
+/**
+ * Sync user info
+ */
+export const SYNC_USER = 'SYNC_USER';
+export const SYNC_USER_OK = 'SYNC_USER_OK';
+export const SYNC_USER_FAIL = 'SYNC_USER_FAIL';
+
+export const syncUser = () => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: SYNC_USER });
+
+      api.put(configs.api.base + configs.api.user.origin, {}, true).then(re => {
+        console.log(re)
+        dispatch({
+          type: GET_USER_OK,
+          reason: null,
+          data: {}
+        });
+        return resolve(re);
+      }).catch(er => {
+        console.log(er)
+        dispatch({
+          type: SYNC_USER_FAIL,
+          reason: 'Cannot sync',
+        });
+        return reject('Cannot sync');
+      });
+    });
+  };
+}
 
 /**
  * Get user by code
@@ -114,6 +148,10 @@ export default (state = defaultState, action) => {
     case GET_USER_OK:
       return { ...state, ...action.data };
     case GET_USER_FAIL:
+      return { ...state, ...action.data };
+    case SYNC_USER_OK:
+      return { ...state, ...action.data };
+    case SYNC_USER_FAIL:
       return { ...state, ...action.data };
     case GET_USER_BY_CODE_OK:
       return { ...state, ...action.data };

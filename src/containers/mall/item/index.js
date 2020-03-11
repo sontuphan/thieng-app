@@ -19,7 +19,7 @@ import Comment from 'components/comment';
 
 import { getItemById } from 'modules/items.reducer';
 import { getComments } from 'modules/comments.reducer';
-import { getUser } from 'modules/users.reducer';
+import { getUser } from 'modules/user.reducer';
 import { recommendItems } from 'modules/recommendation.reducer';
 
 import styles from './styles';

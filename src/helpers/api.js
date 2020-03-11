@@ -50,12 +50,28 @@ api.get = (url, params = null, auth = false) => {
 }
 
 // Update
-api.put = (auth = false) => {
+api.put = (url, params = null, auth = false) => {
+  return new Promise((resolve, reject) => {
+    let authHeader = authentication.getAuthHeader();
+    if (auth && !authHeader) return reject('Unauthentication.');
 
+    axios({
+      method: 'put',
+      url: url,
+      data: params,
+      headers: auth ? { 'Authorization': authHeader } : null
+    }).then(re => {
+      let data = re.data;
+      if (data.status === 'ERROR') return reject(data.error);
+      return resolve(data);
+    }).catch(er => {
+      return reject(er);
+    });
+  });
 }
 
 // Delete
-api.delete = (auth = false) => {
+api.delete = (url, params = null, auth = false) => {
 
 }
 
