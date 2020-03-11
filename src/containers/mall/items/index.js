@@ -115,7 +115,6 @@ class Items extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth,
   items: state.items,
 });
 

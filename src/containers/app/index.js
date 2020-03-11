@@ -15,6 +15,7 @@ import Mall from 'containers/mall';
 import User from 'containers/user';
 import Factory from 'containers/factory';
 import BluePrint from 'containers/blueprint';
+import Shop from 'containers/shop';
 import Footer from 'containers/footer';
 
 import theme from './theme';
@@ -48,6 +49,7 @@ class App extends Component {
             <Route exact path="/user/:userId/:projectId?" component={User} />
             <Route exact path="/factory/blueprint" component={BluePrint} />
             <Route exact path="/factory/:projectId?" component={Factory} />
+            <Route exact path="/my-shop" component={Shop} />
           </Switch>
         </Grid>
         <Grid item xs={12}>

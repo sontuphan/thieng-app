@@ -167,13 +167,21 @@ class User extends Component {
         </Grid>
         <Grid item xs={12}>
           <Grid container direction="row" justify="center" spacing={2}>
-            {
-              MENU.map(
-                (card, i) => <Grid key={i} item xs={10} md={2}>
-                  <Card {...card} width={this.props.ui.width} to={i === 0 ? '/factory' : '#'} />
-                </Grid>
-              )
-            }
+            <Grid item xs={10} md={2}>
+              <Card {...MENU[0]} width={this.props.ui.width} to={'/factory'} />
+            </Grid>
+            <Grid item xs={10} md={2}>
+              <Card {...MENU[1]} width={this.props.ui.width} to={'/my-shop'} />
+            </Grid>
+            <Grid item xs={10} md={2}>
+              <Card {...MENU[2]} width={this.props.ui.width} to={'#'} />
+            </Grid>
+            <Grid item xs={10} md={2}>
+              <Card {...MENU[3]} width={this.props.ui.width} to={'#'} />
+            </Grid>
+            <Grid item xs={10} md={2}>
+              <Card {...MENU[4]} width={this.props.ui.width} to={'#'} />
+            </Grid>
           </Grid>
         </Grid>
         <Grid item xs={12}>
