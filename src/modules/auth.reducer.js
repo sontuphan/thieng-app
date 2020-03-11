@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import configs from 'configs';
 import api from 'helpers/api';
 import authentication from 'helpers/authentication';
@@ -57,6 +56,15 @@ export const refreshSession = () => {
           return reject(er);
         });
       }
+      else if (!authentication.verifyAccessToken(data.accessToken)) {
+        authentication.clear(); // Clear outdated token
+        dispatch({
+          type: REFRESH_SESSION_FAIL,
+          reason: 'Outdated access token',
+          data: { ...defaultState }
+        });
+        return reject('Outdated access token');
+      }
       else {
         dispatch({
           type: REFRESH_SESSION_OK,
@@ -79,7 +87,6 @@ export const LOG_IN_FAIL = 'LOG_IN_FAIL';
 export const logIn = (data) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
-      console.log(LOG_IN)
       dispatch({ type: LOG_IN });
 
       authentication.set(data);

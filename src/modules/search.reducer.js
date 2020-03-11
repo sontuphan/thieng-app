@@ -1,3 +1,5 @@
+import authentication from 'helpers/authentication';
+
 /**
  * Documents
  * @default defaultData
@@ -29,6 +31,8 @@ export const search = (value) => {
         });
         return reject('Input is null.');
       }
+
+      authentication.getAuthHeader();
 
       let prevState = getState();
       let data = null;
