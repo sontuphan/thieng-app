@@ -1,5 +1,3 @@
-import authentication from 'helpers/authentication';
-
 /**
  * Documents
  * @default defaultData
