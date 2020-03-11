@@ -34,7 +34,6 @@ class Header extends Component {
 
     this.state = {
       matches: props.ui.width >= 960,
-      user: {},
       routes: [
         { text: "Bảng tin", link: '/newsfeed' },
         { text: "Siêu thị", link: '/mall' },
@@ -54,9 +53,6 @@ class Header extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (JSON.stringify(prevProps.auth) !== JSON.stringify(this.props.auth)) {
-      this.setState({ user: this.props.auth });
-    }
     if (JSON.stringify(prevProps.ui) !== JSON.stringify(this.props.ui)) {
       this.setState({ matches: this.props.ui.width >= 960 })
     }
@@ -86,8 +82,8 @@ class Header extends Component {
   }
 
   renderProfile = () => {
-    let { user } = this.state;
-    if (user.isValid)
+    let { auth } = this.props;
+    if (auth.isValid)
       return <ButtonGroup>
         <Button
           variant="outlined"
@@ -103,9 +99,9 @@ class Header extends Component {
           size="small"
           startIcon={<Person />}
           component={RouterLink}
-          to="/user/remy-sharp"
+          to={"/user/" + auth.userId}
           onClick={() => this.onToggleDrawer(false)}>
-          <Typography>{user.displayname}</Typography>
+          <Typography>{auth.displayname}</Typography>
         </Button >
         <Button
           variant="outlined"

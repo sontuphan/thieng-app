@@ -21,7 +21,7 @@ api.post = (url, params = null, auth = false) => {
     }).then(re => {
       let data = re.data;
       if (data.status === 'ERROR') return reject(data.error);
-      return resolve(data.data);
+      return resolve(data);
     }).catch(er => {
       return reject(er);
     });
@@ -42,7 +42,7 @@ api.get = (url, params = null, auth = false) => {
     }).then(re => {
       let data = re.data;
       if (data.status === 'ERROR') return reject(data.error);
-      return resolve(data.data);
+      return resolve(data);
     }).catch(er => {
       return reject(er);
     });

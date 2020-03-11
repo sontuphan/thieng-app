@@ -41,13 +41,13 @@ export const refreshSession = () => {
 
       if (data.service !== 'thieng') {
         api.get(configs.auth.api, {}, true).then(re => {
-          authentication.set(re); // Set new thieng's token
+          authentication.set(re.data); // Set new thieng's token
           dispatch({
             type: REFRESH_SESSION_OK,
             reason: null,
-            data: { isValid: true, ...re }
+            data: { isValid: true, ...re.data }
           });
-          return resolve(data);
+          return resolve(re);
         }).catch(er => {
           dispatch({
             type: REFRESH_SESSION_FAIL,
@@ -92,13 +92,13 @@ export const logIn = (data) => {
 
       authentication.set(data);
       api.get(configs.auth.api, {}, true).then(re => {
-        authentication.set(re); // Set new thieng's token
+        authentication.set(re.data); // Set new thieng's token
         dispatch({
           type: LOG_IN_OK,
           reason: null,
-          data: { isValid: true, ...re }
+          data: { isValid: true, ...re.data }
         });
-        return resolve(data);
+        return resolve(re);
       }).catch(er => {
         dispatch({
           type: LOG_IN_FAIL,

@@ -19,54 +19,8 @@ import { getUserByCode } from 'modules/users.reducer';
 import { getProjects } from 'modules/projects.reducer';
 
 import styles from './styles';
-import human1 from 'static/images/human-1.svg';
-import human2 from 'static/images/human-2.svg';
-import human3 from 'static/images/human-3.svg';
-import human4 from 'static/images/human-4.svg';
-import human5 from 'static/images/human-5.svg';
-
-const MENU = [
-  {
-    title: "Xưởng thiết kế",
-    subtitle: "Tạo ra ý tưởng và truyền cảm hứng.",
-    color: "linear-gradient(71.34deg, #9B51E0 0%, #BB6BD9 100%)",
-    img: human1,
-    disabled: false,
-    tooltip: '',
-  },
-  {
-    title: "Kệ hàng",
-    subtitle: "Quản lý sản phẩm, quá trình kinh doanh.",
-    color: "linear-gradient(71.34deg, #2D9CDB 0%, #56CCF2 100%)",
-    img: human2,
-    disabled: false,
-    tooltip: 'Comming soon',
-  },
-  {
-    title: "Tin nhắn",
-    subtitle: "Kết nối với khách hàng và chuyên gia.",
-    color: "linear-gradient(71.34deg, #27AE60 0%, #6FCF97 100%)",
-    img: human3,
-    disabled: false,
-    tooltip: 'Comming soon',
-  },
-  {
-    title: "Ví",
-    subtitle: "Quản lý tài khoản và lịch sử thanh toán.",
-    color: "linear-gradient(71.34deg, #F2994A 0%, #F2C94C 100%)",
-    img: human4,
-    disabled: false,
-    tooltip: 'Comming soon',
-  },
-  {
-    title: "Cài đặt",
-    subtitle: "Điều chỉnh, bảo mật thông tin cá nhân.",
-    color: "linear-gradient(71.34deg, #DB2721 0%, #FF3E3C 100%)",
-    img: human5,
-    disabled: false,
-    tooltip: 'Comming soon',
-  }
-]
+import MENU from './menu';
+import utils from 'helpers/utils';
 
 class User extends Component {
   constructor() {
@@ -75,14 +29,9 @@ class User extends Component {
     this.state = {
       likes: '12.853',
       products: 32,
-      code: null,
+      userId: null,
       projects: []
     }
-  }
-
-  onTheEnd = () => {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)
-      return this.loadData();
   }
 
   componentDidMount() {
@@ -97,24 +46,24 @@ class User extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (JSON.stringify(prevProps.match) !== JSON.stringify(this.props.match))
       this.handleParams();
-    if (prevState.code !== this.state.code)
+    if (prevState.userId !== this.state.userId)
       this.loadData();
   }
 
   handleParams = () => {
-    let { match: { params: { code } } } = this.props;
-    this.setState({ code });
+    let { match: { params: { userId } } } = this.props;
+    this.setState({ userId });
+  }
+
+  onTheEnd = () => {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)
+      return this.loadData();
   }
 
   loadData = () => {
-    this.props.getUserByCode(this.state.code).then(re => {
-      let user = re.data[0];
-      return this.props.getProjects(user.id).then(re => {
-        let newData = this.state.projects.concat(re.data);
-        return this.setState({ projects: newData });
-      }).catch(er => {
-        return console.error(er);
-      });
+    this.props.getProjects(this.state.userId).then(re => {
+      let newData = this.state.projects.concat(re.data);
+      return this.setState({ projects: newData });
     }).catch(er => {
       return console.error(er);
     });
@@ -124,10 +73,10 @@ class User extends Component {
     if (typeof projectId !== 'string') {
       if (this.state.goBack)
         return this.props.history.goBack();
-      return this.props.history.push(`/user/${this.state.code}`);
+      return this.props.history.push(`/user/${this.state.userId}`);
     }
     this.setState({ goBack: true });
-    return this.props.history.push(`/user/${this.state.code}/${projectId}`);
+    return this.props.history.push(`/user/${this.state.userId}/${projectId}`);
   }
 
   onComment = (comment) => {
@@ -142,13 +91,15 @@ class User extends Component {
     console.log(projectId)
   }
 
-  renderProject = (project) => {
+  renderProject = (auth, project) => {
+    if (!project.comments) return null;
+
     let commentSession = <Grid item xs={12}>
       <Comment user={this.props.auth} comments={project.comments} onSend={this.onComment} dense />
     </Grid>
 
     return <Project
-      author={project.user}
+      author={auth}
       project={project}
       onClick={() => this.onGallery(`${project.id}`)}
       commentSession={commentSession} />
@@ -183,10 +134,10 @@ class User extends Component {
 
   render() {
     let { classes } = this.props;
-    let user = this.props.users.data[0];
+    let { auth } = this.props;
     let { projects } = this.state;
 
-    if (!user) return null;
+    if (!auth) return null;
     if (!projects || !projects.length) return null;
 
     return <Fragment>
@@ -197,17 +148,17 @@ class User extends Component {
         <Grid item xs={10} md={5}>
           <Grid container direction="row" justify="flex-start" alignItems="center" spacing={2}>
             <Grid item>
-              <Avatar alt={user.displayname} src={user.avatar} className={classes.avatar} />
+              <Avatar alt={auth.displayname} src={auth.avatar} className={classes.avatar} />
             </Grid>
             <Grid item>
-              <Typography variant="h1">{user.displayname}</Typography>
+              <Typography variant="h1">{auth.displayname}</Typography>
             </Grid>
           </Grid>
         </Grid>
         <Grid item xs={10} md={5}>
           <Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
             <Grid item>
-              <Typography>{user.hearts} Thích - {user.products} Sản phẩm</Typography>
+              <Typography>{this.state.likes} Thích - {this.state.products} Sản phẩm</Typography>
             </Grid>
           </Grid>
         </Grid>
@@ -244,12 +195,9 @@ class User extends Component {
         <Grid item xs={12} sm={10} md={10}>
           <Grid container direction="row" spacing={2}>
             {
-              projects.map((project, index) => {
-                if (!project.user || !project.comments) return null;
-                return <Grid item key={index} xs={12} sm={6} md={4}>
-                  {this.renderProject(project)}
-                </Grid>
-              })
+              projects.map(project => <Grid item key={utils.rand()} xs={12} sm={6} md={4}>
+                {this.renderProject(auth, project)}
+              </Grid>)
             }
           </Grid>
         </Grid>

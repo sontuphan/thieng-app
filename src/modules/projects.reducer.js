@@ -23,9 +23,9 @@ export const GET_PROJECTS = 'GET_PROJECTS';
 export const GET_PROJECTS_OK = 'GET_PROJECTS_OK';
 export const GET_PROJECTS_FAIL = 'GET_PROJECTS_FAIL';
 
-const _getUserById = (id) => {
+const _getUser = (userId) => {
   for (let i = 0; i < UserSchema.length; i++) {
-    if (id === UserSchema[i].id) {
+    if (userId === UserSchema[i].userId) {
       return UserSchema[i];
     }
   }
@@ -39,19 +39,16 @@ const _getComments = (itemId) => {
   }
   for (let i = 0; i < comments.length; i++) {
     if (typeof comments[i].user === 'object') break;
-    let user = _getUserById(comments[i].user);
+    let user = _getUser(comments[i].user);
     comments[i].user = user
   }
   return comments;
 }
 
 const _getProjects = (userId, page, limit) => {
-  if (!userId) userId = Math.floor(Math.random() * 3);
   let projects = getRandomProjects(userId);
-  let user = _getUserById(userId);
   projects = projects.map(project => {
     let comments = _getComments(project.id)
-    project.user = user;
     project.comments = comments;
     return project;
   });
@@ -71,9 +68,9 @@ export const getProjects = (userId, page, limit) => {
       if (!data) {
         dispatch({
           type: GET_PROJECTS_FAIL,
-          reason: 'Input is null.',
+          reason: 'Input is null',
         });
-        return reject('Input is null.');
+        return reject('Input is null');
       }
 
       dispatch({

@@ -16,6 +16,7 @@ import Comment from 'components/comment';
 import { getProjects } from 'modules/projects.reducer';
 
 import styles from './styles';
+import utils from 'helpers/utils';
 
 class Newsfeed extends Component {
   constructor() {
@@ -72,13 +73,15 @@ class Newsfeed extends Component {
     console.log(projectId)
   }
 
-  renderProject = (project) => {
+  renderProject = (auth, project) => {
+    if (!project.comments) return null;
+
     let commentSession = <Grid item xs={12}>
       <Comment user={this.props.auth} comments={project.comments} onSend={this.onComment} dense />
     </Grid>
 
     return <Project
-      author={project.user}
+      author={auth}
       project={project}
       onClick={() => this.onGallery(`${project.id}`)}
       commentSession={commentSession} />
@@ -89,9 +92,7 @@ class Newsfeed extends Component {
     if (!projectId) return null;
 
     let project = this.state.projects[Number(projectId)];
-    let author = project.user;
     let comments = project.comments;
-    if (!author) return null;
 
     let dialogContent = <Fragment>
       <Grid item xs={12} md={10}>
@@ -104,7 +105,7 @@ class Newsfeed extends Component {
 
     return <Gallery visible={true}
       project={project}
-      author={author}
+      author={this.props.auth}
       onClose={this.onGallery}
       onBuy={() => this.onBuy(projectId)}
       onBookmark={() => this.onBookmark(projectId)}
@@ -137,12 +138,9 @@ class Newsfeed extends Component {
         <Grid item xs={12} sm={10} md={10}>
           <Grid container direction="row" spacing={2}>
             {
-              projects.map((project, index) => {
-                if (!project.user || !project.comments) return null;
-                return <Grid key={index} item xs={12} sm={6} md={4}>
-                  {this.renderProject(project)}
-                </Grid>
-              })
+              projects.map(project => <Grid key={utils.rand()} item xs={12} sm={6} md={4}>
+                {this.renderProject(this.props.auth, project)}
+              </Grid>)
             }
           </Grid>
         </Grid>
