@@ -90,7 +90,7 @@ class LogIn extends Component {
           </Grid>
           <Grid item xs={6}>
             <GoogleLogin
-              clientId={configs.auth.google.client_id}
+              clientId={configs.auth.google.clientId}
               render={props => <Button
                 variant="outlined"
                 size="large"
@@ -107,7 +107,7 @@ class LogIn extends Component {
           </Grid>
           <Grid item xs={6}>
             <FacebookLogin
-              appId={configs.auth.facebook.app_id}
+              appId={configs.auth.facebook.appId}
               fields='name,email,picture'
               render={props => <Button
                 variant="outlined"

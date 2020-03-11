@@ -29,23 +29,42 @@ export const refreshSession = () => {
     return new Promise((resolve, reject) => {
       dispatch({ type: REFRESH_SESSION });
 
-      let data = authentication.get();
+      const data = authentication.get();
       if (!data || typeof data !== 'object') {
         dispatch({
           type: REFRESH_SESSION_FAIL,
-          reason: 'Storage is empty.',
+          reason: 'Storage is empty',
           data: { ...defaultState }
         });
-        return reject('Storage is empty.');
+        return reject('Storage is empty');
       }
 
-      console.log('JWT:', jwt.decode(data.accessToken));
-      dispatch({
-        type: REFRESH_SESSION_OK,
-        reason: null,
-        data: { isValid: true, ...data }
-      });
-      return resolve(data);
+      if (data.service !== 'thieng') {
+        api.get(configs.auth.api, {}, true).then(re => {
+          authentication.set(re); // Set new thieng's token
+          dispatch({
+            type: REFRESH_SESSION_OK,
+            reason: null,
+            data: { isValid: true, ...re }
+          });
+          return resolve(data);
+        }).catch(er => {
+          dispatch({
+            type: REFRESH_SESSION_FAIL,
+            reason: 'Failed connection',
+            data: { ...defaultState }
+          });
+          return reject(er);
+        });
+      }
+      else {
+        dispatch({
+          type: REFRESH_SESSION_OK,
+          reason: null,
+          data: { isValid: true, ...data }
+        });
+        return resolve(data);
+      }
     });
   }
 }
@@ -60,6 +79,7 @@ export const LOG_IN_FAIL = 'LOG_IN_FAIL';
 export const logIn = (data) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
+      console.log(LOG_IN)
       dispatch({ type: LOG_IN });
 
       authentication.set(data);
@@ -74,7 +94,7 @@ export const logIn = (data) => {
       }).catch(er => {
         dispatch({
           type: LOG_IN_FAIL,
-          reason: 'Failed connection.',
+          reason: 'Failed connection',
           data: { ...defaultState }
         });
         return reject(er);
@@ -100,10 +120,10 @@ export const logOut = () => {
       if (!data) {
         dispatch({
           type: LOG_OUT_FAIL,
-          reason: 'Empty storage.',
+          reason: 'Empty storage',
           data: null
         });
-        return reject('Empty storage.');
+        return reject('Empty storage');
       }
 
       authentication.clear();
