@@ -16,13 +16,13 @@ const defaultState = {
 /**
  * Get user by id
  */
-export const GET_USER_BY_ID = 'GET_USER_BY_ID';
-export const GET_USER_BY_ID_OK = 'GET_USER_BY_ID_OK';
-export const GET_USER_BY_ID_FAIL = 'GET_USER_BY_ID_FAIL';
+export const GET_USER = 'GET_USER';
+export const GET_USER_OK = 'GET_USER_OK';
+export const GET_USER_FAIL = 'GET_USER_FAIL';
 
-const _getUserById = (id) => {
+const _getUser = (userId) => {
   for (let i = 0; i < UserSchema.length; i++) {
-    if (id === UserSchema[i].id) {
+    if (userId === UserSchema[i].userId) {
       return {
         status: 'OK',
         data: [UserSchema[i]],
@@ -32,22 +32,22 @@ const _getUserById = (id) => {
   }
 }
 
-export const getUserById = (id) => {
+export const getUser = (userId) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
-      dispatch({ type: GET_USER_BY_ID });
+      dispatch({ type: GET_USER });
 
-      let data = _getUserById(id);
+      let data = _getUser(userId);
       if (!data) {
         dispatch({
-          type: GET_USER_BY_ID_FAIL,
+          type: GET_USER_FAIL,
           reason: 'Input is null.',
         });
         return reject('Input is null.');
       }
 
       dispatch({
-        type: GET_USER_BY_ID_OK,
+        type: GET_USER_OK,
         reason: null,
         data: {
           data: data.data,
@@ -111,9 +111,9 @@ export const getUserByCode = (code) => {
  */
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case GET_USER_BY_ID_OK:
+    case GET_USER_OK:
       return { ...state, ...action.data };
-    case GET_USER_BY_ID_FAIL:
+    case GET_USER_FAIL:
       return { ...state, ...action.data };
     case GET_USER_BY_CODE_OK:
       return { ...state, ...action.data };

@@ -28,7 +28,7 @@ export const getRandomItems = () => [
       { ...randInterior(), color: null },
       { ...randInterior(), color: null },
     ],
-    author: 0,
+    author: '55b2b9ec679467c92bae0344cc2dd6cc61c06d2a111845d87fb77f681fe7c7e7',
     comments: [0, 1]
   }, {
     id: 1,
@@ -44,7 +44,7 @@ export const getRandomItems = () => [
       { ...randInterior(), color: "#915B3C" },
       { ...randInterior(), color: null },
     ],
-    author: 0,
+    author: '55b2b9ec679467c92bae0344cc2dd6cc61c06d2a111845d87fb77f681fe7c7e7',
     comments: [2, 3]
   }
 ]

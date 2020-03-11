@@ -19,7 +19,7 @@ import Comment from 'components/comment';
 
 import { getItemById } from 'modules/items.reducer';
 import { getComments } from 'modules/comments.reducer';
-import { getUserById } from 'modules/users.reducer';
+import { getUser } from 'modules/users.reducer';
 import { recommendItems } from 'modules/recommendation.reducer';
 
 import styles from './styles';
@@ -45,7 +45,7 @@ class Item extends Component {
     let item = null;
     this.props.getItemById(this.state.id).then(re => {
       item = re.data[0];
-      return this.props.getUserById(item.author);
+      return this.props.getUser(item.author);
     }).then(re => {
       return this.props.getComments(item.id);
     }).then(re => {
@@ -195,7 +195,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   getItemById,
   getComments,
-  getUserById,
+  getUser,
   recommendItems,
 }, dispatch);
 
