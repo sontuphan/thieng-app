@@ -10,6 +10,7 @@ import authentication from 'helpers/authentication';
 const defaultState = {
   isValid: null,
   service: null,
+  origin: null,
   accessToken: null,
   email: null,
   displayname: null,
@@ -56,7 +57,7 @@ export const refreshSession = () => {
           return reject(er);
         });
       }
-      else if (!authentication.verifyAccessToken(data.accessToken)) {
+      else if (!authentication.verify(data.accessToken)) {
         authentication.clear(); // Clear outdated token
         dispatch({
           type: REFRESH_SESSION_FAIL,

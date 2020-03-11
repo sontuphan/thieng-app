@@ -13,13 +13,7 @@ authentication.get = () => {
   return data;
 }
 
-authentication.getAccessToken = () => {
-  let data = authentication.get();
-  if (!data) return null;
-  return data.accessToken;
-}
-
-authentication.verifyAccessToken = (accessToken) => {
+authentication.verify = (accessToken) => {
   if (!accessToken) return false;
   const user = jwt.decode(accessToken);
   if (!user || !user.exp) return false;
@@ -30,7 +24,7 @@ authentication.getAuthHeader = () => {
   let data = authentication.get();
   if (!data) return null;
   // If the token is invalid, clear auth and reload page
-  if (!authentication.verifyAccessToken(data.accessToken)) {
+  if (data.service === 'thieng' && !authentication.verify(data.accessToken)) {
     authentication.clear();
     window.location.reload();
     return null;
