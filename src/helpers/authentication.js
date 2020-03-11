@@ -30,7 +30,7 @@ authentication.getAuthHeader = () => {
   let data = authentication.get();
   if (!data) return null;
   // If the token is invalid, clear auth and reload page
-  if (authentication.verifyAccessToken(data.accessToken)) {
+  if (!authentication.verifyAccessToken(data.accessToken)) {
     authentication.clear();
     window.location.reload();
     return null;

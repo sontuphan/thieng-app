@@ -32,8 +32,6 @@ export const search = (value) => {
         return reject('Input is null.');
       }
 
-      authentication.getAuthHeader();
-
       let prevState = getState();
       let data = null;
       if (prevState.search.value !== value) data = { value: value, repeat: 0 }
