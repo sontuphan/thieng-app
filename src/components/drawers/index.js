@@ -19,13 +19,52 @@ class BottomDrawer extends Component {
 
   renderSwipArea = () => {
     let { classes } = this.props;
-    return <div className={classes.containerTouchBar}>
-      <Tooltip title="Close">
-        <div className={classes.touchBar} onClick={this.props.onClose}>
+    return <Grid container spacing={2} justify="center">
+      <Grid item onClick={this.props.onClose}>
+        <Tooltip title="Close">
           <div className={classes.touchBarSign} />
-        </div>
-      </Tooltip>
-    </div>
+        </Tooltip>
+      </Grid>
+    </Grid>
+  }
+
+  renderContent = () => {
+    return <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Item project={this.props.project} />
+      </Grid>
+      <Grid item xs={12}>
+        <Drain />
+      </Grid>
+      <Grid item xs={12} >
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={6}>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item>
+                <Avatar alt={this.props.author.displayname} src={this.props.author.avatar} />
+              </Grid>
+              <Grid item xs={8}>
+                <Typography variant="h3" noWrap>{this.props.author.displayname}</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={6}>
+            <Grid container justify="flex-end" spacing={2}>
+              <Grid item>
+                <IconButton color="secondary" size="small" onClick={this.props.onBuy}>
+                  <ShoppingCart />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <IconButton color="secondary" size="small" onClick={this.props.onBookmark}>
+                  <Share />
+                </IconButton>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   }
 
   render() {
@@ -37,41 +76,15 @@ class BottomDrawer extends Component {
       onClose={this.props.onClose}
       classes={{ paper: classes.paper }}
     >
-      {this.renderSwipArea()}
-      <Grid container spacing={2}>
+      <Grid container
+        spacing={2}
+        className={classes.paperContent}
+      >
         <Grid item xs={12}>
-          <Item project={this.props.project} />
+          {this.renderSwipArea()}
         </Grid>
-        <Grid item xs={12}>
-          <Drain />
-        </Grid>
-        <Grid item xs={12} >
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={6}>
-              <Grid container alignItems="center" spacing={2}>
-                <Grid item>
-                  <Avatar alt={this.props.author.displayname} src={this.props.author.avatar} />
-                </Grid>
-                <Grid item xs={8}>
-                  <Typography variant="h3" noWrap>{this.props.author.displayname}</Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={6}>
-              <Grid container justify="flex-end" spacing={2}>
-                <Grid item>
-                  <IconButton color="secondary" size="small" onClick={this.props.onBuy}>
-                    <ShoppingCart />
-                  </IconButton>
-                </Grid>
-                <Grid item>
-                  <IconButton color="secondary" size="small" onClick={this.props.onBookmark}>
-                    <Share />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+        <Grid item xs={12} className={classes.paperBody}>
+          {this.renderContent()}
         </Grid>
       </Grid>
     </SwipeableDrawer >
