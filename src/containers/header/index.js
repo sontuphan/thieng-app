@@ -32,7 +32,6 @@ class Header extends Component {
     this.state = {
       matches: props.ui.width >= 960,
       routes: [
-        { text: "Trang chủ", link: '/home' },
         { text: "Bảng tin", link: '/newsfeed' },
         { text: "Siêu thị", link: '/mall' },
         // { text: "Đối tác", link: '/partner' },
@@ -42,8 +41,6 @@ class Header extends Component {
       visibleDrawer: false,
       visibleLogInModal: false,
     }
-
-    this.logo = <Typography variant="h3">Thiêng</Typography>
   }
 
   componentDidMount() {
@@ -71,7 +68,7 @@ class Header extends Component {
 
   onToggleLogInModal = (visible) => {
     if (typeof visible === 'boolean') return this.setState({ visibleLogInModal: visible });
-    this.setState({ visibleLogInModal: !this.state.visibleLogInModal });
+    return this.setState({ visibleLogInModal: !this.state.visibleLogInModal });
   }
 
   syncAuth = (er, re) => {
@@ -117,45 +114,12 @@ class Header extends Component {
       </Button >
   }
 
-  renderDrawer = () => {
-    let { classes } = this.props;
-    return <TopDrawer
-      visible={this.state.visibleDrawer}
-      onClose={this.onToggleDrawer}
-    >
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <ListItem>
-            <SearchToolbar
-              onChange={this.search}
-              fullWidth />
-          </ListItem>
-          <List className={classes.drawer}>
-            {
-              this.state.routes.map((route, index) => <ListItem
-                key={index}
-                button
-                component={RouterLink}
-                to={route.link}
-                onClick={this.onToggleDrawer} >
-                <ListItemText primary={route.text} />
-              </ListItem>)
-            }
-            <ListItem>
-              {this.renderProfile()}
-            </ListItem>
-          </List>
-        </Grid>
-      </Grid>
-    </TopDrawer>
-  }
-
   renderRoute = () => {
     let { classes } = this.props;
-    if (this.state.matches)
+    if (this.state.matches) {
       return <Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
         <Grid item className={classes.route}>
-          <SearchToolbar onChange={this.search} fullWidth={!this.state.matches} />
+          <SearchToolbar onChange={this.search} fullWidth />
         </Grid>
         {
           this.state.routes.map((route, index) =>
@@ -172,39 +136,68 @@ class Header extends Component {
           {this.renderProfile()}
         </Grid>
       </Grid>
-    else
+    }
+    else {
       return <Grid container direction="row" justify="flex-end" alignItems="center">
         <IconButton color="secondary" onClick={this.onToggleDrawer}>
           <Badge badgeContent={this.state.grocery} color="primary">
             <Menu />
           </Badge>
         </IconButton>
+        <TopDrawer
+          visible={this.state.visibleDrawer}
+          onClose={this.onToggleDrawer}
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <ListItem>
+                <SearchToolbar
+                  onChange={this.search}
+                  fullWidth />
+              </ListItem>
+              <List>
+                {
+                  this.state.routes.map((route, index) => <ListItem
+                    key={index}
+                    button
+                    component={RouterLink}
+                    to={route.link}
+                    onClick={this.onToggleDrawer} >
+                    <ListItemText primary={route.text} />
+                  </ListItem>)
+                }
+                <ListItem>
+                  {this.renderProfile()}
+                </ListItem>
+              </List>
+            </Grid>
+          </Grid>
+        </TopDrawer>
       </Grid>
+    }
   }
 
   render() {
     let { classes } = this.props;
-
     return <Fragment>
       <Grid item xs={10}>
         <Grid container direction="row" justify="space-between" alignItems="center">
           <Grid item className={classes.logo}>
             <Link color="textPrimary" underline="none" component={RouterLink} to={'/home'}>
-              {this.logo}
+              <Typography variant="h3">Thiêng</Typography>
             </Link>
           </Grid>
           <Grid item>
             {this.renderRoute()}
           </Grid>
         </Grid>
+        <LogIn
+          visible={this.state.visibleLogInModal}
+          onToggle={this.onToggleLogInModal}
+          callback={this.syncAuth}
+          fullWidth={!this.state.matches}
+        />
       </Grid>
-      {this.renderDrawer()}
-      <LogIn
-        visible={this.state.visibleLogInModal}
-        onToggle={this.onToggleLogInModal}
-        callback={this.syncAuth}
-        fullWidth={!this.state.matches}
-      />
     </Fragment>
   }
 }
