@@ -10,7 +10,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { ShoppingCart, Share } from '@material-ui/icons';
 
 import styles from './styles';
-import BottomDrawer from 'components/drawers';
+import { BottomDrawer } from 'components/drawers';
 import Item from './item';
 import Drain from 'components/drain';
 
@@ -18,7 +18,7 @@ class Gallery extends Component {
 
   render() {
     // let { classes } = this.props;
-    
+
     return <BottomDrawer
       visible={this.props.visible}
       onOpen={this.props.onOpen}

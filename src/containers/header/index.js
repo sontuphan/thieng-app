@@ -9,22 +9,19 @@ import Typography from '@material-ui/core/Typography';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Badge from '@material-ui/core/Badge';
 import Link from '@material-ui/core/Link';
 
-import { Menu, Person, Close, Notifications } from '@material-ui/icons';
+import { Menu, Person, Notifications } from '@material-ui/icons';
 
 import styles from './styles';
 import LogIn from './login';
 import SearchToolbar from './search';
+import { TopDrawer } from 'components/drawers';
 
-import utils from 'helpers/utils';
 import { search } from 'modules/search.reducer';
 import { refreshSession, logIn, logOut } from 'modules/auth.reducer';
 
@@ -35,6 +32,7 @@ class Header extends Component {
     this.state = {
       matches: props.ui.width >= 960,
       routes: [
+        { text: "Trang chủ", link: '/home' },
         { text: "Bảng tin", link: '/newsfeed' },
         { text: "Siêu thị", link: '/mall' },
         // { text: "Đối tác", link: '/partner' },
@@ -121,44 +119,35 @@ class Header extends Component {
 
   renderDrawer = () => {
     let { classes } = this.props;
-    return <Drawer
-      anchor="top"
-      open={this.state.visibleDrawer}
+    return <TopDrawer
+      visible={this.state.visibleDrawer}
       onClose={this.onToggleDrawer}
-      classes={{ paper: classes.paper }}
     >
-      <List className={classes.drawer}>
-        <ListItem>
-          <ListItemText primary={utils.greet()} />
-          <ListItemSecondaryAction>
-            <IconButton color="secondary" size="small" onClick={this.onToggleDrawer}>
-              <Close />
-            </IconButton>
-          </ListItemSecondaryAction>
-        </ListItem>
-        <Divider />
-        <ListItem button component={RouterLink} to="/home" onClick={this.onToggleDrawer} >
-          <ListItemText primary={this.logo} />
-        </ListItem>
-        {
-          this.state.routes.map((route, index) => <ListItem
-            key={index}
-            button
-            component={RouterLink}
-            to={route.link}
-            onClick={this.onToggleDrawer} >
-            <ListItemText primary={route.text} />
-          </ListItem>)
-        }
-        <Divider />
-        <ListItem>
-          <SearchToolbar onChange={this.search} fullWidth={!this.state.matches} />
-        </ListItem>
-        <ListItem>
-          {this.renderProfile()}
-        </ListItem>
-      </List>
-    </Drawer>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <ListItem>
+            <SearchToolbar
+              onChange={this.search}
+              fullWidth />
+          </ListItem>
+          <List className={classes.drawer}>
+            {
+              this.state.routes.map((route, index) => <ListItem
+                key={index}
+                button
+                component={RouterLink}
+                to={route.link}
+                onClick={this.onToggleDrawer} >
+                <ListItemText primary={route.text} />
+              </ListItem>)
+            }
+            <ListItem>
+              {this.renderProfile()}
+            </ListItem>
+          </List>
+        </Grid>
+      </Grid>
+    </TopDrawer>
   }
 
   renderRoute = () => {
