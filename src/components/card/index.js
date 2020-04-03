@@ -46,6 +46,7 @@ class Card extends Component {
       </Grid>
     </Paper>
   }
+  
   render() {
     let { classes } = this.props;
     let { tooltip, to } = this.props;

@@ -23,14 +23,10 @@ class Newsfeed extends Component {
     super();
 
     this.state = {
-      goBack: false,
-      projects: []
+      projects: [],
+      projectId: null,
+      visibleGallery: false,
     }
-  }
-
-  onTheEnd = () => {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)
-      return this.loadData();
   }
 
   componentDidMount() {
@@ -40,6 +36,11 @@ class Newsfeed extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onTheEnd);
+  }
+
+  onTheEnd = () => {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)
+      return this.loadData();
   }
 
   loadData = () => {
@@ -52,25 +53,19 @@ class Newsfeed extends Component {
   }
 
   onGallery = (projectId) => {
-    if (typeof projectId !== 'string') {
-      if (this.state.goBack)
-        return this.props.history.goBack();
-      return this.props.history.push('/newsfeed');
-    }
-    this.setState({ goBack: true });
-    return this.props.history.push('/newsfeed/' + projectId);
+    this.setState({ projectId: Number(projectId), visibleGallery: true });
   }
 
   onComment = (comment) => {
     console.log(comment);
   }
 
-  onBuy = (projectId) => {
-    this.props.history.push(`/mall/${projectId}`);
+  onBuy = () => {
+    this.props.history.push(`/mall/${this.state.projectId}`);
   }
 
   onBookmark = (projectId) => {
-    console.log(projectId)
+    console.log(this.state.projectId)
   }
 
   renderProject = (auth, project) => {
@@ -87,29 +82,20 @@ class Newsfeed extends Component {
       commentSession={commentSession} />
   }
 
-  renderGallery = () => {
-    let { projectId } = this.props.match.params;
-    if (!projectId) return null;
-
-    let project = this.state.projects[Number(projectId)];
+  renderComments = () => {
+    if (typeof this.state.projectId !== 'number') return null;
+    let project = this.state.projects[this.state.projectId];
     let comments = project.comments;
 
-    let dialogContent = <Fragment>
+    return <Fragment>
       <Grid item xs={12} md={10}>
         <Typography variant="h1">Nhận xét</Typography>
       </Grid>
+      <Drain small />
       <Grid item xs={12} md={10}>
         <Comment user={this.props.auth} comments={comments} onSend={this.onComment} />
       </Grid>
     </Fragment>
-
-    return <Gallery visible={true}
-      project={project}
-      author={this.props.auth}
-      onClose={this.onGallery}
-      onBuy={() => this.onBuy(projectId)}
-      onBookmark={() => this.onBookmark(projectId)}
-      dialogContent={dialogContent} />
   }
 
   render() {
@@ -145,7 +131,14 @@ class Newsfeed extends Component {
           </Grid>
         </Grid>
       </Grid>
-      {this.renderGallery()}
+      <Gallery
+        visible={this.state.visibleGallery}
+        project={projects[this.state.projectId]}
+        author={this.props.auth}
+        onClose={() => this.setState({ visibleGallery: false })}
+        onBuy={this.onBuy}
+        onBookmark={this.onBookmark}
+        comments={this.renderComments()} />
     </Fragment>
   }
 }

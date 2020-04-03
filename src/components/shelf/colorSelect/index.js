@@ -10,6 +10,13 @@ import { FiberManualRecord } from '@material-ui/icons';
 import styles from './styles';
 
 class ColorSelect extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      color: null
+    }
+  }
 
   onSelect = (color) => {
     this.setState({ color }, () => {

@@ -43,7 +43,7 @@ class App extends Component {
           <Switch>
             <Redirect exact from="/" to="/home" />
             <Route exact path="/home" component={Home} />
-            <Route path="/newsfeed/:projectId?" component={Newsfeed} />
+            <Route path="/newsfeed" component={Newsfeed} />
             <Route path="/mall" component={Mall} />
             <Route exact path="/user/:userId/:projectId?" component={User} />
             <Route exact path="/factory/:projectId?" component={Factory} />
