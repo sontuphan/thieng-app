@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Drain from 'components/drain';
 import Divider from 'components/divider';
 import Project from 'components/project';
-import BottomDrawer from 'components/drawers';
+import Gallery from 'components/gallery';
 import Comment from 'components/comment';
 
 import { getProjects } from 'modules/projects.reducer';
@@ -103,7 +103,7 @@ class Newsfeed extends Component {
       </Grid>
     </Fragment>
 
-    return <BottomDrawer visible={true}
+    return <Gallery visible={true}
       project={project}
       author={this.props.auth}
       onClose={this.onGallery}

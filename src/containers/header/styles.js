@@ -10,5 +10,8 @@ export default theme => {
     drawer: {
       minWidth: '240px'
     },
+    paper: {
+      borderRadius: `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
+    }
   }
 };

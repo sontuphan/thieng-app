@@ -121,7 +121,12 @@ class Header extends Component {
 
   renderDrawer = () => {
     let { classes } = this.props;
-    return <Drawer anchor="top" open={this.state.visibleDrawer} onClose={this.onToggleDrawer}>
+    return <Drawer
+      anchor="top"
+      open={this.state.visibleDrawer}
+      onClose={this.onToggleDrawer}
+      classes={{ paper: classes.paper }}
+    >
       <List className={classes.drawer}>
         <ListItem>
           <ListItemText primary={utils.greet()} />
