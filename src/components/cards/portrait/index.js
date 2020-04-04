@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import * as Vibrant from 'node-vibrant';
+import Color from 'color';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -17,6 +19,23 @@ import Divider from 'components/divider';
 import styles from './styles';
 
 class PortraitCard extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      color: '#ffffff'
+    }
+  }
+
+  componentDidMount() {
+    let vibrant = new Vibrant(this.props.image);
+    vibrant.getPalette().then(palette => {
+      let shouldBeBlack = Color(palette.Muted.hex).isLight();
+      this.setState({ color: shouldBeBlack ? '#000000' : '#ffffff' });
+    }).catch(() => {
+      this.setShadow({ color: '#ffffff' });
+    });
+  }
 
   renderIcon = (type) => {
     switch (type) {
@@ -56,10 +75,10 @@ class PortraitCard extends Component {
 
     return <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Card className={classes.card}>
+        <Card className={classes.card} style={{ filter: this.props.disabled ? 'grayscale()' : null }}>
           <CardMedia image={this.props.image} className={classes.cardMedia} />
           <CardHeader className={classes.cardHeader}
-            title={<Typography style={{ color: "#FFF" }}>{this.props.title}</Typography>}
+            title={<Typography variant="body2" style={{ color: this.state.color }}>{this.props.title}</Typography>}
             disableTypography
           />
           <CardContent className={classes.cardContent}>
@@ -90,13 +109,15 @@ class PortraitCard extends Component {
 
 PortraitCard.defaultProps = {
   title: '',
-  content: null
+  content: null,
+  disabled: false
 }
 
 PortraitCard.propTypes = {
   title: PropTypes.string,
   image: PropTypes.string.isRequired,
   content: PropTypes.array,
+  disabled: PropTypes.bool,
 }
 
 export default withStyles(styles)(PortraitCard);

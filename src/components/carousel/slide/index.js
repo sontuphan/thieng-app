@@ -21,6 +21,7 @@ class CarouselSlide extends Component {
       title={obj.displayname}
       image={obj.avatar}
       content={obj.content}
+      disabled={this.props.index !== params.index}
     />
   }
 
@@ -35,6 +36,8 @@ class CarouselSlide extends Component {
       slideClassName={classes.slide}
       index={this.props.index}
       onChangeIndex={this.props.onChange}
+      overscanSlideAfter={1}
+      overscanSlideBefore={1}
       slideRenderer={this.renderCircular}
     />
   }

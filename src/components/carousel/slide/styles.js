@@ -1,6 +1,6 @@
 export default theme => ({
   root: {
-    padding: `0px ${window.innerWidth >= 500 ? '15%' : '0px'}`,
+    padding: `0px ${window.innerWidth >= 500 ? '25%' : '10%'} 0px 0px`,
   },
   slide: {
     width: `calc(100% - ${theme.spacing(2)}px) !important`,

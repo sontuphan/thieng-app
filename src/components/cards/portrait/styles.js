@@ -1,8 +1,8 @@
 export default theme => ({
   card: {
     width: '100%',
-    paddingTop: '180%',
-    position: 'relative'
+    paddingTop: '170%',
+    position: 'relative',
   },
   cardHeader: {
     width: `calc(100% - ${theme.spacing(4)}px)`,

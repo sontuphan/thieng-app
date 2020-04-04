@@ -19,11 +19,11 @@ class Carousel extends Component {
   }
 
   onNext = () => {
-    this.setState({ page: this.state.page - 1 });
+    this.setState({ page: this.state.page + 1 });
   }
 
   onBack = () => {
-    this.setState({ page: this.state.page + 1 });
+    this.setState({ page: this.state.page - 1 });
   }
 
   onMore = () => {
