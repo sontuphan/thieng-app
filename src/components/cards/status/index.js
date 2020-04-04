@@ -20,17 +20,17 @@ class StatusCard extends Component {
     let { classes } = this.props;
     let { author, project, onClick } = this.props;
 
-    return <Grid container spacing={2}>
+    return <Grid container spacing={1}>
       <Grid item xs={12}>
         <Paper elevation={0} className={classes.paper}>
-          <Grid container alignItems="center" spacing={2}>
+          <Grid container alignItems="center" spacing={1}>
             <Grid item xs={10}>
-              <Grid container alignItems="center" spacing={2}>
+              <Grid container alignItems="center" spacing={1}>
                 <Grid item>
                   <Avatar alt={author.displayname} src={author.avatar} />
                 </Grid>
                 <Grid item>
-                  <Typography variant="h3">{author.displayname}</Typography>
+                  <Typography variant="body2">{author.displayname}</Typography>
                 </Grid>
               </Grid>
             </Grid>
@@ -44,7 +44,7 @@ class StatusCard extends Component {
               </Grid>
             </Grid>
             <Grid item xs={12}>
-              <Grid container spacing={2}>
+              <Grid container spacing={1}>
                 <Grid item xs={12} onClick={onClick}>
                   <ImageCard image={project.thumbnail} />
                 </Grid>
@@ -54,7 +54,7 @@ class StatusCard extends Component {
               <Typography style={{ fontWeight: "bold" }}>12,345 lượt thích</Typography>
             </Grid>
             <Grid item xs={4}>
-              <Grid container justify="flex-end" alignItems="center" spacing={2}>
+              <Grid container justify="flex-end" alignItems="center" spacing={1}>
                 <Grid item>
                   <IconButton size="small">
                     <Favorite color="primary" fontSize="small" />
@@ -68,14 +68,13 @@ class StatusCard extends Component {
               </Grid>
             </Grid>
             <Grid item xs={12}>
-              <Typography>{project.createdAt} - {project.status}</Typography>
+              <Typography><strong>{project.createdAt}</strong> - {project.status}</Typography>
             </Grid>
             {this.props.commentSession}
           </Grid>
         </Paper>
       </Grid>
     </Grid >
-
   }
 }
 

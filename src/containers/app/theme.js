@@ -41,6 +41,13 @@ const theme = createMuiTheme({
       letterSpacing: 0,
       textTransform: 'None'
     },
+    h5: {
+      fontFamily: ['"Open Sans"', 'sans-serif'].join(','),
+      fontWeight: 300,
+      fontSize: 15,
+      letterSpacing: 0,
+      textTransform: 'None',
+    },
     body1: {
       fontFamily: ['"Open Sans"', 'sans-serif'].join(','),
       fontWeight: 300,
@@ -49,12 +56,12 @@ const theme = createMuiTheme({
       textTransform: 'None'
     },
     body2: {
-      fontFamily: ['"Open Sans"', 'sans-serif'].join(','),
-      fontWeight: 300,
-      fontSize: 15,
+      fontFamily: ['"Playfair Display"', 'serif'].join(','),
+      fontWeight: 700,
+      fontSize: 13,
       letterSpacing: 0,
-      textTransform: 'None',
-    }
+      textTransform: 'None'
+    },
   }
 });
 

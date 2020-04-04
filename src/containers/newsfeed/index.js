@@ -6,12 +6,17 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+
+import { ShoppingCart, Share } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import Divider from 'components/divider';
 import { StatusCard } from 'components/cards';
 import Gallery from 'components/gallery';
 import Comment from 'components/comment';
+import { BottomDrawer } from 'components/drawers';
 
 import { getProjects } from 'modules/projects.reducer';
 
@@ -64,7 +69,7 @@ class Newsfeed extends Component {
     this.props.history.push(`/mall/${this.state.projectId}`);
   }
 
-  onBookmark = (projectId) => {
+  onBookmark = () => {
     console.log(this.state.projectId)
   }
 
@@ -82,24 +87,66 @@ class Newsfeed extends Component {
       commentSession={commentSession} />
   }
 
-  renderComments = () => {
+  renderFullStatus = () => {
     if (typeof this.state.projectId !== 'number') return null;
     let project = this.state.projects[this.state.projectId];
     let comments = project.comments;
 
-    return <Fragment>
-      <Grid item xs={12} md={10}>
-        <Typography variant="h1">Nhận xét</Typography>
+    return <BottomDrawer
+      visible={this.state.visibleGallery}
+      onClose={() => this.setState({ visibleGallery: false })}
+    >
+      <Grid container spacing={2} justify="center">
+        <Grid item xs={12} md={10} lg={8}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={6}>
+              <Grid container alignItems="center" spacing={2}>
+                <Grid item>
+                  <Avatar alt={this.props.auth.displayname} src={this.props.auth.avatar} />
+                </Grid>
+                <Grid item xs={8}>
+                  <Typography variant="h3" noWrap>{this.props.auth.displayname}</Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={6}>
+              <Grid container justify="flex-end" spacing={2}>
+                <Grid item>
+                  <IconButton color="secondary" size="small" onClick={this.onBuy}>
+                    <ShoppingCart />
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <IconButton color="secondary" size="small" onClick={this.onBookmark}>
+                    <Share />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} md={10} lg={8}>
+          <Gallery project={project} />
+        </Grid>
+        <Grid item xs={12} md={10} lg={8}>
+          <Drain />
+        </Grid>
+        <Grid item xs={12} md={10} lg={8}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={10}>
+              <Typography variant="h1">Nhận xét</Typography>
+            </Grid>
+            <Drain small />
+            <Grid item xs={12} md={10}>
+              <Comment user={this.props.auth} comments={comments} onSend={this.onComment} />
+            </Grid>
+          </Grid>
+        </Grid>
       </Grid>
-      <Drain small />
-      <Grid item xs={12} md={10}>
-        <Comment user={this.props.auth} comments={comments} onSend={this.onComment} />
-      </Grid>
-    </Fragment>
+    </BottomDrawer >
   }
 
   render() {
-    // let { classes } = this.props;
     let { projects } = this.state;
     if (!projects || !projects.length) return null;
 
@@ -131,14 +178,7 @@ class Newsfeed extends Component {
           </Grid>
         </Grid>
       </Grid>
-      <Gallery
-        visible={this.state.visibleGallery}
-        project={projects[this.state.projectId]}
-        author={this.props.auth}
-        onClose={() => this.setState({ visibleGallery: false })}
-        onBuy={this.onBuy}
-        onBookmark={this.onBookmark}
-        comments={this.renderComments()} />
+      {this.renderFullStatus()}
     </Fragment>
   }
 }

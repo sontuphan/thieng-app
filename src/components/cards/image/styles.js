@@ -6,10 +6,10 @@ export default theme => ({
     position: 'relative',
     transition: theme.transitions.create(),
     '&:hover': {
-      transform: 'scale(1.04)'
+      transform: 'scale(1.03)'
     },
     '&:active': {
-      transform: 'scale(1.04)'
+      transform: 'scale(1.03)'
     },
     overflow: 'hidden',
     borderRadius: theme.shape.borderRadius,
@@ -23,10 +23,10 @@ export default theme => ({
     height: '100%',
     transition: theme.transitions.create(),
     '&:hover': {
-      transform: 'scale(1.06)'
+      transform: 'scale(1.05)'
     },
     '&:active': {
-      transform: 'scale(1.06)'
+      transform: 'scale(1.05)'
     }
   },
   imagePNG: {
@@ -40,11 +40,11 @@ export default theme => ({
     transition: theme.transitions.create(),
     '&:hover': {
       filter: 'drop-shadow(6px 12px 8px rgba(0, 0, 0, 0.48)) drop-shadow(6px 12px 4px rgba(0, 0, 0, 0.24))',
-      transform: 'scale(1.06)'
+      transform: 'scale(1.05)'
     },
     '&:active': {
       filter: 'drop-shadow(6px 12px 8px rgba(0, 0, 0, 0.48)) drop-shadow(6px 12px 4px rgba(0, 0, 0, 0.24))',
-      transform: 'scale(1.06)'
+      transform: 'scale(1.05)'
     }
   },
 });

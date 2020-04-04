@@ -56,7 +56,6 @@ class Carousel extends Component {
     console.log('onMore');
   }
 
-
   render() {
     return <Grid container direction="row" spacing={2}>
       <Grid item xs={4}>
