@@ -8,7 +8,7 @@ export default theme => ({
     height: '41px',
   },
   shelf: {
-    background: 'linear-gradient(42.13deg, #FF9B21 0%, #FF3E3C 50%, #FF3E3C 100%)'
+    background: theme.background.primary
   },
   slide: {
     width: `calc(20% - ${theme.spacing(2)}px) !important`,

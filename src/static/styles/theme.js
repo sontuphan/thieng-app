@@ -7,6 +7,10 @@ const theme = createMuiTheme({
     textPrimary: { main: '#000000' },
     textSecondary: { main: '#FFFFFF' },
   },
+  background: {
+    primary: 'linear-gradient(45deg, #FF9B21 0%, #FF3E3C 50%, #FF3E3C 100%)',
+    secondary: '#0000008a'
+  },
   typography: {
     fontFamily: [
       '"Open Sans"',

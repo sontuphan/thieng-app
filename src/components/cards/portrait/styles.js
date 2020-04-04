@@ -1,7 +1,7 @@
 export default theme => ({
   card: {
     width: '100%',
-    paddingTop: '177.777777%',
+    paddingTop: '180%',
     position: 'relative'
   },
   cardHeader: {
@@ -27,12 +27,5 @@ export default theme => ({
     background: 'rgba(255, 255, 255, 0.4)',
     backdropFilter: 'blur(10px)',
     borderRadius: theme.shape.borderRadius
-  },
-  slides: {
-    flexWrap: 'nowrap',
-    overflow: 'hidden'
-  },
-  slide: {
-    minWidth: window.innerWidth >= 960 ? '66.666667%' : '83.333333%'
   }
 });

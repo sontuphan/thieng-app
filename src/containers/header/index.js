@@ -15,7 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Badge from '@material-ui/core/Badge';
 import Link from '@material-ui/core/Link';
 
-import { Menu, Person, Notifications } from '@material-ui/icons';
+import { MenuRounded, PersonRounded, NotificationsRounded } from '@material-ui/icons';
 
 import styles from './styles';
 import LogIn from './login';
@@ -84,7 +84,7 @@ class Header extends Component {
           variant="outlined"
           size="small"
           startIcon={<Badge badgeContent={this.state.grocery} color="primary">
-            <Notifications fontSize="small" />
+            <NotificationsRounded fontSize="small" />
           </Badge>}
           onClick={() => this.onToggleDrawer(false)}>
           <Typography>Thông báo</Typography>
@@ -92,7 +92,7 @@ class Header extends Component {
         <Button
           variant="outlined"
           size="small"
-          startIcon={<Person />}
+          startIcon={<PersonRounded />}
           component={RouterLink}
           to={"/user/" + auth.userId}
           onClick={() => this.onToggleDrawer(false)}>
@@ -141,7 +141,7 @@ class Header extends Component {
       return <Grid container direction="row" justify="flex-end" alignItems="center">
         <IconButton color="secondary" onClick={this.onToggleDrawer}>
           <Badge badgeContent={this.state.grocery} color="primary">
-            <Menu />
+            <MenuRounded />
           </Badge>
         </IconButton>
         <TopDrawer

@@ -17,7 +17,7 @@ import Factory from 'containers/factory';
 import Shop from 'containers/shop';
 import Footer from 'containers/footer';
 
-import theme from './theme';
+import theme from 'static/styles/theme';
 import 'static/styles/index.css';
 
 import { setScreen } from 'modules/ui.reducer';

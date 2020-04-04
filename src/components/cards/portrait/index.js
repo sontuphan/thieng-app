@@ -16,14 +16,7 @@ import Divider from 'components/divider';
 
 import styles from './styles';
 
-class Portrait extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      animation: null
-    }
-  }
+class PortraitCard extends Component {
 
   renderIcon = (type) => {
     switch (type) {
@@ -59,42 +52,49 @@ class Portrait extends Component {
   }
 
   render() {
-    let { classes, obj } = this.props;
+    let { classes } = this.props;
 
-    return <Grid item key={i} className={classes.slide}>
-      <Card className={classes.card}>
-        <CardMedia image={obj.avatar} className={classes.cardMedia} />
-        <CardHeader className={classes.cardHeader}
-          title={<Typography style={{ color: "#FFF" }}>{obj.displayname}</Typography>}
-          disableTypography
-        />
-        <CardContent className={classes.cardContent}>
-          <Grid container direction="row" alignItems="center" spacing={1}>
-            {this.renderContent(obj.content)}
-            <Grid item xs={12}>
-              <Divider />
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container direction="row" justify="space-between" alignItems="center" spacing={1}>
-                <IconButton color="secondary" size="small">
-                  <Message fontSize="small" />
-                </IconButton>
-                <IconButton color="secondary" size="small">
-                  <Visibility fontSize="small" />
-                </IconButton>
+    return <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Card className={classes.card}>
+          <CardMedia image={this.props.image} className={classes.cardMedia} />
+          <CardHeader className={classes.cardHeader}
+            title={<Typography style={{ color: "#FFF" }}>{this.props.title}</Typography>}
+            disableTypography
+          />
+          <CardContent className={classes.cardContent}>
+            <Grid container direction="row" alignItems="center" spacing={1}>
+              {this.renderContent(this.props.content)}
+              <Grid item xs={12}>
+                <Divider />
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container direction="row" justify="space-between" alignItems="center" spacing={1}>
+                  <IconButton color="secondary" size="small">
+                    <Message fontSize="small" />
+                  </IconButton>
+                  <IconButton color="secondary" size="small">
+                    <Visibility fontSize="small" />
+                  </IconButton>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </Grid>
     </Grid>
   }
 }
 
-Portrait.propTypes = {
-  objs: PropTypes.array.isRequired,
-  onNext: PropTypes.func.isRequired,
-  onBack: PropTypes.func.isRequired,
+PortraitCard.defaultProps = {
+  title: '',
+  content: null
 }
 
-export default withStyles(styles)(Portrait);
+PortraitCard.propTypes = {
+  title: PropTypes.string,
+  image: PropTypes.string.isRequired,
+  content: PropTypes.array,
+}
+
+export default withStyles(styles)(PortraitCard);

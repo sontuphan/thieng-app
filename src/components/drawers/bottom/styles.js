@@ -14,7 +14,7 @@ export default theme => ({
   touchBarSign: {
     width: 48,
     height: 4,
-    backgroundColor: '#0000008a',
+    backgroundColor: theme.background.secondary,
     borderRadius: 2,
   }
 });
