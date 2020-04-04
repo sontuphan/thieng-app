@@ -37,7 +37,7 @@ class App extends Component {
 
   render() {
     return <ThemeProvider theme={theme}>
-      <Grid container direction="row" justify="center" spacing={2}>
+      <Grid container justify="center" spacing={2}>
         <Header />
         <Grid item xs={12}>
           <Switch>

@@ -10,7 +10,7 @@ import styles from './styles';
 import utils from 'helpers/utils';
 
 class TopDrawer extends Component {
-  
+
   renderSwipArea = () => {
     let { classes } = this.props;
     let isMobile = utils.checkDevice();
@@ -23,11 +23,11 @@ class TopDrawer extends Component {
     }
     else {
       return <Grid container spacing={2} justify="center">
-        <Grid item onClick={this.props.onClose}>
-          <Tooltip title="Click to close">
+        <Tooltip title="Click to close">
+          <Grid item className={classes.swipeableArea} onClick={this.props.onClose}>
             <div className={classes.touchBarSign} />
-          </Tooltip>
-        </Grid>
+          </Grid>
+        </Tooltip>
       </Grid>
     }
   }

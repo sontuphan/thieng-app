@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -32,9 +32,9 @@ class PortraitCard extends Component {
   }
 
   renderContent = (content) => {
-    return content.map((item, i) => <Fragment key={i}>
+    return content.map((item, i) => <Grid container key={i} alignItems="center" spacing={1}>
       <Grid item xs={8}>
-        <Grid container direction="row" justify="flex-start" spacing={1}>
+        <Grid container alignItems="center" spacing={1}>
           <Grid item>
             {this.renderIcon(item.icon)}
           </Grid>
@@ -44,11 +44,11 @@ class PortraitCard extends Component {
         </Grid>
       </Grid>
       <Grid item xs={4}>
-        <Grid container direction="row" justify="flex-end" spacing={1}>
+        <Grid container justify="flex-end" alignItems="center" spacing={1}>
           <Typography>{item.value}</Typography>
         </Grid>
       </Grid>
-    </Fragment>);
+    </Grid>);
   }
 
   render() {
@@ -63,13 +63,15 @@ class PortraitCard extends Component {
             disableTypography
           />
           <CardContent className={classes.cardContent}>
-            <Grid container direction="row" alignItems="center" spacing={1}>
-              {this.renderContent(this.props.content)}
+            <Grid container alignItems="center" spacing={1}>
+              <Grid item xs={12}>
+                {this.renderContent(this.props.content)}
+              </Grid>
               <Grid item xs={12}>
                 <Divider />
               </Grid>
               <Grid item xs={12}>
-                <Grid container direction="row" justify="space-between" alignItems="center" spacing={1}>
+                <Grid container justify="space-between" alignItems="center" spacing={1}>
                   <IconButton color="secondary" size="small">
                     <Message fontSize="small" />
                   </IconButton>
