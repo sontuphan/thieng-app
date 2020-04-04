@@ -10,8 +10,7 @@ import Avatar from '@material-ui/core/Avatar';
 
 import Drain from 'components/drain';
 import Divider from 'components/divider';
-import Card from 'components/card';
-import Project from 'components/project';
+import { OptionCard, StatusCard } from 'components/cards';
 import Gallery from 'components/gallery';
 import Comment from 'components/comment';
 
@@ -98,7 +97,7 @@ class User extends Component {
       <Comment user={this.props.auth} comments={project.comments} onSend={this.onComment} dense />
     </Grid>
 
-    return <Project
+    return <StatusCard
       author={auth}
       project={project}
       onClick={() => this.onGallery(`${project.id}`)}
@@ -168,19 +167,19 @@ class User extends Component {
         <Grid item xs={12}>
           <Grid container direction="row" justify="center" spacing={2}>
             <Grid item xs={10} md={2}>
-              <Card {...MENU[0]} width={this.props.ui.width} to={'/factory'} />
+              <OptionCard {...MENU[0]} width={this.props.ui.width} to={'/factory'} />
             </Grid>
             <Grid item xs={10} md={2}>
-              <Card {...MENU[1]} width={this.props.ui.width} to={'/my-shop'} />
+              <OptionCard {...MENU[1]} width={this.props.ui.width} to={'/my-shop'} />
             </Grid>
             <Grid item xs={10} md={2}>
-              <Card {...MENU[2]} width={this.props.ui.width} to={'#'} />
+              <OptionCard {...MENU[2]} width={this.props.ui.width} to={'#'} />
             </Grid>
             <Grid item xs={10} md={2}>
-              <Card {...MENU[3]} width={this.props.ui.width} to={'#'} />
+              <OptionCard {...MENU[3]} width={this.props.ui.width} to={'#'} />
             </Grid>
             <Grid item xs={10} md={2}>
-              <Card {...MENU[4]} width={this.props.ui.width} to={'#'} />
+              <OptionCard {...MENU[4]} width={this.props.ui.width} to={'#'} />
             </Grid>
           </Grid>
         </Grid>

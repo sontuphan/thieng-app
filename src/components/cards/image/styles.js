@@ -1,10 +1,8 @@
 export default theme => ({
-  font: { ...theme.typography.body1 },
   image: {
     background: 'linear-gradient(42.13deg, #FF9B21 0%, #FF3E3C 50%, #FF3E3C 100%)',
     width: '100%',
-    paddingTop: '100%',
-    borderRadius: theme.shape.borderRadius,
+    paddingBottom: '100%',
     position: 'relative',
     transition: theme.transitions.create(),
     '&:hover': {
@@ -14,6 +12,7 @@ export default theme => ({
       transform: 'scale(1.04)'
     },
     overflow: 'hidden',
+    borderRadius: theme.shape.borderRadius,
     cursor: 'pointer',
   },
   imageJPG: {
@@ -48,7 +47,4 @@ export default theme => ({
       transform: 'scale(1.06)'
     }
   },
-  cursor: {
-    cursor: 'pointer',
-  }
 });

@@ -11,7 +11,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import styles from './styles';
 
-class Card extends Component {
+class OptionCard extends Component {
 
   renderCard = () => {
     let { classes } = this.props;
@@ -61,7 +61,7 @@ class Card extends Component {
   }
 }
 
-Card.propTypes = {
+OptionCard.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
@@ -72,9 +72,9 @@ Card.propTypes = {
   tooltip: PropTypes.string,
 }
 
-Card.defaultProps = {
+OptionCard.defaultProps = {
   to: '#',
   tooltip: 'Comming soon'
 }
 
-export default withStyles(styles)(Card);
+export default withStyles(styles)(OptionCard);

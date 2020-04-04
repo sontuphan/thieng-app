@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 
 import Drain from 'components/drain';
 import Divider from 'components/divider';
-import Project from 'components/project';
+import { StatusCard } from 'components/cards';
 import Gallery from 'components/gallery';
 import Comment from 'components/comment';
 
@@ -75,7 +75,7 @@ class Newsfeed extends Component {
       <Comment user={this.props.auth} comments={project.comments} onSend={this.onComment} dense />
     </Grid>
 
-    return <Project
+    return <StatusCard
       author={auth}
       project={project}
       onClick={() => this.onGallery(`${project.id}`)}

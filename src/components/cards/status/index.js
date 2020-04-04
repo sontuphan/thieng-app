@@ -10,9 +10,11 @@ import IconButton from '@material-ui/core/IconButton';
 
 import { Favorite, Share, Settings } from '@material-ui/icons';
 
+import { ImageCard } from 'components/cards';
+
 import styles from './styles';
 
-class Project extends Component {
+class StatusCard extends Component {
 
   render() {
     let { classes } = this.props;
@@ -20,7 +22,7 @@ class Project extends Component {
 
     return <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Paper className={classes.project}>
+        <Paper elevation={0} className={classes.paper}>
           <Grid container alignItems="center" spacing={2}>
             <Grid item xs={10}>
               <Grid container alignItems="center" spacing={2}>
@@ -44,13 +46,7 @@ class Project extends Component {
             <Grid item xs={12}>
               <Grid container spacing={2}>
                 <Grid item xs={12} onClick={onClick}>
-                  <div className={classes.thumbnail}
-                    style={{
-                      backgroundImage: `url('${project.thumbnail}')`,
-                      backgroundPosition: 'center top',
-                      backgroundRepeat: 'no-repeat',
-                      backgroundSize: 'cover'
-                    }} />
+                  <ImageCard image={project.thumbnail} />
                 </Grid>
               </Grid>
             </Grid>
@@ -83,11 +79,11 @@ class Project extends Component {
   }
 }
 
-Project.propTypes = {
+StatusCard.propTypes = {
   author: PropTypes.object.isRequired,
   project: PropTypes.object,
   onClick: PropTypes.func.isRequired,
   commentSession: PropTypes.object,
 }
 
-export default withStyles(styles)(Project);
+export default withStyles(styles)(StatusCard);

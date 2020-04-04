@@ -13,7 +13,7 @@ import { Add } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import Divider from 'components/divider';
-import Project from 'components/project';
+import { StatusCard } from 'components/cards';
 import Gallery from 'components/gallery';
 
 import styles from './styles';
@@ -120,7 +120,7 @@ class Factory extends Component {
   }
 
   renderProject = (project) => {
-    return <Project
+    return <StatusCard
       author={project.user}
       project={project}
       onClick={() => this.onGallery(`${project.id}`)} />

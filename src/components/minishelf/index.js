@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 
 import Drain from 'components/drain';
+import { ImageCard } from 'components/cards';
 
 import styles from './styles';
 
@@ -18,25 +19,7 @@ class Minishelf extends Component {
     let image = object.images[0];
     return <Grid container direction="row" justify="center" spacing={1}>
       <Grid item xs={12} component={RouterLink} to={"/mall/" + object.id}>
-        <div className={classes.image}>
-          {image.type !== 'png' ?
-            <div className={classes.imageJPG}
-              style={{
-                backgroundImage: `url('${image.url}')`,
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover'
-              }} />
-            :
-            <div className={classes.imagePNG}
-              style={{
-                backgroundImage: `url('${image.url}')`,
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'contain'
-              }} />
-          }
-        </div>
+        <ImageCard image={image.url} imageType={image.type} />
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={1}>
