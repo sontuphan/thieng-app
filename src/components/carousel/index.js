@@ -14,55 +14,47 @@ class Carousel extends Component {
     super(props);
 
     this.state = {
-      pagination: {
-        title: props.title,
-        subtitle: props.subtitle,
-        paging: { page: 0, total: props.objects.length },
-      },
-      slide: {
-        objs: props.objects,
-        direction: 'left'
-      }
+      page: 0
     }
   }
 
   onNext = () => {
-    let { slide, pagination } = this.state;
-    // Update slide
-    let objs = JSON.parse(JSON.stringify(slide.objs));
-    let firstObj = objs.shift();
-    objs.push(firstObj);
-    slide.objs = objs;
-    slide.direction = 'left';
-    // Update pagination
-    pagination.paging.page = (pagination.paging.page + 1) % pagination.paging.total;
-    this.setState({ slide, pagination });
+    this.setState({ page: this.state.page - 1 });
   }
 
   onBack = () => {
-    let { slide, pagination } = this.state;
-    // Update slide
-    let objs = JSON.parse(JSON.stringify(slide.objs));
-    let lastObj = objs.pop();
-    objs.unshift(lastObj);
-    slide.objs = objs;
-    slide.direction = 'right';
-    // Update pagination
-    pagination.paging.page = (pagination.paging.page - 1 + pagination.paging.total) % pagination.paging.total;
-    this.setState({ slide, pagination });
+    this.setState({ page: this.state.page + 1 });
   }
 
   onMore = () => {
     console.log('onMore');
   }
 
+  onChange = (index) => {
+    this.setState({ page: index });
+  }
+
   render() {
     return <Grid container direction="row" spacing={2}>
       <Grid item xs={4}>
-        <CarouselPagination {...this.state.pagination} onNext={this.onNext} onBack={this.onBack} onMore={this.onMore} />
+        <CarouselPagination {...this.state.pagination}
+          title={this.props.title}
+          subtitle={this.props.subtitle}
+          paging={{
+            page: (this.state.page % this.props.objects.length + this.props.objects.length) % this.props.objects.length,
+            total: this.props.objects.length
+          }}
+          onBack={this.onBack}
+          onNext={this.onNext}
+          onMore={this.onMore}
+        />
       </Grid>
       <Grid item xs={8}>
-        <CarouselSlide {...this.state.slide} onNext={this.onNext} onBack={this.onBack} />
+        <CarouselSlide
+          objects={this.props.objects}
+          index={this.state.page}
+          onChange={this.onChange}
+        />
       </Grid>
     </Grid>
   }
