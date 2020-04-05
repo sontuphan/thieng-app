@@ -11,7 +11,7 @@ export default theme => ({
     height: `calc(100% - ${theme.spacing(2) + 4}px)`,
     overflowY: 'scroll',
   },
-  swipeableArea:{
+  swipeableArea: {
     cursor: 'pointer',
   },
   touchBarSign: {
