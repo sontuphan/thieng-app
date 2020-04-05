@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 
-import { ArrowBack, ArrowForward } from '@material-ui/icons';
+import { ArrowBackRounded, ArrowForwardRounded } from '@material-ui/icons';
 
 import styles from './styles';
 
@@ -37,7 +37,7 @@ class CarouselPagination extends Component {
           <Grid container direction="row" alignItems="center" spacing={1}>
             <Grid item>
               <IconButton color="secondary" size="small" onClick={this.props.onNext}>
-                <ArrowBack />
+                <ArrowBackRounded />
               </IconButton>
             </Grid>
             <Grid item>
@@ -45,7 +45,7 @@ class CarouselPagination extends Component {
             </Grid>
             <Grid item>
               <IconButton color="secondary" size="small" onClick={this.props.onBack}>
-                <ArrowForward />
+                <ArrowForwardRounded />
               </IconButton>
             </Grid>
           </Grid>

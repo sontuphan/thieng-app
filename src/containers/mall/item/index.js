@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import { Shuffle } from '@material-ui/icons';
+import { ShuffleRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import Shelf from 'components/shelf';
@@ -158,7 +158,7 @@ class Item extends Component {
           <Grid item xs={12}>
             <Grid container direction="row" justify="flex-end" spacing={2}>
               <Grid item>
-                <Button variant="outlined" color="primary" size="large" endIcon={<Shuffle />} onClick={this.onShuffle}>
+                <Button variant="outlined" color="primary" size="large" endIcon={<ShuffleRounded />} onClick={this.onShuffle}>
                   <Typography>Khác</Typography>
                 </Button>
               </Grid>

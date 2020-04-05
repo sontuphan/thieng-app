@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-import { ArrowForwardIos } from '@material-ui/icons';
+import { ArrowForwardIosRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import Divider from 'components/divider';
@@ -68,7 +68,7 @@ class Selling extends Component {
       <Grid item xs={12}>
         <Grid container direction="row" justify="flex-end" spacing={2}>
           <Grid item>
-            <Button variant="outlined" color="primary" size="large" endIcon={<ArrowForwardIos />} onClick={this.onMore}>
+            <Button variant="outlined" color="primary" size="large" endIcon={<ArrowForwardIosRounded />} onClick={this.onMore}>
               <Typography>Nhiều hơn</Typography>
             </Button>
           </Grid>

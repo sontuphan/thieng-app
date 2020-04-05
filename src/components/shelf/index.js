@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Badge from '@material-ui/core/Badge';
 
-import { ThreeDRotation, ArrowBack, ArrowForward } from '@material-ui/icons';
+import { ThreeDRotationRounded, ArrowBackRounded, ArrowForwardRounded } from '@material-ui/icons';
 
 import ColorSelect from './colorSelect';
 import Drain from 'components/drain';
@@ -85,7 +85,7 @@ class Shelf extends Component {
           <Grid container direction="row" justify="flex-end" spacing={2}>
             <Grid item>
               <IconButton onClick={this.props.on3D}>
-                <ThreeDRotation style={{ color: this.state.color }} />
+                <ThreeDRotationRounded style={{ color: this.state.color }} />
               </IconButton>
             </Grid>
           </Grid>
@@ -115,7 +115,7 @@ class Shelf extends Component {
         <Grid item xs={2} md={1}>
           <Grid container justify="flex-start">
             <IconButton onClick={this.onBack}>
-              <ArrowBack />
+              <ArrowBackRounded />
             </IconButton>
           </Grid>
         </Grid>
@@ -144,7 +144,7 @@ class Shelf extends Component {
         <Grid item xs={2} md={1}>
           <Grid container justify="flex-end">
             <IconButton onClick={this.onNext}>
-              <ArrowForward />
+              <ArrowForwardRounded />
             </IconButton>
           </Grid>
         </Grid>

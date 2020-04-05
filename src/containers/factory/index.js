@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import { Add } from '@material-ui/icons';
+import { AddRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import Divider from 'components/divider';
@@ -157,7 +157,7 @@ class Factory extends Component {
               <Button
                 color="primary"
                 variant="contained"
-                startIcon={<Add />}
+                startIcon={<AddRounded />}
                 onClick={this.onAddProject}>
                 <Typography>Tạo mới</Typography>
               </Button>

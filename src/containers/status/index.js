@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 
-import { ShoppingCart, Share } from '@material-ui/icons';
+import { ShoppingCartRounded, ShareRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import { StatusCard } from 'components/cards';
@@ -69,12 +69,12 @@ class Status extends Component {
               <Grid container justify="flex-end" spacing={2}>
                 <Grid item>
                   <IconButton color="secondary" size="small" onClick={this.onBuy}>
-                    <ShoppingCart />
+                    <ShoppingCartRounded />
                   </IconButton>
                 </Grid>
                 <Grid item>
                   <IconButton color="secondary" size="small" onClick={this.onBookmark}>
-                    <Share />
+                    <ShareRounded />
                   </IconButton>
                 </Grid>
               </Grid>

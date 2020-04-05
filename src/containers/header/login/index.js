@@ -11,7 +11,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { Close } from '@material-ui/icons';
+import { CloseRounded } from '@material-ui/icons';
 
 import configs from 'configs';
 
@@ -71,7 +71,7 @@ class LogIn extends Component {
             <Grid container justify="flex-end" spacing={2}>
               <Grid item>
                 <IconButton color="secondary" size="small" onClick={onToggle}>
-                  <Close />
+                  <CloseRounded />
                 </IconButton>
               </Grid>
             </Grid>
@@ -122,10 +122,21 @@ class LogIn extends Component {
               variant="outlined"
               size="large"
               startIcon={<i className="fab fa-apple" />}
-              onClick={() => this.logIn('apple')}
+              onClick={() => { }}
               fullWidth
               disabled>
               <Typography>Continue with Apple</Typography>
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<i className="fab fa-twitter" />}
+              onClick={() => { }}
+              fullWidth
+              disabled>
+              <Typography>Continue with Twitter</Typography>
             </Button>
           </Grid>
         </Grid>

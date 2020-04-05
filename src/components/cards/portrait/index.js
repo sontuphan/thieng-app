@@ -11,7 +11,10 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 
-import { Favorite, LocalFlorist, LocalGroceryStore, Visibility, Message } from '@material-ui/icons';
+import {
+  FavoriteRounded, LocalFloristRounded, LocalGroceryStoreRounded,
+  VisibilityRounded, MessageRounded
+} from '@material-ui/icons';
 
 import Divider from 'components/divider';
 
@@ -36,11 +39,11 @@ class PortraitCard extends Component {
   renderIcon = (type) => {
     switch (type) {
       case 'like':
-        return <Favorite fontSize="small" />;
+        return <FavoriteRounded fontSize="small" />;
       case 'flower':
-        return <LocalFlorist fontSize="small" />;
+        return <LocalFloristRounded fontSize="small" />;
       case 'product':
-        return <LocalGroceryStore fontSize="small" />;
+        return <LocalGroceryStoreRounded fontSize="small" />;
       default:
         return null;
     }
@@ -90,10 +93,10 @@ class PortraitCard extends Component {
               <Grid item xs={12}>
                 <Grid container justify="space-between" alignItems="center" spacing={1}>
                   <IconButton color="secondary" size="small">
-                    <Message fontSize="small" />
+                    <MessageRounded fontSize="small" />
                   </IconButton>
                   <IconButton color="secondary" size="small">
-                    <Visibility fontSize="small" />
+                    <VisibilityRounded fontSize="small" />
                   </IconButton>
                 </Grid>
               </Grid>

@@ -10,7 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 
-import { Send } from '@material-ui/icons';
+import { SendRounded } from '@material-ui/icons';
 
 import Divider from 'components/divider';
 
@@ -55,7 +55,7 @@ class Comment extends Component {
             endAdornment: (
               <InputAdornment position="start" className={classes.adornment}>
                 <IconButton size="small" onClick={() => this.props.onSend(this.state.comment)}>
-                  <Send />
+                  <SendRounded />
                 </IconButton>
               </InputAdornment>
             ),
@@ -88,7 +88,7 @@ class Comment extends Component {
             endAdornment: (
               <InputAdornment position="start" className={classes.adornment}>
                 <IconButton size="small" onClick={() => this.props.onSend(this.state.comment)}>
-                  <Send />
+                  <SendRounded />
                 </IconButton>
               </InputAdornment>
             ),
