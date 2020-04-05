@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
@@ -21,14 +21,10 @@ class Mall extends Component {
 
 
   render() {
-    // let { classes } = this.props;
-
-    return <Fragment>
-      <Switch>
-        <Route exact path="/mall" component={Items} />
-        <Route exact path="/mall/:id" component={Item} />
-      </Switch>
-    </Fragment>
+    return <Switch>
+      <Route exact path="/mall" component={Items} />
+      <Route exact path="/mall/:id" component={Item} />
+    </Switch>
   }
 }
 
