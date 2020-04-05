@@ -1,6 +1,6 @@
 export default theme => ({
   paper: {
-    height: '90%',
+    height: '95%',
     padding: theme.spacing(1),
     borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px`,
   },

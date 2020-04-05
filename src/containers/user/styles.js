@@ -1,6 +1,6 @@
 export default theme => ({
   header: {
-    height: '60vh',
+    height: '70vh',
     position: 'relative',
   },
   panel: {
