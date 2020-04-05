@@ -14,7 +14,7 @@ import { Shuffle } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import Shelf from 'components/shelf';
-import Minishelf from 'components/minishelf';
+import { ProductCard } from 'components/cards';
 import Comment from 'components/comment';
 
 import { getItemById } from 'modules/items.reducer';
@@ -153,7 +153,7 @@ class Item extends Component {
             <Drain small />
           </Grid>
           {recommendation.map((obj, index) => <Grid key={index} item xs={4} md={2} xl={1}>
-            <Minishelf object={obj} />
+            <ProductCard object={obj} />
           </Grid>)}
           <Grid item xs={12}>
             <Grid container direction="row" justify="flex-end" spacing={2}>

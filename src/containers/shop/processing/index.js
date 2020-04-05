@@ -12,7 +12,7 @@ import { ArrowForwardIos } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import Divider from 'components/divider';
-import Minishelf from 'components/minishelf';
+import { ProductCard } from 'components/cards';
 
 import styles from './styles';
 
@@ -63,7 +63,7 @@ class Processing extends Component {
         <Drain small />
       </Grid>
       {items.map((obj, i) => <Grid key={i} item xs={6} md={2}>
-        <Minishelf object={obj} />
+        <ProductCard object={obj} />
       </Grid>)}
       <Grid item xs={12}>
         <Grid container direction="row" justify="flex-end" spacing={2}>

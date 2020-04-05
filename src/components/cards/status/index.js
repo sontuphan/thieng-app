@@ -8,7 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 
-import { Favorite, Share, Settings } from '@material-ui/icons';
+import { FavoriteRounded, ShareRounded, MoreHorizRounded } from '@material-ui/icons';
 
 import { ImageCard } from 'components/cards';
 
@@ -27,7 +27,7 @@ class StatusCard extends Component {
             <Grid item xs={10}>
               <Grid container alignItems="center" spacing={1}>
                 <Grid item>
-                  <Avatar alt={author.displayname} src={author.avatar} />
+                  <Avatar className={classes.avatar} alt={author.displayname} src={author.avatar} />
                 </Grid>
                 <Grid item>
                   <Typography variant="body2">{author.displayname}</Typography>
@@ -38,7 +38,7 @@ class StatusCard extends Component {
               <Grid container justify="flex-end" alignItems="center" spacing={2}>
                 <Grid item>
                   <IconButton size="small">
-                    <Settings fontSize="small" />
+                    <MoreHorizRounded fontSize="small" />
                   </IconButton>
                 </Grid>
               </Grid>
@@ -57,12 +57,12 @@ class StatusCard extends Component {
               <Grid container justify="flex-end" alignItems="center" spacing={1}>
                 <Grid item>
                   <IconButton size="small">
-                    <Favorite color="primary" fontSize="small" />
+                    <FavoriteRounded color="primary" fontSize="small" />
                   </IconButton>
                 </Grid>
                 <Grid item>
                   <IconButton size="small">
-                    <Share fontSize="small" />
+                    <ShareRounded fontSize="small" />
                   </IconButton>
                 </Grid>
               </Grid>

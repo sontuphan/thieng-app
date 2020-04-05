@@ -1,7 +1,8 @@
 export default theme => ({
+  font: { ...theme.typography.body1 },
   paper: {
-    padding: theme.spacing(2),
-    width: `calc(100% - ${theme.spacing(4)}px)`,
+    padding: theme.spacing(1),
+    width: `calc(100% - ${theme.spacing(2)}px)`,
     transition: theme.transitions.create(),
     '&:hover': {
       boxShadow: theme.shadows[8],
@@ -11,8 +12,4 @@ export default theme => ({
     },
     cursor: 'pointer',
   },
-  avatar: {
-    width: theme.spacing(4),
-    height: theme.spacing(4),
-  }
 });
