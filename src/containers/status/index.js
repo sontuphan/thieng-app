@@ -37,7 +37,7 @@ class Status extends Component {
   }
 
   onBuy = () => {
-    this.props.history.push(`/mall/${this.props.id}`);
+    this.props.history.push(`/mall/${this.props.project.id}`);
   }
 
   onBookmark = () => {
