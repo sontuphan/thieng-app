@@ -11,7 +11,6 @@ import IconButton from '@material-ui/core/IconButton';
 
 import { SettingsApplicationsRounded } from '@material-ui/icons';
 
-import Drain from 'components/drain';
 import Status from 'containers/status';
 
 import { getUserByCode } from 'modules/user.reducer';
@@ -104,9 +103,6 @@ class User extends Component {
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Drain />
           </Grid>
           <Grid item xs={12}>
             <Grid container direction="row" spacing={2}>

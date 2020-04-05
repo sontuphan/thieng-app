@@ -15,7 +15,7 @@ import { ShuffleRounded } from '@material-ui/icons';
 import Drain from 'components/drain';
 import Shelf from 'components/shelf';
 import { ProductCard } from 'components/cards';
-import Comment from 'components/comment';
+import { RichComment } from 'components/comments';
 
 import { getItemById } from 'modules/items.reducer';
 import { getComments } from 'modules/comments.reducer';
@@ -88,13 +88,15 @@ class Item extends Component {
 
     if (!object || !comments || !author || !recommendation) return null;
 
-    return <Grid container direction="row" justify="center" spacing={2}>
+    return <Grid container justify="center" spacing={2}>
+
       <Grid item xs={12} md={6}>
         <Shelf author={author} objects={object.images} on3D={this.on3D} />
       </Grid>
+
       <Grid item xs={12} md={6}>
         <Drain />
-        <Grid container direction="row" justify="center" spacing={2}>
+        <Grid container justify="center" spacing={2}>
           <Grid item xs={10} md={8}>
             <Grid container spacing={1}>
               {
@@ -141,44 +143,56 @@ class Item extends Component {
           </Grid>
         </Grid>
       </Grid>
+
       <Grid item xs={12}>
         <Drain />
       </Grid>
-      <Grid item xs={10}>
-        <Grid container direction="row" justify="center" spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant="h1">Gợi ý</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Drain small />
-          </Grid>
-          {recommendation.map((obj, index) => <Grid key={index} item xs={6} sm={4} md={3} lg={2}>
-            <ProductCard object={obj} />
-          </Grid>)}
-          <Grid item xs={12}>
-            <Grid container direction="row" justify="flex-end" spacing={2}>
-              <Grid item>
-                <Button variant="outlined" color="primary" size="large" endIcon={<ShuffleRounded />} onClick={this.onShuffle}>
-                  <Typography>Khác</Typography>
-                </Button>
+
+      <Grid item xs={12} md={6}>
+        <Grid container justify="center">
+          <Grid item xs={10}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Grid container justify="space-between" spacing={2}>
+                  <Grid item>
+                    <Typography variant="h2">Gợi ý cho bạn</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      endIcon={<ShuffleRounded />}
+                      onClick={this.onShuffle}
+                    >
+                      <Typography>Khác</Typography>
+                    </Button>
+                  </Grid>
+                </Grid>
               </Grid>
+              {recommendation.map((obj, index) => <Grid key={index} item xs={4}>
+                <ProductCard object={obj} />
+              </Grid>)}
             </Grid>
           </Grid>
-        </Grid>
-      </Grid>
-      <Grid item xs={12}>
-        <Drain />
-      </Grid>
-      <Grid item xs={10}>
-        <Grid container direction="row" justify="center" spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant="h1">Nhận xét</Typography>
-          </Grid>
           <Grid item xs={12}>
             <Drain small />
           </Grid>
         </Grid>
-        <Comment user={this.props.auth} comments={comments} onSend={this.onSend} />
+      </Grid>
+
+
+      <Grid item xs={12} md={6}>
+        <Grid container justify="center" spacing={2}>
+          <Grid item xs={10} md={8}>
+            <Typography variant="h2">Nhận xét</Typography>
+          </Grid>
+          <Grid item xs={10} md={8}>
+            <RichComment user={this.props.auth} comments={comments} onSend={this.onSend} />
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Drain small />
+        </Grid>
       </Grid>
     </Grid>
   }

@@ -6,5 +6,6 @@ export default theme => ({
     width: '50%',
     height: '2px',
     background: theme.background.primary,
+    borderRadius: 1,
   }
 });

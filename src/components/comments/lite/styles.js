@@ -2,7 +2,7 @@ export default theme => ({
   font: {
     ...theme.typography.body1
   },
-  denseAvatar: {
+  avatar: {
     width: '24px',
     height: '24px'
   },

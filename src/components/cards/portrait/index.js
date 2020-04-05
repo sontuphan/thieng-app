@@ -10,13 +10,12 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+import Divider from '@material-ui/core/Divider';
 
 import {
   FavoriteRounded, LocalFloristRounded, LocalGroceryStoreRounded,
   VisibilityRounded, MessageRounded
 } from '@material-ui/icons';
-
-import Divider from 'components/divider';
 
 import styles from './styles';
 import utils from 'helpers/utils';

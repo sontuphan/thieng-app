@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { FavoriteRounded, ShareRounded, MoreHorizRounded } from '@material-ui/icons';
 
 import { ImageCard } from 'components/cards';
+import { LiteComment } from 'components/comments';
 
 import styles from './styles';
 
@@ -18,7 +19,7 @@ class StatusCard extends Component {
 
   render() {
     let { classes } = this.props;
-    let { author, project, onClick } = this.props;
+    let { author, auth, project } = this.props;
 
     return <Grid container spacing={1}>
       <Grid item xs={12}>
@@ -45,7 +46,7 @@ class StatusCard extends Component {
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={1}>
-                <Grid item xs={12} onClick={onClick}>
+                <Grid item xs={12} onClick={this.props.onClick}>
                   <ImageCard image={project.thumbnail} />
                 </Grid>
               </Grid>
@@ -70,7 +71,13 @@ class StatusCard extends Component {
             <Grid item xs={12}>
               <Typography><strong>{project.createdAt}</strong> - {project.status}</Typography>
             </Grid>
-            {this.props.commentSession}
+            <Grid item xs={12}>
+              <LiteComment
+                user={auth}
+                comments={project.comments}
+                onSend={this.props.onComment}
+              />
+            </Grid>
           </Grid>
         </Paper>
       </Grid>
@@ -78,11 +85,17 @@ class StatusCard extends Component {
   }
 }
 
+StatusCard.defaultProps = {
+  onClick: () => { },
+  onComment: () => { },
+}
+
 StatusCard.propTypes = {
+  auth: PropTypes.object,
   author: PropTypes.object.isRequired,
-  project: PropTypes.object,
-  onClick: PropTypes.func.isRequired,
-  commentSession: PropTypes.object,
+  project: PropTypes.object.isRequired,
+  onClick: PropTypes.func,
+  onComment: PropTypes.func,
 }
 
 export default withStyles(styles)(StatusCard);

@@ -7,17 +7,18 @@ import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
-import { ShoppingCartRounded, ShareRounded } from '@material-ui/icons';
+import { ShoppingCartRounded, ShareRounded, ExpandMoreRounded } from '@material-ui/icons';
 
-import Drain from 'components/drain';
 import { StatusCard } from 'components/cards';
 import Gallery from 'components/gallery';
-import Comment from 'components/comment';
 import { BottomDrawer } from 'components/drawers';
+import { SingleRichComment, RichComment } from 'components/comments';
+import Drain from 'components/drain';
 
 import { getProjects } from 'modules/projects.reducer';
 
@@ -45,7 +46,7 @@ class Status extends Component {
   }
 
   renderFullStatus = () => {
-    let project = this.props.project;
+    let { project } = this.props;
     let comments = project.comments;
 
     return <BottomDrawer
@@ -53,49 +54,76 @@ class Status extends Component {
       onClose={() => this.setState({ visible: false })}
     >
       <Grid container spacing={2} justify="center">
-        <Grid item xs={12} md={10} lg={8}>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={6}>
-              <Grid container alignItems="center" spacing={2}>
-                <Grid item>
-                  <Avatar alt={this.props.auth.displayname} src={this.props.auth.avatar} />
+        <Grid item xs={12} md={10}>
+          <Grid container spacing={4}>
+
+            <Grid item xs={12} md={8}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Gallery project={project} />
                 </Grid>
-                <Grid item xs={8}>
-                  <Typography noWrap>{this.props.auth.displayname}</Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={6}>
-              <Grid container justify="flex-end" spacing={2}>
-                <Grid item>
-                  <IconButton color="secondary" size="small" onClick={this.onBuy}>
-                    <ShoppingCartRounded />
-                  </IconButton>
-                </Grid>
-                <Grid item>
-                  <IconButton color="secondary" size="small" onClick={this.onBookmark}>
-                    <ShareRounded />
-                  </IconButton>
+                <Grid item xs={12}>
+                  <Drain />
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12} md={10} lg={8}>
-          <Gallery project={project} />
-        </Grid>
-        <Grid item xs={12} md={10} lg={8}>
-          <Drain />
-        </Grid>
-        <Grid item xs={12} md={10} lg={8}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={10}>
-              <Typography variant="h1">Nhận xét</Typography>
+
+            <Grid item xs={12} md={4}>
+              <Grid container spacing={2} justify="center">
+                <Grid item xs={10} md={12}>
+                  <Grid container justify="space-between" alignItems="center" spacing={2}>
+                    <Grid item>
+                      <Grid container alignItems="center" spacing={2}>
+                        <Grid item>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            startIcon={<ShoppingCartRounded fontSize="small" />}
+                            onClick={this.onBuy}
+                            size="small"
+                          >
+                            <Typography>Mua</Typography>
+                          </Button>
+                        </Grid>
+                        <Grid item>
+                          <Button
+                            variant="outlined"
+                            startIcon={<ShareRounded fontSize="small" />}
+                            onClick={this.onBookmark}
+                            size="small"
+                          >
+                            <Typography>Chia sẻ</Typography>
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item>
+                      <IconButton size="small">
+                        <ExpandMoreRounded fontSize="small" />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={10} md={12}>
+                  <Divider />
+                </Grid>
+                <Grid item xs={10} md={12}>
+                  <SingleRichComment
+                    avatar={this.props.auth.avatar}
+                    displayname={this.props.auth.displayname}
+                    comment={project.status}
+                    createdAt={project.createdAt}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Drain small />
+                </Grid>
+                <Grid item xs={10} md={12}>
+                  <RichComment user={this.props.auth} comments={comments} onSend={this.onComment} />
+                </Grid>
+              </Grid>
             </Grid>
-            <Drain small />
-            <Grid item xs={12} md={10}>
-              <Comment user={this.props.auth} comments={comments} onSend={this.onComment} />
-            </Grid>
+
           </Grid>
         </Grid>
       </Grid>
@@ -106,16 +134,9 @@ class Status extends Component {
     return <Fragment>
       <StatusCard
         author={this.props.auth}
+        auth={this.props.auth}
         project={this.props.project}
         onClick={() => this.setState({ visible: true })}
-        commentSession={<Grid item xs={12}>
-          <Comment
-            user={this.props.auth}
-            comments={this.props.project.comments}
-            onSend={this.onComment}
-            dense
-          />
-        </Grid>}
       />
       {this.renderFullStatus()}
     </Fragment>
