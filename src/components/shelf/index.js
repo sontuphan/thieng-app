@@ -17,6 +17,7 @@ import ColorSelect from './colorSelect';
 import Drain from 'components/drain';
 
 import styles from './styles';
+import utils from 'helpers/utils';
 
 class Shelf extends Component {
   constructor() {
@@ -24,7 +25,16 @@ class Shelf extends Component {
 
     this.state = {
       showing: 0,
-      translate: 0
+      translate: 0,
+      color: '#ffffff'
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.showing !== this.state.showing) {
+      utils.getAccessibleTextColor(this.props.objects[this.state.showing].url).then(color => {
+        this.setState({ color });
+      });
     }
   }
 
@@ -42,7 +52,7 @@ class Shelf extends Component {
     this.setState({
       showing: step,
       translate: translate + 1
-    }, () => { this.setState({ translate: translate }); });
+    }, () => this.setState({ translate: translate }));
   }
 
   onNext = () => {
@@ -75,7 +85,7 @@ class Shelf extends Component {
           <Grid container direction="row" justify="flex-end" spacing={2}>
             <Grid item>
               <IconButton onClick={this.props.on3D}>
-                <ThreeDRotation />
+                <ThreeDRotation style={{ color: this.state.color }} />
               </IconButton>
             </Grid>
           </Grid>
@@ -92,7 +102,7 @@ class Shelf extends Component {
               <Avatar alt={author.displayname} src={author.avatar} className={classes.avatar} />
             </Grid>
             <Grid item xs={8} className={classes.link} component={RouterLink} to={author.link}>
-              <Typography noWrap>{author.displayname}</Typography>
+              <Typography variant="body2" style={{ color: this.state.color }} noWrap>{author.displayname}</Typography>
             </Grid>
           </Grid>
         </Grid>

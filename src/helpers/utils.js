@@ -1,3 +1,7 @@
+import * as Vibrant from 'node-vibrant';
+import Color from 'color';
+
+
 let Utils = function () { }
 
 Utils.scrollTop = () => {
@@ -56,6 +60,18 @@ Utils.checkDevice = () => {
     isMobile = true;
   }
   return isMobile;
+}
+
+Utils.getAccessibleTextColor = (backgroundImage) => {
+  return new Promise((resolve, reject) => {
+    let vibrant = new Vibrant(backgroundImage);
+    vibrant.getPalette().then(palette => {
+      let shouldBeBlack = Color(palette.Muted.hex).isLight();
+      return resolve(shouldBeBlack ? '#000000' : '#ffffff');
+    }).catch(() => {
+      return resolve('#ffffff');
+    });
+  });
 }
 
 export default Utils;

@@ -14,6 +14,10 @@ import styles from './styles';
 
 class Product extends Component {
 
+  onChip = (tag) => {
+    console.log('onChip:', tag);
+  }
+
   render() {
     let { classes, object } = this.props;
     let image = object.images[0];
@@ -28,7 +32,13 @@ class Product extends Component {
               <Grid container spacing={1}>
                 {
                   object.tags.map(tag => <Grid item key={tag}>
-                    <Chip className={classes.font} color="primary" label={tag} size="small" />
+                    <Chip
+                      className={classes.chip}
+                      color="primary"
+                      label={tag}
+                      size="small"
+                      onClick={() => this.onChip(tag)}
+                    />
                   </Grid>)
                 }
               </Grid>

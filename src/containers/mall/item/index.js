@@ -152,7 +152,7 @@ class Item extends Component {
           <Grid item xs={12}>
             <Drain small />
           </Grid>
-          {recommendation.map((obj, index) => <Grid key={index} item xs={4} md={2} xl={1}>
+          {recommendation.map((obj, index) => <Grid key={index} item xs={6} sm={4} md={3} lg={2}>
             <ProductCard object={obj} />
           </Grid>)}
           <Grid item xs={12}>

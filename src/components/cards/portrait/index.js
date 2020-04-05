@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import * as Vibrant from 'node-vibrant';
-import Color from 'color';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -18,6 +16,7 @@ import { Favorite, LocalFlorist, LocalGroceryStore, Visibility, Message } from '
 import Divider from 'components/divider';
 
 import styles from './styles';
+import utils from 'helpers/utils';
 
 class PortraitCard extends Component {
   constructor() {
@@ -29,12 +28,8 @@ class PortraitCard extends Component {
   }
 
   componentDidMount() {
-    let vibrant = new Vibrant(this.props.image);
-    vibrant.getPalette().then(palette => {
-      let shouldBeBlack = Color(palette.Muted.hex).isLight();
-      this.setState({ color: shouldBeBlack ? '#000000' : '#ffffff' });
-    }).catch(() => {
-      this.setShadow({ color: '#ffffff' });
+    utils.getAccessibleTextColor(this.props.image).then(color => {
+      this.setState({ color });
     });
   }
 

@@ -95,7 +95,7 @@ class Items extends Component {
           <Grid item xs={12}>
             <Drain small />
           </Grid>
-          {items.map((obj, i) => <Grid key={i} item xs={6} md={2}>
+          {items.map((obj, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
             <ProductCard object={obj} />
           </Grid>)}
           <Grid item xs={12}>
