@@ -105,7 +105,7 @@ class Newsfeed extends Component {
                   <Avatar alt={this.props.auth.displayname} src={this.props.auth.avatar} />
                 </Grid>
                 <Grid item xs={8}>
-                  <Typography variant="h3" noWrap>{this.props.auth.displayname}</Typography>
+                  <Typography noWrap>{this.props.auth.displayname}</Typography>
                 </Grid>
               </Grid>
             </Grid>

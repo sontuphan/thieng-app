@@ -102,7 +102,7 @@ class Shelf extends Component {
               <Avatar alt={author.displayname} src={author.avatar} className={classes.avatar} />
             </Grid>
             <Grid item xs={8} className={classes.link} component={RouterLink} to={author.link}>
-              <Typography variant="body2" style={{ color: this.state.color }} noWrap>{author.displayname}</Typography>
+              <Typography style={{ color: this.state.color }} noWrap>{author.displayname}</Typography>
             </Grid>
           </Grid>
         </Grid>

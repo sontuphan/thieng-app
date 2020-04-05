@@ -30,7 +30,7 @@ class StatusCard extends Component {
                   <Avatar className={classes.avatar} alt={author.displayname} src={author.avatar} />
                 </Grid>
                 <Grid item>
-                  <Typography variant="body2">{author.displayname}</Typography>
+                  <Typography>{author.displayname}</Typography>
                 </Grid>
               </Grid>
             </Grid>
