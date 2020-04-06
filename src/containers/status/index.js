@@ -55,7 +55,7 @@ class Status extends Component {
   }
 
   renderFullStatus = () => {
-    let { project } = this.props;
+    let { classes, project } = this.props;
     let comments = project.comments;
 
     return <BottomDrawer
@@ -82,7 +82,7 @@ class Status extends Component {
                 <Grid item xs={10} md={12}>
                   <Grid container justify="space-between" alignItems="center" spacing={2}>
                     <Grid item>
-                      <Grid container alignItems="center" spacing={2}>
+                      <Grid container alignItems="center" spacing={2} className={classes.noWrap}>
                         <Grid item>
                           <Button
                             variant="contained"
@@ -91,7 +91,7 @@ class Status extends Component {
                             onClick={this.onBuy}
                             size="small"
                           >
-                            <Typography>Mua</Typography>
+                            <Typography noWrap>Mua</Typography>
                           </Button>
                         </Grid>
                         <Grid item>
@@ -101,7 +101,7 @@ class Status extends Component {
                             onClick={this.onBookmark}
                             size="small"
                           >
-                            <Typography>Chia sẻ</Typography>
+                            <Typography noWrap>Chia sẻ</Typography>
                           </Button>
                         </Grid>
                       </Grid>

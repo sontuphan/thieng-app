@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { Parallax } from 'rc-scroll-anim';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -69,13 +70,22 @@ class User extends Component {
             </IconButton>
           </Grid>
         </Grid>
-        <div className={classes.panel}
-          style={{
-            backgroundImage: `url('${PANEL}')`,
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover'
-          }} />
+        <div className={classes.panel}>
+          <div className={classes.frame}>
+            <Parallax
+              animation={{ scale: 1.5, playScale: [1, 1.75] }}
+              style={{ transform: 'scale(1)' }}
+            >
+              <div className={classes.image}
+                style={{
+                  backgroundImage: `url('${PANEL}')`,
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: 'cover'
+                }} />
+            </Parallax>
+          </div>
+        </div>
       </Grid>
       <Grid item xs={12} md={10} className={classes.body}>
         <Grid container alignItems="center" spacing={2}>
