@@ -30,6 +30,7 @@ class Status extends Component {
 
     this.state = {
       visible: false,
+      isLoading: false,
     }
   }
 
@@ -43,6 +44,14 @@ class Status extends Component {
 
   onBookmark = () => {
     console.log(this.props.id)
+  }
+
+  onMore = () => {
+    this.setState({ isLoading: true }, () => {
+      setTimeout(() => {
+        this.setState({ isLoading: false });
+      }, 3000);
+    });
   }
 
   renderFullStatus = () => {
@@ -119,7 +128,13 @@ class Status extends Component {
                   <Drain small />
                 </Grid>
                 <Grid item xs={10} md={12}>
-                  <RichComment user={this.props.auth} comments={comments} onSend={this.onComment} />
+                  <RichComment
+                    user={this.props.auth}
+                    comments={comments}
+                    onSend={this.onComment}
+                    onMore={this.onMore}
+                    isLoading={this.state.isLoading}
+                  />
                 </Grid>
               </Grid>
             </Grid>

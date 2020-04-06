@@ -5,10 +5,8 @@ import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 
 import Drain from 'components/drain';
-import Divider from 'components/divider';
 import Status from 'containers/status';
 
 import { getProjects } from 'modules/projects.reducer';
@@ -55,19 +53,6 @@ class Newsfeed extends Component {
     return<Grid container direction="row" justify="center" alignItems="center" spacing={2}>
         <Grid item xs={12}>
           <Drain />
-        </Grid>
-        <Grid item xs={10}>
-          <Grid container direction="row" spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h1">Bảng tin</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Divider />
-            </Grid>
-            <Grid item xs={12}>
-              <Drain small />
-            </Grid>
-          </Grid>
         </Grid>
         <Grid item xs={12} sm={10} md={10}>
           <Grid container direction="row" spacing={2}>

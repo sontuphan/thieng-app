@@ -30,7 +30,8 @@ class Item extends Component {
 
     this.state = {
       id: 0,
-      amount: 1
+      amount: 1,
+      isLoading: false,
     }
   }
 
@@ -79,6 +80,14 @@ class Item extends Component {
     this.props.recommendItems(6);
   }
 
+  onMore = () => {
+    this.setState({ isLoading: true }, () => {
+      setTimeout(() => {
+        this.setState({ isLoading: false });
+      }, 3000);
+    });
+  }
+
   render() {
     let { classes } = this.props;
     let object = this.props.items.data[0];
@@ -125,7 +134,14 @@ class Item extends Component {
             <Drain />
           </Grid>
           <Grid item xs={10} md={8}>
-            <TextField label="Số lượng" size="small" variant="outlined" color="secondary" value={this.state.amount} fullWidth />
+            <TextField
+              label="Số lượng"
+              size="small"
+              variant="outlined"
+              color="secondary"
+              value={this.state.amount}
+              fullWidth
+            />
           </Grid>
           <Grid item xs={10} md={8}>
             <Grid container direction="row" spacing={2}>
@@ -187,7 +203,13 @@ class Item extends Component {
             <Typography variant="h2">Nhận xét</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <RichComment user={this.props.auth} comments={comments} onSend={this.onSend} />
+            <RichComment
+              user={this.props.auth}
+              comments={comments}
+              onSend={this.onSend}
+              onMore={this.onMore}
+              isLoading={this.state.isLoading}
+            />
           </Grid>
         </Grid>
         <Grid item xs={12}>
