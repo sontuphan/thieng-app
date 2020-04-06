@@ -76,7 +76,7 @@ class SingleRichComment extends Component {
     let { classes } = this.props;
     return <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Grid container spacing={1} className={classes.root}>
+        <Grid container spacing={1} className={classes.noWrap}>
           <Grid item>
             <Avatar alt={this.props.avatar} src={this.props.avatar} />
           </Grid>
@@ -84,12 +84,12 @@ class SingleRichComment extends Component {
             <div className={classes.paper}>
               <Typography><strong className={classes.name}>{this.props.displayname}</strong> - {this.props.comment}</Typography>
             </div>
-            <Grid container justify="space-between" alignItems="center" spacing={1}>
+            <Grid container className={classes.noWrap} justify="space-between" alignItems="center" spacing={1}>
               <Grid item>
                 <Typography color="textSecondary" className={classes.date}>{this.props.createdAt}</Typography>
               </Grid>
               <Grid item>
-                <Grid container alignItems="center" spacing={1}>
+                <Grid container className={classes.noWrap} alignItems="center" spacing={1}>
                   <Grid item>
                     <LikeChip counting={this.props.likeCounting} onClick={this.props.onLike} />
                   </Grid>

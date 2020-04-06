@@ -63,7 +63,7 @@ class Status extends Component {
       onClose={() => this.setState({ visible: false })}
     >
       <Grid container spacing={2} justify="center">
-        <Grid item xs={12} md={10}>
+        <Grid item xs={12} md={11} lg={10}>
           <Grid container spacing={this.props.ui.width >= 960 ? 4 : 2}>
 
             <Grid item xs={12} md={8}>
@@ -82,7 +82,7 @@ class Status extends Component {
                 <Grid item xs={10} md={12}>
                   <Grid container justify="space-between" alignItems="center" spacing={2}>
                     <Grid item>
-                      <Grid container className={classes.root} alignItems="center" spacing={2}>
+                      <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
                         <Grid item>
                           <Button
                             variant="contained"
@@ -135,6 +135,9 @@ class Status extends Component {
                     onMore={this.onMore}
                     isLoading={this.state.isLoading}
                   />
+                </Grid>
+                <Grid item xs={12}>
+                  <Drain small />
                 </Grid>
               </Grid>
             </Grid>

@@ -9,7 +9,7 @@ export default theme => ({
   adornment: {
     marginRight: -theme.spacing(1)
   },
-  root: {
+  noWrap: {
     flexWrap: 'nowrap',
   },
   stretch: {
