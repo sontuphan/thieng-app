@@ -82,7 +82,7 @@ class Status extends Component {
                 <Grid item xs={10} md={12}>
                   <Grid container justify="space-between" alignItems="center" spacing={2}>
                     <Grid item>
-                      <Grid container alignItems="center" spacing={2} className={classes.noWrap}>
+                      <Grid container className={classes.root} alignItems="center" spacing={2}>
                         <Grid item>
                           <Button
                             variant="contained"

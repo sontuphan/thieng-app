@@ -76,7 +76,7 @@ class SingleRichComment extends Component {
     let { classes } = this.props;
     return <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Grid container spacing={1} style={classes.root}>
+        <Grid container spacing={1} className={classes.root}>
           <Grid item>
             <Avatar alt={this.props.avatar} src={this.props.avatar} />
           </Grid>

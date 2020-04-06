@@ -1,5 +1,5 @@
 export default theme => ({
-  noWrap: {
+  root: {
     flexWrap: 'nowrap'
   }
 });
