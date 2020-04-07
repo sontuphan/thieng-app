@@ -3,7 +3,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const theme = createMuiTheme({
   palette: {
     primary: { main: '#FF3E3C' },
-    secondary: { main: '#2C2C2C' },
+    secondary: { main: '#012639' },
     textPrimary: { main: '#000000' },
     textSecondary: { main: '#FFFFFF' },
   },
@@ -45,7 +45,21 @@ const theme = createMuiTheme({
       letterSpacing: 0,
       textTransform: 'None'
     },
+    h4: {
+      fontFamily: ['"Open Sans"', 'sans-serif'].join(','),
+      fontWeight: 300,
+      fontSize: 17,
+      letterSpacing: 0,
+      textTransform: 'None'
+    },
     h5: {
+      fontFamily: ['"Playfair Display"', 'serif'].join(','),
+      fontWeight: 700,
+      fontSize: 15,
+      letterSpacing: 0,
+      textTransform: 'None',
+    },
+    h6: {
       fontFamily: ['"Open Sans"', 'sans-serif'].join(','),
       fontWeight: 300,
       fontSize: 15,

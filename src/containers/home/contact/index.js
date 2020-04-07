@@ -22,7 +22,7 @@ class Contact extends Component {
             <Typography variant="h1">Về chúng tôi</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography variant="h5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu vestibulum, lorem felis eget. Gravida auctor risus erat pharetra vel odio molestie mi. Ipsum vitae urna porta amet potenti mi pellentesque eu. Est, integer gravida felis eget dolor turpis vitae adipiscing massa. Nulla adipiscing amet, ipsum mattis amet volutpat ac. Dolor pellentesque volutpat massa nibh tincidunt bibendum a, quisque massa. Duis nulla malesuada vulputate nunc egestas elit habitasse bibendum id. Hendrerit dapibus lectus vel id parturient. At sed porttitor vestibulum commodo, sed quam. Amet.</Typography>
+            <Typography variant="h6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu vestibulum, lorem felis eget. Gravida auctor risus erat pharetra vel odio molestie mi. Ipsum vitae urna porta amet potenti mi pellentesque eu. Est, integer gravida felis eget dolor turpis vitae adipiscing massa. Nulla adipiscing amet, ipsum mattis amet volutpat ac. Dolor pellentesque volutpat massa nibh tincidunt bibendum a, quisque massa. Duis nulla malesuada vulputate nunc egestas elit habitasse bibendum id. Hendrerit dapibus lectus vel id parturient. At sed porttitor vestibulum commodo, sed quam. Amet.</Typography>
           </Grid>
           <Grid item xs={12}>
             <Drain />
@@ -35,10 +35,10 @@ class Contact extends Component {
             <Typography variant="h1">Liên hệ</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography variant="h5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet eu sit diam, sagittis, sed id turpis egestas elementum. A eget mi dis magna in tortor nec. Et purus pharetra cras feugiat lectus vel vitae lobortis non. Viverra ut nibh quis nulla ultricies tristique feugiat. Bibendum enim vitae tellus auctor viverra non scelerisque. Massa.</Typography>
+            <Typography variant="h6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet eu sit diam, sagittis, sed id turpis egestas elementum. A eget mi dis magna in tortor nec. Et purus pharetra cras feugiat lectus vel vitae lobortis non. Viverra ut nibh quis nulla ultricies tristique feugiat. Bibendum enim vitae tellus auctor viverra non scelerisque. Massa.</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography variant="h5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sem nibh at lacus amet, magna pharetra est. Tortor in.</Typography>
+            <Typography variant="h6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sem nibh at lacus amet, magna pharetra est. Tortor in.</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
             <TextField label="Email" variant="outlined" color="secondary" fullWidth />

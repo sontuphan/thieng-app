@@ -9,7 +9,15 @@ import Typography from '@material-ui/core/Typography';
 
 import styles from './styles';
 
-class Header extends Component {
+import Blueprint from 'helpers/blueprint';
+
+class Footer extends Component {
+  constructor(){
+    super();
+
+    let blueprint = new Blueprint();
+    blueprint.debug()
+  }
   render() {
     let { classes } = this.props;
 
@@ -36,4 +44,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Header)));
+)(withStyles(styles)(Footer)));
