@@ -44,6 +44,7 @@ class RichComment extends Component {
           color="secondary"
           size="small"
           onChange={this.onChange}
+          className={classes.input}
           InputProps={{
             classes: {
               input: classes.font,
@@ -56,7 +57,7 @@ class RichComment extends Component {
             endAdornment: (
               <InputAdornment position="start" className={classes.adornment}>
                 <IconButton size="small" onClick={() => this.props.onSend(this.state.comment)}>
-                  <SendRounded />
+                  <SendRounded fontSize="small" />
                 </IconButton>
               </InputAdornment>
             ),

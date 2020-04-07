@@ -73,7 +73,7 @@ class User extends Component {
         <div className={classes.panel}>
           <div className={classes.frame}>
             <Parallax
-              animation={{ scale: 1.5, playScale: [1, 1.75] }}
+              animation={{ scale: 1.5, playScale: [1, 2] }}
               style={{ transform: 'scale(1)' }}
             >
               <div className={classes.image}
@@ -88,7 +88,7 @@ class User extends Component {
         </div>
       </Grid>
       <Grid item xs={12} md={10} className={classes.body}>
-        <Grid container alignItems="center" spacing={2}>
+        <Grid container spacing={2}>
           <Grid item xs={12} style={{ margin: 16 }}>
             <Grid container alignItems="center" spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -111,6 +111,9 @@ class User extends Component {
                     <Typography>{this.state.likes} Thích - {this.state.products} Sản phẩm</Typography>
                   </Grid>
                 </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography>Settings</Typography>
               </Grid>
             </Grid>
           </Grid>

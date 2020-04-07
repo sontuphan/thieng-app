@@ -78,7 +78,7 @@ class SingleRichComment extends Component {
       <Grid item xs={12}>
         <Grid container spacing={1} className={classes.noWrap}>
           <Grid item>
-            <Avatar alt={this.props.avatar} src={this.props.avatar} />
+            <Avatar className={classes.user} alt={this.props.avatar} src={this.props.avatar} />
           </Grid>
           <Grid item className={classes.stretch}>
             <div className={classes.paper}>

@@ -4,7 +4,8 @@ export default theme => ({
   },
   avatar: {
     width: '24px',
-    height: '24px'
+    height: '24px',
+    marginLeft: -theme.spacing(1),
   },
   adornment: {
     marginRight: -theme.spacing(1)
@@ -28,5 +29,14 @@ export default theme => ({
   },
   name: {
     cursor: 'pointer',
-  }
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+    '&:active': {
+      textDecoration: 'underline',
+    }
+  },
+  user: {
+    cursor: 'pointer',
+  },
 });

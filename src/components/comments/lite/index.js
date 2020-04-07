@@ -52,7 +52,7 @@ class LiteComment extends Component {
             endAdornment: (
               <InputAdornment position="start" className={classes.adornment}>
                 <IconButton size="small" onClick={() => this.props.onSend(this.state.comment)}>
-                  <SendRounded />
+                  <SendRounded fontSize="small" />
                 </IconButton>
               </InputAdornment>
             ),
@@ -62,12 +62,12 @@ class LiteComment extends Component {
   }
 
   renderOutput = () => {
-    let { comments } = this.props;
+    let { classes, comments } = this.props;
     if (!comments || comments.length === 0) return null;
 
     return <Grid container spacing={2}>
       {comments.map((comment, i) => <Grid item key={i} xs={12}>
-        <Typography><strong>{comment.user.displayname}</strong> - {comment.comment}</Typography>
+        <Typography><strong className={classes.name}>{comment.user.displayname}</strong> - {comment.comment}</Typography>
       </Grid>)}
     </Grid>
   }
