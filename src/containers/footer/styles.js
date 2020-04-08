@@ -1,8 +1,5 @@
 export default theme => ({
-  row: {
-    minHeight: '56px'
-  },
-  maxHeight: {
-    height: '100%'
+  footer: {
+    minHeight: theme.spacing(8)
   }
 });

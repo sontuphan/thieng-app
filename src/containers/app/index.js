@@ -13,8 +13,8 @@ import Home from 'containers/home';
 import Newsfeed from 'containers/newsfeed';
 import Mall from 'containers/mall';
 import User from 'containers/user';
-import Factory from 'containers/factory';
 import Shop from 'containers/shop';
+import { BlueprintEditor } from 'containers/blueprint';
 import Footer from 'containers/footer';
 
 import theme from 'static/styles/theme';
@@ -38,22 +38,26 @@ class App extends Component {
   render() {
     return <ThemeProvider theme={theme}>
       <Grid container justify="center" spacing={2}>
-        <Header />
+        <Grid item xs={10}>
+          <Header />
+        </Grid>
         <Grid item xs={12}>
           <Switch>
             <Redirect exact from="/" to="/home" />
             <Route exact path="/home" component={Home} />
             <Route path="/newsfeed" component={Newsfeed} />
             <Route path="/mall" component={Mall} />
-            <Route exact path="/user/:userId/:projectId?" component={User} />
-            <Route exact path="/factory/:projectId?" component={Factory} />
+            <Route exact path="/user/:userId" component={User} />
             <Route exact path="/my-shop" component={Shop} />
+            <Route exact path="/blueprint" component={BlueprintEditor} />
           </Switch>
         </Grid>
         <Grid item xs={12}>
           <Drain large />
         </Grid>
-        <Footer />
+        <Grid item xs={10}>
+          <Footer />
+        </Grid>
       </Grid>
     </ThemeProvider>
   }

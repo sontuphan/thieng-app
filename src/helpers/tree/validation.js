@@ -33,14 +33,14 @@ const validateContainerJustify = function (justify) {
   return true;
 }
 
-const validateContainerAlign = function (align) {
-  if (!align) return false;
-  if (typeof align !== 'string') return false;
-  if (!PREDEFINED_TYPES.container.align.includes(align)) return false;
+const validateContainerAlignItems = function (alignItems) {
+  if (!alignItems) return false;
+  if (typeof alignItems !== 'string') return false;
+  if (!PREDEFINED_TYPES.container.alignItems.includes(alignItems)) return false;
   return true;
 }
 
-export { validateContainerWidth, validateContainerJustify, validateContainerAlign }
+export { validateContainerWidth, validateContainerJustify, validateContainerAlignItems }
 
 
 /**

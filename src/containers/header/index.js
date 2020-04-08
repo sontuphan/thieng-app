@@ -180,24 +180,22 @@ class Header extends Component {
   render() {
     let { classes } = this.props;
     return <Fragment>
-      <Grid item xs={10}>
-        <Grid container direction="row" justify="space-between" alignItems="center">
-          <Grid item className={classes.logo}>
-            <Link color="textPrimary" underline="none" component={RouterLink} to={'/home'}>
-              <Typography variant="h3">Thiêng</Typography>
-            </Link>
-          </Grid>
-          <Grid item>
-            {this.renderRoute()}
-          </Grid>
+      <Grid container direction="row" justify="space-between" alignItems="center">
+        <Grid item className={classes.logo}>
+          <Link color="textPrimary" underline="none" component={RouterLink} to={'/home'}>
+            <Typography variant="h3">Thiêng</Typography>
+          </Link>
         </Grid>
-        <LogIn
-          visible={this.state.visibleLogInModal}
-          onToggle={this.onToggleLogInModal}
-          callback={this.syncAuth}
-          fullWidth={!this.state.matches}
-        />
+        <Grid item>
+          {this.renderRoute()}
+        </Grid>
       </Grid>
+      <LogIn
+        visible={this.state.visibleLogInModal}
+        onToggle={this.onToggleLogInModal}
+        callback={this.syncAuth}
+        fullWidth={!this.state.matches}
+      />
     </Fragment>
   }
 }

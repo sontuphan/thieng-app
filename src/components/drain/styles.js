@@ -1,14 +1,14 @@
 export default theme => ({
   large: {
-    minHeight: '112px',
+    minHeight: theme.spacing(14),
     width: '100%'
   },
   default: {
-    minHeight: '56px',
+    minHeight: theme.spacing(7),
     width: '100%'
   },
   small: {
-    minHeight: '28px',
+    minHeight: theme.spacing(3),
     width: '100%'
   }
 });

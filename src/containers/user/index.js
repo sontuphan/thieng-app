@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 
 import { SettingsApplicationsRounded } from '@material-ui/icons';
 
@@ -113,7 +114,13 @@ class User extends Component {
                 </Grid>
               </Grid>
               <Grid item xs={12}>
-                <Typography>Settings</Typography>
+                <Grid container spacing={2} justify="center">
+                  <Grid item>
+                    <Button href="/blueprint">
+                      <Typography>New blueprint</Typography>
+                    </Button>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>

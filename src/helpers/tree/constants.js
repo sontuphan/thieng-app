@@ -5,7 +5,7 @@ const PREDEFINED_TYPES = {
   container: {
     width: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     justify: ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'],
-    align: ['flex-start', 'flex-end', 'center', 'stretch', 'baseline'],
+    alignItems: ['flex-start', 'flex-end', 'center', 'stretch', 'baseline'],
     children: ['container', 'image', 'video', 'text', 'drain'],
   },
   image: {
@@ -32,7 +32,7 @@ const DEFAULT_CONTAINER = {
   type: 'container',
   width: 12,
   justify: 'flex-start',
-  align: 'flex-start',
+  alignItems: 'flex-start',
   children: null,
 }
 
