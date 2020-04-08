@@ -1,4 +1,17 @@
-import { PREDEFINED_TYPES } from './constants'
+import { PREDEFINED_TYPES } from './constants';
+
+/**
+ * Helpers
+ */
+const validateURL = function (str) {
+  var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+    '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+  return !!pattern.test(str);
+}
 
 
 /**
@@ -37,6 +50,7 @@ export { validateContainerWidth, validateContainerJustify, validateContainerAlig
 const validateImageUrl = function (url) {
   if (!url) return false;
   if (typeof url !== 'string') return false;
+  if (!validateURL(url)) return false;
   return true;
 }
 
@@ -50,6 +64,7 @@ export { validateImageUrl }
 const validateVideoUrl = function (url) {
   if (!url) return false;
   if (typeof url !== 'string') return false;
+  if (!validateURL(url)) return false;
   return true;
 }
 
@@ -66,7 +81,14 @@ const validateTextContent = function (content) {
   return true;
 }
 
-export { validateTextContent }
+const validateTextVariant = function (variant) {
+  if (!variant) return false;
+  if (typeof variant !== 'string') return false;
+  if (!PREDEFINED_TYPES.text.variant.includes(variant)) return false;
+  return true;
+}
+
+export { validateTextContent, validateTextVariant }
 
 
 /**
@@ -77,7 +99,7 @@ const validateDrainHeight = function (height) {
   if (!height) return false;
   if (typeof height !== 'number') return false;
   if (!Number.isInteger(height)) return false;
-  if (height <= 0) return false;
+  if (height < 1 || height > 1000) return false;
   return true;
 }
 
