@@ -45,7 +45,7 @@ class Root extends Component {
     return <Grid
       container
       spacing={2}
-      className={classes.container}
+      className={this.props.editable ? classes.container : null}
       id={this.props.id}
     >
       {this.props.children}

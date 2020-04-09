@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 
 import Root from './components/root';
 import Container from './components/container';
+import Text from './components/text';
 
 import styles from './components/styles';
 import Tree from './tree';
@@ -56,7 +57,12 @@ class Render extends Component {
 
     }
     if (node.type === 'text') {
-
+      return <Text
+        id={id}
+        tree={this.tree}
+        onChange={this.onChange}
+        editable={this.props.editable}
+      />
     }
     if (node.type === 'drain') {
 

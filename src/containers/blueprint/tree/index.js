@@ -48,6 +48,15 @@ class Tree {
     return this.root[id];
   }
 
+  deleteNode = (id) => {
+    delete this.root[id];
+    Object.keys(this.root).forEach(nodeId => {
+      let node = this.root[nodeId]
+      if (!node.children) return;
+      node.children = node.children.filter(childId => childId !== id);
+    });
+  }
+
 
   /**
    * Root interaction
@@ -118,7 +127,7 @@ class Tree {
   }
 
   deleteContainer = (id) => {
-    delete this.root[id];
+    this.deleteNode(id);
   }
 
 
@@ -153,7 +162,7 @@ class Tree {
   }
 
   deleteImage = (id) => {
-    delete this.root[id];
+    this.deleteNode(id);
   }
 
 
@@ -188,7 +197,7 @@ class Tree {
   }
 
   deleteVideo = (id) => {
-    delete this.root[id];
+    this.deleteNode(id);
   }
 
 
@@ -226,7 +235,7 @@ class Tree {
   }
 
   deleteText = (id) => {
-    delete this.root[id];
+    this.deleteNode(id);
   }
 
 
@@ -262,7 +271,7 @@ class Tree {
   }
 
   deleteDrain = (id) => {
-    delete this.root[id];
+    this.deleteNode(id);
   }
 }
 

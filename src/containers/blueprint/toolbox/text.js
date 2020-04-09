@@ -8,21 +8,21 @@ import Popover from '@material-ui/core/Popover';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
+import TextField from '@material-ui/core/TextField';
 
 import styles from './styles';
 
+
 const DEFAULT_DATA = {
-  width: 12,
-  justify: 'flex-start',
-  alignItems: 'flex-start',
+  variant: 'body1',
+  content: '',
 }
 
 
-class ContainerTool extends Component {
+class TextTool extends Component {
   constructor() {
     super();
 
@@ -41,15 +41,12 @@ class ContainerTool extends Component {
     }
   }
 
-  onWidth = (e, value) => {
-    if (!value) return;
-    this.setState({ width: value });
+  onVariant = (e) => {
+    this.setState({ variant: e.target.value });
   }
-  onJustify = (e) => {
-    this.setState({ justify: e.target.value });
-  }
-  onAlign = (e) => {
-    this.setState({ alignItems: e.target.value });
+
+  onContent = (e) => {
+    this.setState({ content: e.target.value });
   }
 
   onOk = () => {
@@ -76,68 +73,54 @@ class ContainerTool extends Component {
             <ListItem>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Typography variant="h3">Container</Typography>
+                  <Typography variant="h3">Text</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <InputLabel color="secondary">Width</InputLabel>
-                  <Slider
-                    value={this.state.width}
-                    onChange={this.onWidth}
-                    step={1} min={0} max={12}
-                    valueLabelDisplay="auto"
-                    marks
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <InputLabel color="secondary">Justify</InputLabel>
+                  <InputLabel color="secondary">Variant</InputLabel>
                   <Select
-                    value={this.state.justify}
-                    onChange={this.onJustify}
+                    onChange={this.onVariant}
+                    value={this.state.variant}
                     fullWidth
                   >
-                    <MenuItem value={'flex-start'}>
-                      <Typography>Start</Typography>
+                    <MenuItem value={'h1'}>
+                      <Typography variant="h1">h1</Typography>
                     </MenuItem>
-                    <MenuItem value={'flex-end'}>
-                      <Typography>End</Typography>
+                    <MenuItem value={'h2'}>
+                      <Typography variant="h2">h2</Typography>
                     </MenuItem>
-                    <MenuItem value={'center'}>
-                      <Typography>Center</Typography>
+                    <MenuItem value={'h3'}>
+                      <Typography variant="h3">h3</Typography>
                     </MenuItem>
-                    <MenuItem value={'space-between'}>
-                      <Typography>Space Between</Typography>
+                    <MenuItem value={'h4'}>
+                      <Typography variant="h4">h4</Typography>
                     </MenuItem>
-                    <MenuItem value={'space-around'}>
-                      <Typography>Space Around</Typography>
+                    <MenuItem value={'h5'}>
+                      <Typography variant="h5">h5</Typography>
                     </MenuItem>
-                    <MenuItem value={'space-evenly'}>
-                      <Typography>Space Evenly</Typography>
+                    <MenuItem value={'h6'}>
+                      <Typography variant="h6">h6</Typography>
+                    </MenuItem>
+                    <MenuItem value={'body1'}>
+                      <Typography variant="body1">body1</Typography>
+                    </MenuItem>
+                    <MenuItem value={'body2'}>
+                      <Typography variant="body2">body2</Typography>
                     </MenuItem>
                   </Select>
                 </Grid>
                 <Grid item xs={12}>
-                  <InputLabel color="secondary">Align</InputLabel>
-                  <Select
-                    value={this.state.alignItems}
-                    onChange={this.onAlign}
-                    fullWidth
-                  >
-                    <MenuItem value={'flex-start'}>
-                      <Typography>Start</Typography>
-                    </MenuItem>
-                    <MenuItem value={'flex-end'}>
-                      <Typography>End</Typography>
-                    </MenuItem>
-                    <MenuItem value={'center'}>
-                      <Typography>Center</Typography>
-                    </MenuItem>
-                    <MenuItem value={'stretch'}>
-                      <Typography>Stretch</Typography>
-                    </MenuItem>
-                    <MenuItem value={'baseline'}>
-                      <Typography>Baseline</Typography>
-                    </MenuItem>
-                  </Select>
+                  <TextField
+                    label="Content"
+                    variant="outlined"
+                    color="secondary"
+                    size="small"
+                    value={this.state.content}
+                    onChange={this.onContent}
+                    InputProps={{
+                      classes: {
+                        input: classes.font,
+                      }
+                    }} multiline fullWidth />
                 </Grid>
                 <Grid item xs={12}>
                   <Grid container spacing={2} justify="flex-end">
@@ -162,14 +145,14 @@ class ContainerTool extends Component {
   }
 }
 
-ContainerTool.defaultProps = {
+TextTool.defaultProps = {
   visible: false,
   defaultData: { ...DEFAULT_DATA },
   onChange: () => { },
   onClose: () => { },
 }
 
-ContainerTool.propTypes = {
+TextTool.propTypes = {
   visible: PropTypes.bool.isRequired,
   onChange: PropTypes.func,
   onClose: PropTypes.func,
@@ -177,4 +160,4 @@ ContainerTool.propTypes = {
   defaultData: PropTypes.object,
 }
 
-export default withStyles(styles)(ContainerTool);
+export default withStyles(styles)(TextTool);

@@ -1,13 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 
-import { EditRounded, AddRounded, DeleteRounded } from '@material-ui/icons';
+import {
+  EditRounded, AddRounded, DeleteRounded,
+  CheckBoxOutlineBlankRounded, CalendarViewDayRounded,
+  VideoCallRounded, TextFieldsRounded, ImageRounded,
+} from '@material-ui/icons';
 
-import { ContainerTool } from '../toolbox';
+import { ContainerTool, TextTool } from '../toolbox';
 
 import styles from './styles';
 
@@ -18,21 +22,35 @@ class Container extends Component {
 
     this.state = {
       visibleAdd: false,
+      visibleAddContainer: false,
+      visibleAddImage: false,
+      visibleAddVideo: false,
+      visibleAddText: false,
+      visibleAddDrain: false,
       visibleEdit: false,
       anchorEl: null,
     }
   }
 
+  onMouseEnter = () => {
+    this.setState({ visibleAdd: true });
+  }
+  onMouseLeave = () => {
+    this.setState({ visibleAdd: false });
+  }
+
   /**
    * Add
    */
-  onAdd = (e) => {
+
+  // Container
+  onAddContainer = (e) => {
     return this.setState({
-      visibleAdd: !this.state.visibleAdd,
+      visibleAddContainer: !this.state.visibleAddContainer,
       anchorEl: e.currentTarget,
     });
   }
-  onAddOk = (data) => {
+  onAddContainerOk = (data) => {
     this.props.tree.addContainer(
       this.props.id,
       data.width,
@@ -40,7 +58,48 @@ class Container extends Component {
       data.alignItems,
     );
     this.props.onChange(this.props.tree);
-    this.setState({ visibleAdd: false });
+    this.setState({ visibleAddContainer: false });
+  }
+
+  // Image
+  onAddImage = (e) => {
+    return this.setState({
+      visibleAddImage: !this.state.visibleAddImage,
+      anchorEl: e.currentTarget,
+    });
+  }
+
+  // Video
+  onAddVideo = (e) => {
+    return this.setState({
+      visibleAddVideo: !this.state.visibleAddVideo,
+      anchorEl: e.currentTarget,
+    });
+  }
+
+  // Text
+  onAddText = (e) => {
+    return this.setState({
+      visibleAddText: !this.state.visibleAddText,
+      anchorEl: e.currentTarget,
+    });
+  }
+  onAddTextOk = (data) => {
+    this.props.tree.addText(
+      this.props.id,
+      data.variant,
+      data.content,
+    );
+    this.props.onChange(this.props.tree);
+    this.setState({ visibleAddText: false });
+  }
+
+  //Drain
+  onAddDrain = (e) => {
+    return this.setState({
+      visibleAddDrain: !this.state.visibleAddDrain,
+      anchorEl: e.currentTarget,
+    });
   }
 
   /**
@@ -53,7 +112,6 @@ class Container extends Component {
     });
   }
   onEditOk = (data) => {
-    console.log(this.props.tree)
     this.props.tree.editContainer(
       this.props.id,
       data.width,
@@ -68,7 +126,8 @@ class Container extends Component {
    * Delete
    */
   onDelete = () => {
-
+    this.props.tree.deleteContainer(this.props.id);
+    this.props.onChange(this.props.tree);
   }
 
   render() {
@@ -80,7 +139,7 @@ class Container extends Component {
         justify={node.justify}
         alignItems={node.alignItems}
         spacing={2}
-        className={classes.container}
+        className={this.props.editable ? classes.container : null}
         id={this.props.id}
       >
         {this.props.children}
@@ -104,18 +163,42 @@ class Container extends Component {
             </Grid>
 
             {/* Add button */}
-            <Grid item>
-              <IconButton
-                size="small"
-                onClick={this.onAdd}
-              >
-                <AddRounded fontSize="small" />
-              </IconButton>
+            <Grid item onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+              {
+                this.state.visibleAdd ?
+                  <Fragment>
+                    <IconButton size="small" onClick={this.onAddContainer}>
+                      <CheckBoxOutlineBlankRounded fontSize="small" />
+                    </IconButton>
+                    <IconButton size="small" onClick={this.onAddImage}>
+                      <ImageRounded fontSize="small" />
+                    </IconButton>
+                    <IconButton size="small" onClick={this.onAddVideo}>
+                      <VideoCallRounded fontSize="small" />
+                    </IconButton>
+                    <IconButton size="small" onClick={this.onAddText}>
+                      <TextFieldsRounded fontSize="small" />
+                    </IconButton>
+                    <IconButton size="small" onClick={this.onAddDrain}>
+                      <CalendarViewDayRounded fontSize="small" />
+                    </IconButton>
+                  </Fragment>
+                  :
+                  <IconButton size="small">
+                    <AddRounded fontSize="small" />
+                  </IconButton>
+              }
               <ContainerTool
-                visible={this.state.visibleAdd}
+                visible={this.state.visibleAddContainer}
                 anchorEl={this.state.anchorEl}
-                onChange={this.onAddOk}
-                onClose={this.onAdd}
+                onChange={this.onAddContainerOk}
+                onClose={this.onAddContainer}
+              />
+              <TextTool
+                visible={this.state.visibleAddText}
+                anchorEl={this.state.anchorEl}
+                onChange={this.onAddTextOk}
+                onClose={this.onAddText}
               />
             </Grid>
 
