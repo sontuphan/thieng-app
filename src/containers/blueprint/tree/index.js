@@ -20,10 +20,10 @@ import {
 
 
 /**
- * TreeEditor creates a recursive tree for quick rendering
+ * Tree creates a recursive tree for quick rendering
  */
 
-class TreeEditor {
+class Tree {
   constructor(blueprintObject) {
     if (blueprintObject) {
       this.root = blueprintObject;
@@ -155,4 +155,4 @@ class TreeEditor {
   }
 }
 
-export default TreeEditor;
+export default Tree;

@@ -14,7 +14,7 @@ import Newsfeed from 'containers/newsfeed';
 import Mall from 'containers/mall';
 import User from 'containers/user';
 import Shop from 'containers/shop';
-import { BlueprintEditor } from 'containers/blueprint';
+import Blueprint from 'containers/blueprint';
 import Footer from 'containers/footer';
 
 import theme from 'static/styles/theme';
@@ -49,7 +49,7 @@ class App extends Component {
             <Route path="/mall" component={Mall} />
             <Route exact path="/user/:userId" component={User} />
             <Route exact path="/my-shop" component={Shop} />
-            <Route exact path="/blueprint" component={BlueprintEditor} />
+            <Route exact path="/blueprint" component={Blueprint} />
           </Switch>
         </Grid>
         <Grid item xs={12}>

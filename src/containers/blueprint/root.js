@@ -17,9 +17,14 @@ class Root extends Component {
     super();
 
     this.state = {
+      focus: false,
       visible: false,
       anchorEl: null,
     }
+  }
+
+  onFocus = () => {
+    this.setState({ focus: !this.state.focus });
   }
 
   onAdd = (e) => {
@@ -47,6 +52,7 @@ class Root extends Component {
       spacing={2}
       className={classes.container}
       id={this.props.data.id}
+      style={{ borderStyle: this.state.focus ? 'solid' : 'none' }}
     >
       <Grid item xs={12}>
         {this.props.children}
@@ -54,7 +60,12 @@ class Root extends Component {
       {this.props.editable ? <Grid item xs={12}>
         <Grid container justify="center" spacing={2}>
           <Grid item>
-            <IconButton size="small" onClick={this.onAdd}>
+            <IconButton
+              size="small"
+              onClick={this.onAdd}
+              onMouseEnter={this.onFocus}
+              onMouseLeave={this.onFocus}
+            >
               <AddRounded fontSize="small" />
             </IconButton>
           </Grid>
