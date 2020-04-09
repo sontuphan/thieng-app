@@ -5,46 +5,28 @@ import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+
+import { VisibilityRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
-import Root from './root';
-import Container from './container';
+import Render from './render';
 
-import styles from './styles';
-import Tree from './tree';
+import styles from './components/styles';
 
 
 class Blueprint extends Component {
   constructor() {
     super();
 
-    this.tree = new Tree();
-    this.rootId = this.getRootId();
-  }
-
-  getRootId = () => {
-    for (let id in this.tree.root) {
-      let node = this.tree.root[id];
-      if (node.type === 'root') return id;
+    this.state = {
+      editable: true
     }
   }
 
-  Container = (props) => {
-    return <Grid item xs={props.data.width}>
-      <Grid container justify={props.data.justify} alignItems={props.data.alignItems} spacing={2}>
-        {props.children}
-      </Grid>
-    </Grid>
-  }
-
-  onAddContainer = (data) => {
-    this.tree.addContainer(
-      data.parentId,
-      data.width,
-      data.justify,
-      data.alignItems,
-    );
-    console.log(this.tree.root)
+  onPreview = () => {
+    this.setState({ editable: !this.state.editable });
   }
 
   render() {
@@ -53,19 +35,22 @@ class Blueprint extends Component {
         <Drain />
       </Grid>
       <Grid item xs={12} md={10}>
-        <Root
-          data={{ id: this.rootId }}
-          onAdd={this.onAddContainer}
-          editable
-        >
-          <Container
-            data={{ width: 12, justify: 'center', alignItems: 'center' }}
-            onAdd={this.onAddContainer}
-            editable
-          >
-
-          </Container>
-        </Root>
+        <Grid container justify="flex-end">
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              onClick={this.onPreview}
+              startIcon={<VisibilityRounded />}
+            >
+              <Typography>Preview</Typography>
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} md={10}>
+        <Render editable={this.state.editable} />
       </Grid>
     </Grid>
   }

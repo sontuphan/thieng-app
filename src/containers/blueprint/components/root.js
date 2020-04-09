@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import { AddRounded } from '@material-ui/icons';
 
-import { ContainerTool } from './tool';
+import { ContainerTool } from '../toolbox';
 
 import styles from './styles';
 
@@ -17,14 +17,9 @@ class Root extends Component {
     super();
 
     this.state = {
-      focus: false,
       visible: false,
       anchorEl: null,
     }
-  }
-
-  onFocus = () => {
-    this.setState({ focus: !this.state.focus });
   }
 
   onAdd = (e) => {
@@ -35,13 +30,13 @@ class Root extends Component {
   }
 
   onOk = (data) => {
-    this.props.onAdd({
-      parentId: this.props.data.id,
-      type: 'container',
-      width: data.width,
-      justify: data.justify,
-      alignItems: data.alignItems,
-    });
+    this.props.tree.addContainer(
+      this.props.id,
+      data.width,
+      data.justify,
+      data.alignItems,
+    );
+    this.props.onChange(this.props.tree);
     this.setState({ visible: false });
   }
 
@@ -51,25 +46,18 @@ class Root extends Component {
       container
       spacing={2}
       className={classes.container}
-      id={this.props.data.id}
-      style={{ borderStyle: this.state.focus ? 'solid' : 'none' }}
+      id={this.props.id}
     >
-      <Grid item xs={12}>
-        {this.props.children}
-      </Grid>
+      {this.props.children}
       {this.props.editable ? <Grid item xs={12}>
         <Grid container justify="center" spacing={2}>
           <Grid item>
             <IconButton
               size="small"
               onClick={this.onAdd}
-              onMouseEnter={this.onFocus}
-              onMouseLeave={this.onFocus}
             >
               <AddRounded fontSize="small" />
             </IconButton>
-          </Grid>
-          <Grid item xs={12}>
             <ContainerTool
               visible={this.state.visible}
               anchorEl={this.state.anchorEl}
@@ -84,14 +72,15 @@ class Root extends Component {
 }
 
 Root.defaultProps = {
+  onChange: () => { },
   editable: false,
-  onAdd: () => { },
 }
 
 Root.propTypes = {
+  id: PropTypes.string.isRequired,
+  tree: PropTypes.object.isRequired,
+  onChange: PropTypes.func,
   editable: PropTypes.bool,
-  data: PropTypes.object.isRequired,
-  onAdd: PropTypes.func,
 }
 
 export default withStyles(styles)(Root);
