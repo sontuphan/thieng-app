@@ -15,6 +15,7 @@ import {
   validateVideoUrl,
   validateTextContent,
   validateTextVariant,
+  validateTextAlign,
   validateDrainHeight,
 } from './validation';
 
@@ -49,12 +50,18 @@ class Tree {
   }
 
   deleteNode = (id) => {
-    delete this.root[id];
+    // Delete it in parent
     Object.keys(this.root).forEach(nodeId => {
       let node = this.root[nodeId]
       if (!node.children) return;
       node.children = node.children.filter(childId => childId !== id);
     });
+    // Delete its children
+    if (this.root[id].children) {
+      this.root[id].children.forEach(childId => this.deleteNode(childId));
+    }
+    // Delete itself
+    delete this.root[id];
   }
 
 
@@ -90,7 +97,8 @@ class Tree {
    * Container interaction
    */
 
-  __createContainer = (width = DEFAULT_CONTAINER.width,
+  __createContainer = (
+    width = DEFAULT_CONTAINER.width,
     justify = DEFAULT_CONTAINER.justify,
     alignItems = DEFAULT_CONTAINER.alignItems
   ) => {
@@ -135,7 +143,7 @@ class Tree {
    * Image interaction
    */
 
-  __createImage = (url) => {
+  __createImage = (url = DEFAULT_IMAGE.url) => {
     if (!validateImageUrl(url)) return null;
     const id = getRandId();
     const obj = {
@@ -154,6 +162,7 @@ class Tree {
   }
 
   editImage = (id, url) => {
+    console.log(url, validateImageUrl(url))
     if (!this.root[id]) return null;
     if (this.root[id].type !== DEFAULT_IMAGE.type) return null;
     if (!validateImageUrl(url)) return null;
@@ -170,7 +179,7 @@ class Tree {
    * Video interaction
    */
 
-  __createVideo = (url) => {
+  __createVideo = (url = DEFAULT_VIDEO.url) => {
     if (!validateVideoUrl(url)) return null;
     const id = getRandId();
     const obj = {
@@ -205,32 +214,39 @@ class Tree {
    * Text interaction
    */
 
-  __createText = (variant = DEFAULT_TEXT.variant, content) => {
+  __createText = (
+    variant = DEFAULT_TEXT.variant,
+    align = DEFAULT_TEXT.align,
+    content = DEFAULT_TEXT.content
+  ) => {
     if (!validateTextVariant(variant)) return null;
+    if (!validateTextAlign(align)) return null;
     if (!validateTextContent(content)) return null;
     const id = getRandId();
     const obj = {
       type: DEFAULT_TEXT.type,
       variant,
+      align,
       content,
     }
     return { id, obj }
   }
 
-  addText = (parentId, variant, content) => {
-    const text = this.__createText(variant, content);
+  addText = (parentId, variant, align, content) => {
+    const text = this.__createText(variant, align, content);
     if (!text) return console.error('Invalid text');
     this.root[parentId].children.push(text.id);
     this.root[text.id] = text.obj;
     return text.id;
   }
 
-  editText = (id, variant, content) => {
+  editText = (id, variant, align, content) => {
     if (!this.root[id]) return null;
     if (this.root[id].type !== DEFAULT_TEXT.type) return null;
     if (!validateTextVariant(variant)) return null;
+    if (!validateTextAlign(align)) return null;
     if (!validateTextContent(content)) return null;
-    this.root[id] = { ...this.root[id], variant, content }
+    this.root[id] = { ...this.root[id], variant, align, content }
     return id;
   }
 

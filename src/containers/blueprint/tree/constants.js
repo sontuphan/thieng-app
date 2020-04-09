@@ -16,7 +16,8 @@ const PREDEFINED_TYPES = {
   },
   text: {
     variant: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'body1', 'body2'],
-    content: null,
+    align: ['left', 'center', 'right', 'justify'],
+    content: '',
   },
   drain: {
     height: null,
@@ -38,18 +39,19 @@ const DEFAULT_CONTAINER = {
 
 const DEFAULT_IMAGE = {
   type: 'image',
-  url: null,
+  url: 'https://source.unsplash.com/random/',
 }
 
 const DEFAULT_VIDEO = {
   type: 'video',
-  url: null,
+  url: 'https://source.unsplash.com/random/',
 }
 
 const DEFAULT_TEXT = {
   type: 'text',
-  contents: null,
   variant: 'body1',
+  align: 'left',
+  contents: '',
 }
 
 const DEFAULT_DRAIN = {

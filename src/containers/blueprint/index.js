@@ -14,15 +14,51 @@ import Drain from 'components/drain';
 import Render from './render';
 
 import styles from './components/styles';
+import storage from 'helpers/storage';
+import Tree from './tree';
+
 
 
 class Blueprint extends Component {
   constructor() {
     super();
 
+    this.treeRootStack = [];
+    let currentTreeRoot = this.loadTreeInStorage();
+    this.tree = new Tree(currentTreeRoot);
     this.state = {
       editable: true
     }
+  }
+
+  loadTreeInStorage = () => {
+    this.treeRootStack = storage.get('tree');
+    let currentTreeRootIndex = storage.get('currentTree');
+    return this.treeRootStack[currentTreeRootIndex];
+  }
+
+  onUndo = () => {
+
+  }
+
+  onRedo = () => {
+
+  }
+
+  clearStaleTree = () => {
+
+  }
+
+  onChange = (tree) => {
+    if (this.treeRootStack.length < 10) {
+      this.treeRootStack.push(tree.root);
+    }
+    else {
+      this.treeRootStack.shift();
+      this.treeRootStack.push(tree.root);
+    }
+    storage.set('tree', this.treeRootStack);
+    storage.set('currentTree', this.treeRootStack.length - 1);
   }
 
   onPreview = () => {
@@ -34,7 +70,7 @@ class Blueprint extends Component {
       <Grid item xs={12}>
         <Drain />
       </Grid>
-      <Grid item xs={12} md={10}>
+      <Grid item md={10}>
         <Grid container justify="flex-end">
           <Grid item>
             <Button
@@ -50,7 +86,11 @@ class Blueprint extends Component {
         </Grid>
       </Grid>
       <Grid item xs={12} md={10}>
-        <Render editable={this.state.editable} />
+        <Render
+          tree={this.tree}
+          editable={this.state.editable}
+          onChange={this.onChange}
+        />
       </Grid>
     </Grid>
   }

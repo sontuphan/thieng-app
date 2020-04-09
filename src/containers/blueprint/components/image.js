@@ -5,44 +5,28 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 
-import { EditRounded, DeleteRounded, } from '@material-ui/icons';
-
-import { TextTool } from '../toolbox';
+import { ImageRounded, DeleteRounded } from '@material-ui/icons';
 
 import styles from './styles';
-import { Typography } from '@material-ui/core';
 
+class Image extends Component {
 
-class Text extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      visible: false,
-      anchorEl: null,
-    }
+  onEdit = () => {
+    let e = document.getElementById('tree-upload-image');
+    e.click();
   }
 
-  onEdit = (e) => {
-    return this.setState({
-      visible: !this.state.visible,
-      anchorEl: e.currentTarget,
-    });
-  }
-
-  onOk = (data) => {
-    this.props.tree.editText(
+  onImage = (e) => {
+    let url = URL.createObjectURL(e.target.files[0])
+    this.props.tree.editImage(
       this.props.id,
-      data.variant,
-      data.align,
-      data.content,
+      url,
     );
     this.props.onChange(this.props.tree);
-    this.setState({ visible: false });
   }
 
   onDelete = () => {
-    this.props.tree.deleteText(this.props.id);
+    this.props.tree.deleteImage(this.props.id);
     this.props.onChange(this.props.tree);
   }
 
@@ -57,21 +41,15 @@ class Text extends Component {
         id={this.props.id}
       >
         <Grid item xs={12}>
-          <Typography variant={node.variant} align={node.align}>{node.content}</Typography>
+          <img width="100%" height="auto" alt={node.url} src={node.url} />
         </Grid>
         {this.props.editable ? <Grid item xs={12}>
           <Grid container justify="center" spacing={2}>
             <Grid item>
+              <input type="file" id="tree-upload-image" style={{ display: "none" }} onChange={this.onImage} />
               <IconButton size="small" onClick={this.onEdit}>
-                <EditRounded fontSize="small" />
+                <ImageRounded fontSize="small" />
               </IconButton>
-              <TextTool
-                defaultData={node}
-                visible={this.state.visible}
-                anchorEl={this.state.anchorEl}
-                onChange={this.onOk}
-                onClose={this.onEdit}
-              />
             </Grid>
             <Grid item>
               <IconButton size="small" onClick={this.onDelete}>
@@ -85,16 +63,16 @@ class Text extends Component {
   }
 }
 
-Text.defaultProps = {
+Image.defaultProps = {
   onChange: () => { },
   editable: false,
 }
 
-Text.propTypes = {
+Image.propTypes = {
   id: PropTypes.string.isRequired,
   tree: PropTypes.object.isRequired,
   onChange: PropTypes.func,
   editable: PropTypes.bool,
 }
 
-export default withStyles(styles)(Text);
+export default withStyles(styles)(Image);

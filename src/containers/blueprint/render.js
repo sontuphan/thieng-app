@@ -7,33 +7,31 @@ import Grid from '@material-ui/core/Grid';
 import Root from './components/root';
 import Container from './components/container';
 import Text from './components/text';
+import Image from './components/image';
 
 import styles from './components/styles';
-import Tree from './tree';
-
 
 class Render extends Component {
   constructor() {
     super();
 
-    this.tree = new Tree();
     this.state = {
       restart: 0
     }
   }
 
   onChange = (tree) => {
-    console.log(this.tree.root);
+    this.props.onChange(tree);
     this.restart();
   }
 
   renderChild = (id) => {
-    const node = this.tree.getNode(id);
+    const node = this.props.tree.getNode(id);
 
     if (node.type === 'root') {
       return <Root
         id={id}
-        tree={this.tree}
+        tree={this.props.tree}
         onChange={this.onChange}
         editable={this.props.editable}
       >
@@ -43,7 +41,7 @@ class Render extends Component {
     if (node.type === 'container') {
       return <Container
         id={id}
-        tree={this.tree}
+        tree={this.props.tree}
         onChange={this.onChange}
         editable={this.props.editable}
       >
@@ -51,7 +49,12 @@ class Render extends Component {
       </Container>
     }
     if (node.type === 'image') {
-
+      return <Image
+        id={id}
+        tree={this.props.tree}
+        onChange={this.onChange}
+        editable={this.props.editable}
+      />
     }
     if (node.type === 'video') {
 
@@ -59,7 +62,7 @@ class Render extends Component {
     if (node.type === 'text') {
       return <Text
         id={id}
-        tree={this.tree}
+        tree={this.props.tree}
         onChange={this.onChange}
         editable={this.props.editable}
       />
@@ -77,7 +80,7 @@ class Render extends Component {
   }
 
   renderTree = () => {
-    const rootId = this.tree.getRootId();
+    const rootId = this.props.tree.getRootId();
     return this.renderChild(rootId);
   }
 
@@ -100,6 +103,7 @@ Render.defaultProps = {
 }
 
 Render.propTypes = {
+  tree: PropTypes.object.isRequired,
   editable: PropTypes.bool,
   onChange: PropTypes.func,
 }

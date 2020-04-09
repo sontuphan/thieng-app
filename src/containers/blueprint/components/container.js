@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -6,9 +6,9 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 
 import {
-  EditRounded, AddRounded, DeleteRounded,
+  EditRounded, DeleteRounded,
   CheckBoxOutlineBlankRounded, CalendarViewDayRounded,
-  VideoCallRounded, TextFieldsRounded, ImageRounded,
+  VideoCallRounded, TextFieldsRounded, AddPhotoAlternateRounded, 
 } from '@material-ui/icons';
 
 import { ContainerTool, TextTool } from '../toolbox';
@@ -21,22 +21,13 @@ class Container extends Component {
     super();
 
     this.state = {
-      visibleAdd: false,
       visibleAddContainer: false,
-      visibleAddImage: false,
       visibleAddVideo: false,
       visibleAddText: false,
       visibleAddDrain: false,
       visibleEdit: false,
       anchorEl: null,
     }
-  }
-
-  onMouseEnter = () => {
-    this.setState({ visibleAdd: true });
-  }
-  onMouseLeave = () => {
-    this.setState({ visibleAdd: false });
   }
 
   /**
@@ -63,10 +54,11 @@ class Container extends Component {
 
   // Image
   onAddImage = (e) => {
-    return this.setState({
-      visibleAddImage: !this.state.visibleAddImage,
-      anchorEl: e.currentTarget,
-    });
+    this.props.tree.addImage(
+      this.props.id,
+      'https://source.unsplash.com/random/',
+    );
+    this.props.onChange(this.props.tree);
   }
 
   // Video
@@ -88,6 +80,7 @@ class Container extends Component {
     this.props.tree.addText(
       this.props.id,
       data.variant,
+      data.align,
       data.content,
     );
     this.props.onChange(this.props.tree);
@@ -163,31 +156,22 @@ class Container extends Component {
             </Grid>
 
             {/* Add button */}
-            <Grid item onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-              {
-                this.state.visibleAdd ?
-                  <Fragment>
-                    <IconButton size="small" onClick={this.onAddContainer}>
-                      <CheckBoxOutlineBlankRounded fontSize="small" />
-                    </IconButton>
-                    <IconButton size="small" onClick={this.onAddImage}>
-                      <ImageRounded fontSize="small" />
-                    </IconButton>
-                    <IconButton size="small" onClick={this.onAddVideo}>
-                      <VideoCallRounded fontSize="small" />
-                    </IconButton>
-                    <IconButton size="small" onClick={this.onAddText}>
-                      <TextFieldsRounded fontSize="small" />
-                    </IconButton>
-                    <IconButton size="small" onClick={this.onAddDrain}>
-                      <CalendarViewDayRounded fontSize="small" />
-                    </IconButton>
-                  </Fragment>
-                  :
-                  <IconButton size="small">
-                    <AddRounded fontSize="small" />
-                  </IconButton>
-              }
+            <Grid item>
+              <IconButton size="small" onClick={this.onAddContainer}>
+                <CheckBoxOutlineBlankRounded fontSize="small" />
+              </IconButton>
+              <IconButton size="small" onClick={this.onAddImage}>
+                <AddPhotoAlternateRounded fontSize="small" />
+              </IconButton>
+              <IconButton size="small" onClick={this.onAddVideo}>
+                <VideoCallRounded fontSize="small" />
+              </IconButton>
+              <IconButton size="small" onClick={this.onAddText}>
+                <TextFieldsRounded fontSize="small" />
+              </IconButton>
+              <IconButton size="small" onClick={this.onAddDrain}>
+                <CalendarViewDayRounded fontSize="small" />
+              </IconButton>
               <ContainerTool
                 visible={this.state.visibleAddContainer}
                 anchorEl={this.state.anchorEl}

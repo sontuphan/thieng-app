@@ -4,9 +4,9 @@ import { PREDEFINED_TYPES } from './constants';
  * Helpers
  */
 const validateURL = function (str) {
-  var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+  var pattern = new RegExp('^(blob:)?(https?:\\/\\/)?' + // protocol
     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(([a-z\\d]([a-z\\d-]*[a-z\\d])*)|(\\d{1,3}\\.){3}\\d{1,3}))' + // localhost OR ip (v4) address
     '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
     '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
     '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
@@ -88,7 +88,14 @@ const validateTextVariant = function (variant) {
   return true;
 }
 
-export { validateTextContent, validateTextVariant }
+const validateTextAlign = function (align) {
+  if (!align) return false;
+  if (typeof align !== 'string') return false;
+  if (!PREDEFINED_TYPES.text.align.includes(align)) return false;
+  return true;
+}
+
+export { validateTextContent, validateTextVariant, validateTextAlign }
 
 
 /**

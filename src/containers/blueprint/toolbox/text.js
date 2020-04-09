@@ -12,12 +12,20 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+
+import {
+  FormatAlignLeftRounded, FormatAlignCenterRounded,
+  FormatAlignRightRounded, FormatAlignJustifyRounded
+} from '@material-ui/icons';
 
 import styles from './styles';
 
 
 const DEFAULT_DATA = {
   variant: 'body1',
+  align: 'left',
   content: '',
 }
 
@@ -42,20 +50,24 @@ class TextTool extends Component {
   }
 
   onVariant = (e) => {
-    this.setState({ variant: e.target.value });
+    return this.setState({ variant: e.target.value });
+  }
+
+  onAlign = (e, value) => {
+    return this.setState({ align: value });
   }
 
   onContent = (e) => {
-    this.setState({ content: e.target.value });
+    return this.setState({ content: e.target.value });
   }
 
   onOk = () => {
     this.props.onChange(this.state);
-    this.onDefault();
+    return this.onDefault();
   }
 
   onDefault = () => {
-    this.setState({ ...DEFAULT_DATA });
+    return this.setState({ ...DEFAULT_DATA });
   }
 
   render() {
@@ -75,8 +87,11 @@ class TextTool extends Component {
                 <Grid item xs={12}>
                   <Typography variant="h3">Text</Typography>
                 </Grid>
+
                 <Grid item xs={12}>
                   <InputLabel color="secondary">Variant</InputLabel>
+                </Grid>
+                <Grid item xs={12}>
                   <Select
                     onChange={this.onVariant}
                     value={this.state.variant}
@@ -108,9 +123,37 @@ class TextTool extends Component {
                     </MenuItem>
                   </Select>
                 </Grid>
+
+                <Grid item xs={12}>
+                  <InputLabel color="secondary">Align</InputLabel>
+                </Grid>
+                <Grid item xs={12}>
+                  <ToggleButtonGroup
+                    value={this.state.align}
+                    onChange={this.onAlign}
+                    size="small"
+                    exclusive
+                  >
+                    <ToggleButton value="left">
+                      <FormatAlignLeftRounded fontSize="small" />
+                    </ToggleButton>
+                    <ToggleButton value="center">
+                      <FormatAlignCenterRounded fontSize="small" />
+                    </ToggleButton>
+                    <ToggleButton value="right">
+                      <FormatAlignRightRounded fontSize="small" />
+                    </ToggleButton>
+                    <ToggleButton value="justify">
+                      <FormatAlignJustifyRounded fontSize="small" />
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <InputLabel color="secondary">Content</InputLabel>
+                </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    label="Content"
                     variant="outlined"
                     color="secondary"
                     size="small"
@@ -122,6 +165,7 @@ class TextTool extends Component {
                       }
                     }} multiline fullWidth />
                 </Grid>
+
                 <Grid item xs={12}>
                   <Grid container spacing={2} justify="flex-end">
                     <Grid item>
