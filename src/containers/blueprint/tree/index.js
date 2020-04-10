@@ -25,9 +25,9 @@ import {
  */
 
 class Tree {
-  constructor(blueprintObject) {
-    if (blueprintObject) {
-      this.root = blueprintObject;
+  constructor(treeRoot) {
+    if (treeRoot) {
+      this.root = treeRoot;
     }
     else {
       this.addRoot();

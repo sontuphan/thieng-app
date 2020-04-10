@@ -163,7 +163,7 @@ class Container extends Component {
               <IconButton size="small" onClick={this.onAddImage}>
                 <AddPhotoAlternateRounded fontSize="small" />
               </IconButton>
-              <IconButton size="small" onClick={this.onAddVideo}>
+              <IconButton size="small" onClick={this.onAddVideo} disabled>
                 <VideoCallRounded fontSize="small" />
               </IconButton>
               <IconButton size="small" onClick={this.onAddText}>

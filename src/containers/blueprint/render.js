@@ -12,17 +12,9 @@ import Image from './components/image';
 import styles from './components/styles';
 
 class Render extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      restart: 0
-    }
-  }
 
   onChange = (tree) => {
     this.props.onChange(tree);
-    this.restart();
   }
 
   renderChild = (id) => {
@@ -82,10 +74,6 @@ class Render extends Component {
   renderTree = () => {
     const rootId = this.props.tree.getRootId();
     return this.renderChild(rootId);
-  }
-
-  restart = () => {
-    return this.setState({ restart: this.state.restart + 1 });
   }
 
   render() {

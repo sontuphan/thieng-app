@@ -4,10 +4,10 @@ export default theme => ({
     background: '#00000010',
     borderRadius: theme.shape.borderRadius,
     transition: theme.transitions.create(),
-    '&:hover':{
+    '&:hover': {
       background: '#00000020',
     },
-    '&:active':{
+    '&:active': {
       background: '#00000020',
     }
   },

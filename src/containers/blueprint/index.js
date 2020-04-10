@@ -6,59 +6,62 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 
-import { VisibilityRounded } from '@material-ui/icons';
+import { VisibilityRounded, UndoRounded, RedoRounded, DeleteForeverRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import Render from './render';
 
 import styles from './components/styles';
-import storage from 'helpers/storage';
 import Tree from './tree';
-
+import TreeHistory from './tree/history';
 
 
 class Blueprint extends Component {
   constructor() {
     super();
 
-    this.treeRootStack = [];
-    let currentTreeRoot = this.loadTreeInStorage();
-    this.tree = new Tree(currentTreeRoot);
+    this.treeHistory = new TreeHistory();
+    this.tree = new Tree(this.treeHistory.__getTreeRoot());
+
     this.state = {
+      restart: 0,
       editable: true
     }
   }
 
-  loadTreeInStorage = () => {
-    this.treeRootStack = storage.get('tree');
-    let currentTreeRootIndex = storage.get('currentTree');
-    return this.treeRootStack[currentTreeRootIndex];
-  }
-
-  onUndo = () => {
-
-  }
-
-  onRedo = () => {
-
-  }
-
-  clearStaleTree = () => {
-
+  restart = () => {
+    return this.setState({ restart: this.state.restart + 1 });
   }
 
   onChange = (tree) => {
-    if (this.treeRootStack.length < 10) {
-      this.treeRootStack.push(tree.root);
-    }
-    else {
-      this.treeRootStack.shift();
-      this.treeRootStack.push(tree.root);
-    }
-    storage.set('tree', this.treeRootStack);
-    storage.set('currentTree', this.treeRootStack.length - 1);
+    // Save history
+    this.treeHistory.addHistory(tree);
+    // Reload rendering
+    this.restart();
+  }
+
+  onDelete = () => {
+    this.treeHistory.clearHistory();
+    this.tree = new Tree();
+    // Reload rendering
+    this.restart();
+  }
+
+  onUndo = () => {
+    let root = this.treeHistory.undo();
+    this.tree = new Tree(root);
+    // Reload rendering
+    this.restart();
+  }
+
+  onRedo = () => {
+    let root = this.treeHistory.redo();
+    this.tree = new Tree(root);
+    // Reload rendering
+    this.restart();
   }
 
   onPreview = () => {
@@ -71,7 +74,22 @@ class Blueprint extends Component {
         <Drain />
       </Grid>
       <Grid item md={10}>
-        <Grid container justify="flex-end">
+        <Grid container justify="flex-end" spacing={2}>
+          <Grid item>
+            <IconButton size="small" onClick={this.onDelete} >
+              <DeleteForeverRounded fontSize="small" />
+            </IconButton>
+          </Grid>
+          <Grid item>
+            <IconButton size="small" onClick={this.onUndo} >
+              <UndoRounded fontSize="small" />
+            </IconButton>
+          </Grid>
+          <Grid item>
+            <IconButton size="small" onClick={this.onRedo} >
+              <RedoRounded fontSize="small" />
+            </IconButton>
+          </Grid>
           <Grid item>
             <Button
               variant="contained"
