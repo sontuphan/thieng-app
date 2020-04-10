@@ -73,7 +73,7 @@ class Blueprint extends Component {
       <Grid item xs={12}>
         <Drain />
       </Grid>
-      <Grid item md={10}>
+      <Grid item xs={12} md={10}>
         <Grid container justify="flex-end" spacing={2}>
           <Grid item>
             <IconButton size="small" onClick={this.onDelete} >

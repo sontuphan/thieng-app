@@ -149,10 +149,7 @@ class Container extends Component {
 
             {/* Edit button */}
             <Grid item>
-              <IconButton
-                size="small"
-                onClick={this.onEdit}
-              >
+              <IconButton size="small" onClick={this.onEdit}>
                 <EditRounded fontSize="small" />
               </IconButton>
               <ContainerTool
@@ -182,21 +179,18 @@ class Container extends Component {
                 <CalendarViewDayRounded fontSize="small" />
               </IconButton>
               <ContainerTool
-                defaultData={node}
                 visible={this.state.visibleAddContainer}
                 anchorEl={this.state.anchorEl}
                 onChange={this.onAddContainerOk}
                 onClose={this.onAddContainer}
               />
               <TextTool
-                defaultData={node}
                 visible={this.state.visibleAddText}
                 anchorEl={this.state.anchorEl}
                 onChange={this.onAddTextOk}
                 onClose={this.onAddText}
               />
               <DrainTool
-                defaultData={node}
                 visible={this.state.visibleAddDrain}
                 anchorEl={this.state.anchorEl}
                 onChange={this.onAddDrainOk}
@@ -206,10 +200,7 @@ class Container extends Component {
 
             {/* Delete button */}
             <Grid item>
-              <IconButton
-                size="small"
-                onClick={this.onDelete}
-              >
+              <IconButton size="small" onClick={this.onDelete}>
                 <DeleteRounded fontSize="small" />
               </IconButton>
             </Grid>
