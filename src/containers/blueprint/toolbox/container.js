@@ -80,6 +80,8 @@ class ContainerTool extends Component {
                 </Grid>
                 <Grid item xs={12}>
                   <InputLabel color="secondary">Width</InputLabel>
+                </Grid>
+                <Grid item xs={12}>
                   <Slider
                     value={this.state.width}
                     onChange={this.onWidth}
@@ -90,6 +92,8 @@ class ContainerTool extends Component {
                 </Grid>
                 <Grid item xs={12}>
                   <InputLabel color="secondary">Justify</InputLabel>
+                </Grid>
+                <Grid item xs={12}>
                   <Select
                     value={this.state.justify}
                     onChange={this.onJustify}
@@ -117,11 +121,9 @@ class ContainerTool extends Component {
                 </Grid>
                 <Grid item xs={12}>
                   <InputLabel color="secondary">Align</InputLabel>
-                  <Select
-                    value={this.state.alignItems}
-                    onChange={this.onAlign}
-                    fullWidth
-                  >
+                </Grid>
+                <Grid item xs={12}>
+                  <Select value={this.state.alignItems} onChange={this.onAlign} fullWidth>
                     <MenuItem value={'flex-start'}>
                       <Typography>Start</Typography>
                     </MenuItem>

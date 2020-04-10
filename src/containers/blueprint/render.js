@@ -8,6 +8,7 @@ import Root from './components/root';
 import Container from './components/container';
 import Text from './components/text';
 import Image from './components/image';
+import Drain from './components/drain';
 
 import styles from './components/styles';
 
@@ -60,7 +61,12 @@ class Render extends Component {
       />
     }
     if (node.type === 'drain') {
-
+      return <Drain
+        id={id}
+        tree={this.props.tree}
+        onChange={this.onChange}
+        editable={this.props.editable}
+      />
     }
   }
 

@@ -8,10 +8,10 @@ import IconButton from '@material-ui/core/IconButton';
 import {
   EditRounded, DeleteRounded,
   CheckBoxOutlineBlankRounded, CalendarViewDayRounded,
-  VideoCallRounded, TextFieldsRounded, AddPhotoAlternateRounded, 
+  VideoCallRounded, TextFieldsRounded, AddPhotoAlternateRounded,
 } from '@material-ui/icons';
 
-import { ContainerTool, TextTool } from '../toolbox';
+import { ContainerTool, TextTool, DrainTool } from '../toolbox';
 
 import styles from './styles';
 
@@ -94,6 +94,14 @@ class Container extends Component {
       anchorEl: e.currentTarget,
     });
   }
+  onAddDrainOk = (data) => {
+    this.props.tree.addDrain(
+      this.props.id,
+      data.height,
+    );
+    this.props.onChange(this.props.tree);
+    this.setState({ visibleAddDrain: false });
+  }
 
   /**
    * Edit
@@ -148,6 +156,7 @@ class Container extends Component {
                 <EditRounded fontSize="small" />
               </IconButton>
               <ContainerTool
+                defaultData={node}
                 visible={this.state.visibleEdit}
                 anchorEl={this.state.anchorEl}
                 onChange={this.onEditOk}
@@ -173,16 +182,25 @@ class Container extends Component {
                 <CalendarViewDayRounded fontSize="small" />
               </IconButton>
               <ContainerTool
+                defaultData={node}
                 visible={this.state.visibleAddContainer}
                 anchorEl={this.state.anchorEl}
                 onChange={this.onAddContainerOk}
                 onClose={this.onAddContainer}
               />
               <TextTool
+                defaultData={node}
                 visible={this.state.visibleAddText}
                 anchorEl={this.state.anchorEl}
                 onChange={this.onAddTextOk}
                 onClose={this.onAddText}
+              />
+              <DrainTool
+                defaultData={node}
+                visible={this.state.visibleAddDrain}
+                anchorEl={this.state.anchorEl}
+                onChange={this.onAddDrainOk}
+                onClose={this.onAddDrain}
               />
             </Grid>
 
