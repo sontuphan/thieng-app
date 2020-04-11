@@ -18,6 +18,7 @@
     "jsonwebtoken": "^8.5.1",
     "lorem-ipsum": "^2.0.3",
     "material-ui-image": "^3.2.2",
+    "material-ui-toggle-icon": "^1.0.6",
     "node-vibrant": "^3.1.5",
     "prop-types": "^15.7.2",
     "rc-scroll-anim": "^2.7.4",

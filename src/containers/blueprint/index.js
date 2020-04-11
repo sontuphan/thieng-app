@@ -5,11 +5,13 @@ import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
+import ToggleIcon from 'material-ui-toggle-icon';
 
-import { VisibilityRounded, UndoRounded, RedoRounded, DeleteForeverRounded } from '@material-ui/icons';
+import {
+  VisibilityRounded, VisibilityOffRounded,
+  UndoRounded, RedoRounded, DeleteForeverRounded
+} from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import Render from './render';
@@ -28,7 +30,7 @@ class Blueprint extends Component {
 
     this.state = {
       restart: 0,
-      editable: true
+      editable: true,
     }
   }
 
@@ -76,30 +78,28 @@ class Blueprint extends Component {
       <Grid item xs={12} md={10}>
         <Grid container justify="flex-end" spacing={2}>
           <Grid item>
-            <IconButton size="small" onClick={this.onDelete} >
-              <DeleteForeverRounded fontSize="small" />
+            <IconButton onClick={this.onDelete} >
+              <DeleteForeverRounded />
             </IconButton>
           </Grid>
           <Grid item>
-            <IconButton size="small" onClick={this.onUndo} >
-              <UndoRounded fontSize="small" />
+            <IconButton onClick={this.onUndo} >
+              <UndoRounded />
             </IconButton>
           </Grid>
           <Grid item>
-            <IconButton size="small" onClick={this.onRedo} >
-              <RedoRounded fontSize="small" />
+            <IconButton onClick={this.onRedo} >
+              <RedoRounded />
             </IconButton>
           </Grid>
           <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              onClick={this.onPreview}
-              startIcon={<VisibilityRounded />}
-            >
-              <Typography>Preview</Typography>
-            </Button>
+            <IconButton onClick={this.onPreview}>
+              <ToggleIcon
+                on={!this.state.editable}
+                onIcon={<VisibilityRounded />}
+                offIcon={<VisibilityOffRounded />}
+              />
+            </IconButton>
           </Grid>
         </Grid>
       </Grid>
