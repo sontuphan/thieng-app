@@ -10,9 +10,6 @@ export default theme => ({
     // transition: theme.transitions.create(),
     // '&:hover': {
     //   transform: 'scale(1.02)'
-    // },
-    // '&:active': {
-    //   transform: 'scale(1.02)'
     // }
   },
   imageJPG: {
@@ -25,9 +22,6 @@ export default theme => ({
     '&:hover': {
       transform: 'scale(1.05)'
     },
-    '&:active': {
-      transform: 'scale(1.05)'
-    }
   },
   imagePNG: {
     position: 'absolute',
@@ -42,9 +36,5 @@ export default theme => ({
       filter: 'drop-shadow(6px 12px 8px rgba(0, 0, 0, 0.48)) drop-shadow(6px 12px 4px rgba(0, 0, 0, 0.24))',
       transform: 'scale(1.05)'
     },
-    '&:active': {
-      filter: 'drop-shadow(6px 12px 8px rgba(0, 0, 0, 0.48)) drop-shadow(6px 12px 4px rgba(0, 0, 0, 0.24))',
-      transform: 'scale(1.05)'
-    }
   },
 });

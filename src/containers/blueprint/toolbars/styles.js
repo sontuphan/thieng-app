@@ -2,6 +2,9 @@ export default theme => ({
   paper: {
     padding: theme.spacing(1) / 2,
   },
+  noWrap: {
+    flexWrap: 'nowrap'
+  },
   font: {
     ...theme.typography.body1
   },

@@ -32,9 +32,6 @@ export default theme => ({
     '&:hover': {
       textDecoration: 'underline',
     },
-    '&:active': {
-      textDecoration: 'underline',
-    }
   },
   user: {
     cursor: 'pointer',

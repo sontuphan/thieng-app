@@ -9,8 +9,5 @@ export default theme => ({
     // '&:hover': {
     //   boxShadow: theme.shadows[8],
     // },
-    // '&:active': {
-    //   boxShadow: theme.shadows[8],
-    // },
   },
 });

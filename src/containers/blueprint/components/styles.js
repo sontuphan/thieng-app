@@ -8,9 +8,6 @@ export default theme => ({
     '&:hover': {
       background: '#00000020',
     },
-    '&:active': {
-      background: '#00000020',
-    },
   },
   child: {
     minHeight: theme.spacing(6),
@@ -20,18 +17,12 @@ export default theme => ({
         display: 'block',
       },
     },
-    '&:active': {
-      '& $tool': {
-        display: 'block',
-      },
-    },
   },
   tool: {
     position: 'absolute',
     top: -theme.spacing(6),
-    left: -theme.spacing(1),
+    left: 0,
     margin: theme.spacing(1),
-    width: `calc(100% - ${theme.spacing(2)}px)`,
     transition: theme.transitions.create(),
     display: 'none',
   },

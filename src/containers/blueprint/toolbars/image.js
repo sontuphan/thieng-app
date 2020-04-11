@@ -24,6 +24,7 @@ class ImageBar extends Component {
     this.state = {
       ...DEFAULT_DATA,
     }
+    this.hiddenRef = React.createRef();
   }
 
   componentDidMount() {
@@ -37,11 +38,11 @@ class ImageBar extends Component {
   }
 
   onUpload = () => {
-    let e = document.getElementById('tree-upload-image');
-    e.click();
+    this.hiddenRef.current.click();
   }
 
   onChange = (e) => {
+    if (!e.target.files[0]) return;
     let url = URL.createObjectURL(e.target.files[0]);
     return this.setState({ url }, () => {
       this.props.onChange(this.state);
@@ -63,7 +64,12 @@ class ImageBar extends Component {
         </Grid>
 
         <Grid item>
-          <input type="file" id="tree-upload-image" style={{ display: "none" }} onChange={this.onChange} />
+          <input
+            type="file"
+            ref={this.hiddenRef}
+            style={{ display: "none" }}
+            onChange={this.onChange}
+          />
           <IconButton size="small" onClick={this.onUpload}>
             <ImageRounded fontSize="small" />
           </IconButton>

@@ -15,8 +15,5 @@ export default theme => ({
     '&:hover': {
       textDecoration: 'underline',
     },
-    '&:active': {
-      textDecoration: 'underline',
-    }
   },
 });
