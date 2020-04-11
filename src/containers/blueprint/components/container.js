@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 
 import {
   EditRounded, DeleteRounded,
@@ -11,7 +13,7 @@ import {
   VideoCallRounded, TextFieldsRounded, AddPhotoAlternateRounded,
 } from '@material-ui/icons';
 
-import { ContainerTool, TextTool, DrainTool } from '../toolbox';
+import { ContainerTool } from '../toolbox';
 
 import styles from './styles';
 
@@ -21,10 +23,6 @@ class Container extends Component {
     super();
 
     this.state = {
-      visibleAddContainer: false,
-      visibleAddVideo: false,
-      visibleAddText: false,
-      visibleAddDrain: false,
       visibleEdit: false,
       anchorEl: null,
     }
@@ -34,73 +32,29 @@ class Container extends Component {
    * Add
    */
 
-  // Container
-  onAddContainer = (e) => {
-    return this.setState({
-      visibleAddContainer: !this.state.visibleAddContainer,
-      anchorEl: e.currentTarget,
-    });
-  }
-  onAddContainerOk = (data) => {
-    this.props.tree.addContainer(
-      this.props.id,
-      data.width,
-      data.justify,
-      data.alignItems,
-    );
-    this.props.onChange(this.props.tree);
-    this.setState({ visibleAddContainer: false });
-  }
-
-  // Image
-  onAddImage = (e) => {
-    this.props.tree.addImage(
-      this.props.id,
-      'https://source.unsplash.com/random/',
-    );
+  // Add a subcontainer by default
+  onAddContainer = () => {
+    this.props.tree.addContainer(this.props.id);
     this.props.onChange(this.props.tree);
   }
-
-  // Video
-  onAddVideo = (e) => {
-    return this.setState({
-      visibleAddVideo: !this.state.visibleAddVideo,
-      anchorEl: e.currentTarget,
-    });
-  }
-
-  // Text
-  onAddText = (e) => {
-    return this.setState({
-      visibleAddText: !this.state.visibleAddText,
-      anchorEl: e.currentTarget,
-    });
-  }
-  onAddTextOk = (data) => {
-    this.props.tree.addText(
-      this.props.id,
-      data.variant,
-      data.align,
-      data.content,
-    );
+  // Add an image by default
+  onAddImage = () => {
+    this.props.tree.addImage(this.props.id);
     this.props.onChange(this.props.tree);
-    this.setState({ visibleAddText: false });
   }
+  // Add a video by default
+  onAddVideo = () => {
 
-  //Drain
+  }
+  // Add text by default
+  onAddText = () => {
+    this.props.tree.addText(this.props.id);
+    this.props.onChange(this.props.tree);
+  }
+  // Add a drain by default
   onAddDrain = (e) => {
-    return this.setState({
-      visibleAddDrain: !this.state.visibleAddDrain,
-      anchorEl: e.currentTarget,
-    });
-  }
-  onAddDrainOk = (data) => {
-    this.props.tree.addDrain(
-      this.props.id,
-      data.height,
-    );
+    this.props.tree.addDrain(this.props.id);
     this.props.onChange(this.props.tree);
-    this.setState({ visibleAddDrain: false });
   }
 
   /**
@@ -144,69 +98,77 @@ class Container extends Component {
         id={this.props.id}
       >
         {this.props.children}
-        {this.props.editable ? <Grid item xs={12}>
-          <Grid container justify="center" spacing={2}>
 
-            {/* Edit button */}
-            <Grid item>
-              <IconButton size="small" onClick={this.onEdit}>
-                <EditRounded fontSize="small" />
-              </IconButton>
-              <ContainerTool
-                defaultData={node}
-                visible={this.state.visibleEdit}
-                anchorEl={this.state.anchorEl}
-                onChange={this.onEditOk}
-                onClose={this.onEdit}
-              />
-            </Grid>
+        <Grid item xs={12}>
+          <Grid container spacing={2} justify="center">
+            {this.props.editable ? <Grid item>
 
-            {/* Add button */}
-            <Grid item>
-              <IconButton size="small" onClick={this.onAddContainer}>
-                <CheckBoxOutlineBlankRounded fontSize="small" />
-              </IconButton>
-              <IconButton size="small" onClick={this.onAddImage}>
-                <AddPhotoAlternateRounded fontSize="small" />
-              </IconButton>
-              <IconButton size="small" onClick={this.onAddVideo} disabled>
-                <VideoCallRounded fontSize="small" />
-              </IconButton>
-              <IconButton size="small" onClick={this.onAddText}>
-                <TextFieldsRounded fontSize="small" />
-              </IconButton>
-              <IconButton size="small" onClick={this.onAddDrain}>
-                <CalendarViewDayRounded fontSize="small" />
-              </IconButton>
-              <ContainerTool
-                visible={this.state.visibleAddContainer}
-                anchorEl={this.state.anchorEl}
-                onChange={this.onAddContainerOk}
-                onClose={this.onAddContainer}
-              />
-              <TextTool
-                visible={this.state.visibleAddText}
-                anchorEl={this.state.anchorEl}
-                onChange={this.onAddTextOk}
-                onClose={this.onAddText}
-              />
-              <DrainTool
-                visible={this.state.visibleAddDrain}
-                anchorEl={this.state.anchorEl}
-                onChange={this.onAddDrainOk}
-                onClose={this.onAddDrain}
-              />
-            </Grid>
+              <Paper className={classes.paper} elevation={8}>
+                <Grid container spacing={1}>
 
-            {/* Delete button */}
-            <Grid item>
-              <IconButton size="small" onClick={this.onDelete}>
-                <DeleteRounded fontSize="small" />
-              </IconButton>
-            </Grid>
+                  {/* Delete button */}
+                  <Grid item>
+                    <IconButton size="small" onClick={this.onDelete}>
+                      <DeleteRounded fontSize="small" />
+                    </IconButton>
+                  </Grid>
+
+                  {/* Edit button */}
+                  <Grid item>
+                    <IconButton size="small" onClick={this.onEdit}>
+                      <EditRounded fontSize="small" />
+                    </IconButton>
+                    <ContainerTool
+                      defaultData={node}
+                      visible={this.state.visibleEdit}
+                      anchorEl={this.state.anchorEl}
+                      onChange={this.onEditOk}
+                      onClose={this.onEdit}
+                    />
+                  </Grid>
+
+                  <Grid item>
+                    <Divider orientation="vertical" />
+                  </Grid>
+
+                  {/* Add container button */}
+                  <Grid item>
+                    <IconButton size="small" onClick={this.onAddContainer}>
+                      <CheckBoxOutlineBlankRounded fontSize="small" />
+                    </IconButton>
+                  </Grid>
+                  {/* Add image button */}
+                  <Grid item>
+                    <IconButton size="small" onClick={this.onAddImage}>
+                      <AddPhotoAlternateRounded fontSize="small" />
+                    </IconButton>
+                  </Grid>
+                  {/* Add video button */}
+                  <Grid item>
+                    <IconButton size="small" onClick={this.onAddVideo} disabled>
+                      <VideoCallRounded fontSize="small" />
+                    </IconButton>
+                  </Grid>
+                  {/* Add text button */}
+                  <Grid item>
+                    <IconButton size="small" onClick={this.onAddText}>
+                      <TextFieldsRounded fontSize="small" />
+                    </IconButton>
+                  </Grid>
+                  {/* Add drain button */}
+                  <Grid item>
+                    <IconButton size="small" onClick={this.onAddDrain}>
+                      <CalendarViewDayRounded fontSize="small" />
+                    </IconButton>
+                  </Grid>
+
+                </Grid>
+              </Paper>
+            </Grid> : null}
 
           </Grid>
-        </Grid> : null}
+        </Grid>
+
       </Grid>
     </Grid>
   }

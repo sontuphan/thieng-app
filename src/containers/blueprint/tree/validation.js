@@ -75,9 +75,9 @@ export { validateVideoUrl }
  * Text validation
  */
 
-const validateTextContent = function (content) {
-  if (!content) return false;
-  if (typeof content !== 'string') return false;
+const validateTextContents = function (contents) {
+  // if (!contents) return false; // We now accept an empty string
+  if (typeof contents !== 'string') return false;
   return true;
 }
 
@@ -95,7 +95,7 @@ const validateTextAlign = function (align) {
   return true;
 }
 
-export { validateTextContent, validateTextVariant, validateTextAlign }
+export { validateTextContents, validateTextVariant, validateTextAlign }
 
 
 /**

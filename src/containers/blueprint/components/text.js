@@ -3,42 +3,35 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 
-import { EditRounded, DeleteRounded, } from '@material-ui/icons';
-
-import { TextTool } from '../toolbox';
+import { TextBar } from '../toolbars';
 
 import styles from './styles';
-import { Typography } from '@material-ui/core';
 
 
 class Text extends Component {
-  constructor() {
-    super();
 
-    this.state = {
-      visible: false,
-      anchorEl: null,
-    }
+  onType = (e) => {
+    let node = this.props.tree.getNode(this.props.id);
+    const contents = e.target.textContent;
+    this.props.tree.editText(
+      this.props.id,
+      node.variant,
+      node.align,
+      contents,
+    );
+    this.props.onChange(this.props.tree);
   }
 
-  onEdit = (e) => {
-    return this.setState({
-      visible: !this.state.visible,
-      anchorEl: e.currentTarget,
-    });
-  }
-
-  onOk = (data) => {
+  onChange = (data) => {
     this.props.tree.editText(
       this.props.id,
       data.variant,
       data.align,
-      data.content,
+      data.contents,
     );
     this.props.onChange(this.props.tree);
-    this.setState({ visible: false });
   }
 
   onDelete = () => {
@@ -53,33 +46,33 @@ class Text extends Component {
       <Grid
         container
         spacing={2}
-        className={this.props.editable ? classes.container : null}
         id={this.props.id}
+        className={this.props.editable ? classes.child : null}
       >
+
         <Grid item xs={12}>
-          <Typography variant={node.variant} align={node.align}>{node.content}</Typography>
+          <Typography
+            contentEditable={true}
+            suppressContentEditableWarning={true}
+            variant={node.variant}
+            align={node.align}
+            className={classes.text}
+            onBlur={this.onType}
+          >{node.contents}</Typography>
         </Grid>
-        {this.props.editable ? <Grid item xs={12}>
-          <Grid container justify="center" spacing={2}>
-            <Grid item>
-              <IconButton size="small" onClick={this.onEdit}>
-                <EditRounded fontSize="small" />
-              </IconButton>
-              <TextTool
+
+        <div className={classes.tool}>
+          <Grid container spacing={2} justify="center">
+            {this.props.editable ? <Grid item>
+              <TextBar
                 defaultData={node}
-                visible={this.state.visible}
-                anchorEl={this.state.anchorEl}
-                onChange={this.onOk}
-                onClose={this.onEdit}
+                onChange={this.onChange}
+                onDelete={this.onDelete}
               />
-            </Grid>
-            <Grid item>
-              <IconButton size="small" onClick={this.onDelete}>
-                <DeleteRounded fontSize="small" />
-              </IconButton>
-            </Grid>
+            </Grid> : null}
           </Grid>
-        </Grid> : null}
+        </div>
+
       </Grid>
     </Grid>
   }

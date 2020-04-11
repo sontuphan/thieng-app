@@ -14,10 +14,6 @@ import styles from './components/styles';
 
 class Render extends Component {
 
-  onChange = (tree) => {
-    this.props.onChange(tree);
-  }
-
   renderChild = (id) => {
     const node = this.props.tree.getNode(id);
 
@@ -25,7 +21,7 @@ class Render extends Component {
       return <Root
         id={id}
         tree={this.props.tree}
-        onChange={this.onChange}
+        onChange={this.props.onChange}
         editable={this.props.editable}
       >
         {this.renderChildren(node.children)}
@@ -35,7 +31,7 @@ class Render extends Component {
       return <Container
         id={id}
         tree={this.props.tree}
-        onChange={this.onChange}
+        onChange={this.props.onChange}
         editable={this.props.editable}
       >
         {this.renderChildren(node.children)}
@@ -45,7 +41,7 @@ class Render extends Component {
       return <Image
         id={id}
         tree={this.props.tree}
-        onChange={this.onChange}
+        onChange={this.props.onChange}
         editable={this.props.editable}
       />
     }
@@ -56,7 +52,7 @@ class Render extends Component {
       return <Text
         id={id}
         tree={this.props.tree}
-        onChange={this.onChange}
+        onChange={this.props.onChange}
         editable={this.props.editable}
       />
     }
@@ -64,7 +60,7 @@ class Render extends Component {
       return <Drain
         id={id}
         tree={this.props.tree}
-        onChange={this.onChange}
+        onChange={this.props.onChange}
         editable={this.props.editable}
       />
     }

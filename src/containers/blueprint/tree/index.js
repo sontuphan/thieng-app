@@ -13,7 +13,7 @@ import {
   validateContainerAlignItems,
   validateImageUrl,
   validateVideoUrl,
-  validateTextContent,
+  validateTextContents,
   validateTextVariant,
   validateTextAlign,
   validateDrainHeight,
@@ -162,7 +162,6 @@ class Tree {
   }
 
   editImage = (id, url) => {
-    console.log(url, validateImageUrl(url))
     if (!this.root[id]) return null;
     if (this.root[id].type !== DEFAULT_IMAGE.type) return null;
     if (!validateImageUrl(url)) return null;
@@ -217,36 +216,37 @@ class Tree {
   __createText = (
     variant = DEFAULT_TEXT.variant,
     align = DEFAULT_TEXT.align,
-    content = DEFAULT_TEXT.content
+    contents = DEFAULT_TEXT.contents
   ) => {
+    console.log(contents, !validateTextContents(contents))
     if (!validateTextVariant(variant)) return null;
     if (!validateTextAlign(align)) return null;
-    if (!validateTextContent(content)) return null;
+    if (!validateTextContents(contents)) return null;
     const id = getRandId();
     const obj = {
       type: DEFAULT_TEXT.type,
       variant,
       align,
-      content,
+      contents,
     }
     return { id, obj }
   }
 
-  addText = (parentId, variant, align, content) => {
-    const text = this.__createText(variant, align, content);
+  addText = (parentId, variant, align, contents) => {
+    const text = this.__createText(variant, align, contents);
     if (!text) return console.error('Invalid text');
     this.root[parentId].children.push(text.id);
     this.root[text.id] = text.obj;
     return text.id;
   }
 
-  editText = (id, variant, align, content) => {
+  editText = (id, variant, align, contents) => {
     if (!this.root[id]) return null;
     if (this.root[id].type !== DEFAULT_TEXT.type) return null;
     if (!validateTextVariant(variant)) return null;
     if (!validateTextAlign(align)) return null;
-    if (!validateTextContent(content)) return null;
-    this.root[id] = { ...this.root[id], variant, align, content }
+    if (!validateTextContents(contents)) return null;
+    this.root[id] = { ...this.root[id], variant, align, contents }
     return id;
   }
 

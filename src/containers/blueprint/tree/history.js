@@ -6,7 +6,7 @@ const MAX_HISTORY = 10;
 
 class TreeHistory {
   constructor() {
-    this.treeRootIndex = storage.get(INDEX_KEY) || -1;
+    this.treeRootIndex = typeof (storage.get(INDEX_KEY)) !== 'number' ? -1 : storage.get(INDEX_KEY);
     this.treeRootStack = storage.get(TREE_ROOT_KEY) || [];
   }
 

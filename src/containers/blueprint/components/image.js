@@ -3,24 +3,18 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 
-import { ImageRounded, DeleteRounded } from '@material-ui/icons';
+import { ImageBar } from '../toolbars';
 
 import styles from './styles';
 
+
 class Image extends Component {
 
-  onEdit = () => {
-    let e = document.getElementById('tree-upload-image');
-    e.click();
-  }
-
-  onImage = (e) => {
-    let url = URL.createObjectURL(e.target.files[0])
+  onChange = (data) => {
     this.props.tree.editImage(
       this.props.id,
-      url,
+      data.url,
     );
     this.props.onChange(this.props.tree);
   }
@@ -37,27 +31,26 @@ class Image extends Component {
       <Grid
         container
         spacing={2}
-        className={this.props.editable ? classes.container : null}
         id={this.props.id}
+        className={this.props.editable ? classes.child : null}
       >
+
         <Grid item xs={12}>
           <img width="100%" height="auto" alt={node.url} src={node.url} />
         </Grid>
-        {this.props.editable ? <Grid item xs={12}>
-          <Grid container justify="center" spacing={2}>
-            <Grid item>
-              <input type="file" id="tree-upload-image" style={{ display: "none" }} onChange={this.onImage} />
-              <IconButton size="small" onClick={this.onEdit}>
-                <ImageRounded fontSize="small" />
-              </IconButton>
-            </Grid>
-            <Grid item>
-              <IconButton size="small" onClick={this.onDelete}>
-                <DeleteRounded fontSize="small" />
-              </IconButton>
-            </Grid>
+
+        <div className={classes.tool}>
+          <Grid container spacing={2} justify="center">
+            {this.props.editable ? <Grid item>
+              <ImageBar
+                defaultData={node}
+                onChange={this.onChange}
+                onDelete={this.onDelete}
+              />
+            </Grid> : null}
           </Grid>
-        </Grid> : null}
+        </div>
+
       </Grid>
     </Grid>
   }

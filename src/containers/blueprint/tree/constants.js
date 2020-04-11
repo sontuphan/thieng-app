@@ -51,12 +51,12 @@ const DEFAULT_TEXT = {
   type: 'text',
   variant: 'body1',
   align: 'left',
-  contents: '',
+  contents: 'Type something here',
 }
 
 const DEFAULT_DRAIN = {
   type: 'drain',
-  height: 24,
+  height: 96,
 }
 
 export {

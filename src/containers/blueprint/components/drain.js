@@ -3,38 +3,19 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 
-import { HeightRounded, DeleteRounded } from '@material-ui/icons';
-
-import { DrainTool } from '../toolbox';
+import { DrainBar } from '../toolbars';
 
 import styles from './styles';
 
 class Drain extends Component {
-  constructor() {
-    super();
 
-    this.state = {
-      visibleEdit: false,
-      anchorEl: null,
-    }
-  }
-
-  onEdit = (e) => {
-    return this.setState({
-      visibleEdit: !this.state.visibleEdit,
-      anchorEl: e.currentTarget,
-    });
-  }
-
-  onEditOk = (data) => {
+  onChange = (data) => {
     this.props.tree.editDrain(
       this.props.id,
       data.height,
     );
     this.props.onChange(this.props.tree);
-    this.setState({ visibleEdit: false });
   }
 
   onDelete = () => {
@@ -49,31 +30,28 @@ class Drain extends Component {
       <Grid
         container
         spacing={2}
-        className={this.props.editable ? classes.container : null}
         id={this.props.id}
+        className={this.props.editable ? classes.child : null}
       >
-        <Grid item xs={12} style={{ height: node.height }} />
-        {this.props.editable ? <Grid item xs={12}>
-          <Grid container justify="center" spacing={2}>
-            <Grid item>
-              <IconButton size="small" onClick={this.onEdit}>
-                <HeightRounded fontSize="small" />
-              </IconButton>
-              <DrainTool
+        <Grid
+          item
+          xs={12}
+          style={{ height: node.height }}
+          className={this.props.editable ? classes.accessibleDrain : null}
+        />
+
+        <div className={classes.tool}>
+          <Grid container spacing={2} justify="center">
+            {this.props.editable ? <Grid item>
+              <DrainBar
                 defaultData={node}
-                visible={this.state.visibleEdit}
-                anchorEl={this.state.anchorEl}
-                onChange={this.onEditOk}
-                onClose={this.onEdit}
+                onChange={this.onChange}
+                onDelete={this.onDelete}
               />
-            </Grid>
-            <Grid item>
-              <IconButton size="small" onClick={this.onDelete}>
-                <DeleteRounded fontSize="small" />
-              </IconButton>
-            </Grid>
+            </Grid> : null}
           </Grid>
-        </Grid> : null}
+        </div>
+
       </Grid>
     </Grid>
   }
