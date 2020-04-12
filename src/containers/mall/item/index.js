@@ -8,7 +8,6 @@ import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 
 import { ShuffleRounded } from '@material-ui/icons';
 
@@ -16,6 +15,7 @@ import Drain from 'components/drain';
 import Shelf from 'components/shelf';
 import { ProductCard } from 'components/cards';
 import { RichComment } from 'components/comments';
+import { NumericInput } from 'components/inputs';
 
 import { getItemById } from 'modules/items.reducer';
 import { getComments } from 'modules/comments.reducer';
@@ -23,6 +23,7 @@ import { getUser } from 'modules/user.reducer';
 import { recommendItems } from 'modules/recommendation.reducer';
 
 import styles from './styles';
+import utils from 'helpers/utils';
 
 class Item extends Component {
   constructor() {
@@ -66,6 +67,10 @@ class Item extends Component {
       this.handleId();
     if (prevState.id !== this.state.id)
       this.loadData();
+  }
+
+  onAmount = (amount) => {
+    return this.setState({ amount });
   }
 
   on3D = () => {
@@ -128,19 +133,20 @@ class Item extends Component {
             <Drain />
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography variant="h1">{object.price} {object.unit}</Typography>
+            <Typography variant="h4" className={classes.originalPrice}>{utils.prettyNumber(object.price, 'long')} {object.unit}</Typography>
+          </Grid>
+          <Grid item xs={10} md={8}>
+            <Typography variant="h1">{utils.prettyNumber(this.state.amount * object.price, 'long')} {object.unit}</Typography>
           </Grid>
           <Grid item xs={12}>
             <Drain />
           </Grid>
           <Grid item xs={10} md={8}>
-            <TextField
-              label="Số lượng"
-              size="small"
+            <NumericInput
               variant="outlined"
-              color="secondary"
+              size="large"
               value={this.state.amount}
-              fullWidth
+              onChange={this.onAmount}
             />
           </Grid>
           <Grid item xs={10} md={8}>

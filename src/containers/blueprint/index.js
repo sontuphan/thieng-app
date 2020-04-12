@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import ToggleIcon from 'material-ui-toggle-icon';
 
@@ -76,30 +78,39 @@ class Blueprint extends Component {
         <Drain />
       </Grid>
       <Grid item xs={12} md={10}>
-        <Grid container justify="flex-end" spacing={2}>
+        <Grid container justify="flex-end" alignItems="center" spacing={2}>
           <Grid item>
-            <IconButton onClick={this.onDelete} >
+            <IconButton onClick={this.onDelete} size="small">
               <DeleteForeverRounded />
             </IconButton>
           </Grid>
           <Grid item>
-            <IconButton onClick={this.onUndo} >
+            <IconButton onClick={this.onUndo} size="small">
               <UndoRounded />
             </IconButton>
           </Grid>
           <Grid item>
-            <IconButton onClick={this.onRedo} >
+            <IconButton onClick={this.onRedo} size="small">
               <RedoRounded />
             </IconButton>
           </Grid>
           <Grid item>
-            <IconButton onClick={this.onPreview}>
+            <IconButton onClick={this.onPreview} size="small">
               <ToggleIcon
                 on={!this.state.editable}
                 onIcon={<VisibilityRounded />}
                 offIcon={<VisibilityOffRounded />}
               />
             </IconButton>
+          </Grid>
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+            >
+              <Typography>Publish</Typography>
+            </Button>
           </Grid>
         </Grid>
       </Grid>

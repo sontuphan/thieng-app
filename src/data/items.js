@@ -16,7 +16,7 @@ export const getRandomItems = () => [
     name: loremIpsum(),
     description1: loremIpsum({ units: "paragraphs" }),
     description2: loremIpsum({ units: "paragraphs" }),
-    price: "6.490.000",
+    price: 6490000,
     unit: "vnd",
     tags: ["New", "20%"],
     category: "table",
@@ -35,7 +35,7 @@ export const getRandomItems = () => [
     name: loremIpsum(),
     description1: loremIpsum({ units: "paragraphs" }),
     description2: loremIpsum({ units: "paragraphs" }),
-    price: "1.990.000",
+    price: 1990000,
     unit: "vnd",
     tags: ["Best Seller", "25%", "Artist Choice"],
     images: [

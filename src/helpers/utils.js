@@ -25,26 +25,40 @@ Utils.rand = () => {
   return Math.floor(Math.random() * 1000000000);
 }
 
-Utils.prettyNumber = (num) => {
+Utils.prettyNumber = (num, type = 'long') => {
   if (typeof num !== 'number') throw new TypeError('Expected a number');
   if (num > 1e19) throw new RangeError('Input expected to be < 1e19');
   if (num < -1e19) throw new RangeError('Input expected to be > -1e19');
   if (Math.abs(num) < 1000) return num;
 
-  num = Math.abs(num);
-  let size = Math.floor(num).toString().length;
-  let exponent = size % 3 === 0 ? size - 3 : size - (size % 3);
-  let shortNumber = Math.round(10 * (num / Math.pow(10, exponent))) / 10;
+  if (type === 'short') {
+    num = Math.abs(num);
+    let size = Math.floor(num).toString().length;
+    let exponent = size % 3 === 0 ? size - 3 : size - (size % 3);
+    let shortNumber = Math.round(10 * (num / Math.pow(10, exponent))) / 10;
 
-  let suffixes = { K: 6, M: 9, B: 12, T: 16 }
-  for (let suffix in suffixes) {
-    if (exponent < suffixes[suffix]) {
-      shortNumber += suffix;
-      break;
+    let suffixes = { K: 6, M: 9, B: 12, T: 16 }
+    for (let suffix in suffixes) {
+      if (exponent < suffixes[suffix]) {
+        shortNumber += suffix;
+        break;
+      }
     }
+    let sign = num < 0 ? '-' : '';
+    return sign + shortNumber;
   }
-  let sign = num < 0 ? '-' : '';
-  return sign + shortNumber;
+
+  if (type === 'long') {
+    num = String(num)
+    let [decimal, fraction] = num.split('.');
+    let separateNumber = decimal.split('').reverse().map((a, i) => {
+      if (i > 1 && i % 3 === 0) return a + '.';
+      return a;
+    }).reverse();
+    if (!fraction)
+      return separateNumber;
+    return separateNumber + fraction;
+  }
 }
 
 Utils.prettyName = (name, length) => {
