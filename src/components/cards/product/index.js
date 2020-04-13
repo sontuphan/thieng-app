@@ -11,6 +11,7 @@ import Chip from '@material-ui/core/Chip';
 import { ImageCard } from 'components/cards';
 
 import styles from './styles';
+import utils from 'helpers/utils';
 
 class Product extends Component {
 
@@ -45,7 +46,7 @@ class Product extends Component {
             </Grid>
             <Grid item xs={12} className={classes.cursor} onClick={this.onView}>
               <Typography>{object.name}</Typography>
-              <Typography variant="h3">{object.price} {object.unit}</Typography>
+              <Typography variant="h3">{utils.prettyNumber(object.price, 'long')} {object.unit}</Typography>
             </Grid>
           </Grid>
         </Paper>

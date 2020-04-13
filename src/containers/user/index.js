@@ -10,10 +10,16 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
+import Badge from '@material-ui/core/Badge';
 
-import { SettingsApplicationsRounded } from '@material-ui/icons';
+import {
+  SettingsApplicationsRounded, SettingsRounded,
+  ChatRounded, StorefrontRounded, AddBoxRounded,
+  AccountBalanceWalletRounded
+} from '@material-ui/icons';
 
 import Status from 'containers/status';
+import Drain from 'components/drain';
 
 import { getUserByCode } from 'modules/user.reducer';
 import { getProjects } from 'modules/projects.reducer';
@@ -27,7 +33,7 @@ class User extends Component {
     super();
 
     this.state = {
-      likes: '12.853',
+      likes: 12853,
       products: 32,
       projects: [],
     }
@@ -63,6 +69,7 @@ class User extends Component {
     if (!projects || !projects.length) return null;
 
     return <Grid container justify="center" spacing={2}>
+
       <Grid item xs={12} className={classes.header}>
         <Grid container justify="flex-end" spacing={2}>
           <Grid item>
@@ -88,10 +95,12 @@ class User extends Component {
           </div>
         </div>
       </Grid>
+
       <Grid item xs={12} md={10} className={classes.body}>
         <Grid container spacing={2}>
-          <Grid item xs={12} style={{ margin: 16 }}>
-            <Grid container alignItems="center" spacing={2}>
+
+          <Grid item xs={12}>
+            <Grid container alignItems="center" spacing={2} className={classes.subheader}>
               <Grid item xs={12} sm={6}>
                 <Grid container alignItems="center" spacing={2}>
                   <Grid item>
@@ -109,21 +118,79 @@ class User extends Component {
               <Grid item xs={12} sm={6}>
                 <Grid container justify="flex-end" alignItems="center" spacing={2}>
                   <Grid item>
-                    <Typography>{this.state.likes} Thích - {this.state.products} Sản phẩm</Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12}>
-                <Grid container spacing={2} justify="center">
-                  <Grid item>
-                    <Button href="/blueprint">
-                      <Typography>New blueprint</Typography>
-                    </Button>
+                    <Typography>{utils.prettyNumber(this.state.likes, 'long')} Thích - {utils.prettyNumber(this.state.products, 'long')} Sản phẩm</Typography>
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
+
+          <Grid item xs={12}>
+            <Grid container spacing={2} className={classes.subheader} justify="flex-end">
+              <Grid item>
+                <Badge badgeContent={1} color="primary">
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<AddBoxRounded />}
+                    href="/blueprint"
+                  >
+                    <Typography>New Blueprint</Typography>
+                  </Button>
+                </Badge>
+              </Grid>
+              <Grid item>
+                <Badge badgeContent={4} color="primary">
+                  <Button
+                    variant="outlined"
+                    startIcon={<StorefrontRounded />}
+                    href="#"
+                  >
+                    <Typography>My Store</Typography>
+                  </Button>
+                </Badge>
+              </Grid>
+              <Grid item>
+                <Badge badgeContent={18} color="primary">
+                  <Button
+                    variant="outlined"
+                    startIcon={<ChatRounded />}
+                    href="#"
+                  >
+                    <Typography>Message</Typography>
+                  </Button>
+                </Badge>
+              </Grid>
+              <Grid item>
+                <Badge badgeContent={0} color="primary">
+                  <Button
+                    variant="outlined"
+                    startIcon={<AccountBalanceWalletRounded />}
+                    href="#"
+                    disabled
+                  >
+                    <Typography>Wallet</Typography>
+                  </Button>
+                </Badge>
+              </Grid>
+              <Grid item>
+                <Badge badgeContent={0} color="primary">
+                  <Button
+                    variant="outlined"
+                    href="/settings"
+                    startIcon={<SettingsRounded />}
+                  >
+                    <Typography>Settings</Typography>
+                  </Button>
+                </Badge>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Drain small />
+          </Grid>
+
           <Grid item xs={12}>
             <Grid container direction="row" spacing={2}>
               {
@@ -135,6 +202,7 @@ class User extends Component {
           </Grid>
         </Grid>
       </Grid>
+
     </Grid>
   }
 }

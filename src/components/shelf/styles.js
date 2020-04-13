@@ -3,10 +3,6 @@ export default theme => ({
     color: 'inherit',
     textDecoration: 'none'
   },
-  avatar: {
-    width: '41px',
-    height: '41px',
-  },
   shelf: {
     background: theme.background.primary
   },

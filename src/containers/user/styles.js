@@ -25,12 +25,15 @@ export default theme => ({
     top: 0,
     left: 0,
   },
+  avatar: {
+    height: theme.spacing(8),
+    width: theme.spacing(8),
+  },
   body: {
     borderRadius: '30px 30px 0px 0px',
     backgroundColor: '#FFFFFF',
   },
-  avatar: {
-    height: theme.spacing(7),
-    width: theme.spacing(7),
-  },
+  subheader: {
+    padding: theme.spacing(2),
+  }
 });

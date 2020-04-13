@@ -52,7 +52,7 @@ Utils.prettyNumber = (num, type = 'long') => {
     num = String(num)
     let [decimal, fraction] = num.split('.');
     let separateNumber = decimal.split('').reverse().map((a, i) => {
-      if (i > 1 && i % 3 === 0) return a + '.';
+      if (i > 1 && i % 3 === 0) return a + ',';
       return a;
     }).reverse();
     if (!fraction)

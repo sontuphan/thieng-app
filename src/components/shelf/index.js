@@ -99,7 +99,7 @@ class Shelf extends Component {
         <Grid item xs={6}>
           <Grid container direction="row" alignItems="center" spacing={1} >
             <Grid item className={classes.link} component={RouterLink} to={author.link}>
-              <Avatar alt={author.displayname} src={author.avatar} className={classes.avatar} />
+              <Avatar alt={author.displayname} src={author.avatar} />
             </Grid>
             <Grid item xs={8} className={classes.link} component={RouterLink} to={author.link}>
               <Typography style={{ color: this.state.color }} noWrap>{author.displayname}</Typography>

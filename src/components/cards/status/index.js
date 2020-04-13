@@ -14,6 +14,7 @@ import { ImageCard } from 'components/cards';
 import { LiteComment } from 'components/comments';
 
 import styles from './styles';
+import utils from 'helpers/utils';
 
 class StatusCard extends Component {
 
@@ -52,7 +53,7 @@ class StatusCard extends Component {
               </Grid>
             </Grid>
             <Grid item xs={8}>
-              <Typography style={{ fontWeight: "bold" }}>12,345 lượt thích</Typography>
+              <Typography style={{ fontWeight: "bold" }}>{utils.prettyNumber(12345, 'short')} lượt thích</Typography>
             </Grid>
             <Grid item xs={4}>
               <Grid container justify="flex-end" alignItems="center" spacing={1}>
