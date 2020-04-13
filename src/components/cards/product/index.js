@@ -25,8 +25,8 @@ class Product extends Component {
     return <Grid container spacing={1}>
       <Grid item xs={12}>
         <Paper elevation={0} className={classes.paper}>
-          <Grid container direction="row" justify="center" spacing={1}>
-            <Grid item xs={12} component={RouterLink} to={"/mall/" + object.id}>
+          <Grid container justify="center" spacing={1}>
+            <Grid item xs={12} component={RouterLink} to={"/mall/item/" + object.id}>
               <ImageCard image={image.url} imageType={image.type} />
             </Grid>
             <Grid item xs={12}>

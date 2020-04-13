@@ -50,20 +50,20 @@ class Newsfeed extends Component {
     let { projects } = this.state;
     if (!projects || !projects.length) return null;
 
-    return<Grid container direction="row" justify="center" alignItems="center" spacing={2}>
-        <Grid item xs={12}>
-          <Drain />
-        </Grid>
-        <Grid item xs={12} sm={10} md={10}>
-          <Grid container direction="row" spacing={2}>
-            {
-              projects.map(project => <Grid key={utils.rand()} item xs={12} sm={6} md={4} xl={3}>
-                <Status project={project}/>
-              </Grid>)
-            }
-          </Grid>
+    return <Grid container justify="center" alignItems="center" spacing={2}>
+      <Grid item xs={12}>
+        <Drain large />
+      </Grid>
+      <Grid item xs={12} sm={10} md={10}>
+        <Grid container spacing={2}>
+          {
+            projects.map(project => <Grid key={utils.rand()} item xs={12} sm={6} md={4} xl={3}>
+              <Status project={project} />
+            </Grid>)
+          }
         </Grid>
       </Grid>
+    </Grid>
   }
 }
 

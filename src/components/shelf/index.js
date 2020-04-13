@@ -82,7 +82,7 @@ class Shelf extends Component {
         } : null}
         className={classes.shelf}>
         <Grid item xs={12}>
-          <Grid container direction="row" justify="flex-end" spacing={2}>
+          <Grid container justify="flex-end" spacing={2}>
             <Grid item>
               <IconButton onClick={this.props.on3D}>
                 <ThreeDRotationRounded style={{ color: this.state.color }} />
@@ -97,7 +97,7 @@ class Shelf extends Component {
           backgroundSize: 'contain'
         } : null} />
         <Grid item xs={6}>
-          <Grid container direction="row" alignItems="center" spacing={1} >
+          <Grid container alignItems="center" spacing={1} >
             <Grid item className={classes.link} component={RouterLink} to={author.link}>
               <Avatar alt={author.displayname} src={author.avatar} />
             </Grid>
@@ -111,7 +111,7 @@ class Shelf extends Component {
         </Grid>
       </Grid>
       <Drain small />
-      <Grid container direction="row" alignItems="center" spacing={2}>
+      <Grid container alignItems="center" spacing={2}>
         <Grid item xs={2} md={1}>
           <Grid container justify="flex-start">
             <IconButton onClick={this.onBack}>

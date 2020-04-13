@@ -24,7 +24,7 @@ class Shop extends Component {
 
 
   render() {
-    return <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
+    return <Grid container justify="center" alignItems="center" spacing={2}>
       <Grid item xs={12}>
         <Drain />
       </Grid>

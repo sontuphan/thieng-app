@@ -126,7 +126,7 @@ class User extends Component {
           </Grid>
 
           <Grid item xs={12}>
-            <Grid container spacing={2} className={classes.subheader} justify="flex-end">
+            <Grid container spacing={2} className={classes.subheader} justify="center">
               <Grid item>
                 <Badge badgeContent={1} color="primary">
                   <Button
@@ -192,7 +192,7 @@ class User extends Component {
           </Grid>
 
           <Grid item xs={12}>
-            <Grid container direction="row" spacing={2}>
+            <Grid container spacing={2}>
               {
                 projects.map(project => <Grid item key={utils.rand()} xs={12} sm={6} md={4} lg={3} xl={2}>
                   <Status project={project} />

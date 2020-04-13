@@ -14,7 +14,7 @@ import styles from './styles';
 
 class Mission extends Component {
   render() {
-    return <Grid container direction="row" justify="center" spacing={2}>
+    return <Grid container justify="center" spacing={2}>
       <Grid item xs={10} md={8}>
         <Typography variant="h1">Sứ mệnh</Typography>
       </Grid>

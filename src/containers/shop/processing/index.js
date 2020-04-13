@@ -52,7 +52,7 @@ class Processing extends Component {
   render() {
     let { items } = this.state;
 
-    return <Grid container direction="row" spacing={2}>
+    return <Grid container spacing={2}>
       <Grid item xs={12}>
         <Typography variant="h1">Đang tạo</Typography>
       </Grid>
@@ -66,7 +66,7 @@ class Processing extends Component {
         <ProductCard object={obj} />
       </Grid>)}
       <Grid item xs={12}>
-        <Grid container direction="row" justify="flex-end" spacing={2}>
+        <Grid container justify="flex-end" spacing={2}>
           <Grid item>
             <Button variant="outlined" color="primary" size="large" endIcon={<ArrowForwardIosRounded />} onClick={this.onMore}>
               <Typography>Nhiều hơn</Typography>

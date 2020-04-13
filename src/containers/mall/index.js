@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -11,19 +11,12 @@ import Items from 'containers/mall/items';
 import styles from './styles';
 
 class Mall extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-
-    }
-  }
-
 
   render() {
     return <Switch>
-      <Route exact path="/mall" component={Items} />
-      <Route exact path="/mall/:id" component={Item} />
+      <Redirect exact from="/mall" to="/mall/chairs" />
+      <Route exact path="/mall/:category" component={Items} />
+      <Route exact path="/mall/item/:id" component={Item} />
     </Switch>
   }
 }

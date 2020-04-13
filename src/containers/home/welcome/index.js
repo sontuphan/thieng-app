@@ -20,7 +20,7 @@ class Welcome extends Component {
   }
 
   render() {
-    return <Grid container direction="row" justify="center" spacing={2}>
+    return <Grid container justify="center" spacing={2}>
       <Grid item xs={10} md={8}>
         <Typography variant="h1">Chào mừng</Typography>
       </Grid>
@@ -40,7 +40,7 @@ class Welcome extends Component {
         <Typography variant="h2">Tôi là</Typography>
       </Grid>
       <Grid item xs={10} md={8}>
-        <Grid container direction="row" spacing={2}>
+        <Grid container spacing={2}>
           <Grid item xs={6}>
             <Button onClick={() => this.redirect('/newsfeed')} variant="contained" color="primary" size="large" fullWidth>
               <Typography>Nhà thiết kế</Typography>

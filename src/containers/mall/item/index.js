@@ -150,7 +150,7 @@ class Item extends Component {
             />
           </Grid>
           <Grid item xs={10} md={8}>
-            <Grid container direction="row" spacing={2}>
+            <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Button variant="contained" color="primary" size="large" fullWidth>
                   <Typography>Mua</Typography>

@@ -6,13 +6,12 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 
-import { ArrowForwardIosRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import { ProductCard } from 'components/cards';
-import Divider from 'components/divider';
+import Menu from './menu';
 
 import { getItems } from 'modules/items.reducer';
 
@@ -26,10 +25,21 @@ class Items extends Component {
       items: [],
       page: 0,
       limit: 12,
+      category: 'chairs'
     }
   }
 
+  readCategory = () => {
+    let { match: { params: { category } } } = this.props;
+    this.setState({ category });
+  }
+
+  capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   componentDidMount() {
+    this.readCategory();
     this.props.getItems(this.state.page, this.state.limit);
   }
 
@@ -45,21 +55,22 @@ class Items extends Component {
     }
   }
 
-  onMore = () => {
-    this.setState({ page: this.state.page + 1 });
-  }
-
   render() {
     let { items } = this.state;
 
-    return <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
+    return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
-        <Drain />
+        <Drain large />
       </Grid>
+
+      <Grid item xs={12}>
+        <Menu category={this.state.category} />
+      </Grid>
+
       <Grid item xs={10}>
-        <Grid container direction="row" spacing={2}>
+        <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography variant="h1">Bàn</Typography>
+            <Drain small />
           </Grid>
           <Grid item xs={12}>
             <Divider />
@@ -67,48 +78,23 @@ class Items extends Component {
           <Grid item xs={12}>
             <Drain small />
           </Grid>
-          {items.map((obj, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
-            <ProductCard object={obj} />
-          </Grid>)}
-          <Grid item xs={12}>
-            <Grid container direction="row" justify="flex-end" spacing={2}>
-              <Grid item>
-                <Button variant="outlined" color="primary" size="large" endIcon={<ArrowForwardIosRounded />} onClick={this.onMore}>
-                  <Typography>Nhiều hơn</Typography>
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Drain />
+
+      <Grid item xs={10}>
+        <Typography variant="h1">{this.capitalizeFirstLetter(this.state.category)}</Typography>
       </Grid>
       <Grid item xs={10}>
-        <Grid container direction="row" spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant="h1">Ghế</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Divider />
-          </Grid>
-          <Grid item xs={12}>
-            <Drain small />
-          </Grid>
+        <Drain small />
+      </Grid>
+      <Grid item xs={10}>
+        <Grid container spacing={2}>
           {items.map((obj, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
             <ProductCard object={obj} />
           </Grid>)}
-          <Grid item xs={12}>
-            <Grid container direction="row" justify="flex-end" spacing={2}>
-              <Grid item>
-                <Button variant="outlined" color="primary" size="large" endIcon={<ArrowForwardIosRounded />} onClick={this.onMore}>
-                  <Typography>Nhiều hơn</Typography>
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
         </Grid>
       </Grid>
+
     </Grid>
   }
 }

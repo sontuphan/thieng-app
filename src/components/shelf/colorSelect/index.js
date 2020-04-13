@@ -26,7 +26,7 @@ class ColorSelect extends Component {
 
   render() {
     let { classes } = this.props;
-    return <Grid container direction="row" justify="flex-end" alignItems="center" spacing={1}>
+    return <Grid container justify="flex-end" alignItems="center" spacing={1}>
       {
         this.props.colors.map(color => <Grid item key={color}>
           <IconButton size="small" onClick={() => { this.onSelect(color) }}>

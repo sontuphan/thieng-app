@@ -117,7 +117,7 @@ class Header extends Component {
   renderRoute = () => {
     let { classes } = this.props;
     if (this.state.matches) {
-      return <Grid container direction="row" justify="flex-end" alignItems="center" spacing={2}>
+      return <Grid container justify="flex-end" alignItems="center" spacing={2}>
         <Grid item className={classes.route}>
           <SearchToolbar onChange={this.search} fullWidth />
         </Grid>
@@ -138,7 +138,7 @@ class Header extends Component {
       </Grid>
     }
     else {
-      return <Grid container direction="row" justify="flex-end" alignItems="center">
+      return <Grid container justify="flex-end" alignItems="center">
         <IconButton color="secondary" onClick={this.onToggleDrawer}>
           <Badge badgeContent={this.state.grocery} color="primary">
             <MenuRounded />
@@ -180,7 +180,7 @@ class Header extends Component {
   render() {
     let { classes } = this.props;
     return <Fragment>
-      <Grid container direction="row" justify="space-between" alignItems="center">
+      <Grid container justify="space-between" alignItems="center">
         <Grid item className={classes.logo}>
           <Link color="textPrimary" underline="none" component={RouterLink} to={'/home'}>
             <Typography variant="h3">Thiêng</Typography>

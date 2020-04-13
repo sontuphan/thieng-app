@@ -35,7 +35,7 @@ class Carousel extends Component {
   }
 
   render() {
-    return <Grid container direction="row" spacing={2}>
+    return <Grid container spacing={2}>
       <Grid item xs={4}>
         <CarouselPagination {...this.state.pagination}
           title={this.props.title}
