@@ -29,21 +29,15 @@ class Items extends Component {
     }
   }
 
-  readCategory = () => {
-    let { match: { params: { category } } } = this.props;
-    this.setState({ category });
-  }
-
-  capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
   componentDidMount() {
     this.readCategory();
     this.props.getItems(this.state.page, this.state.limit);
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (JSON.stringify(prevProps.match.params) !== JSON.stringify(this.props.match.params))
+      this.readCategory();
+
     if (prevState.page !== this.state.page)
       this.props.getItems(this.state.page, this.state.limit);
     if (prevState.limit !== this.state.limit)
@@ -55,6 +49,15 @@ class Items extends Component {
     }
   }
 
+  readCategory = () => {
+    let { match: { params: { category } } } = this.props;
+    this.setState({ category });
+  }
+
+  capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   render() {
     let { items } = this.state;
 
@@ -64,7 +67,7 @@ class Items extends Component {
       </Grid>
 
       <Grid item xs={10}>
-        <Menu category={this.state.category} />
+        <Menu />
       </Grid>
 
       <Grid item xs={10}>

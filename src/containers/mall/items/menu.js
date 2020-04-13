@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -18,8 +19,28 @@ class Menu extends Component {
     super();
 
     this.state = {
+      category: 'chairs',
       expanded: false
     }
+  }
+
+  componentDidMount() {
+    this.readCategory();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (JSON.stringify(prevProps.match.params) !== JSON.stringify(this.props.match.params)) {
+      this.readCategory();
+    }
+  }
+
+  readCategory = () => {
+    let { match: { params: { category } } } = this.props;
+    this.setState({ category });
+  }
+
+  redirect = (to) => {
+    this.props.history.push('/mall/' + to);
   }
 
   onMore = () => {
@@ -36,9 +57,9 @@ class Menu extends Component {
       <Grid item>
         <Button
           variant="outlined"
-          color={this.props.category === 'kitchen' ? "primary" : 'default'}
+          color={this.state.category === 'kitchen' ? 'primary' : 'default'}
           startIcon={<GiCookingPot />}
-          href="/mall/kitchen"
+          onClick={() => this.redirect('kitchen')}
         >
           <Typography>Kitchen</Typography>
         </Button>
@@ -46,9 +67,9 @@ class Menu extends Component {
       <Grid item>
         <Button
           variant="outlined"
-          color={this.props.category === 'garden' ? "primary" : 'default'}
+          color={this.state.category === 'garden' ? 'primary' : 'default'}
           startIcon={<FaTree />}
-          href="/mall/garden"
+          onClick={() => this.redirect('garden')}
         >
           <Typography>Garden</Typography>
         </Button>
@@ -56,9 +77,9 @@ class Menu extends Component {
       <Grid item>
         <Button
           variant="outlined"
-          color={this.props.category === 'others' ? "primary" : 'default'}
+          color={this.state.category === 'others' ? 'primary' : 'default'}
           startIcon={<FaConciergeBell />}
-          href="/mall/others"
+          onClick={() => this.redirect('others')}
         >
           <Typography>Others</Typography>
         </Button>
@@ -76,9 +97,9 @@ class Menu extends Component {
       <Grid item>
         <Button
           variant="outlined"
-          color={this.props.category === 'chairs' ? "primary" : 'default'}
+          color={this.state.category === 'chairs' ? 'primary' : 'default'}
           startIcon={<FaChair />}
-          href="/mall/chairs"
+          onClick={() => this.redirect('chairs')}
         >
           <Typography>Chairs</Typography>
         </Button>
@@ -86,9 +107,9 @@ class Menu extends Component {
       <Grid item>
         <Button
           variant="outlined"
-          color={this.props.category === 'desks' ? "primary" : 'default'}
+          color={this.state.category === 'desks' ? 'primary' : 'default'}
           startIcon={<GiDesk />}
-          href="/mall/desks"
+          onClick={() => this.redirect('desks')}
         >
           <Typography>Desks</Typography>
         </Button>
@@ -96,9 +117,9 @@ class Menu extends Component {
       <Grid item>
         <Button
           variant="outlined"
-          color={this.props.category === 'floor' ? "primary" : 'default'}
+          color={this.state.category === 'floor' ? 'primary' : 'default'}
           startIcon={<MdTexture />}
-          href="/mall/floor"
+          onClick={() => this.redirect('floor')}
         >
           <Typography>Floor</Typography>
         </Button>
@@ -106,9 +127,9 @@ class Menu extends Component {
       <Grid item>
         <Button
           variant="outlined"
-          color={this.props.category === 'light' ? "primary" : 'default'}
+          color={this.state.category === 'light' ? 'primary' : 'default'}
           startIcon={<GiCeilingLight />}
-          href="/mall/light"
+          onClick={() => this.redirect('light')}
         >
           <Typography>Light</Typography>
         </Button>
@@ -116,9 +137,9 @@ class Menu extends Component {
       <Grid item>
         <Button
           variant="outlined"
-          color={this.props.category === 'bedroom' ? "primary" : 'default'}
+          color={this.state.category === 'bedroom' ? 'primary' : 'default'}
           startIcon={<GiBedLamp />}
-          href="/mall/bedroom"
+          onClick={() => this.redirect('bedroom')}
         >
           <Typography>Bedroom</Typography>
         </Button>
@@ -126,9 +147,9 @@ class Menu extends Component {
       <Grid item>
         <Button
           variant="outlined"
-          color={this.props.category === 'playground' ? "primary" : 'default'}
+          color={this.state.category === 'playground' ? 'primary' : 'default'}
           startIcon={<FaTableTennis />}
-          href="/mall/playground"
+          onClick={() => this.redirect('playground')}
         >
           <Typography>Playground</Typography>
         </Button>
@@ -156,4 +177,4 @@ Menu.propTypes = {
   category: PropTypes.string
 }
 
-export default withStyles(styles)(Menu);
+export default withRouter(withStyles(styles)(Menu));
