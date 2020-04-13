@@ -63,7 +63,7 @@ class Items extends Component {
         <Drain large />
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={10}>
         <Menu category={this.state.category} />
       </Grid>
 
