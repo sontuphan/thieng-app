@@ -48,7 +48,7 @@ class DrainBar extends Component {
 
   render() {
     let { classes } = this.props;
-    return <Paper className={classes.paper}>
+    return <Paper className={classes.paper} elevation={12}>
       <Grid container spacing={1}>
         <Grid item>
           <IconButton size="small" onClick={this.props.onDelete}>

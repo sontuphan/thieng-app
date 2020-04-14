@@ -34,7 +34,7 @@ class Root extends Component {
         <Grid container spacing={2} justify="flex-end">
           {this.props.editable ? <Grid item>
 
-            <Paper className={classes.paper} elevation={8}>
+            <Paper className={classes.paper}>
               <Grid container spacing={1}>
                 <Grid item>
                   <IconButton size="small" onClick={this.onAdd}>

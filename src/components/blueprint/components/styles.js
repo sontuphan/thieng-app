@@ -1,7 +1,6 @@
 export default theme => ({
   container: {
     position: 'relative',
-    minHeight: theme.spacing(6),
     background: '#00000010',
     borderRadius: theme.shape.borderRadius,
     transition: theme.transitions.create(),
@@ -10,7 +9,6 @@ export default theme => ({
     },
   },
   child: {
-    minHeight: theme.spacing(6),
     position: 'relative',
     '&:hover': {
       '& $tool': {

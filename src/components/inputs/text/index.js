@@ -11,7 +11,6 @@ import styles from './styles';
 class TextInput extends Component {
 
   onChange = (e) => {
-    console.log('event')
     const contents = e.target.textContent;
     this.props.onChange(contents);
   }

@@ -53,15 +53,15 @@ class BottomDrawer extends Component {
   }
 }
 
+BottomDrawer.defaultProps = {
+  onOpen: () => { },
+  onClose: () => { },
+}
+
 BottomDrawer.propsTypes = {
   visible: PropTypes.bool.isRequired,
   onOpen: PropTypes.func,
   onClose: PropTypes.func,
-}
-
-BottomDrawer.defaultProps = {
-  onOpen: () => { console.log('onOpen') },
-  onClose: () => { console.log('onClose') },
 }
 
 export default withStyles(styles)(BottomDrawer);

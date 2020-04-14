@@ -218,7 +218,6 @@ class Tree {
     align = DEFAULT_TEXT.align,
     contents = DEFAULT_TEXT.contents
   ) => {
-    console.log(contents, !validateTextContents(contents))
     if (!validateTextVariant(variant)) return null;
     if (!validateTextAlign(align)) return null;
     if (!validateTextContents(contents)) return null;

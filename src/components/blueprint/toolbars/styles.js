@@ -14,5 +14,9 @@ export default theme => ({
   },
   select: {
     padding: '4px 0px 3px 0px',
+  },
+  toggleIcon: {
+    height: '20px',
+    width: '20px',
   }
 });

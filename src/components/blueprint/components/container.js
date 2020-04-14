@@ -3,16 +3,8 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
 
-import {
-  EditRounded, DeleteRounded,
-  CheckBoxOutlineBlankRounded, CalendarViewDayRounded,
-  VideoCallRounded, TextFieldsRounded, AddPhotoAlternateRounded,
-} from '@material-ui/icons';
-
+import { ContainerBar } from '../toolbars';
 import { ContainerTool } from '../toolbox';
 
 import styles from './styles';
@@ -102,68 +94,22 @@ class Container extends Component {
         <Grid item xs={12}>
           <Grid container spacing={2} justify="center">
             {this.props.editable ? <Grid item>
-
-              <Paper className={classes.paper} elevation={8}>
-                <Grid container spacing={1}>
-
-                  {/* Delete button */}
-                  <Grid item>
-                    <IconButton size="small" onClick={this.onDelete}>
-                      <DeleteRounded fontSize="small" />
-                    </IconButton>
-                  </Grid>
-
-                  {/* Edit button */}
-                  <Grid item>
-                    <IconButton size="small" onClick={this.onEdit}>
-                      <EditRounded fontSize="small" />
-                    </IconButton>
-                    <ContainerTool
-                      defaultData={node}
-                      visible={this.state.visibleEdit}
-                      anchorEl={this.state.anchorEl}
-                      onChange={this.onEditOk}
-                      onClose={this.onEdit}
-                    />
-                  </Grid>
-
-                  <Grid item>
-                    <Divider orientation="vertical" />
-                  </Grid>
-
-                  {/* Add container button */}
-                  <Grid item>
-                    <IconButton size="small" onClick={this.onAddContainer}>
-                      <CheckBoxOutlineBlankRounded fontSize="small" />
-                    </IconButton>
-                  </Grid>
-                  {/* Add image button */}
-                  <Grid item>
-                    <IconButton size="small" onClick={this.onAddImage}>
-                      <AddPhotoAlternateRounded fontSize="small" />
-                    </IconButton>
-                  </Grid>
-                  {/* Add video button */}
-                  <Grid item>
-                    <IconButton size="small" onClick={this.onAddVideo} disabled>
-                      <VideoCallRounded fontSize="small" />
-                    </IconButton>
-                  </Grid>
-                  {/* Add text button */}
-                  <Grid item>
-                    <IconButton size="small" onClick={this.onAddText}>
-                      <TextFieldsRounded fontSize="small" />
-                    </IconButton>
-                  </Grid>
-                  {/* Add drain button */}
-                  <Grid item>
-                    <IconButton size="small" onClick={this.onAddDrain}>
-                      <CalendarViewDayRounded fontSize="small" />
-                    </IconButton>
-                  </Grid>
-
-                </Grid>
-              </Paper>
+              <ContainerBar
+                onDelete={this.onDelete}
+                onEdit={this.onEdit}
+                onAddContainer={this.onAddContainer}
+                onAddImage={this.onAddImage}
+                onAddVideo={this.onAddVideo}
+                onAddText={this.onAddText}
+                onAddDrain={this.onAddDrain}
+              />
+              <ContainerTool
+                defaultData={node}
+                visible={this.state.visibleEdit}
+                anchorEl={this.state.anchorEl}
+                onChange={this.onEditOk}
+                onClose={this.onEdit}
+              />
             </Grid> : null}
 
           </Grid>

@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import ToggleIcon from 'material-ui-toggle-icon';
-
-import {
-  VisibilityRounded, VisibilityOffRounded,
-  UndoRounded, RedoRounded, DeleteForeverRounded
-} from '@material-ui/icons';
 
 import Render from './render';
+import { MainBar } from './toolbars';
 
 import styles from './components/styles';
 import Tree from './tree';
@@ -39,6 +32,8 @@ class Blueprint extends Component {
   onChange = (tree) => {
     // Save history
     this.treeHistory.addHistory(tree);
+    // Return value
+    this.props.onChange(tree.root);
     // Reload rendering
     this.restart();
   }
@@ -46,6 +41,8 @@ class Blueprint extends Component {
   onDelete = () => {
     this.treeHistory.clearHistory();
     this.tree = new Tree();
+    // Return value
+    this.props.onChange(this.tree.root);
     // Reload rendering
     this.restart();
   }
@@ -53,6 +50,8 @@ class Blueprint extends Component {
   onUndo = () => {
     let root = this.treeHistory.undo();
     this.tree = new Tree(root);
+    // Return value
+    this.props.onChange(this.tree.root);
     // Reload rendering
     this.restart();
   }
@@ -60,6 +59,8 @@ class Blueprint extends Component {
   onRedo = () => {
     let root = this.treeHistory.redo();
     this.tree = new Tree(root);
+    // Return value
+    this.props.onChange(this.tree.root);
     // Reload rendering
     this.restart();
   }
@@ -70,39 +71,17 @@ class Blueprint extends Component {
 
   render() {
     return <Grid container justify="center" spacing={2}>
-      <Grid item xs={12}>
-        <Grid container justify="flex-end" alignItems="center" spacing={2}>
-          <Grid item>
-            <IconButton onClick={this.onDelete} size="small">
-              <DeleteForeverRounded />
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <IconButton onClick={this.onUndo} size="small">
-              <UndoRounded />
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <IconButton onClick={this.onRedo} size="small">
-              <RedoRounded />
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <IconButton onClick={this.onPreview} size="small">
-              <ToggleIcon
-                on={!this.state.editable}
-                onIcon={<VisibilityRounded />}
-                offIcon={<VisibilityOffRounded />}
-              />
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <Button variant="contained" color="primary" size="small">
-              <Typography>Publish</Typography>
-            </Button>
-          </Grid>
-        </Grid>
+
+      <Grid item>
+        <MainBar
+          onDelete={this.onDelete}
+          onUndo={this.onUndo}
+          onRedo={this.onRedo}
+          previewing={!this.state.editable}
+          onPreview={this.onPreview}
+        />
       </Grid>
+
       <Grid item xs={12}>
         <Render
           tree={this.tree}
@@ -110,8 +89,17 @@ class Blueprint extends Component {
           onChange={this.onChange}
         />
       </Grid>
+
     </Grid>
   }
+}
+
+Blueprint.defaultProps = {
+  onChange: () => { },
+}
+
+Blueprint.propTypes = {
+  onChange: PropTypes.func,
 }
 
 export default withStyles(styles)(Blueprint);

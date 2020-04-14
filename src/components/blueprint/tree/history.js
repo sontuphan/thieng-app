@@ -4,6 +4,22 @@ const INDEX_KEY = 'treeRootIndex';
 const TREE_ROOT_KEY = 'treeRootStack';
 const MAX_HISTORY = 10;
 
+/**
+ * Supportive function
+ */
+const checkTreeRootInLocalStorage = () => {
+  let treeRootIndex = typeof (storage.get(INDEX_KEY)) !== 'number' ? -1 : storage.get(INDEX_KEY);
+  let treeRootStack = storage.get(TREE_ROOT_KEY) || [];
+  let desiredRoot = treeRootStack[treeRootIndex];
+  if (!desiredRoot || typeof desiredRoot !== 'object') return false;
+  return true;
+}
+export { checkTreeRootInLocalStorage }
+
+
+/**
+ * Main class
+ */
 class TreeHistory {
   constructor() {
     this.treeRootIndex = typeof (storage.get(INDEX_KEY)) !== 'number' ? -1 : storage.get(INDEX_KEY);

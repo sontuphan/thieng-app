@@ -9,41 +9,29 @@ import Button from '@material-ui/core/Button';
 import Badge from '@material-ui/core/Badge';
 
 import {
-  HomeRounded,
+  HomeRounded, AccountBalanceWalletRounded,
   SettingsRounded, ChatRounded, StorefrontRounded,
-  AddBoxRounded, AccountBalanceWalletRounded
 } from '@material-ui/icons';
 
 import styles from './styles';
+import { checkTreeRootInLocalStorage } from 'components/blueprint/tree/history';
 
 class Menu extends Component {
 
   render() {
     let { match: { params: { userId, page } } } = this.props;
-    console.log(this.props)
 
     return <Grid container spacing={2} justify="center">
       <Grid item>
-        <Button
-          variant="outlined"
-          color={page === 'home' ? 'primary' : 'default'}
-          startIcon={<HomeRounded />}
-          component={RouterLink}
-          to={`/user/${userId}/home`}
-        >
-          <Typography>Home</Typography>
-        </Button>
-      </Grid>
-      <Grid item>
-        <Badge badgeContent={1} color="primary">
+        <Badge badgeContent={checkTreeRootInLocalStorage() ? 1 : 0} color="primary">
           <Button
             variant="outlined"
-            color={page === 'blueprint' ? 'primary' : 'default'}
-            startIcon={<AddBoxRounded />}
+            color={page === 'home' ? 'primary' : 'default'}
+            startIcon={<HomeRounded />}
             component={RouterLink}
-            to={`/user/${userId}/blueprint`}
+            to={`/user/${userId}/home`}
           >
-            <Typography>New Blueprint</Typography>
+            <Typography>Home</Typography>
           </Button>
         </Badge>
       </Grid>

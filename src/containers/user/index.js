@@ -16,7 +16,6 @@ import { SettingsApplicationsRounded } from '@material-ui/icons';
 import Drain from 'components/drain';
 import Menu from './menu';
 import UserHome from './home';
-import Blueprint from 'components/blueprint';
 
 import { getUserByCode } from 'modules/user.reducer';
 
@@ -114,7 +113,6 @@ class User extends Component {
           <Grid item xs={12}>
             <Switch>
               <Route exact path="/user/:userId/home" component={UserHome} />
-              <Route exact path="/user/:userId/blueprint" component={Blueprint} />
             </Switch>
           </Grid>
         </Grid>

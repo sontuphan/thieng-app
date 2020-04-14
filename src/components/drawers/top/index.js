@@ -53,15 +53,15 @@ class TopDrawer extends Component {
   }
 }
 
+TopDrawer.defaultProps = {
+  onOpen: () => { },
+  onClose: () => { },
+}
+
 TopDrawer.propsTypes = {
   visible: PropTypes.bool.isRequired,
   onOpen: PropTypes.func,
   onClose: PropTypes.func,
-}
-
-TopDrawer.defaultProps = {
-  onOpen: () => { console.log('onOpen') },
-  onClose: () => { console.log('onClose') },
 }
 
 export default withStyles(styles)(TopDrawer);
