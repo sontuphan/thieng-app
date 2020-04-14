@@ -95,9 +95,7 @@ class UserHome extends Component {
                 <Grid container spacing={this.props.ui.width >= 960 ? 4 : 2}>
 
                   <Grid item xs={12} md={8}>
-                    <Grid container spacing={2}>
-                      <Blueprint onChange={this.onBluePrint} />
-                    </Grid>
+                    <Blueprint onChange={this.onBluePrint} />
                   </Grid>
 
                   <Grid item xs={12} md={4}>

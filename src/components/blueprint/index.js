@@ -71,7 +71,6 @@ class Blueprint extends Component {
 
   render() {
     return <Grid container justify="center" spacing={2}>
-
       <Grid item>
         <MainBar
           onDelete={this.onDelete}
@@ -81,7 +80,6 @@ class Blueprint extends Component {
           onPreview={this.onPreview}
         />
       </Grid>
-
       <Grid item xs={12}>
         <Render
           tree={this.tree}
@@ -89,7 +87,6 @@ class Blueprint extends Component {
           onChange={this.onChange}
         />
       </Grid>
-
     </Grid>
   }
 }
