@@ -6,17 +6,21 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import Avatar from '@material-ui/core/Avatar';
+import TextField from '@material-ui/core/TextField';
 
 import {
-  AddBoxRounded, WarningRounded,
-  PublishRounded,
+  AddBoxRounded, WarningRounded, SaveAltRounded,
+  PublicRounded, ExpandMoreRounded,
 } from '@material-ui/icons';
 
 import Status from 'containers/status';
 import Blueprint from 'components/blueprint';
 import { BottomDrawer } from 'components/drawers';
+import Drain from 'components/drain';
 
 import { getProjects } from 'modules/projects.reducer';
 
@@ -24,12 +28,16 @@ import styles from './styles';
 import utils from 'helpers/utils';
 import { checkTreeRootInLocalStorage } from 'components/blueprint/tree/history';
 
+const MAX_LENGTH_STATUS = 250;
+
 class UserHome extends Component {
   constructor() {
     super();
 
     this.state = {
-      visible: false,
+      visible: true,
+      status: '',
+      blueprint: {},
       projects: [],
     }
   }
@@ -58,12 +66,19 @@ class UserHome extends Component {
     });
   }
 
-  onClick = () => {
+  onVisibleBlueprint = () => {
     this.setState({ visible: true });
   }
 
   onBluePrint = (value) => {
-    console.log(value);
+    this.setState({ blueprint: value });
+  }
+
+  onStatus = (e) => {
+    let value = e.target.value;
+    if (!value) value = '';
+    if (value.length > MAX_LENGTH_STATUS) return;
+    this.setState({ status: value });
   }
 
   render() {
@@ -81,7 +96,7 @@ class UserHome extends Component {
               color="primary"
               className={classes.fixAlign}
               startIcon={checkTreeRootInLocalStorage() ? <WarningRounded /> : <AddBoxRounded />}
-              onClick={this.onClick}
+              onClick={this.onVisibleBlueprint}
             >
               <Typography>{checkTreeRootInLocalStorage() ? 'Resume' : 'New'}</Typography>
             </Button>
@@ -95,38 +110,93 @@ class UserHome extends Component {
                 <Grid container spacing={this.props.ui.width >= 960 ? 4 : 2}>
 
                   <Grid item xs={12} md={8}>
-                    <Blueprint onChange={this.onBluePrint} />
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        <Blueprint onChange={this.onBluePrint} />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Drain />
+                      </Grid>
+                    </Grid>
                   </Grid>
 
                   <Grid item xs={12} md={4}>
                     <Grid container spacing={2} justify="center">
 
                       <Grid item xs={10} md={12}>
-                        <Grid
-                          container
-                          className={classes.noWrap}
-                          justify="flex-end"
-                          alignItems="center"
-                          spacing={2}
-                        >
+                        <Grid container justify="space-between" alignItems="center" spacing={2}>
                           <Grid item>
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              startIcon={<PublishRounded fontSize="small" />}
-                              onClick={this.onPublish}
-                              size="small"
-                            >
-                              <Typography noWrap>Publish</Typography>
-                            </Button>
+                            <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
+                              <Grid item>
+                                <Button
+                                  variant="contained"
+                                  color="primary"
+                                  startIcon={<PublicRounded fontSize="small" />}
+                                  onClick={this.onPublish}
+                                  size="small"
+                                >
+                                  <Typography noWrap>Publish</Typography>
+                                </Button>
+                              </Grid>
+                              <Grid item>
+                                <Button
+                                  variant="outlined"
+                                  startIcon={<SaveAltRounded fontSize="small" />}
+                                  onClick={() => this.setState({ visible: false })}
+                                  size="small"
+                                >
+                                  <Typography noWrap>Save</Typography>
+                                </Button>
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                          <Grid item>
+                            <IconButton size="small">
+                              <ExpandMoreRounded fontSize="small" />
+                            </IconButton>
                           </Grid>
                         </Grid>
                       </Grid>
-
                       <Grid item xs={10} md={12}>
                         <Divider />
                       </Grid>
-
+                      <Grid item xs={10} md={12}>
+                        <Grid container justify="space-between" alignItems="center" spacing={2}>
+                          <Grid item>
+                            <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
+                              <Grid item>
+                                <Avatar
+                                  alt={this.props.auth.displayname}
+                                  src={this.props.auth.avatar}
+                                  className={classes.avatar}
+                                />
+                              </Grid>
+                              <Grid item>
+                                <Typography>{this.props.auth.displayname}</Typography>
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                          <Grid item>
+                            <Typography>{this.state.status.length}/{MAX_LENGTH_STATUS}</Typography>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={10} md={12}>
+                        <TextField
+                          label="Short introduction about your work of art."
+                          variant="outlined"
+                          size="small"
+                          color="secondary"
+                          value={this.state.status}
+                          onChange={this.onStatus}
+                          InputProps={{ classes: { input: classes.font } }}
+                          multiline
+                          fullWidth
+                        />
+                      </Grid>
+                      <Grid item xs={10} md={12}>
+                        <Divider />
+                      </Grid>
                     </Grid>
                   </Grid>
 
