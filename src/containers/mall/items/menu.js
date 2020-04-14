@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -19,28 +19,8 @@ class Menu extends Component {
     super();
 
     this.state = {
-      category: 'chairs',
       expanded: false
     }
-  }
-
-  componentDidMount() {
-    this.readCategory();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (JSON.stringify(prevProps.match.params) !== JSON.stringify(this.props.match.params)) {
-      this.readCategory();
-    }
-  }
-
-  readCategory = () => {
-    let { match: { params: { category } } } = this.props;
-    this.setState({ category });
-  }
-
-  redirect = (to) => {
-    this.props.history.push('/mall/' + to);
   }
 
   onMore = () => {
@@ -53,13 +33,16 @@ class Menu extends Component {
 
   renderHiddenOptions = () => {
     if (!this.state.expanded) return null;
+    let { match: { params: { category } } } = this.props;
+
     return <Fragment>
       <Grid item>
         <Button
           variant="outlined"
-          color={this.state.category === 'kitchen' ? 'primary' : 'default'}
+          color={category === 'kitchen' ? 'primary' : 'default'}
           startIcon={<GiCookingPot />}
-          onClick={() => this.redirect('kitchen')}
+          component={RouterLink}
+          to={'/mall/kitchen'}
         >
           <Typography>Kitchen</Typography>
         </Button>
@@ -67,9 +50,10 @@ class Menu extends Component {
       <Grid item>
         <Button
           variant="outlined"
-          color={this.state.category === 'garden' ? 'primary' : 'default'}
+          color={category === 'garden' ? 'primary' : 'default'}
           startIcon={<FaTree />}
-          onClick={() => this.redirect('garden')}
+          component={RouterLink}
+          to={'/mall/garden'}
         >
           <Typography>Garden</Typography>
         </Button>
@@ -77,9 +61,10 @@ class Menu extends Component {
       <Grid item>
         <Button
           variant="outlined"
-          color={this.state.category === 'others' ? 'primary' : 'default'}
+          color={category === 'others' ? 'primary' : 'default'}
           startIcon={<FaConciergeBell />}
-          onClick={() => this.redirect('others')}
+          component={RouterLink}
+          to={'/mall/others'}
         >
           <Typography>Others</Typography>
         </Button>
@@ -93,13 +78,16 @@ class Menu extends Component {
   }
 
   render() {
+    let { match: { params: { category } } } = this.props;
+
     return <Grid container spacing={2} justify="center">
       <Grid item>
         <Button
           variant="outlined"
-          color={this.state.category === 'chairs' ? 'primary' : 'default'}
+          color={category === 'chairs' ? 'primary' : 'default'}
           startIcon={<FaChair />}
-          onClick={() => this.redirect('chairs')}
+          component={RouterLink}
+          to={'/mall/chairs'}
         >
           <Typography>Chairs</Typography>
         </Button>
@@ -107,9 +95,10 @@ class Menu extends Component {
       <Grid item>
         <Button
           variant="outlined"
-          color={this.state.category === 'desks' ? 'primary' : 'default'}
+          color={category === 'desks' ? 'primary' : 'default'}
           startIcon={<GiDesk />}
-          onClick={() => this.redirect('desks')}
+          component={RouterLink}
+          to={'/mall/desks'}
         >
           <Typography>Desks</Typography>
         </Button>
@@ -117,9 +106,10 @@ class Menu extends Component {
       <Grid item>
         <Button
           variant="outlined"
-          color={this.state.category === 'floor' ? 'primary' : 'default'}
+          color={category === 'floor' ? 'primary' : 'default'}
           startIcon={<MdTexture />}
-          onClick={() => this.redirect('floor')}
+          component={RouterLink}
+          to={'/mall/floor'}
         >
           <Typography>Floor</Typography>
         </Button>
@@ -127,9 +117,10 @@ class Menu extends Component {
       <Grid item>
         <Button
           variant="outlined"
-          color={this.state.category === 'light' ? 'primary' : 'default'}
+          color={category === 'light' ? 'primary' : 'default'}
           startIcon={<GiCeilingLight />}
-          onClick={() => this.redirect('light')}
+          component={RouterLink}
+          to={'/mall/light'}
         >
           <Typography>Light</Typography>
         </Button>
@@ -137,9 +128,10 @@ class Menu extends Component {
       <Grid item>
         <Button
           variant="outlined"
-          color={this.state.category === 'bedroom' ? 'primary' : 'default'}
+          color={category === 'bedroom' ? 'primary' : 'default'}
           startIcon={<GiBedLamp />}
-          onClick={() => this.redirect('bedroom')}
+          component={RouterLink}
+          to={'/mall/bedroom'}
         >
           <Typography>Bedroom</Typography>
         </Button>
@@ -147,9 +139,10 @@ class Menu extends Component {
       <Grid item>
         <Button
           variant="outlined"
-          color={this.state.category === 'playground' ? 'primary' : 'default'}
+          color={category === 'playground' ? 'primary' : 'default'}
           startIcon={<FaTableTennis />}
-          onClick={() => this.redirect('playground')}
+          component={RouterLink}
+          to={'/mall/playground'}
         >
           <Typography>Playground</Typography>
         </Button>

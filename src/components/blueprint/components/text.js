@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 
+import { TextInput } from 'components/inputs';
 import { TextBar } from '../toolbars';
 
 import styles from './styles';
@@ -12,9 +12,8 @@ import styles from './styles';
 
 class Text extends Component {
 
-  onType = (e) => {
+  onType = (contents) => {
     let node = this.props.tree.getNode(this.props.id);
-    const contents = e.target.textContent;
     this.props.tree.editText(
       this.props.id,
       node.variant,
@@ -51,14 +50,12 @@ class Text extends Component {
       >
 
         <Grid item xs={12}>
-          <Typography
-            contentEditable={true}
-            suppressContentEditableWarning={true}
+          <TextInput
+            value={node.contents}
             variant={node.variant}
             align={node.align}
-            className={classes.text}
-            onBlur={this.onType}
-          >{node.contents}</Typography>
+            onChange={this.onType}
+          />
         </Grid>
 
         <div className={classes.tool}>

@@ -13,8 +13,6 @@ import Home from 'containers/home';
 import Newsfeed from 'containers/newsfeed';
 import Mall from 'containers/mall';
 import User from 'containers/user';
-import Shop from 'containers/shop';
-import Blueprint from 'containers/blueprint';
 import Footer from 'containers/footer';
 
 import theme from 'static/styles/theme';
@@ -45,11 +43,10 @@ class App extends Component {
           <Switch>
             <Redirect exact from="/" to="/home" />
             <Route exact path="/home" component={Home} />
-            <Route path="/newsfeed" component={Newsfeed} />
+            <Route exact path="/newsfeed" component={Newsfeed} />
             <Route path="/mall" component={Mall} />
-            <Route exact path="/user/:userId" component={User} />
-            <Route exact path="/my-shop" component={Shop} />
-            <Route exact path="/blueprint" component={Blueprint} />
+            <Redirect exact from="/user/:userId" to="/user/:userId/home" />
+            <Route exact path="/user/:userId/:page" component={User} />
           </Switch>
         </Grid>
         <Grid item xs={12}>

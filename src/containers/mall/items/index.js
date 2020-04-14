@@ -66,11 +66,11 @@ class Items extends Component {
         <Drain large />
       </Grid>
 
-      <Grid item xs={10}>
+      <Grid item xs={11} md={10}>
         <Menu />
       </Grid>
 
-      <Grid item xs={10}>
+      <Grid item xs={11} md={10}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Drain small />
@@ -84,13 +84,13 @@ class Items extends Component {
         </Grid>
       </Grid>
 
-      <Grid item xs={10}>
+      <Grid item xs={11} md={10}>
         <Typography variant="h1">{this.capitalizeFirstLetter(this.state.category)}</Typography>
       </Grid>
-      <Grid item xs={10}>
+      <Grid item xs={12}>
         <Drain small />
       </Grid>
-      <Grid item xs={10}>
+      <Grid item xs={11} md={10}>
         <Grid container spacing={2}>
           {items.map((obj, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
             <ProductCard object={obj} />

@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -15,7 +12,6 @@ import {
   UndoRounded, RedoRounded, DeleteForeverRounded
 } from '@material-ui/icons';
 
-import Drain from 'components/drain';
 import Render from './render';
 
 import styles from './components/styles';
@@ -75,9 +71,6 @@ class Blueprint extends Component {
   render() {
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
-        <Drain />
-      </Grid>
-      <Grid item xs={12} md={10}>
         <Grid container justify="flex-end" alignItems="center" spacing={2}>
           <Grid item>
             <IconButton onClick={this.onDelete} size="small">
@@ -104,17 +97,13 @@ class Blueprint extends Component {
             </IconButton>
           </Grid>
           <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-            >
+            <Button variant="contained" color="primary" size="small">
               <Typography>Publish</Typography>
             </Button>
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} md={10}>
+      <Grid item xs={12}>
         <Render
           tree={this.tree}
           editable={this.state.editable}
@@ -125,15 +114,4 @@ class Blueprint extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-
-}, dispatch);
-
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(Blueprint)));
+export default withStyles(styles)(Blueprint);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { Parallax } from 'rc-scroll-anim';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -9,20 +9,16 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
-import Badge from '@material-ui/core/Badge';
+import Divider from '@material-ui/core/Divider';
 
-import {
-  SettingsApplicationsRounded, SettingsRounded,
-  ChatRounded, StorefrontRounded, AddBoxRounded,
-  AccountBalanceWalletRounded
-} from '@material-ui/icons';
+import { SettingsApplicationsRounded } from '@material-ui/icons';
 
-import Status from 'containers/status';
 import Drain from 'components/drain';
+import Menu from './menu';
+import UserHome from './home';
+import Blueprint from 'components/blueprint';
 
 import { getUserByCode } from 'modules/user.reducer';
-import { getProjects } from 'modules/projects.reducer';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -35,38 +31,11 @@ class User extends Component {
     this.state = {
       likes: 12853,
       products: 32,
-      projects: [],
     }
-  }
-
-  componentDidMount() {
-    this.loadData();
-    window.addEventListener('scroll', this.onTheEnd);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.onTheEnd);
-  }
-
-  onTheEnd = () => {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)
-      return this.loadData();
-  }
-
-  loadData = () => {
-    let { match: { params: { userId } } } = this.props;
-    this.props.getProjects(userId).then(re => {
-      let newData = this.state.projects.concat(re.data);
-      return this.setState({ projects: newData });
-    }).catch(er => {
-      return console.error(er);
-    });
   }
 
   render() {
     let { classes } = this.props;
-    let { projects } = this.state;
-    if (!projects || !projects.length) return null;
 
     return <Grid container justify="center" spacing={2}>
 
@@ -97,7 +66,7 @@ class User extends Component {
       </Grid>
 
       <Grid item xs={12} md={10} className={classes.body}>
-        <Grid container spacing={2}>
+        <Grid container spacing={4}>
 
           <Grid item xs={12}>
             <Grid container alignItems="center" spacing={2} className={classes.subheader}>
@@ -126,79 +95,27 @@ class User extends Component {
           </Grid>
 
           <Grid item xs={12}>
-            <Grid container spacing={2} className={classes.subheader} justify="center">
-              <Grid item>
-                <Badge badgeContent={1} color="primary">
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    startIcon={<AddBoxRounded />}
-                    href="/blueprint"
-                  >
-                    <Typography>New Blueprint</Typography>
-                  </Button>
-                </Badge>
+            <Grid container spacing={2} justify="center" className={classes.subheader}>
+              <Grid item xs={12}>
+                <Menu />
               </Grid>
-              <Grid item>
-                <Badge badgeContent={4} color="primary">
-                  <Button
-                    variant="outlined"
-                    startIcon={<StorefrontRounded />}
-                    href="#"
-                  >
-                    <Typography>My Store</Typography>
-                  </Button>
-                </Badge>
+              <Grid item xs={12}>
+                <Drain small />
               </Grid>
-              <Grid item>
-                <Badge badgeContent={18} color="primary">
-                  <Button
-                    variant="outlined"
-                    startIcon={<ChatRounded />}
-                    href="#"
-                  >
-                    <Typography>Message</Typography>
-                  </Button>
-                </Badge>
+              <Grid item xs={12}>
+                <Divider />
               </Grid>
-              <Grid item>
-                <Badge badgeContent={0} color="primary">
-                  <Button
-                    variant="outlined"
-                    startIcon={<AccountBalanceWalletRounded />}
-                    href="#"
-                    disabled
-                  >
-                    <Typography>Wallet</Typography>
-                  </Button>
-                </Badge>
-              </Grid>
-              <Grid item>
-                <Badge badgeContent={0} color="primary">
-                  <Button
-                    variant="outlined"
-                    href="/settings"
-                    startIcon={<SettingsRounded />}
-                  >
-                    <Typography>Settings</Typography>
-                  </Button>
-                </Badge>
+              <Grid item xs={12}>
+                <Drain small />
               </Grid>
             </Grid>
           </Grid>
 
           <Grid item xs={12}>
-            <Drain small />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Grid container spacing={2}>
-              {
-                projects.map(project => <Grid item key={utils.rand()} xs={12} sm={6} md={4} lg={3} xl={2}>
-                  <Status project={project} />
-                </Grid>)
-              }
-            </Grid>
+            <Switch>
+              <Route exact path="/user/:userId/home" component={UserHome} />
+              <Route exact path="/user/:userId/blueprint" component={Blueprint} />
+            </Switch>
           </Grid>
         </Grid>
       </Grid>
@@ -211,12 +128,10 @@ const mapStateToProps = state => ({
   ui: state.ui,
   auth: state.auth,
   users: state.users,
-  projects: state.projects,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getUserByCode,
-  getProjects,
 }, dispatch);
 
 export default withRouter(connect(

@@ -29,9 +29,6 @@ export default theme => ({
   paper: {
     padding: theme.spacing(1) / 2,
   },
-  text: {
-    overflowWrap: 'break-word',
-  },
   accessibleDrain: {
     backgroundColor: '#00000010',
     backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 5px, #ffffff 5px, #ffffff 10px)',

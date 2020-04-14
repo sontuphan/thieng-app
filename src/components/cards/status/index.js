@@ -22,7 +22,7 @@ class StatusCard extends Component {
     let { classes } = this.props;
     let { author, auth, project } = this.props;
 
-    return <Grid container spacing={1}>
+    return <Grid container spacing={2}>
       <Grid item xs={12}>
         <Paper elevation={0} className={classes.paper}>
           <Grid container alignItems="center" spacing={1}>

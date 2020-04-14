@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link as RouterLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
+import Link from '@material-ui/core/Link';
 
 import { ImageCard } from 'components/cards';
 
@@ -22,11 +23,11 @@ class Product extends Component {
   render() {
     let { classes, object } = this.props;
     let image = object.images[0];
-    return <Grid container spacing={1}>
+    return <Grid container spacing={2}>
       <Grid item xs={12}>
         <Paper elevation={0} className={classes.paper}>
           <Grid container justify="center" spacing={1}>
-            <Grid item xs={12} component={RouterLink} to={"/mall/item/" + object.id}>
+            <Grid item xs={12} component={Link} href={`/mall/item/${object.id}`}>
               <ImageCard image={image.url} imageType={image.type} />
             </Grid>
             <Grid item xs={12}>

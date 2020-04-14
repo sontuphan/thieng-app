@@ -6,7 +6,6 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
-import Drain from 'components/drain';
 import Status from 'containers/status';
 
 import { getProjects } from 'modules/projects.reducer';
@@ -14,7 +13,7 @@ import { getProjects } from 'modules/projects.reducer';
 import styles from './styles';
 import utils from 'helpers/utils';
 
-class Newsfeed extends Component {
+class UserHome extends Component {
   constructor() {
     super();
 
@@ -38,7 +37,8 @@ class Newsfeed extends Component {
   }
 
   loadData = () => {
-    this.props.getProjects().then(re => {
+    let { match: { params: { userId } } } = this.props;
+    this.props.getProjects(userId).then(re => {
       let newData = this.state.projects.concat(re.data);
       return this.setState({ projects: newData });
     }).catch(er => {
@@ -50,19 +50,12 @@ class Newsfeed extends Component {
     let { projects } = this.state;
     if (!projects || !projects.length) return null;
 
-    return <Grid container justify="center" spacing={2}>
-      <Grid item xs={12}>
-        <Drain large />
-      </Grid>
-      <Grid item xs={12} md={10}>
-        <Grid container spacing={2}>
-          {
-            projects.map(project => <Grid key={utils.rand()} item xs={12} sm={6} md={4} xl={3}>
-              <Status project={project} />
-            </Grid>)
-          }
-        </Grid>
-      </Grid>
+    return <Grid container spacing={2}>
+      {
+        projects.map(project => <Grid item key={utils.rand()} xs={12} sm={6} md={4} lg={3} xl={2}>
+          <Status project={project} />
+        </Grid>)
+      }
     </Grid>
   }
 }
@@ -80,4 +73,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Newsfeed)));
+)(withStyles(styles)(UserHome)));

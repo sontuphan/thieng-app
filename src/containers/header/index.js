@@ -94,7 +94,7 @@ class Header extends Component {
           size="small"
           startIcon={<PersonRounded />}
           component={RouterLink}
-          to={"/user/" + auth.userId}
+          to={'/user/' + auth.userId + '/home'}
           onClick={() => this.onToggleDrawer(false)}>
           <Typography>{auth.displayname}</Typography>
         </Button >
