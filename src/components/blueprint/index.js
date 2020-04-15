@@ -25,6 +25,10 @@ class Blueprint extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.onChange(this.tree.root);
+  }
+
   restart = () => {
     return this.setState({ restart: this.state.restart + 1 });
   }

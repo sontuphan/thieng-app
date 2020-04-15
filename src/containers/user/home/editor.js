@@ -13,13 +13,12 @@ import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 
-import {
-  SaveAltRounded, PublicRounded, ExpandMoreRounded,
-} from '@material-ui/icons';
+import { SaveAltRounded, PublicRounded, ExpandMoreRounded } from '@material-ui/icons';
 
 import Blueprint from 'components/blueprint';
 import { BottomDrawer } from 'components/drawers';
 import Drain from 'components/drain';
+import Cascade from 'components/blueprint/cascade';
 
 import styles from './styles';
 
@@ -157,6 +156,9 @@ class Editor extends Component {
                     </Grid>
                     <Grid item xs={10} md={12}>
                       <Divider />
+                    </Grid>
+                    <Grid item xs={10} md={12}>
+                      <Cascade root={this.state.blueprint} />
                     </Grid>
                   </Grid>
                 </Grid>

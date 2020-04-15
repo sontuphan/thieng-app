@@ -15,6 +15,7 @@ import Menu from './menu';
 import { getItems } from 'modules/items.reducer';
 
 import styles from './styles';
+import utils from 'helpers/utils';
 
 class Items extends Component {
   constructor() {
@@ -53,10 +54,6 @@ class Items extends Component {
     this.setState({ category });
   }
 
-  capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
   render() {
     let { items } = this.state;
 
@@ -84,7 +81,7 @@ class Items extends Component {
       </Grid>
 
       <Grid item xs={11} md={10}>
-        <Typography variant="h1">{this.capitalizeFirstLetter(this.state.category)}</Typography>
+        <Typography variant="h1">{utils.capitalizeFirstLetter(this.state.category)}</Typography>
       </Grid>
       <Grid item xs={12}>
         <Drain small />
