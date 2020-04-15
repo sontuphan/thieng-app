@@ -79,7 +79,7 @@ class Render extends Component {
   }
 
   render() {
-    return <Grid container justify="center" spacing={2}>
+    return <Grid container spacing={2}>
       <Grid item xs={12}>
         {this.renderTree()}
       </Grid>
