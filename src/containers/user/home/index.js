@@ -16,7 +16,6 @@ import Editor from './editor';
 import { getProjects } from 'modules/projects.reducer';
 
 import styles from './styles';
-import utils from 'helpers/utils';
 import { checkTreeRootInLocalStorage } from 'components/blueprint/tree/history';
 
 
@@ -86,7 +85,7 @@ class UserHome extends Component {
       <Grid item xs={12}>
         <Grid container spacing={2}>
           {
-            projects.map(project => <Grid item key={utils.rand()} xs={12} sm={6} md={4} lg={3} xl={2}>
+            projects.map((project, index) => <Grid item key={index} xs={12} sm={6} md={4} lg={3} xl={2}>
               <Status project={project} />
             </Grid>)
           }

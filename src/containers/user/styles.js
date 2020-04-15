@@ -25,15 +25,23 @@ export default theme => ({
     top: 0,
     left: 0,
   },
+  paper: {
+    padding: 32,
+    borderRadius: theme.spacing(4),
+    boxShadow: theme.shadows[8],
+    transition: theme.transitions.create(),
+    '&:hover': {
+      boxShadow: theme.shadows[16],
+    }
+  },
   avatar: {
     height: theme.spacing(8),
     width: theme.spacing(8),
   },
-  body: {
-    borderRadius: '30px 30px 0px 0px',
-    backgroundColor: '#FFFFFF',
+  noWrap: {
+    flexWrap: 'nowrap',
   },
-  subheader: {
-    padding: theme.spacing(2),
-  }
+  stretch: {
+    flex: '1 1 auto',
+  },
 });

@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { Parallax } from 'rc-scroll-anim';
+import { loremIpsum } from "lorem-ipsum";
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
-import Divider from '@material-ui/core/Divider';
+import Paper from '@material-ui/core/Paper';
 
 import { SettingsApplicationsRounded } from '@material-ui/icons';
 
@@ -20,8 +21,8 @@ import UserHome from './home';
 import { getUserByCode } from 'modules/user.reducer';
 
 import styles from './styles';
-import utils from 'helpers/utils';
 import PANEL from 'static/images/designer-2.jpg';
+import utils from 'helpers/utils';
 
 class User extends Component {
   constructor() {
@@ -64,58 +65,54 @@ class User extends Component {
         </div>
       </Grid>
 
-      <Grid item xs={12} md={10} className={classes.body}>
-        <Grid container spacing={4}>
-
-          <Grid item xs={12}>
-            <Grid container alignItems="center" spacing={2} className={classes.subheader}>
-              <Grid item xs={12} sm={6}>
-                <Grid container alignItems="center" spacing={2}>
-                  <Grid item>
-                    <Avatar
-                      alt={this.props.auth.displayname}
-                      src={this.props.auth.avatar}
-                      className={classes.avatar}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="body2">{this.props.auth.displayname}</Typography>
-                  </Grid>
+      <Grid item xs={11} md={10}>
+        <Paper elevation={0} className={classes.paper}>
+          <Grid container justify="center" spacing={2}>
+            <Grid item xs={12}>
+              <Grid container spacing={2} className={classes.noWrap}>
+                <Grid item>
+                  <Avatar
+                    alt={this.props.auth.displayname}
+                    src={this.props.auth.avatar}
+                    className={classes.avatar}
+                  />
                 </Grid>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Grid container justify="flex-end" alignItems="center" spacing={2}>
-                  <Grid item>
-                    <Typography>{utils.prettyNumber(this.state.likes, 'long')} Thích - {utils.prettyNumber(this.state.products, 'long')} Sản phẩm</Typography>
+                <Grid item className={classes.stretch}>
+                  <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                      <Typography variant="body2">{this.props.auth.displayname}</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography>{utils.prettyNumber(this.state.likes, 'long')} Thích - {utils.prettyNumber(this.state.products, 'long')} Sản phẩm</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography>{loremIpsum({ units: 'paragraph' })}</Typography>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Grid container spacing={2} justify="center" className={classes.subheader}>
-              <Grid item xs={12}>
-                <Menu />
-              </Grid>
-              <Grid item xs={12}>
-                <Drain small />
-              </Grid>
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-              <Grid item xs={12}>
-                <Drain small />
-              </Grid>
+            <Grid item xs={12}>
+              <Drain small />
+            </Grid>
+            <Grid item xs={12}>
+              <Menu />
             </Grid>
           </Grid>
+        </Paper>
+      </Grid>
 
-          <Grid item xs={12}>
-            <Switch>
-              <Route exact path="/user/:userId/home" component={UserHome} />
-            </Switch>
-          </Grid>
-        </Grid>
+      <Grid item xs={12}>
+        <Drain />
+      </Grid>
+
+      <Grid item xs={12} md={10}>
+        <Switch>
+          <Route exact path="/user/:userId/home" component={UserHome} />
+          <Route exact path="/user/:userId/store" component={null} />
+          <Route exact path="/user/:userId/message" component={null} />
+          <Route exact path="/user/:userId/settings" component={null} />
+        </Switch>
       </Grid>
 
     </Grid>

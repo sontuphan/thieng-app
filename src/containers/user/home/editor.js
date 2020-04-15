@@ -160,6 +160,9 @@ class Editor extends Component {
                     <Grid item xs={10} md={12}>
                       <Cascade root={this.state.blueprint} />
                     </Grid>
+                    <Grid item xs={12}>
+                      <Drain />
+                    </Grid>
                   </Grid>
                 </Grid>
 
