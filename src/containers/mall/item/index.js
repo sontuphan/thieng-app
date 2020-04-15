@@ -144,7 +144,6 @@ class Item extends Component {
           <Grid item xs={10} md={8}>
             <NumericInput
               variant="outlined"
-              size="large"
               value={this.state.amount}
               onChange={this.onAmount}
             />

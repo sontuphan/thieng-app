@@ -1,5 +1,5 @@
 export default theme => ({
-  normalPaper: {
+  defaultPaper: {
     padding: theme.spacing(1) / 2,
   },
   largePaper: {

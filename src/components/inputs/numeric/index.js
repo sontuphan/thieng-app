@@ -61,8 +61,8 @@ class NumericInput extends Component {
           variant={this.props.variant === 'outlined' ? 'outlined' : 'elevation'}
           className={
             this.props.size === 'large' ?
-              classes.largePaper : this.props.size === 'normal' ?
-                classes.normalPaper : classes.smallPaper
+              classes.largePaper : this.props.size === 'small' ?
+                classes.smallPaper : classes.defaultPaper
           }
           elevation={this.props.elevation}
         >
@@ -99,7 +99,7 @@ NumericInput.defaultProps = {
   onChange: () => { },
   readOnly: false,
   disabled: false,
-  size: 'normal',
+  size: 'default',
   variant: 'elevation',
   elevation: 1,
 }
@@ -109,7 +109,7 @@ NumericInput.propTypes = {
   onChange: PropTypes.func,
   readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
-  size: PropTypes.oneOf(['small', 'normal', 'large']),
+  size: PropTypes.oneOf(['small', 'default', 'large']),
   variant: PropTypes.oneOf(['outlined', 'elevation']),
   elevation: PropTypes.number,
 }
