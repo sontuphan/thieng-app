@@ -9,6 +9,7 @@ import users from './user.reducer';
 import comments from './comments.reducer';
 import recommendation from './recommendation.reducer';
 import projects from './projects.reducer';
+import cart from './cart.reducer';
 
 export default (history) => combineReducers({
   router: connectRouter(history),
@@ -20,4 +21,5 @@ export default (history) => combineReducers({
   comments,
   recommendation,
   projects,
+  cart,
 });

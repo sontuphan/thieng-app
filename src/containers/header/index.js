@@ -24,6 +24,7 @@ import { TopDrawer } from 'components/drawers';
 
 import { search } from 'modules/search.reducer';
 import { refreshSession, logIn, logOut } from 'modules/auth.reducer';
+import { toogleCart } from 'modules/cart.reducer';
 
 class Header extends Component {
   constructor(props) {
@@ -76,6 +77,11 @@ class Header extends Component {
     return this.props.logIn(re);
   }
 
+  onNotification = (e) => {
+    this.onToggleDrawer(false);
+    this.props.toogleCart();
+  }
+
   renderProfile = () => {
     let { auth } = this.props;
     if (auth.isValid)
@@ -86,7 +92,8 @@ class Header extends Component {
           startIcon={<Badge badgeContent={this.state.grocery} color="primary">
             <NotificationsRounded fontSize="small" />
           </Badge>}
-          onClick={() => this.onToggleDrawer(false)}>
+          onClick={this.onNotification}
+        >
           <Typography>Thông báo</Typography>
         </Button>
         <Button
@@ -95,13 +102,15 @@ class Header extends Component {
           startIcon={<PersonRounded />}
           component={RouterLink}
           to={'/user/' + auth.userId + '/home'}
-          onClick={() => this.onToggleDrawer(false)}>
+          onClick={() => this.onToggleDrawer(false)}
+        >
           <Typography>{auth.displayname}</Typography>
         </Button >
         <Button
           variant="outlined"
           size="small"
-          onClick={this.props.logOut}>
+          onClick={this.props.logOut}
+        >
           <Typography>Đăng xuất</Typography>
         </Button>
       </ButtonGroup >
@@ -109,7 +118,8 @@ class Header extends Component {
       return <Button
         variant="outlined"
         size="small"
-        onClick={this.onToggleLogInModal}>
+        onClick={this.onToggleLogInModal}
+      >
         <Typography>Đăng nhập</Typography>
       </Button >
   }
@@ -125,9 +135,7 @@ class Header extends Component {
           this.state.routes.map((route, index) =>
             <Grid item key={index} className={classes.route}>
               <Link color="textPrimary" underline="none" component={RouterLink} to={route.link}>
-                <Typography >
-                  <span className="link">{route.text}</span>
-                </Typography>
+                <Typography><span className="link">{route.text}</span></Typography>
               </Link>
             </Grid>
           )
@@ -202,12 +210,14 @@ class Header extends Component {
 
 const mapStateToProps = state => ({
   ui: state.ui,
-  auth: state.auth
+  auth: state.auth,
+  cart: state.cart,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   search,
   refreshSession, logIn, logOut,
+  toogleCart,
 }, dispatch);
 
 export default withRouter(connect(

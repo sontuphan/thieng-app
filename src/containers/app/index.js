@@ -13,6 +13,7 @@ import Home from 'containers/home';
 import Newsfeed from 'containers/newsfeed';
 import Mall from 'containers/mall';
 import User from 'containers/user';
+import Cart from 'containers/cart';
 import Footer from 'containers/footer';
 
 import theme from 'static/styles/theme';
@@ -40,6 +41,8 @@ class App extends Component {
           <Header />
         </Grid>
         <Grid item xs={12}>
+
+          {/* Pages */}
           <Switch>
             <Redirect exact from="/" to="/home" />
             <Route exact path="/home" component={Home} />
@@ -49,6 +52,14 @@ class App extends Component {
             <Redirect exact from="/user/:userId" to="/user/:userId/home" />
             <Route exact path="/user/:userId/:page" component={User} />
           </Switch>
+
+          {/* Global app */}
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Cart />
+            </Grid>
+          </Grid>
+
         </Grid>
         <Grid item xs={12}>
           <Drain large />

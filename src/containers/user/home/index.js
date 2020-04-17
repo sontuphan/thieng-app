@@ -61,7 +61,7 @@ class UserHome extends Component {
 
     return <Grid container justify="center" spacing={2}>
 
-      <Grid item xs={11}>
+      <Grid item xs={12}>
         <Grid container className={classes.noWrap} alignItems="center" justify="flex-end" spacing={2}>
           <Grid item>
             <Typography variant="h3">Home</Typography>

@@ -9,6 +9,7 @@ import Chip from '@material-ui/core/Chip';
 import IconButton from '@material-ui/core/IconButton';
 
 import { FavoriteRounded, MoreHorizRounded } from '@material-ui/icons';
+import { FaPoop } from 'react-icons/fa';
 
 import styles from './styles';
 
@@ -39,29 +40,26 @@ LikeChip.propTypes = {
 
 
 /**
- * PoopChip
+ * DislikeChip
  * @param {*} props 
  */
-function PoopChip(props) {
+function DislikeChip(props) {
   return <Chip
     color="secondary"
     size="small"
-    deleteIcon={<i
-      className="fas fa-poop"
-      style={{ textAlign: "center", lineHeight: '16px' }}
-    />}
+    deleteIcon={<FaPoop style={{ height: 13, padding: "1px 0px 2px 0px" }} />}
     label={props.counting}
     onDelete={props.onClick}
     onClick={props.onClick}
   />
 }
 
-PoopChip.defaultProps = {
+DislikeChip.defaultProps = {
   counting: 0,
   onClick: () => { },
 }
 
-PoopChip.propTypes = {
+DislikeChip.propTypes = {
   counting: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
 }
@@ -94,7 +92,7 @@ class SingleRichComment extends Component {
                     <LikeChip counting={this.props.likeCounting} onClick={this.props.onLike} />
                   </Grid>
                   <Grid item>
-                    <PoopChip counting={this.props.poopCounting} onClick={this.props.onPoop} />
+                    <DislikeChip counting={this.props.poopCounting} onClick={this.props.onPoop} />
                   </Grid>
                   <Grid item>
                     <IconButton size="small">

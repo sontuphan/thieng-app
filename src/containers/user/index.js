@@ -108,7 +108,7 @@ class User extends Component {
         <Drain small />
       </Grid>
 
-      <Grid item xs={12} md={10}>
+      <Grid item xs={11} md={10}>
         <Switch>
           <Route exact path="/user/:userId/home" component={UserHome} />
           <Route exact path="/user/:userId/store" component={UserStore} />

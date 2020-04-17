@@ -25,7 +25,7 @@ class Menu extends Component {
           component={RouterLink}
           to={'/newsfeed/for-me'}
         >
-          <Typography>For Me</Typography>
+          <Typography>For me</Typography>
         </Button>
       </Grid>
       <Grid item>

@@ -21,6 +21,7 @@ import { getItemById } from 'modules/items.reducer';
 import { getComments } from 'modules/comments.reducer';
 import { getUser } from 'modules/user.reducer';
 import { recommendItems } from 'modules/recommendation.reducer';
+import { setCart } from 'modules/cart.reducer';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -75,6 +76,13 @@ class Item extends Component {
 
   on3D = () => {
     console.log('Turn on 3D');
+  }
+
+  onBuy = () => {
+    let object = this.props.items.data[0];
+    let { amount } = this.state;
+    let item = { ...object, amount }
+    this.props.setCart(item);
   }
 
   onSend = () => {
@@ -151,12 +159,23 @@ class Item extends Component {
           <Grid item xs={10} md={8}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <Button variant="contained" color="primary" size="large" fullWidth>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  onClick={this.onBuy}
+                  fullWidth
+                >
                   <Typography>Mua</Typography>
                 </Button>
               </Grid>
               <Grid item xs={6}>
-                <Button variant="contained" color="secondary" size="large" fullWidth>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  fullWidth
+                >
                   <Typography>Huỷ</Typography>
                 </Button>
               </Grid>
@@ -238,6 +257,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   getComments,
   getUser,
   recommendItems,
+  setCart,
 }, dispatch);
 
 export default withRouter(connect(
