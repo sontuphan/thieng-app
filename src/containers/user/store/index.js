@@ -5,41 +5,39 @@ import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
-import Drain from 'components/drain';
-import Status from 'containers/status';
-import Menu from './menu';
+import { AddBoxRounded, } from '@material-ui/icons';
 
-import { getProjects } from 'modules/projects.reducer';
+import { ProductCard } from 'components/cards';
+import Editor from './editor';
+
+import { getItems } from 'modules/items.reducer';
 
 import styles from './styles';
-import utils from 'helpers/utils';
 
-class Newsfeed extends Component {
+
+class UserStore extends Component {
   constructor() {
     super();
 
     this.state = {
-      projects: [],
-      page: 'for-me'
+      visible: false,
+      items: [],
+      page: 0,
+      limit: 12,
     }
   }
 
   componentDidMount() {
     this.loadData();
-    this.readParams();
     window.addEventListener('scroll', this.onTheEnd);
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onTheEnd);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (JSON.stringify(prevProps.match.params) !== JSON.stringify(this.props.match.params))
-      this.readParams();
   }
 
   onTheEnd = () => {
@@ -48,59 +46,59 @@ class Newsfeed extends Component {
   }
 
   loadData = () => {
-    this.props.getProjects().then(re => {
-      let newData = this.state.projects.concat(re.data);
-      return this.setState({ projects: newData });
+    this.props.getItems(this.state.page, this.state.limit).then(re => {
+      let newData = this.state.items.concat(re.data);
+      return this.setState({ items: newData });
     }).catch(er => {
       return console.error(er);
     });
   }
 
-  readParams = () => {
-    let { match: { params: { page } } } = this.props;
-    this.setState({ page });
-  }
-
   render() {
     let { classes } = this.props;
-    let { projects } = this.state;
-    if (!projects || !projects.length) return null;
+    let { items } = this.state;
+    if (!items || !items.length) return null;
 
     return <Grid container justify="center" spacing={2}>
-      <Grid item xs={12}>
-        <Drain large />
-      </Grid>
 
-      <Grid item xs={11} md={10}>
-        <Menu />
-      </Grid>
-
-      <Grid item xs={12}>
-        <Drain small />
-      </Grid>
-      <Grid item xs={11} md={10}>
+      <Grid item xs={11}>
         <Grid container className={classes.noWrap} alignItems="center" justify="flex-end" spacing={2}>
           <Grid item>
-            <Typography variant="h3">{utils.paramToHeader(this.state.page)}</Typography>
+            <Typography variant="h3">Store</Typography>
           </Grid>
           <Grid item className={classes.stretch}>
             <Divider />
           </Grid>
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<AddBoxRounded />}
+              onClick={() => this.setState({ visible: true })}
+            >
+              <Typography>New</Typography>
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
+
       <Grid item xs={12}>
-        <Drain small />
+        <Editor
+          visible={this.state.visible}
+          onClose={() => this.setState({ visible: false })}
+        />
       </Grid>
 
-      <Grid item xs={11} md={10}>
+      <Grid item xs={12}>
         <Grid container spacing={2}>
           {
-            projects.map(project => <Grid key={utils.rand()} item xs={12} sm={6} md={4} lg={3} xl={2}>
-              <Status project={project} />
+            items.map((obj, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
+              <ProductCard object={obj} />
             </Grid>)
           }
         </Grid>
       </Grid>
+
     </Grid>
   }
 }
@@ -108,14 +106,14 @@ class Newsfeed extends Component {
 const mapStateToProps = state => ({
   ui: state.ui,
   auth: state.auth,
-  projects: state.projects,
+  items: state.items,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getProjects,
+  getItems,
 }, dispatch);
 
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Newsfeed)));
+)(withStyles(styles)(UserStore)));

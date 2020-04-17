@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 import { AddBoxRounded, WarningRounded, } from '@material-ui/icons';
 
@@ -58,28 +59,34 @@ class UserHome extends Component {
     let { projects } = this.state;
     if (!projects || !projects.length) return null;
 
-    return <Grid container spacing={2}>
+    return <Grid container justify="center" spacing={2}>
 
-      <Grid item xs={12}>
-        <Grid container justify="flex-end" spacing={2}>
+      <Grid item xs={11}>
+        <Grid container className={classes.noWrap} alignItems="center" justify="flex-end" spacing={2}>
+          <Grid item>
+            <Typography variant="h3">Home</Typography>
+          </Grid>
+          <Grid item className={classes.stretch}>
+            <Divider />
+          </Grid>
           <Grid item>
             <Button
               variant="contained"
               color="primary"
-              className={classes.fixAlign}
               startIcon={checkTreeRootInLocalStorage() ? <WarningRounded /> : <AddBoxRounded />}
               onClick={() => this.setState({ visible: true })}
             >
               <Typography>{checkTreeRootInLocalStorage() ? 'Resume' : 'New'}</Typography>
             </Button>
           </Grid>
-          <Grid item xs={12}>
-            <Editor
-              visible={this.state.visible}
-              onClose={() => this.setState({ visible: false })}
-            />
-          </Grid>
         </Grid>
+      </Grid>
+
+      <Grid item xs={12}>
+        <Editor
+          visible={this.state.visible}
+          onClose={() => this.setState({ visible: false })}
+        />
       </Grid>
 
       <Grid item xs={12}>

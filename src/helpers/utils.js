@@ -88,8 +88,10 @@ Utils.getAccessibleTextColor = (backgroundImage) => {
   });
 }
 
-Utils.capitalizeFirstLetter = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+Utils.paramToHeader = (string) => {
+  if (!string) return '';
+  let s = string.charAt(0).toUpperCase() + string.slice(1);
+  return s.replace('-', ' ');
 }
 
 export default Utils;

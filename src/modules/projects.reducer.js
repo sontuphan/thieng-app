@@ -46,7 +46,7 @@ const _getComments = (itemId) => {
 }
 
 const _getProjects = (userId, page, limit) => {
-  let projects = getRandomProjects(userId);
+  let projects = getRandomProjects(userId).concat(getRandomProjects(userId));
   projects = projects.map(project => {
     let comments = _getComments(project.id)
     project.comments = comments;

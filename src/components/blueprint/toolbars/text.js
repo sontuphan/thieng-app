@@ -67,7 +67,7 @@ class TextBar extends Component {
 
   render() {
     let { classes } = this.props;
-    return <Paper className={classes.paper} elevation={12}>
+    return <Paper className={classes.paper} elevation={8}>
       <Grid container className={classes.noWrap} spacing={1}>
         <Grid item>
           <IconButton size="small" onClick={this.props.onDelete}>

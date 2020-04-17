@@ -17,7 +17,7 @@ class Cascade extends Component {
 
   renderItem = (id) => {
     let node = this.props.root[id];
-    return <TreeItem key={id} nodeId={id} label={utils.capitalizeFirstLetter(node.type)}>
+    return <TreeItem key={id} nodeId={id} label={utils.paramToHeader(node.type)}>
       {node.children ? node.children.map(childId => this.renderItem(childId)) : null}
     </TreeItem>
   }

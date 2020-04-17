@@ -28,11 +28,6 @@ export default theme => ({
   paper: {
     padding: 32,
     borderRadius: theme.spacing(4),
-    boxShadow: theme.shadows[8],
-    transition: theme.transitions.create(),
-    '&:hover': {
-      boxShadow: theme.shadows[16],
-    }
   },
   avatar: {
     height: theme.spacing(8),

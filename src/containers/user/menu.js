@@ -49,13 +49,14 @@ class Menu extends Component {
         </Badge>
       </Grid>
       <Grid item>
-        <Badge badgeContent={18} color="primary">
+        <Badge badgeContent={0} color="primary">
           <Button
             variant="outlined"
             color={page === 'message' ? 'primary' : 'default'}
             startIcon={<ChatRounded />}
             component={RouterLink}
             to={`/user/${userId}/message`}
+            disabled
           >
             <Typography>Message</Typography>
           </Button>

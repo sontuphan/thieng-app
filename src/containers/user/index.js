@@ -17,6 +17,8 @@ import { SettingsApplicationsRounded } from '@material-ui/icons';
 import Drain from 'components/drain';
 import Menu from './menu';
 import UserHome from './home';
+import UserStore from './store';
+import UserSettings from './settings';
 
 import { getUserByCode } from 'modules/user.reducer';
 
@@ -65,7 +67,7 @@ class User extends Component {
         </div>
       </Grid>
 
-      <Grid item xs={11} md={10}>
+      <Grid item xs={12} md={10}>
         <Paper elevation={0} className={classes.paper}>
           <Grid container justify="center" spacing={2}>
             <Grid item xs={12}>
@@ -103,15 +105,15 @@ class User extends Component {
       </Grid>
 
       <Grid item xs={12}>
-        <Drain />
+        <Drain small />
       </Grid>
 
       <Grid item xs={12} md={10}>
         <Switch>
           <Route exact path="/user/:userId/home" component={UserHome} />
-          <Route exact path="/user/:userId/store" component={null} />
+          <Route exact path="/user/:userId/store" component={UserStore} />
           <Route exact path="/user/:userId/message" component={null} />
-          <Route exact path="/user/:userId/settings" component={null} />
+          <Route exact path="/user/:userId/settings" component={UserSettings} />
         </Switch>
       </Grid>
 

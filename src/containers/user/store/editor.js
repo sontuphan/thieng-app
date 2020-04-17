@@ -15,10 +15,8 @@ import TextField from '@material-ui/core/TextField';
 
 import { SaveAltRounded, PublicRounded, ExpandMoreRounded } from '@material-ui/icons';
 
-import Blueprint from 'components/blueprint';
 import { BottomDrawer } from 'components/drawers';
 import Drain from 'components/drain';
-import Cascade from 'components/blueprint/cascade';
 
 import styles from './styles';
 
@@ -72,7 +70,7 @@ class Editor extends Component {
                 <Grid item xs={12} md={8}>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
-                      <Blueprint onChange={this.onBluePrint} />
+
                     </Grid>
                     <Grid item xs={12}>
                       <Drain />
@@ -153,12 +151,6 @@ class Editor extends Component {
                         multiline
                         fullWidth
                       />
-                    </Grid>
-                    <Grid item xs={10} md={12}>
-                      <Divider />
-                    </Grid>
-                    <Grid item xs={10} md={12}>
-                      <Cascade root={this.state.blueprint} />
                     </Grid>
                     <Grid item xs={12}>
                       <Drain />
