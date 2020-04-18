@@ -10,6 +10,7 @@ import comments from './comments.reducer';
 import recommendation from './recommendation.reducer';
 import projects from './projects.reducer';
 import cart from './cart.reducer';
+import notification from './notification.reducer';
 
 export default (history) => combineReducers({
   router: connectRouter(history),
@@ -22,4 +23,5 @@ export default (history) => combineReducers({
   recommendation,
   projects,
   cart,
+  notification,
 });

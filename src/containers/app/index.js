@@ -7,14 +7,18 @@ import { withStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
+// Static component
 import Drain from 'components/drain';
 import Header from 'containers/header';
+import Footer from 'containers/footer';
+// Pages
 import Home from 'containers/home';
 import Newsfeed from 'containers/newsfeed';
 import Mall from 'containers/mall';
 import User from 'containers/user';
+// Apllications
 import Cart from 'containers/cart';
-import Footer from 'containers/footer';
+import Notification from 'containers/notification';
 
 import theme from 'static/styles/theme';
 import 'static/styles/index.css';
@@ -57,6 +61,9 @@ class App extends Component {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Cart />
+            </Grid>
+            <Grid item xs={12}>
+              <Notification />
             </Grid>
           </Grid>
 

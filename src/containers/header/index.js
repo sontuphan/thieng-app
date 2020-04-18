@@ -24,7 +24,7 @@ import { TopDrawer } from 'components/drawers';
 
 import { search } from 'modules/search.reducer';
 import { refreshSession, logIn, logOut } from 'modules/auth.reducer';
-import { toogleCart } from 'modules/cart.reducer';
+import { toogleNotification } from 'modules/notification.reducer';
 
 class Header extends Component {
   constructor(props) {
@@ -77,9 +77,9 @@ class Header extends Component {
     return this.props.logIn(re);
   }
 
-  onNotification = (e) => {
+  onNotification = () => {
     this.onToggleDrawer(false);
-    this.props.toogleCart();
+    this.props.toogleNotification();
   }
 
   renderProfile = () => {
@@ -217,7 +217,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   search,
   refreshSession, logIn, logOut,
-  toogleCart,
+  toogleNotification,
 }, dispatch);
 
 export default withRouter(connect(
