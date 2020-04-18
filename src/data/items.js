@@ -1,4 +1,4 @@
-import { loremIpsum } from "lorem-ipsum";
+import { loremIpsum } from 'lorem-ipsum';
 
 import product from 'static/images/product.png';
 import chair from 'static/images/chair.png';

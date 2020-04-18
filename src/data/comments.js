@@ -1,4 +1,4 @@
-import { loremIpsum } from "lorem-ipsum";
+import { loremIpsum } from 'lorem-ipsum';
 import dateformat from 'dateformat';
 
 const CommentSchema = [

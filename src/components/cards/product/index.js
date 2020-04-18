@@ -14,7 +14,7 @@ import { ImageCard } from 'components/cards';
 import styles from './styles';
 import utils from 'helpers/utils';
 
-class Product extends Component {
+class ProductCard extends Component {
 
   onChip = (tag) => {
     console.log('onChip:', tag);
@@ -56,8 +56,8 @@ class Product extends Component {
   }
 }
 
-Product.propTypes = {
+ProductCard.propTypes = {
   object: PropTypes.object.isRequired,
 }
 
-export default withRouter(withStyles(styles)(Product));
+export default withRouter(withStyles(styles)(ProductCard));

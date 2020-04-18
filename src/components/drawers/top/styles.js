@@ -7,6 +7,7 @@ export default theme => ({
     height: `calc(100% + ${theme.spacing(2)}px)`,
   },
   paperBody: {
+    maxHeight: theme.spacing(50),
     height: `calc(100% - ${theme.spacing(2) + 4}px)`,
     overflowY: 'scroll',
   },
