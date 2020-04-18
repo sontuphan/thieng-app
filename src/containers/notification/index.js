@@ -18,15 +18,8 @@ import styles from './styles';
 
 
 class Notification extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-    }
-  }
 
   render() {
-    // let { classes } = this.props;
 
     return <Grid container spacing={2}>
       <Grid item xs={12}>

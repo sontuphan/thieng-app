@@ -9,6 +9,7 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Badge from '@material-ui/core/Badge';
 
 import { ShoppingCartRounded, ExpandMoreRounded } from '@material-ui/icons';
 
@@ -70,15 +71,16 @@ class PrimaryNotification extends Component {
             <Divider />
           </Grid>
           <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              startIcon={<ShoppingCartRounded />}
-              onClick={this.onCart}
-            >
-              <Typography>Open Cart</Typography>
-            </Button>
+            <Badge badgeContent={this.props.cart.data.length} color="primary">
+              <Button
+                variant="outlined"
+                size="small"
+                startIcon={<ShoppingCartRounded />}
+                onClick={this.onCart}
+              >
+                <Typography>Open Cart</Typography>
+              </Button>
+            </Badge>
           </Grid>
         </Grid>
       </Grid>
@@ -113,6 +115,7 @@ class PrimaryNotification extends Component {
 const mapStateToProps = state => ({
   ui: state.ui,
   auth: state.auth,
+  cart: state.cart,
   notification: state.notification,
 });
 

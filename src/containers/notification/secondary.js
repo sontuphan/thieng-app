@@ -65,8 +65,7 @@ class SecondaryNotification extends Component {
           </Grid>
           <Grid item>
             <Button
-              variant="contained"
-              color="primary"
+              variant="outlined"
               size="small"
               startIcon={<AlarmOnRounded />}
             >

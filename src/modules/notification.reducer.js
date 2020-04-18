@@ -9,7 +9,7 @@ import EventSchema from 'data/events';
 const defaultState = {
   notification: [],
   events: [],
-  visible: true
+  visible: false
 }
 
 /**

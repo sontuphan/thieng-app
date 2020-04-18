@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import TweenOne from 'rc-tween-one';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -9,7 +10,7 @@ import Link from '@material-ui/core/Link';
 import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
 
-import { DoneAllRounded, NotificationsNoneRounded, } from '@material-ui/icons';
+import { DoneAllRounded, FiberManualRecordRounded, } from '@material-ui/icons';
 
 import styles from './styles';
 
@@ -48,7 +49,9 @@ class EventCard extends Component {
                   this.props.read ?
                     <DoneAllRounded color="secondary" fontSize="small" />
                     :
-                    <NotificationsNoneRounded color="primary" fontSize="small" />
+                    <TweenOne animation={{ scale: 1.25, yoyo: true, repeat: -1, }} >
+                      <FiberManualRecordRounded color="primary" fontSize="small" />
+                    </TweenOne>
                 }
               </Grid>
             </Grid>
