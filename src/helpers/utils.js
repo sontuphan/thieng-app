@@ -54,10 +54,10 @@ Utils.prettyNumber = (num, type = 'long') => {
     let separateNumber = decimal.split('').reverse().map((a, i) => {
       if (i > 1 && i % 3 === 0) return a + ',';
       return a;
-    }).reverse();
+    }).reverse().join('');
     if (!fraction)
       return separateNumber;
-    return separateNumber + fraction;
+    return separateNumber + '.' + fraction;
   }
 }
 
