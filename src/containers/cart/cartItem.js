@@ -60,11 +60,7 @@ class CartItem extends Component {
           <Grid item>
             <Grid item>
               <Tooltip title="Cancel">
-                <IconButton
-                  color="primary"
-                  size="small"
-                  onClick={this.onCancel}
-                >
+                <IconButton size="small" onClick={this.onCancel}>
                   <CancelRounded />
                 </IconButton>
               </Tooltip>

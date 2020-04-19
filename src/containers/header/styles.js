@@ -12,5 +12,8 @@ export default theme => {
     logo: {
       cursor: 'pointer'
     },
+    noWrap: {
+      flexWrap: 'noWrap',
+    }
   }
 };

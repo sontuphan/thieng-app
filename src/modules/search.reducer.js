@@ -64,7 +64,6 @@ export const searchText = (value) => {
         dispatch({
           type: SEARCH_TEXT_FAIL,
           reason: 'Input is null.',
-          data: { ...defaultState }
         });
         return reject('Input is null.');
       }

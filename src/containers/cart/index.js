@@ -92,8 +92,7 @@ class Cart extends Component {
                   <Button
                     variant="contained"
                     color="primary"
-                    size="small"
-                    startIcon={<FlightTakeoffRounded fontSize="small" />}
+                    startIcon={<FlightTakeoffRounded />}
                   >
                     <Typography>Done</Typography>
                   </Button>

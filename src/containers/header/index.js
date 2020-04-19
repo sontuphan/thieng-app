@@ -16,6 +16,7 @@ import Link from '@material-ui/core/Link';
 import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 
 import {
   MenuRounded, NotificationsRounded,
@@ -84,7 +85,19 @@ class Header extends Component {
 
   renderProfile = () => {
     let { classes, auth } = this.props;
-    if (auth.isValid)
+
+    if (!auth.isValid) {
+      return <Button
+        variant="contained"
+        color="primary"
+        startIcon={<PersonRounded />}
+        onClick={this.onToggleLogInModal}
+      >
+        <Typography>Đăng nhập</Typography>
+      </Button >
+    }
+
+    if (this.props.ui.width >= 960) {
       return <Tooltip title={auth.displayname}>
         <Avatar
           alt={auth.avatar}
@@ -93,15 +106,21 @@ class Header extends Component {
           onClick={this.onUser}
         />
       </Tooltip>
-    else
-      return <Button
-        variant="outlined"
-        size="small"
-        startIcon={<PersonRounded fontSize="small" />}
-        onClick={this.onToggleLogInModal}
-      >
-        <Typography>Đăng nhập</Typography>
-      </Button >
+    }
+
+    return <Grid
+      container
+      alignItems="center"
+      className={classes.noWrap}
+      onClick={this.onUser}
+      spacing={2}>
+      <Grid item>
+        <Typography>{auth.displayname}</Typography>
+      </Grid>
+      <Grid item>
+        <Avatar alt={auth.avatar} src={auth.avatar} className={classes.avatar} />
+      </Grid>
+    </Grid>
   }
 
   renderRoute = () => {
@@ -139,6 +158,9 @@ class Header extends Component {
                       <ListItemText primary={route.text} />
                     </ListItem>)
                   }
+                </List>
+                <Divider />
+                <List>
                   <ListItem>
                     <Grid container justify="flex-end" spacing={2}>
                       <Grid item>
