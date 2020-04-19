@@ -10,6 +10,10 @@ import styles from './styles';
 
 class TextInput extends Component {
 
+  componentDidMount() {
+    this.props.inputRef(this.myRef);
+  }
+
   onChange = (e) => {
     const contents = e.target.textContent;
     this.props.onChange(contents);
@@ -21,12 +25,14 @@ class TextInput extends Component {
     return <Grid container spacing={2}>
       <Grid item xs={12}>
         <Typography
-          contentEditable={true}
-          suppressContentEditableWarning={true}
+          ref={node => this.myRef = node}
+          contentEditable={!this.props.readOnly}
+          suppressContentEditableWarning={!this.props.readOnly}
           className={classes.text}
           variant={this.props.variant}
           align={this.props.align}
           onBlur={this.onChange}
+          color={this.props.disabled ? "textSecondary" : "textPrimary"}
         >{this.props.value}</Typography>
       </Grid>
     </Grid>
@@ -37,6 +43,7 @@ TextInput.defaultProps = {
   value: '',
   variant: 'body1',
   onChange: () => { },
+  inputRef: () => { },
   readOnly: false,
   disabled: false,
 }
@@ -45,6 +52,7 @@ TextInput.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   variant: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'body1', 'body2']),
   onChange: PropTypes.func,
+  inputRef: PropTypes.func,
   readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
 }

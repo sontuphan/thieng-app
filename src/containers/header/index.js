@@ -26,7 +26,7 @@ import styles from './styles';
 import LogIn from './login';
 import { TopDrawer } from 'components/drawers';
 
-import { refreshSession, logIn, logOut } from 'modules/auth.reducer';
+import { refreshSession, logIn } from 'modules/auth.reducer';
 import { toogleNotification } from 'modules/notification.reducer';
 import { toogleSearch } from 'modules/search.reducer';
 
@@ -210,7 +210,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  refreshSession, logIn, logOut,
+  refreshSession, logIn,
   toogleNotification, toogleSearch,
 }, dispatch);
 

@@ -39,4 +39,8 @@ export default theme => ({
   stretch: {
     flex: '1 1 auto',
   },
+  toggleIcon: {
+    height: 20,
+    width: 20,
+  }
 });

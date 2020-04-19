@@ -11,15 +11,22 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
+import ToggleIcon from 'material-ui-toggle-icon';
+import Tooltip from '@material-ui/core/Tooltip';
 
-import { SettingsApplicationsRounded } from '@material-ui/icons';
+import {
+  SettingsApplicationsRounded, CreateRounded,
+  BorderColorRounded, ExitToAppRounded,
+} from '@material-ui/icons';
 
 import Drain from 'components/drain';
+import { TextInput } from 'components/inputs';
 import Menu from './menu';
 import UserHome from './home';
 import UserStore from './store';
 import UserSettings from './settings';
 
+import { logOut } from 'modules/auth.reducer';
 import { getUserByCode } from 'modules/user.reducer';
 
 import styles from './styles';
@@ -33,7 +40,22 @@ class User extends Component {
     this.state = {
       likes: 12853,
       products: 32,
+      editable: false,
     }
+  }
+
+  focusDescription = (ref) => {
+    this.descriptionRef = ref;
+  }
+
+  onEdit = () => {
+    this.setState({ editable: !this.state.editable }, () => {
+      this.descriptionRef.focus();
+    });
+  }
+
+  onLogout = () => {
+
   }
 
   render() {
@@ -69,7 +91,7 @@ class User extends Component {
 
       <Grid item xs={12} md={10}>
         <Paper elevation={0} className={classes.paper}>
-          <Grid container justify="center" spacing={2}>
+          <Grid container spacing={2}>
             <Grid item xs={12}>
               <Grid container spacing={2} className={classes.noWrap}>
                 <Grid item>
@@ -82,13 +104,40 @@ class User extends Component {
                 <Grid item className={classes.stretch}>
                   <Grid container spacing={1}>
                     <Grid item xs={12}>
-                      <Typography variant="body2">{this.props.auth.displayname}</Typography>
+                      <Grid container alignItems="center" className={classes.noWrap} spacing={2}>
+                        <Grid item className={classes.stretch}>
+                          <Typography variant="body2">{this.props.auth.displayname}</Typography>
+                        </Grid>
+                        <Grid item>
+                          <Tooltip title="Edit Your Description">
+                            <IconButton onClick={this.onEdit} size="small">
+                              <ToggleIcon
+                                className={classes.toggleIcon}
+                                on={this.state.editable}
+                                onIcon={<BorderColorRounded fontSize="small" color="primary" />}
+                                offIcon={<CreateRounded fontSize="small" />}
+                              />
+                            </IconButton>
+                          </Tooltip>
+                        </Grid>
+                        <Grid item>
+                          <Tooltip title="Sign Out">
+                            <IconButton onClick={this.props.logOut} size="small">
+                              <ExitToAppRounded fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                        </Grid>
+                      </Grid>
                     </Grid>
                     <Grid item xs={12}>
                       <Typography>{utils.prettyNumber(this.state.likes, 'long')} Thích - {utils.prettyNumber(this.state.products, 'long')} Sản phẩm</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      <Typography>{loremIpsum({ units: 'paragraph' })}</Typography>
+                      <TextInput
+                        inputRef={this.focusDescription}
+                        value={loremIpsum({ units: 'paragraph' })}
+                        readOnly={!this.state.editable}
+                      />
                     </Grid>
                   </Grid>
                 </Grid>
@@ -128,6 +177,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  logOut,
   getUserByCode,
 }, dispatch);
 

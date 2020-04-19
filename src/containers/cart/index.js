@@ -5,8 +5,11 @@ import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
 
-import { } from '@material-ui/icons';
+import { FlightTakeoffRounded } from '@material-ui/icons';
 
 import { BottomDrawer } from 'components/drawers';
 import Drain from 'components/drain';
@@ -38,6 +41,7 @@ class Cart extends Component {
   }
 
   render() {
+    let { classes } = this.props;
     let items = this.props.cart.data;
 
     return <Grid container spacing={2}>
@@ -67,6 +71,34 @@ class Cart extends Component {
             </Grid>
             <Grid item xs={11} md={10}>
               <DeliveryInfomation />
+            </Grid>
+            <Grid item xs={12}>
+              <Drain small />
+            </Grid>
+            <Grid item xs={11} md={10}>
+              <Grid
+                container
+                alignItems="center"
+                className={classes.noWrap}
+                spacing={2}
+              >
+                <Grid item>
+                  <Typography>Please ensure your information is correct!</Typography>
+                </Grid>
+                <Grid item className={classes.stretch} xs={12}>
+                  <Divider />
+                </Grid>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    startIcon={<FlightTakeoffRounded fontSize="small" />}
+                  >
+                    <Typography>Done</Typography>
+                  </Button>
+                </Grid>
+              </Grid>
             </Grid>
             <Grid item xs={12}>
               <Drain />
