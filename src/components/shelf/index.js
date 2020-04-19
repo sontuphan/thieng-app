@@ -76,14 +76,18 @@ class Shelf extends Component {
       <Grid container spacing={2}>
 
         <Grid item xs={12}>
-          <Grid container spacing={2} justify="center" alignItems="center"
+          <Grid container
+            spacing={2}
+            justify="center"
+            alignItems="center"
             style={objects[showing].type !== 'png' ? {
               backgroundImage: `url('${objects[showing].url}')`,
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover'
             } : null}
-            className={classes.shelf}>
+            className={classes.shelf}
+          >
             <Grid item xs={12}>
               <Grid container justify="flex-end" spacing={2}>
                 <Grid item>
@@ -93,12 +97,16 @@ class Shelf extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={10} className={classes.imageShelf} style={objects[showing].type === 'png' ? {
-              backgroundImage: `url('${objects[showing].url}')`,
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'contain'
-            } : null} />
+            <Grid item
+              xs={10}
+              className={classes.imageShelf}
+              style={objects[showing].type === 'png' ? {
+                backgroundImage: `url('${objects[showing].url}')`,
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'contain'
+              } : null}
+            />
             <Grid item xs={6}>
               <Grid container alignItems="center" spacing={1} >
                 <Grid item className={classes.link} component={RouterLink} to={author.link}>
@@ -110,7 +118,11 @@ class Shelf extends Component {
               </Grid>
             </Grid>
             <Grid item xs={6}>
-              <ColorSelect colors={objects.map(obj => obj.color).filter(color => color !== null)} value={objects[showing].color} onChange={this.onColor} />
+              <ColorSelect
+                colors={objects.map(obj => obj.color).filter(color => color !== null)}
+                value={objects[showing].color}
+                onChange={this.onColor}
+              />
             </Grid>
           </Grid>
         </Grid>
@@ -138,11 +150,18 @@ class Shelf extends Component {
                 {
                   objects.map((object, i) => <Grid item key={i}>
                     <Grid container justify="center">
-                      {this.state.showing === i ? <Badge overlap="circle" variant="dot" color="primary">
-                        <Avatar alt={object.url} src={object.url} onClick={() => this.onChange(i)} />
+                      <Badge
+                        overlap="circle"
+                        variant="dot"
+                        color="primary"
+                        invisible={this.state.showing !== i}
+                      >
+                        <Avatar
+                          alt={object.url}
+                          src={object.url}
+                          onClick={() => this.onChange(i)}
+                        />
                       </Badge>
-                        : <Avatar alt={object.url} src={object.url} onClick={() => this.onChange(i)} />
-                      }
                     </Grid>
                   </Grid>)
                 }
