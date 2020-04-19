@@ -44,7 +44,7 @@ class Menu extends Component {
             component={RouterLink}
             to={`/user/${userId}/store`}
           >
-            <Typography>My Store</Typography>
+            <Typography>Store</Typography>
           </Button>
         </Badge>
       </Grid>
