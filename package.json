@@ -39,7 +39,8 @@
     "start": "REACT_APP_ENV=development react-scripts start",
     "stag": "REACT_APP_ENV=staging react-scripts start",
     "prod": "REACT_APP_ENV=production react-scripts start",
-    "build": "react-scripts build",
+    "build": "REACT_APP_ENV=development react-scripts build",
+    "serve": "serve -s build -l 3000",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -14,7 +14,7 @@ const defaultState = {
 }
 
 /**
- * Get toogle on/off cart app
+ * Toogle on/off cart app
  */
 export const TOOGLE_CART = 'TOOGLE_CART';
 export const TOOGLE_CART_OK = 'TOOGLE_CART_OK';

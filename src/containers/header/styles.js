@@ -1,8 +1,13 @@
 export default theme => {
   console.log(theme)
   return {
-    route: {
-      margin: `${theme.spacing(1)}px 0px ${theme.spacing(1)}px ${theme.spacing(2)}px`
+    paper: {
+      padding: `${theme.spacing(1)}px 0px`,
+    },
+    avatar: {
+      cursor: 'pointer',
+      height: 30,
+      width: 30
     },
     logo: {
       cursor: 'pointer'

@@ -7,25 +7,62 @@ import api from '../helpers/api';
 
 const defaultState = {
   value: null,
-  repeat: 0
+  repeat: 0,
+  visible: false
+}
+
+
+/**
+ * Toogle on/off search app
+ */
+export const TOOGLE_SEARCH = 'TOOGLE_SEARCH';
+export const TOOGLE_SEARCH_OK = 'TOOGLE_SEARCH_OK';
+export const TOOGLE_SEARCH_FAIL = 'TOOGLE_SEARCH_FAIL';
+
+export const toogleSearch = () => {
+  return (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: TOOGLE_SEARCH });
+
+      let prevState = getState();
+      let prevVisible = prevState.search.visible;
+
+      if (typeof prevVisible !== 'boolean') {
+        dispatch({
+          type: TOOGLE_SEARCH_FAIL,
+          reason: 'Undifined search state.',
+        });
+        return reject('Undifined search state.');
+      }
+
+      dispatch({
+        type: TOOGLE_SEARCH_OK,
+        reason: null,
+        data: {
+          visible: !prevVisible,
+        }
+      });
+      return resolve(!prevVisible);
+    });
+  }
 }
 
 
 /**
  * Search bar
  */
-export const SEARCH = 'SEARCH';
-export const SEARCH_OK = 'SEARCH_OK';
-export const SEARCH_FAIL = 'SEARCH_FAIL';
+export const SEARCH_TEXT = 'SEARCH_TEXT';
+export const SEARCH_TEXT_OK = 'SEARCH_TEXT_OK';
+export const SEARCH_TEXT_FAIL = 'SEARCH_TEXT_FAIL';
 
-export const search = (value) => {
+export const searchText = (value) => {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-      dispatch({ type: SEARCH });
+      dispatch({ type: SEARCH_TEXT });
 
       if (!value) {
         dispatch({
-          type: SEARCH_FAIL,
+          type: SEARCH_TEXT_FAIL,
           reason: 'Input is null.',
           data: { ...defaultState }
         });
@@ -44,7 +81,7 @@ export const search = (value) => {
       else data = { value: value, repeat: prevState.search.repeat + 1 }
 
       dispatch({
-        type: SEARCH_OK,
+        type: SEARCH_TEXT_OK,
         reason: null,
         data: data
       });
@@ -59,9 +96,13 @@ export const search = (value) => {
  */
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case SEARCH_OK:
+    case SEARCH_TEXT_OK:
       return { ...state, ...action.data };
-    case SEARCH_FAIL:
+    case SEARCH_TEXT_FAIL:
+      return { ...state, ...action.data };
+    case TOOGLE_SEARCH_OK:
+      return { ...state, ...action.data };
+    case TOOGLE_SEARCH_FAIL:
       return { ...state, ...action.data };
     default:
       return state;

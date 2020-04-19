@@ -17,6 +17,7 @@ import Newsfeed from 'containers/newsfeed';
 import Mall from 'containers/mall';
 import User from 'containers/user';
 // Apllications
+import Search from 'containers/search';
 import Cart from 'containers/cart';
 import Notification from 'containers/notification';
 
@@ -41,7 +42,7 @@ class App extends Component {
   render() {
     return <ThemeProvider theme={theme}>
       <Grid container justify="center" spacing={2}>
-        <Grid item xs={10}>
+        <Grid item xs={11} md={10}>
           <Header />
         </Grid>
         <Grid item xs={12}>
@@ -59,6 +60,9 @@ class App extends Component {
 
           {/* Global app */}
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Search />
+            </Grid>
             <Grid item xs={12}>
               <Cart />
             </Grid>

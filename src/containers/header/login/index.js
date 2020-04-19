@@ -12,6 +12,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { CloseRounded } from '@material-ui/icons';
+import { FaGoogle, FaFacebookF, FaApple, FaTwitter } from 'react-icons/fa';
 
 import configs from 'configs';
 
@@ -92,7 +93,7 @@ class LogIn extends Component {
               render={props => <Button
                 variant="outlined"
                 size="large"
-                startIcon={<i className="fab fa-google" />}
+                startIcon={<FaGoogle />}
                 onClick={props.onClick}
                 disabled={props.disabled}
                 fullWidth>
@@ -110,7 +111,7 @@ class LogIn extends Component {
               render={props => <Button
                 variant="outlined"
                 size="large"
-                startIcon={<i className="fab fa-facebook-f" />}
+                startIcon={<FaFacebookF />}
                 onClick={props.onClick}
                 fullWidth>
                 <Typography>Continue with Facebook</Typography>
@@ -121,7 +122,7 @@ class LogIn extends Component {
             <Button
               variant="outlined"
               size="large"
-              startIcon={<i className="fab fa-apple" />}
+              startIcon={<FaApple />}
               onClick={() => { }}
               fullWidth
               disabled>
@@ -132,7 +133,7 @@ class LogIn extends Component {
             <Button
               variant="outlined"
               size="large"
-              startIcon={<i className="fab fa-twitter" />}
+              startIcon={<FaTwitter />}
               onClick={() => { }}
               fullWidth
               disabled>

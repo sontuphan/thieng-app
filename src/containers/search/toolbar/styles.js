@@ -4,7 +4,7 @@ export default theme => {
       ...theme.typography.body1
     },
     adornment: {
-      marginRight: 0
+      marginRight: -theme.spacing(1)
     }
   }
 };

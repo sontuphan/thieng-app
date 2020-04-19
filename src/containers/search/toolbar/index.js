@@ -27,8 +27,10 @@ class SearchToolbar extends Component {
     let { classes } = this.props;
 
     return <TextField
+      variant="outlined"
       color="secondary"
       placeholder="Search..."
+      size="small"
       onChange={this.input}
       InputProps={{
         classes: { input: classes.font },

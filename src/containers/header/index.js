@@ -6,7 +6,6 @@ import { Link as RouterLink, withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
@@ -14,31 +13,34 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Badge from '@material-ui/core/Badge';
 import Link from '@material-ui/core/Link';
+import Avatar from '@material-ui/core/Avatar';
+import Tooltip from '@material-ui/core/Tooltip';
+import Paper from '@material-ui/core/Paper';
 
-import { MenuRounded, PersonRounded, NotificationsRounded } from '@material-ui/icons';
+import {
+  MenuRounded, NotificationsRounded,
+  SearchRounded, PersonRounded,
+} from '@material-ui/icons';
 
 import styles from './styles';
 import LogIn from './login';
-import SearchToolbar from './search';
 import { TopDrawer } from 'components/drawers';
 
-import { search } from 'modules/search.reducer';
 import { refreshSession, logIn, logOut } from 'modules/auth.reducer';
 import { toogleNotification } from 'modules/notification.reducer';
+import { toogleSearch } from 'modules/search.reducer';
 
 class Header extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      matches: props.ui.width >= 960,
       routes: [
         { text: "Bảng tin", link: '/newsfeed' },
         { text: "Siêu thị", link: '/mall' },
         // { text: "Đối tác", link: '/partner' },
         { text: "Liên hệ", link: '/home#contact' },
       ],
-      grocery: 3,
       visibleDrawer: false,
       visibleLogInModal: false,
     }
@@ -46,20 +48,6 @@ class Header extends Component {
 
   componentDidMount() {
     this.props.refreshSession();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (JSON.stringify(prevProps.ui) !== JSON.stringify(this.props.ui)) {
-      this.setState({ matches: this.props.ui.width >= 960 })
-    }
-  }
-
-  search = (data) => {
-    this.props.search(data).then(re => {
-      this.setState({ visibleDrawer: false });
-    }).catch(er => {
-      console.error(er);
-    });
   }
 
   onToggleDrawer = (visible) => {
@@ -77,47 +65,39 @@ class Header extends Component {
     return this.props.logIn(re);
   }
 
+  onSearch = () => {
+    this.onToggleDrawer(false);
+    this.props.toogleSearch();
+  }
+
   onNotification = () => {
     this.onToggleDrawer(false);
     this.props.toogleNotification();
   }
 
-  renderProfile = () => {
+  onUser = () => {
     let { auth } = this.props;
+    this.onToggleDrawer(false);
+    if (!auth.userId) return console.error('Not signed in yet.');
+    return this.props.history.push('/user/' + auth.userId + '/home');
+  }
+
+  renderProfile = () => {
+    let { classes, auth } = this.props;
     if (auth.isValid)
-      return <ButtonGroup>
-        <Button
-          variant="outlined"
-          size="small"
-          startIcon={<Badge badgeContent={this.state.grocery} color="primary">
-            <NotificationsRounded fontSize="small" />
-          </Badge>}
-          onClick={this.onNotification}
-        >
-          <Typography>Thông báo</Typography>
-        </Button>
-        <Button
-          variant="outlined"
-          size="small"
-          startIcon={<PersonRounded />}
-          component={RouterLink}
-          to={'/user/' + auth.userId + '/home'}
-          onClick={() => this.onToggleDrawer(false)}
-        >
-          <Typography>{auth.displayname}</Typography>
-        </Button >
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={this.props.logOut}
-        >
-          <Typography>Đăng xuất</Typography>
-        </Button>
-      </ButtonGroup >
+      return <Tooltip title={auth.displayname}>
+        <Avatar
+          alt={auth.avatar}
+          src={auth.avatar}
+          className={classes.avatar}
+          onClick={this.onUser}
+        />
+      </Tooltip>
     else
       return <Button
         variant="outlined"
         size="small"
+        startIcon={<PersonRounded fontSize="small" />}
         onClick={this.onToggleLogInModal}
       >
         <Typography>Đăng nhập</Typography>
@@ -125,62 +105,52 @@ class Header extends Component {
   }
 
   renderRoute = () => {
-    let { classes } = this.props;
-    if (this.state.matches) {
-      return <Grid container justify="flex-end" alignItems="center" spacing={2}>
-        <Grid item className={classes.route}>
-          <SearchToolbar onChange={this.search} fullWidth />
-        </Grid>
+    if (this.props.ui.width >= 960) {
+      return <Grid container alignItems="center" spacing={4}>
         {
-          this.state.routes.map((route, index) =>
-            <Grid item key={index} className={classes.route}>
-              <Link color="textPrimary" underline="none" component={RouterLink} to={route.link}>
-                <Typography><span className="link">{route.text}</span></Typography>
-              </Link>
-            </Grid>
-          )
+          this.state.routes.map(route => <Grid item key={route.link}>
+            <Link color="textPrimary" underline="none" component={RouterLink} to={route.link}>
+              <Typography><span className="link">{route.text}</span></Typography>
+            </Link>
+          </Grid>)
         }
-        <Grid item className={classes.route}>
+        < Grid item >
           {this.renderProfile()}
-        </Grid>
-      </Grid>
+        </Grid >
+      </Grid >
     }
     else {
-      return <Grid container justify="flex-end" alignItems="center">
-        <IconButton color="secondary" onClick={this.onToggleDrawer}>
-          <Badge badgeContent={this.state.grocery} color="primary">
+      return <Grid container spacing={2}>
+        <Grid item>
+          <IconButton size="small" color="secondary" onClick={this.onToggleDrawer}>
             <MenuRounded />
-          </Badge>
-        </IconButton>
-        <TopDrawer
-          visible={this.state.visibleDrawer}
-          onClose={this.onToggleDrawer}
-        >
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <ListItem>
-                <SearchToolbar
-                  onChange={this.search}
-                  fullWidth />
-              </ListItem>
-              <List>
-                {
-                  this.state.routes.map((route, index) => <ListItem
-                    key={index}
-                    button
-                    component={RouterLink}
-                    to={route.link}
-                    onClick={this.onToggleDrawer} >
-                    <ListItemText primary={route.text} />
-                  </ListItem>)
-                }
-                <ListItem>
-                  {this.renderProfile()}
-                </ListItem>
-              </List>
+          </IconButton>
+          <TopDrawer visible={this.state.visibleDrawer} onClose={this.onToggleDrawer} >
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <List>
+                  {
+                    this.state.routes.map(route => <ListItem
+                      key={route.link}
+                      button
+                      component={RouterLink}
+                      to={route.link}
+                      onClick={this.onToggleDrawer} >
+                      <ListItemText primary={route.text} />
+                    </ListItem>)
+                  }
+                  <ListItem>
+                    <Grid container justify="flex-end" spacing={2}>
+                      <Grid item>
+                        {this.renderProfile()}
+                      </Grid>
+                    </Grid>
+                  </ListItem>
+                </List>
+              </Grid>
             </Grid>
-          </Grid>
-        </TopDrawer>
+          </TopDrawer>
+        </Grid>
       </Grid>
     }
   }
@@ -189,20 +159,45 @@ class Header extends Component {
     let { classes } = this.props;
     return <Fragment>
       <Grid container justify="space-between" alignItems="center">
+
+        {/* Logo */}
         <Grid item className={classes.logo}>
           <Link color="textPrimary" underline="none" component={RouterLink} to={'/home'}>
             <Typography variant="h3">Thiêng</Typography>
           </Link>
         </Grid>
+
         <Grid item>
-          {this.renderRoute()}
+          <Paper elevation={0} className={classes.paper}>
+            <Grid container alignItems="center" spacing={4}>
+              {/* Search app */}
+              <Grid item>
+                <IconButton size="small" color="secondary" onClick={this.onSearch}>
+                  <SearchRounded />
+                </IconButton>
+              </Grid>
+              {/* Notification app */}
+              <Grid item>
+                <IconButton size="small" color="secondary" onClick={this.onNotification}>
+                  <Badge badgeContent={3} color="primary">
+                    <NotificationsRounded />
+                  </Badge>
+                </IconButton>
+              </Grid>
+              {/* Routers & Authentication*/}
+              <Grid item>
+                {this.renderRoute()}
+              </Grid>
+            </Grid>
+          </Paper>
         </Grid>
+
       </Grid>
       <LogIn
         visible={this.state.visibleLogInModal}
         onToggle={this.onToggleLogInModal}
         callback={this.syncAuth}
-        fullWidth={!this.state.matches}
+        fullWidth={this.props.ui.width < 960}
       />
     </Fragment>
   }
@@ -215,9 +210,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  search,
   refreshSession, logIn, logOut,
-  toogleNotification,
+  toogleNotification, toogleSearch,
 }, dispatch);
 
 export default withRouter(connect(
