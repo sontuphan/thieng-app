@@ -20,6 +20,8 @@ import User from 'containers/user';
 import Search from 'containers/search';
 import Cart from 'containers/cart';
 import Notification from 'containers/notification';
+// Debug
+import Debug from 'containers/debug';
 
 import theme from 'static/styles/theme';
 import 'static/styles/index.css';
@@ -56,6 +58,7 @@ class App extends Component {
             <Route path="/mall" component={Mall} />
             <Redirect exact from="/user/:userId" to="/user/:userId/home" />
             <Route exact path="/user/:userId/:page" component={User} />
+            <Route exact path="/debug" component={Debug} />
           </Switch>
 
           {/* Global app */}
