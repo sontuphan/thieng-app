@@ -44,12 +44,12 @@ class App extends Component {
   render() {
     return <ThemeProvider theme={theme}>
       <Grid container justify="center" spacing={2}>
+        {/* Header */}
         <Grid item xs={11} md={10}>
           <Header />
         </Grid>
+        {/* Pages */}
         <Grid item xs={12}>
-
-          {/* Pages */}
           <Switch>
             <Redirect exact from="/" to="/home" />
             <Route exact path="/home" component={Home} />
@@ -60,25 +60,19 @@ class App extends Component {
             <Route exact path="/user/:userId/:page" component={User} />
             <Route exact path="/debug" component={Debug} />
           </Switch>
-
-          {/* Global app */}
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Search />
-            </Grid>
-            <Grid item xs={12}>
-              <Cart />
-            </Grid>
-            <Grid item xs={12}>
-              <Notification />
-            </Grid>
-          </Grid>
-
         </Grid>
+        {/* Global app */}
+        <Grid item xs={12}>
+          <Search />
+          <Cart />
+          <Notification />
+        </Grid>
+        {/* Safe zone */}
         <Grid item xs={12}>
           <Drain large />
         </Grid>
-        <Grid item xs={10}>
+        {/* Footer */}
+        <Grid item xs={11} md={10}>
           <Footer />
         </Grid>
       </Grid>

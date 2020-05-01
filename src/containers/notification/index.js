@@ -6,8 +6,6 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
-import { } from '@material-ui/icons';
-
 import { TopDrawer } from 'components/drawers';
 import PrimaryNotification from './primary';
 import SecondaryNotification from './secondary';
@@ -20,24 +18,19 @@ import styles from './styles';
 class Notification extends Component {
 
   render() {
-
     return <Grid container spacing={2}>
       <Grid item xs={12}>
         <TopDrawer
           visible={this.props.notification.visible}
           onClose={this.props.toogleNotification}
         >
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-              <Grid container justify="center" spacing={2}>
-                <Grid item xs={10}>
+          <Grid container justify="center" spacing={2}>
+            <Grid item xs={11} md={10}>
+              <Grid container spacing={this.props.ui.width >= 960 ? 8 : 2}>
+                <Grid item xs={12} md={6}>
                   <PrimaryNotification />
                 </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Grid container justify="center" spacing={2}>
-                <Grid item xs={10}>
+                <Grid item xs={12} md={6}>
                   <SecondaryNotification />
                 </Grid>
               </Grid>

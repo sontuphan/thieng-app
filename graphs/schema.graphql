@@ -11,3 +11,9 @@ type User {
   panel: String
   description: String
 }
+
+fragment UserFragment on User {
+  userId: String
+  displayname: String
+  avatar: String
+}

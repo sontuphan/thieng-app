@@ -2,7 +2,7 @@ import { Environment, Network, RecordSource, Store } from 'relay-runtime';
 import authentication from 'helpers/authentication';
 
 function fetchQuery(operation, variables) {
-  return fetch('http://localhost:3001/user', {
+  return fetch('http://localhost:3001/graphql', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

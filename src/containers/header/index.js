@@ -93,7 +93,7 @@ class Header extends Component {
         startIcon={<PersonRounded />}
         onClick={this.onToggleLogInModal}
       >
-        <Typography>Đăng nhập</Typography>
+        <Typography noWrap>Đăng nhập</Typography>
       </Button >
     }
 
@@ -124,11 +124,12 @@ class Header extends Component {
   }
 
   renderRoute = () => {
+    let { classes } = this.props;
     if (this.props.ui.width >= 960) {
-      return <Grid container alignItems="center" spacing={4}>
+      return <Grid container className={classes.noWrap} alignItems="center" spacing={4}>
         {
           this.state.routes.map(route => <Grid item key={route.link}>
-            <Link color="textPrimary" underline="none" component={RouterLink} to={route.link}>
+            <Link color="textPrimary" underline="none" component={RouterLink} to={route.link} noWrap>
               <Typography><span className="link">{route.text}</span></Typography>
             </Link>
           </Grid>)
@@ -191,7 +192,7 @@ class Header extends Component {
 
         <Grid item>
           <Paper elevation={0} className={classes.paper}>
-            <Grid container alignItems="center" spacing={4}>
+            <Grid container className={classes.noWrap} alignItems="center" spacing={4}>
               {/* Search app */}
               <Grid item>
                 <IconButton size="small" color="secondary" onClick={this.onSearch}>
