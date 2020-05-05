@@ -12,6 +12,6 @@ export default theme => ({
   },
   action: {
     flexWrap: 'nowrap',
-    padding: theme.spacing(2),
+    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
   }
 });

@@ -1,4 +1,5 @@
 @import "./link.css";
+@import "./color-picker.css";
 
 html {
   scroll-behavior: smooth;

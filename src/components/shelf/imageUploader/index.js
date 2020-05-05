@@ -25,7 +25,7 @@ class ImageUploader extends Component {
     this.state = {
       url: null,
       error: null,
-      visible: true,
+      visible: false,
       isColor: false,
       color: '#000000',
       colors: ['#000000']
@@ -61,6 +61,14 @@ class ImageUploader extends Component {
     this.setState({ color: value.hex });
   }
 
+  onOk = () => {
+    this.props.onChange({
+      url: this.state.url,
+      color: this.state.color,
+    });
+    this.onToggle();
+  }
+
   render() {
     let { classes } = this.props;
     if (!this.props.visible) return null;
@@ -83,7 +91,6 @@ class ImageUploader extends Component {
       <Dialog
         open={this.state.visible}
         onClose={this.onToggle}
-        fullScreen={this.props.fullWidth}
       >
         <DialogTitle>
           <Grid container spacing={2} alignItems="center" className={classes.noWrap}>
@@ -153,6 +160,7 @@ class ImageUploader extends Component {
                   <Button
                     variant="contained"
                     color="primary"
+                    onClick={this.onOk}
                   >
                     <Typography>OK</Typography>
                   </Button>
@@ -161,6 +169,7 @@ class ImageUploader extends Component {
                   <Button
                     variant="contained"
                     color="secondary"
+                    onClick={this.onToggle}
                   >
                     <Typography>Cancel</Typography>
                   </Button>
@@ -178,13 +187,11 @@ ImageUploader.defaultProps = {
   onChange: () => { },
   visible: false,
   color: '#ffffff',
-  fullWidth: false
 }
 
 ImageUploader.propTypes = {
   onChange: PropTypes.func,
   visible: PropTypes.bool,
-  fullWidth: PropTypes.bool,
   color: PropTypes.string,
 }
 

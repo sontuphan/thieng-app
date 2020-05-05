@@ -97,7 +97,7 @@ class Shelf extends Component {
                     <ThreeDRotationRounded style={{ color: this.state.color }} />
                   </IconButton>
                 </Grid>
-                {this.props.editable || true ? <Grid item>
+                {this.props.editable ? <Grid item>
                   <ImageUploader color={this.state.color} visible />
                 </Grid> : null}
               </Grid>
