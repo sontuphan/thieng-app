@@ -78,6 +78,7 @@ Utils.checkDevice = () => {
 
 Utils.extractImageColors = (image) => {
   return new Promise((resolve, reject) => {
+    if (!image) return reject('No image detected.');
     let vibrant = new Vibrant(image);
     vibrant.getPalette().then(palette => {
       return resolve(palette);

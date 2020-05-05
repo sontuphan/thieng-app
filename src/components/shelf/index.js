@@ -98,7 +98,11 @@ class Shelf extends Component {
                   </IconButton>
                 </Grid>
                 {this.props.editable ? <Grid item>
-                  <ImageUploader color={this.state.color} visible />
+                  <ImageUploader
+                    iconColor={this.state.color}
+                    visible
+                    onChange={console.log}
+                  />
                 </Grid> : null}
               </Grid>
             </Grid>

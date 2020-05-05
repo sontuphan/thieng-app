@@ -18,28 +18,30 @@ import { AddCircleRounded, CloseRounded } from '@material-ui/icons';
 import styles from './styles';
 import utils from 'helpers/utils';
 
+const DEFAULT_STATE = {
+  url: null,
+  error: null,
+  visibleDialog: false,
+  isColor: false,
+  color: '#000000',
+  colors: ['#000000']
+}
+
 class ImageUploader extends Component {
   constructor() {
     super();
 
-    this.state = {
-      url: null,
-      error: null,
-      visible: false,
-      isColor: false,
-      color: '#000000',
-      colors: ['#000000']
-    }
+    this.state = { ...DEFAULT_STATE }
     this.hiddenRef = React.createRef();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.url !== this.state.url) {
+    if (this.state.visibleDialog && prevState.visibleDialog !== this.state.visibleDialog) {
       utils.extractImageColors(this.state.url).then(palette => {
         let colors = [palette.DarkVibrant.hex, palette.Vibrant.hex, palette.LightVibrant.hex, palette.DarkMuted.hex, palette.Muted.hex, palette.LightMuted.hex]
         let color = colors[0];
         this.setState({ color, colors });
-      });
+      }).catch(er => console.error(er));
     }
   }
 
@@ -50,11 +52,13 @@ class ImageUploader extends Component {
   onChange = (e) => {
     if (!e.target.files[0]) return;
     let url = URL.createObjectURL(e.target.files[0]);
-    return this.setState({ url, visible: true });
+    return this.setState({ url, visibleDialog: true });
   }
 
   onToggle = () => {
-    this.setState({ visible: !this.state.visible });
+    this.setState({ ...DEFAULT_STATE, visibleDialog: !this.state.visibleDialog }, () => {
+      this.hiddenRef.current.value = null;
+    });
   }
 
   onColor = (value) => {
@@ -64,7 +68,7 @@ class ImageUploader extends Component {
   onOk = () => {
     this.props.onChange({
       url: this.state.url,
-      color: this.state.color,
+      color: this.state.isColor ? this.state.color : null,
     });
     this.onToggle();
   }
@@ -77,7 +81,7 @@ class ImageUploader extends Component {
       {/* Button */}
       <Grid item>
         <IconButton onClick={this.onUpload}>
-          <AddCircleRounded style={{ color: this.props.color }} />
+          <AddCircleRounded style={{ color: this.props.iconColor }} />
         </IconButton>
       </Grid>
       {/* Hidden input */}
@@ -89,7 +93,8 @@ class ImageUploader extends Component {
       />
       {/* Confirmation dialog */}
       <Dialog
-        open={this.state.visible}
+        maxWidth="md"
+        open={this.state.visibleDialog}
         onClose={this.onToggle}
       >
         <DialogTitle>
@@ -186,13 +191,13 @@ class ImageUploader extends Component {
 ImageUploader.defaultProps = {
   onChange: () => { },
   visible: false,
-  color: '#ffffff',
+  iconColor: '#ffffff',
 }
 
 ImageUploader.propTypes = {
   onChange: PropTypes.func,
   visible: PropTypes.bool,
-  color: PropTypes.string,
+  iconColor: PropTypes.string,
 }
 
 export default withStyles(styles)(ImageUploader);
