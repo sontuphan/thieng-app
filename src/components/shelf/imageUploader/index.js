@@ -36,7 +36,6 @@ class ImageUploader extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.url !== this.state.url) {
       utils.extractImageColors(this.state.url).then(palette => {
-        console.log(palette);
         let colors = [palette.DarkVibrant.hex, palette.Vibrant.hex, palette.LightVibrant.hex, palette.DarkMuted.hex, palette.Muted.hex, palette.LightMuted.hex]
         let color = colors[0];
         this.setState({ color, colors });
@@ -116,8 +115,8 @@ class ImageUploader extends Component {
             <Grid item xs={12} md={4}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Grid container className={classes.noWrap} spacing={2}>
-                    <Grid item className={classes.strength}>
+                  <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
+                    <Grid item className={classes.stretch}>
                       <Typography>Enable theme color</Typography>
                     </Grid>
                     <Grid item>
