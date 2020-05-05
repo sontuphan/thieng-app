@@ -25,7 +25,7 @@ class ImageUploader extends Component {
     this.state = {
       url: null,
       error: null,
-      visible: false,
+      visible: true,
       isColor: false,
       color: '#000000',
       colors: ['#000000']
@@ -86,18 +86,14 @@ class ImageUploader extends Component {
         fullScreen={this.props.fullWidth}
       >
         <DialogTitle>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={8}>
+          <Grid container spacing={2} alignItems="center" className={classes.noWrap}>
+            <Grid item className={classes.stretch}>
               <Typography variant="h3">Image Uploader</Typography>
             </Grid>
-            <Grid item xs={4}>
-              <Grid container justify="flex-end" spacing={2}>
-                <Grid item>
-                  <IconButton color="secondary" size="small" onClick={this.onToggle}>
-                    <CloseRounded />
-                  </IconButton>
-                </Grid>
-              </Grid>
+            <Grid item>
+              <IconButton color="secondary" size="small" onClick={this.onToggle}>
+                <CloseRounded />
+              </IconButton>
             </Grid>
           </Grid>
         </DialogTitle>
@@ -141,9 +137,37 @@ class ImageUploader extends Component {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.onToggle} color="primary">
-            <Typography>Bạn cần sự giúp đỡ ?</Typography>
-          </Button>
+          <Grid container justify="space-between" alignItems="center" className={classes.action} spacing={2}>
+            <Grid item>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={this.onToggle}
+              >
+                <Typography>Need help?</Typography>
+              </Button>
+            </Grid>
+            <Grid item>
+              <Grid container className={classes.noWrap} justify="flex-end" spacing={2}>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                  >
+                    <Typography>OK</Typography>
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                  >
+                    <Typography>Cancel</Typography>
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
         </DialogActions>
       </Dialog>
     </Grid>

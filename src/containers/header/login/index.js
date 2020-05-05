@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
+import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -14,6 +15,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { CloseRounded } from '@material-ui/icons';
 import { FaGoogle, FaFacebookF, FaApple, FaTwitter } from 'react-icons/fa';
 
+import styles from './styles';
 import configs from 'configs';
 
 class LogIn extends Component {
@@ -56,22 +58,19 @@ class LogIn extends Component {
   }
 
   render() {
+    let { classes } = this.props;
     let { visible, onToggle } = this.props;
 
     return <Dialog open={visible} onClose={onToggle} >
       <DialogTitle>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={8}>
+        <Grid container spacing={2} alignItems="center" className={classes.noWrap}>
+          <Grid item className={classes.stretch}>
             <Typography variant="h3">Đăng nhập</Typography>
           </Grid>
-          <Grid item xs={4}>
-            <Grid container justify="flex-end" spacing={2}>
-              <Grid item>
-                <IconButton color="secondary" size="small" onClick={onToggle}>
-                  <CloseRounded />
-                </IconButton>
-              </Grid>
-            </Grid>
+          <Grid item>
+            <IconButton color="secondary" size="small" onClick={onToggle}>
+              <CloseRounded />
+            </IconButton>
           </Grid>
         </Grid>
       </DialogTitle>
@@ -139,12 +138,20 @@ class LogIn extends Component {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onToggle} color="primary">
-          <Typography>Bạn cần sự giúp đỡ ?</Typography>
-        </Button>
+        <Grid container className={classes.action} spacing={2}>
+          <Grid item>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={onToggle}
+            >
+              <Typography>Need help?</Typography>
+            </Button>
+          </Grid>
+        </Grid>
       </DialogActions>
     </Dialog>
   }
 }
 
-export default LogIn;
+export default withStyles(styles)(LogIn);

@@ -10,4 +10,8 @@ export default theme => ({
     opacity: 0.5,
     filter: 'grayscale(100%)',
   },
+  action: {
+    flexWrap: 'nowrap',
+    padding: theme.spacing(2),
+  }
 });
