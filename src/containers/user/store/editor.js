@@ -147,7 +147,6 @@ class Editor extends Component {
                         color="secondary"
                         value={this.state.status}
                         onChange={this.onStatus}
-                        InputProps={{ classes: { input: classes.font } }}
                         multiline
                         fullWidth
                       />

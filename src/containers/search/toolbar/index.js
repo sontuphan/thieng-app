@@ -33,7 +33,6 @@ class SearchToolbar extends Component {
       size="small"
       onChange={this.input}
       InputProps={{
-        classes: { input: classes.font },
         endAdornment: (
           <InputAdornment position="start" className={classes.adornment}>
             <IconButton size="small" onClick={() => this.props.onChange(this.state.data)}>

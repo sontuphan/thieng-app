@@ -219,7 +219,6 @@ class Header extends Component {
         visible={this.state.visibleLogInModal}
         onToggle={this.onToggleLogInModal}
         callback={this.syncAuth}
-        fullWidth={this.props.ui.width < 960}
       />
     </Fragment>
   }

@@ -94,7 +94,6 @@ class DeliveryInformation extends Component {
           variant="outlined"
           value={this.state.name}
           onChange={this.onName}
-          InputProps={{ classes: { input: classes.font } }}
           multiline
           fullWidth
         />
@@ -107,7 +106,6 @@ class DeliveryInformation extends Component {
           variant="outlined"
           value={this.state.phone}
           onChange={this.onPhone}
-          InputProps={{ classes: { input: classes.font } }}
           multiline
           fullWidth
         />
@@ -122,7 +120,6 @@ class DeliveryInformation extends Component {
               variant="outlined"
               value={this.state.address}
               onChange={this.onAddress}
-              InputProps={{ classes: { input: classes.font } }}
               multiline
               fullWidth
             />
@@ -168,7 +165,6 @@ class DeliveryInformation extends Component {
           variant="outlined"
           value={this.state.note}
           onChange={this.onNote}
-          InputProps={{ classes: { input: classes.font } }}
           multiline
           fullWidth
         />

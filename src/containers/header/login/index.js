@@ -56,13 +56,9 @@ class LogIn extends Component {
   }
 
   render() {
-    let { visible, onToggle, fullWidth } = this.props;
+    let { visible, onToggle } = this.props;
 
-    return <Dialog
-      open={visible}
-      onClose={onToggle}
-      fullScreen={fullWidth}
-    >
+    return <Dialog open={visible} onClose={onToggle} >
       <DialogTitle>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={8}>
@@ -87,7 +83,7 @@ class LogIn extends Component {
           <Grid item xs={12}>
             {this.state.error ? <Typography color="primary">{this.state.error}</Typography> : null}
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <GoogleLogin
               clientId={configs.auth.google.clientId}
               render={props => <Button
@@ -104,7 +100,7 @@ class LogIn extends Component {
               cookiePolicy={'single_host_origin'}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <FacebookLogin
               appId={configs.auth.facebook.appId}
               fields='name,email,picture'
@@ -118,7 +114,7 @@ class LogIn extends Component {
               </Button>}
               callback={this.logIn} />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <Button
               variant="outlined"
               size="large"
@@ -129,7 +125,7 @@ class LogIn extends Component {
               <Typography>Continue with Apple</Typography>
             </Button>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <Button
               variant="outlined"
               size="large"

@@ -46,9 +46,6 @@ class RichComment extends Component {
           onChange={this.onChange}
           className={classes.input}
           InputProps={{
-            classes: {
-              input: classes.font,
-            },
             startAdornment: (
               <InputAdornment position="start">
                 <Avatar className={classes.avatar} alt={user.avatar} src={user.avatar} />

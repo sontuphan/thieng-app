@@ -66,11 +66,6 @@ class DrainBar extends Component {
             size="small"
             value={this.state.height}
             onChange={this.onHeight}
-            InputProps={{
-              classes: {
-                input: classes.font,
-              }
-            }}
           />
         </Grid>
       </Grid>

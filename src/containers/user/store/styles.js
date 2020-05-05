@@ -1,7 +1,4 @@
 export default theme => ({
-  font: {
-    ...theme.typography.body1
-  },
   noWrap: {
     flexWrap: 'nowrap',
   },

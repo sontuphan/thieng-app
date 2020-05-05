@@ -99,7 +99,6 @@ class PaymentInfomation extends Component {
           variant="outlined"
           value={this.state.code}
           onChange={this.onCode}
-          InputProps={{ classes: { input: classes.font } }}
           multiline
           fullWidth
         />

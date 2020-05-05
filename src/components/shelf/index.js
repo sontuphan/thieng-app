@@ -15,6 +15,7 @@ import { ThreeDRotationRounded, ArrowBackRounded, ArrowForwardRounded } from '@m
 
 import ColorSelect from './colorSelect';
 import Drain from 'components/drain';
+import ImageUploader from './imageUploader'
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -28,6 +29,7 @@ class Shelf extends Component {
       translate: 0,
       color: '#ffffff'
     }
+    this.hiddenRef = React.createRef();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -95,8 +97,12 @@ class Shelf extends Component {
                     <ThreeDRotationRounded style={{ color: this.state.color }} />
                   </IconButton>
                 </Grid>
+                {this.props.editable || true ? <Grid item>
+                  <ImageUploader color={this.state.color} visible />
+                </Grid> : null}
               </Grid>
             </Grid>
+
             <Grid item
               xs={10}
               className={classes.imageShelf}
@@ -135,18 +141,24 @@ class Shelf extends Component {
           <Grid container alignItems="center" spacing={2}>
             <Grid item xs={2} md={1}>
               <Grid container justify="flex-start">
-                <IconButton onClick={this.onBack}>
-                  <ArrowBackRounded />
-                </IconButton>
+                <Grid item>
+                  <IconButton onClick={this.onBack}>
+                    <ArrowBackRounded />
+                  </IconButton>
+                </Grid>
               </Grid>
             </Grid>
             <Grid item xs={8} md={10}>
               <SwipeableViews
                 index={showing}
                 onChangeIndex={this.onChange}
-                containerStyle={{ alignItems: "center", transform: `translate(${this.state.translate}%, 0px)` }}
+                containerStyle={{
+                  alignItems: "center",
+                  transform: `translate(${this.state.translate}%, 0px)`
+                }}
                 slideClassName={classes.slide}
-                disabled>
+                disabled
+              >
                 {
                   objects.map((object, i) => <Grid item key={i}>
                     <Grid container justify="center">
@@ -169,9 +181,11 @@ class Shelf extends Component {
             </Grid>
             <Grid item xs={2} md={1}>
               <Grid container justify="flex-end">
-                <IconButton onClick={this.onNext}>
-                  <ArrowForwardRounded />
-                </IconButton>
+                <Grid item>
+                  <IconButton onClick={this.onNext}>
+                    <ArrowForwardRounded />
+                  </IconButton>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -182,10 +196,16 @@ class Shelf extends Component {
   }
 }
 
+Shelf.defaultProps = {
+  on3D: () => { },
+  editable: false,
+}
+
 Shelf.propTypes = {
   author: PropTypes.object.isRequired,
   objects: PropTypes.array.isRequired,
-  on3D: PropTypes.func.isRequired,
+  on3D: PropTypes.func,
+  editable: PropTypes.bool,
 }
 
 export default withRouter(withStyles(styles)(Shelf));

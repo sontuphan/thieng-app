@@ -5,9 +5,6 @@ export default theme => ({
   noWrap: {
     flexWrap: 'nowrap'
   },
-  font: {
-    ...theme.typography.body1
-  },
   btnGroup: {
     padding: '0px 4px',
     height: '26px',

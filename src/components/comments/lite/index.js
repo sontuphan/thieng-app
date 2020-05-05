@@ -41,9 +41,6 @@ class LiteComment extends Component {
           size="small"
           onChange={this.onChange}
           InputProps={{
-            classes: {
-              input: classes.font,
-            },
             startAdornment: (
               <InputAdornment position="start">
                 <Avatar className={classes.avatar} alt={user.avatar} src={user.avatar} />

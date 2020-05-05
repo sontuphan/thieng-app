@@ -113,7 +113,7 @@ class Item extends Component {
     return <Grid container justify="center" spacing={2}>
 
       <Grid item xs={12} md={6}>
-        <Shelf author={author} objects={object.images} on3D={this.on3D} />
+        <Shelf author={author} objects={object.images} on3D={this.on3D} editable/>
       </Grid>
 
       <Grid item xs={12} md={6}>
@@ -123,7 +123,7 @@ class Item extends Component {
             <Grid container spacing={1}>
               {
                 object.tags.map(tag => <Grid item key={tag}>
-                  <Chip className={classes.font} color="primary" label={tag} size="small" />
+                  <Chip color="primary" label={tag} size="small" />
                 </Grid>)
               }
             </Grid>
