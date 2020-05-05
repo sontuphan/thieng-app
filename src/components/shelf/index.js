@@ -15,7 +15,7 @@ import { ThreeDRotationRounded, ArrowBackRounded, ArrowForwardRounded } from '@m
 
 import ColorSelect from './colorSelect';
 import Drain from 'components/drain';
-import ImageUploader from './imageUploader'
+import ImageUploader from './imageUploader';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -97,7 +97,7 @@ class Shelf extends Component {
                     <ThreeDRotationRounded style={{ color: this.state.color }} />
                   </IconButton>
                 </Grid>
-                {this.props.editable || true ? <Grid item>
+                {this.props.editable ? <Grid item>
                   <ImageUploader color={this.state.color} visible />
                 </Grid> : null}
               </Grid>

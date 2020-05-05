@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { BlockPicker } from 'react-color';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -10,11 +11,12 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { BlockPicker } from 'react-color';
+import Switch from '@material-ui/core/Switch';
 
 import { AddCircleRounded, CloseRounded } from '@material-ui/icons';
 
 import styles from './styles';
+import utils from 'helpers/utils';
 
 class ImageUploader extends Component {
   constructor() {
@@ -23,9 +25,23 @@ class ImageUploader extends Component {
     this.state = {
       url: null,
       error: null,
-      visible: true,
+      visible: false,
+      isColor: false,
+      color: '#000000',
+      colors: ['#000000']
     }
     this.hiddenRef = React.createRef();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.url !== this.state.url) {
+      utils.extractImageColors(this.state.url).then(palette => {
+        console.log(palette);
+        let colors = [palette.DarkVibrant.hex, palette.Vibrant.hex, palette.LightVibrant.hex, palette.DarkMuted.hex, palette.Muted.hex, palette.LightMuted.hex]
+        let color = colors[0];
+        this.setState({ color, colors });
+      });
+    }
   }
 
   onUpload = () => {
@@ -35,13 +51,15 @@ class ImageUploader extends Component {
   onChange = (e) => {
     if (!e.target.files[0]) return;
     let url = URL.createObjectURL(e.target.files[0]);
-    return this.setState({ url, visible: true }, () => {
-      console.log(this.state)
-    });
+    return this.setState({ url, visible: true });
   }
 
   onToggle = () => {
     this.setState({ visible: !this.state.visible });
+  }
+
+  onColor = (value) => {
+    this.setState({ color: value.hex });
   }
 
   render() {
@@ -96,11 +114,30 @@ class ImageUploader extends Component {
               <img width="100%" height="auto" alt={this.state.url} src={this.state.url} />
             </Grid>
             <Grid item xs={12} md={4}>
-              <BlockPicker
-                triangle="hide"
-                width="100%"
-                colors={['#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', '#EB144C']}
-              />
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Grid container className={classes.noWrap} spacing={2}>
+                    <Grid item className={classes.strength}>
+                      <Typography>Enable theme color</Typography>
+                    </Grid>
+                    <Grid item>
+                      <Switch
+                        checked={this.state.isColor}
+                        onChange={() => this.setState({ isColor: !this.state.isColor })}
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} className={this.state.isColor ? null : classes.disabled}>
+                  <BlockPicker
+                    triangle="hide"
+                    width="100%"
+                    color={this.state.color}
+                    colors={this.state.colors}
+                    onChange={this.onColor}
+                  />
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </DialogContent>

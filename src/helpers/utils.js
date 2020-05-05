@@ -76,6 +76,17 @@ Utils.checkDevice = () => {
   return isMobile;
 }
 
+Utils.extractImageColors = (image) => {
+  return new Promise((resolve, reject) => {
+    let vibrant = new Vibrant(image);
+    vibrant.getPalette().then(palette => {
+      return resolve(palette);
+    }).catch(er => {
+      return reject(er);
+    });
+  });
+}
+
 Utils.getAccessibleTextColor = (backgroundImage) => {
   return new Promise((resolve, reject) => {
     let vibrant = new Vibrant(backgroundImage);
