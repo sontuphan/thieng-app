@@ -5,26 +5,17 @@ import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-
-import { ShuffleRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
-import Shelf from 'components/shelf';
-import { ProductCard } from 'components/cards';
 import { RichComment } from 'components/comments';
-import { NumericInput } from 'components/inputs';
+import Stall from 'containers/stall';
+import Recommendation from 'containers/recommendation';
 
 import { getItemById } from 'modules/items.reducer';
 import { getComments } from 'modules/comments.reducer';
-import { getUser } from 'modules/user.reducer';
-import { recommendItems } from 'modules/recommendation.reducer';
-import { setCart } from 'modules/cart.reducer';
 
 import styles from './styles';
-import utils from 'helpers/utils';
 
 class Item extends Component {
   constructor() {
@@ -45,14 +36,9 @@ class Item extends Component {
   }
 
   loadData = () => {
-    let item = null;
     this.props.getItemById(this.state.id).then(re => {
-      item = re.data[0];
-      return this.props.getUser(item.author);
-    }).then(re => {
+      let item = re.data[0];
       return this.props.getComments(item.id);
-    }).then(re => {
-      return this.props.recommendItems(6);
     }).catch(er => {
       return console.error(er);
     });
@@ -70,27 +56,8 @@ class Item extends Component {
       this.loadData();
   }
 
-  onAmount = (amount) => {
-    return this.setState({ amount });
-  }
-
-  on3D = () => {
-    console.log('Turn on 3D');
-  }
-
-  onBuy = () => {
-    let object = this.props.items.data[0];
-    let { amount } = this.state;
-    let item = { ...object, amount }
-    this.props.setCart(item);
-  }
-
   onSend = () => {
     console.log('Submit comment');
-  }
-
-  onShuffle = () => {
-    this.props.recommendItems(6);
   }
 
   onMore = () => {
@@ -102,86 +69,11 @@ class Item extends Component {
   }
 
   render() {
-    let { classes } = this.props;
-    let object = this.props.items.data[0];
-    let comments = this.props.comments.data;
-    let author = this.props.users.data[0];
-    let recommendation = this.props.recommendation.data;
-
-    if (!object || !comments || !author || !recommendation) return null;
+    // let { classes } = this.props;
 
     return <Grid container justify="center" spacing={2}>
-
-      <Grid item xs={12} md={6}>
-        <Shelf author={author} objects={object.images} on3D={this.on3D} editable/>
-      </Grid>
-
-      <Grid item xs={12} md={6}>
-        <Drain />
-        <Grid container justify="center" spacing={2}>
-          <Grid item xs={10} md={8}>
-            <Grid container spacing={1}>
-              {
-                object.tags.map(tag => <Grid item key={tag}>
-                  <Chip color="primary" label={tag} size="small" />
-                </Grid>)
-              }
-            </Grid>
-          </Grid>
-          <Grid item xs={10} md={8}>
-            <Typography variant="h1">{object.name}</Typography>
-          </Grid>
-          <Grid item xs={10} md={8}>
-            <Typography>{object.description1}</Typography>
-          </Grid>
-          <Grid item xs={10} md={8}>
-            <Typography>{object.description2}</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Drain />
-          </Grid>
-          <Grid item xs={10} md={8}>
-            <Typography variant="h4" className={classes.originalPrice}>{utils.prettyNumber(object.price, 'long')} {object.unit}</Typography>
-          </Grid>
-          <Grid item xs={10} md={8}>
-            <Typography variant="h1">{utils.prettyNumber(this.state.amount * object.price, 'long')} {object.unit}</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Drain />
-          </Grid>
-          <Grid item xs={10} md={8}>
-            <NumericInput
-              variant="outlined"
-              value={this.state.amount}
-              onChange={this.onAmount}
-            />
-          </Grid>
-          <Grid item xs={10} md={8}>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  onClick={this.onBuy}
-                  fullWidth
-                >
-                  <Typography>Mua</Typography>
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  size="large"
-                  fullWidth
-                >
-                  <Typography>Huỷ</Typography>
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
+      <Grid item xs={12}>
+        <Stall id={this.state.id} />
       </Grid>
 
       <Grid item xs={12}>
@@ -189,30 +81,10 @@ class Item extends Component {
       </Grid>
 
       <Grid item xs={12} md={6}>
-        <Grid container justify="center">
+        <Grid container justify="center" spacing={2}>
           <Grid item xs={10}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Grid container justify="space-between" spacing={2}>
-                  <Grid item>
-                    <Typography variant="h2">Gợi ý cho bạn</Typography>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      endIcon={<ShuffleRounded />}
-                      onClick={this.onShuffle}
-                    >
-                      <Typography>Khác</Typography>
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Grid>
-              {recommendation.map((obj, index) => <Grid key={index} item xs={6} sm={4}>
-                <ProductCard object={obj} />
-              </Grid>)}
-            </Grid>
+            <Recommendation id={this.state.id} quatity={6}
+            />
           </Grid>
           <Grid item xs={12}>
             <Drain small />
@@ -229,7 +101,7 @@ class Item extends Component {
           <Grid item xs={10} md={8}>
             <RichComment
               user={this.props.auth}
-              comments={comments}
+              comments={this.props.comments.data}
               onSend={this.onSend}
               onMore={this.onMore}
               isLoading={this.state.isLoading}
@@ -246,18 +118,12 @@ class Item extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  items: state.items,
-  users: state.users,
   comments: state.comments,
-  recommendation: state.recommendation,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getItemById,
   getComments,
-  getUser,
-  recommendItems,
-  setCart,
 }, dispatch);
 
 export default withRouter(connect(

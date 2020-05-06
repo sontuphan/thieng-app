@@ -11,16 +11,14 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
-import TextField from '@material-ui/core/TextField';
 
 import { SaveAltRounded, PublicRounded, ExpandMoreRounded } from '@material-ui/icons';
 
 import { BottomDrawer } from 'components/drawers';
 import Drain from 'components/drain';
+import Stall from 'containers/stall';
 
 import styles from './styles';
-
-const MAX_LENGTH_STATUS = 150;
 
 
 class Editor extends Component {
@@ -28,30 +26,8 @@ class Editor extends Component {
     super();
 
     this.state = {
-      status: '',
-      blueprint: {},
+      id: Math.floor(Math.random() * 100)
     }
-  }
-
-  loadData = () => {
-    let { match: { params: { userId } } } = this.props;
-    this.props.getProjects(userId).then(re => {
-      let newData = this.state.projects.concat(re.data);
-      return this.setState({ projects: newData });
-    }).catch(er => {
-      return console.error(er);
-    });
-  }
-
-  onBluePrint = (value) => {
-    this.setState({ blueprint: value });
-  }
-
-  onStatus = (e) => {
-    let value = e.target.value;
-    if (!value) value = '';
-    if (value.length > MAX_LENGTH_STATUS) return;
-    this.setState({ status: value });
   }
 
   render() {
@@ -70,7 +46,10 @@ class Editor extends Component {
                 <Grid item xs={12} md={8}>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
-
+                      <Stall
+                        id={this.state.id}
+                        editable
+                      />
                     </Grid>
                     <Grid item xs={12}>
                       <Drain />
@@ -119,37 +98,18 @@ class Editor extends Component {
                       <Divider />
                     </Grid>
                     <Grid item xs={10} md={12}>
-                      <Grid container justify="space-between" alignItems="center" spacing={2}>
+                      <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
                         <Grid item>
-                          <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
-                            <Grid item>
-                              <Avatar
-                                alt={this.props.auth.displayname}
-                                src={this.props.auth.avatar}
-                                className={classes.avatar}
-                              />
-                            </Grid>
-                            <Grid item>
-                              <Typography>{this.props.auth.displayname}</Typography>
-                            </Grid>
-                          </Grid>
+                          <Avatar
+                            alt={this.props.auth.displayname}
+                            src={this.props.auth.avatar}
+                            className={classes.avatar}
+                          />
                         </Grid>
                         <Grid item>
-                          <Typography>{this.state.status.length}/{MAX_LENGTH_STATUS}</Typography>
+                          <Typography>{this.props.auth.displayname}</Typography>
                         </Grid>
                       </Grid>
-                    </Grid>
-                    <Grid item xs={10} md={12}>
-                      <TextField
-                        label="Short introduction about your work of art."
-                        variant="outlined"
-                        size="small"
-                        color="secondary"
-                        value={this.state.status}
-                        onChange={this.onStatus}
-                        multiline
-                        fullWidth
-                      />
                     </Grid>
                     <Grid item xs={12}>
                       <Drain />

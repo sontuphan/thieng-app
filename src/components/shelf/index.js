@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
@@ -15,6 +15,7 @@ import { ThreeDRotationRounded, ArrowBackRounded, ArrowForwardRounded } from '@m
 
 import ColorSelect from './colorSelect';
 import Drain from 'components/drain';
+import ImageEditor from './imageEditor';
 import ImageUploader from './imageUploader';
 
 import styles from './styles';
@@ -27,9 +28,8 @@ class Shelf extends Component {
     this.state = {
       showing: 0,
       translate: 0,
-      color: '#ffffff'
+      color: '#ffffff',
     }
-    this.hiddenRef = React.createRef();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -41,13 +41,12 @@ class Shelf extends Component {
   }
 
   onColor = (color) => {
-    let { objects } = this.props;
-    objects.forEach((obj, step) => {
-      if (obj.color === color) this.onChange(step);
+    this.props.objects.forEach((obj, step) => {
+      if (obj.color === color) this.onStep(step);
     });
   }
 
-  onChange = (step) => {
+  onStep = (step) => {
     let { objects } = this.props;
     let translate = -step * (20 * objects.length - 100) / (objects.length - 1);
     if (translate > 0) translate = 0;
@@ -61,18 +60,30 @@ class Shelf extends Component {
     let { objects } = this.props;
     let step = this.state.showing + 1;
     if (step >= objects.length) step = objects.length - 1;
-    this.onChange(step);
+    this.onStep(step);
   }
 
   onBack = () => {
     let step = this.state.showing - 1;
     if (step < 0) step = 0;
-    this.onChange(step);
+    this.onStep(step);
+  }
+
+  onAdd = (value) => {
+    console.log('add', value)
+  }
+
+  onEdit = (value) => {
+    console.log('edit', value)
   }
 
   render() {
     let { classes, author, objects } = this.props;
     let { showing } = this.state;
+
+    if (objects.length <= 0) return null;
+    let obj = objects[showing];
+    let colors = objects.map(obj => obj.color).filter(color => color);
 
     return <Swipeable onSwipedLeft={this.onNext} onSwipedRight={this.onBack}>
       <Grid container spacing={2}>
@@ -82,8 +93,8 @@ class Shelf extends Component {
             spacing={2}
             justify="center"
             alignItems="center"
-            style={objects[showing].type !== 'png' ? {
-              backgroundImage: `url('${objects[showing].url}')`,
+            style={obj.type !== 'png' ? {
+              backgroundImage: `url('${obj.url}')`,
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover'
@@ -92,16 +103,18 @@ class Shelf extends Component {
           >
             <Grid item xs={12}>
               <Grid container justify="flex-end" spacing={2}>
-                <Grid item>
+                {this.props.on3D ? <Grid item>
                   <IconButton onClick={this.props.on3D}>
                     <ThreeDRotationRounded style={{ color: this.state.color }} />
                   </IconButton>
-                </Grid>
+                </Grid> : null}
                 {this.props.editable ? <Grid item>
-                  <ImageUploader
+                  <ImageEditor
                     iconColor={this.state.color}
+                    onChange={this.onEdit}
+                    url={obj.url}
+                    color={obj.color}
                     visible
-                    onChange={console.log}
                   />
                 </Grid> : null}
               </Grid>
@@ -110,8 +123,8 @@ class Shelf extends Component {
             <Grid item
               xs={10}
               className={classes.imageShelf}
-              style={objects[showing].type === 'png' ? {
-                backgroundImage: `url('${objects[showing].url}')`,
+              style={obj.type === 'png' ? {
+                backgroundImage: `url('${obj.url}')`,
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'contain'
@@ -129,8 +142,8 @@ class Shelf extends Component {
             </Grid>
             <Grid item xs={6}>
               <ColorSelect
-                colors={objects.map(obj => obj.color).filter(color => color !== null)}
-                value={objects[showing].color}
+                colors={colors}
+                value={obj.color}
                 onChange={this.onColor}
               />
             </Grid>
@@ -155,7 +168,7 @@ class Shelf extends Component {
             <Grid item xs={8} md={10}>
               <SwipeableViews
                 index={showing}
-                onChangeIndex={this.onChange}
+                onChangeIndex={this.onStep}
                 containerStyle={{
                   alignItems: "center",
                   transform: `translate(${this.state.translate}%, 0px)`
@@ -175,12 +188,19 @@ class Shelf extends Component {
                         <Avatar
                           alt={object.url}
                           src={object.url}
-                          onClick={() => this.onChange(i)}
+                          onClick={() => this.onStep(i)}
+                          className={classes.cursor}
                         />
                       </Badge>
                     </Grid>
                   </Grid>)
                 }
+                {this.props.editable ? <Grid item>
+                  <ImageUploader
+                    onChange={this.onAdd}
+                    visible
+                  />
+                </Grid> : <Fragment />}
               </SwipeableViews>
             </Grid>
             <Grid item xs={2} md={1}>
@@ -201,15 +221,18 @@ class Shelf extends Component {
 }
 
 Shelf.defaultProps = {
+  objects: [{}],
+  onChange: () => { },
   on3D: () => { },
   editable: false,
 }
 
 Shelf.propTypes = {
   author: PropTypes.object.isRequired,
-  objects: PropTypes.array.isRequired,
+  objects: PropTypes.array,
   on3D: PropTypes.func,
   editable: PropTypes.bool,
+  onChange: PropTypes.func,
 }
 
 export default withRouter(withStyles(styles)(Shelf));

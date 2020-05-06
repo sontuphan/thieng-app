@@ -21,5 +21,8 @@ export default theme => ({
     margin: 'auto',
     display: 'block',
     verticalAlign: 'middle'
+  },
+  cursor: {
+    cursor: 'pointer',
   }
 });
