@@ -86,6 +86,7 @@ class Stall extends Component {
   }
 
   onPrice = (value) => {
+    if (value) value = value.split(',').join('');
     this.setState({
       object: {
         ...this.state.object,
@@ -206,7 +207,7 @@ class Stall extends Component {
             <Typography
               variant="h4"
               className={classes.originalPrice}
-            >{utils.prettyNumber(object.price, 'long')}</Typography>
+            >{utils.prettyNumber(object.price, 'long') || '0'} vnd</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
             <Grid container className={classes.noWrap} spacing={2}>

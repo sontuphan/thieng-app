@@ -23,7 +23,12 @@ class TextInput extends Component {
     if (
       prevProps.readOnly !== this.props.readOnly ||
       prevProps.focus !== this.props.focus
-    ) return this.focus();
+    ) {
+      this.focus();
+    }
+    if (prevProps.value !== this.props.value) {
+      this.ref.current.textContent = this.props.value;
+    }
   }
 
   focus = () => {
@@ -31,12 +36,7 @@ class TextInput extends Component {
       return this.ref.current.focus();
   }
 
-  // onInput = (e) => {
-  //   const contents = e.target.textContent;
-  //   this.props.onChange(contents);
-  // }
-
-  onBlur = (e) => {
+  onInput = (e) => {
     const contents = e.target.textContent;
     this.props.onChange(contents);
   }
@@ -53,11 +53,10 @@ class TextInput extends Component {
           className={classes.text}
           variant={this.props.variant}
           align={this.props.align}
-          onBlur={this.onBlur}
-          // onInput={this.onInput}
+          onInput={this.onInput}
           color={this.props.disabled ? 'textSecondary' : 'textPrimary'}
           placeholder={this.props.placeholder}
-        >{this.props.value}</Typography>
+        />
       </Grid>
     </Grid>
   }
