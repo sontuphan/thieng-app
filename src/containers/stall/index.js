@@ -92,6 +92,12 @@ class Stall extends Component {
     return this.setState({ amount });
   }
 
+  onPublish = () => {
+    console.log(this.state.object)
+  }
+  onSave = () => { }
+  onDelete = () => { }
+
   onBuy = () => {
     let object = this.props.items.data[0];
     let { amount } = this.state;
@@ -116,7 +122,41 @@ class Stall extends Component {
 
   renderAction = () => {
     if (this.props.editable) {
-      return null;
+      return <Grid container spacing={2}>
+        <Grid item xs={4}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={this.onPublish}
+            fullWidth
+          >
+            <Typography>Publish</Typography>
+          </Button>
+        </Grid>
+        <Grid item xs={4}>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="large"
+            onClick={this.onSave}
+            fullWidth
+          >
+            <Typography>Save</Typography>
+          </Button>
+        </Grid>
+        <Grid item xs={4}>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="large"
+            onClick={this.onDelete}
+            fullWidth
+          >
+            <Typography>Delete</Typography>
+          </Button>
+        </Grid>
+      </Grid>
     }
     else {
       return <Grid container spacing={2}>
@@ -142,15 +182,12 @@ class Stall extends Component {
           </Button>
         </Grid>
       </Grid>
-
     }
   }
 
   render() {
     let { classes } = this.props;
     let { object, author } = this.state;
-
-    console.log(object)
 
     if (!object || !author) return null;
     return <Grid container spacing={2}>
@@ -210,7 +247,7 @@ class Stall extends Component {
                   variant="h1"
                   value={utils.prettyNumber(this.state.amount * object.price, 'long')}
                   placeholder="0"
-                  onChange={this.onPrice}
+                  onBlur={this.onPrice}
                 />
               </Grid>
               <Grid item>
