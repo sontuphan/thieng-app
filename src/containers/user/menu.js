@@ -16,6 +16,7 @@ import {
 import styles from './styles';
 import { checkTreeRootInLocalStorage } from 'components/blueprint/tree/history';
 
+
 class Menu extends Component {
 
   render() {

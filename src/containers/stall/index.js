@@ -27,6 +27,7 @@ class Stall extends Component {
 
     this.state = {
       id: props.id,
+      name: '',
       amount: 1,
       isLoading: false,
     }
@@ -36,7 +37,7 @@ class Stall extends Component {
     if (this.props.editable) {
       return this.setState({
         object: {},
-        author: { ...this.props.auth, link: '#' },
+        author: this.props.auth,
       });
     }
     else {
@@ -55,6 +56,15 @@ class Stall extends Component {
 
   componentDidMount() {
     return this.loadData();
+  }
+
+  onName = (value) => {
+    this.setState({
+      object: {
+        ...this.state.object,
+        name: value,
+      }
+    });
   }
 
   onAmount = (amount) => {
@@ -116,12 +126,11 @@ class Stall extends Component {
   }
 
   render() {
-    let { classes } = this.props;
     let { object, author } = this.state;
 
     if (!object || !author) return null;
     return <Grid container spacing={2}>
-
+      {/* Shelf */}
       <Grid item xs={12} md={6}>
         <Shelf
           author={author}
@@ -129,7 +138,7 @@ class Stall extends Component {
           editable={this.props.editable}
         />
       </Grid>
-
+      {/* Contents */}
       <Grid item xs={12} md={6}>
         <Grid container justify="center" spacing={2}>
           <Grid item xs={12}>
@@ -142,17 +151,25 @@ class Stall extends Component {
             <TextInput
               variant="h1"
               value={object.name}
+              onChange={this.onName}
+              placeholder="Tên sản phẩm"
             />
           </Grid>
-          {/* <Grid item xs={10} md={8}>
-            <Typography>{object.description1}</Typography>
-          </Grid> */}
-          {/* <Grid item xs={10} md={8}>
-            <Typography>{object.description2}</Typography>
-          </Grid> */}
-          {/* <Grid item xs={12}>
+          <Grid item xs={10} md={8}>
+            <TextInput
+              value={object.description1}
+              placeholder="Giới thiệu sản phẩm"
+            />
+          </Grid>
+          <Grid item xs={10} md={8}>
+            <TextInput
+              value={object.description2}
+              placeholder="Mô tả kỹ thuật"
+            />
+          </Grid>
+          <Grid item xs={12}>
             <Drain />
-          </Grid> */}
+          </Grid>
           {/* <Grid item xs={10} md={8}>
             <Typography variant="h4" className={classes.originalPrice}>{utils.prettyNumber(object.price, 'long')} {object.unit}</Typography>
           </Grid> */}
@@ -174,7 +191,6 @@ class Stall extends Component {
           </Grid>
         </Grid>
       </Grid>
-
     </Grid>
   }
 }

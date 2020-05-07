@@ -80,8 +80,6 @@ class Shelf extends Component {
   render() {
     let { classes, author, objects } = this.props;
     let { showing } = this.state;
-
-    if (objects.length <= 0) return null;
     let obj = objects[showing];
     let colors = objects.map(obj => obj.color).filter(color => color);
 
@@ -93,7 +91,7 @@ class Shelf extends Component {
             spacing={2}
             justify="center"
             alignItems="center"
-            style={obj.type !== 'png' ? {
+            style={obj && obj.type !== 'png' ? {
               backgroundImage: `url('${obj.url}')`,
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
@@ -101,6 +99,7 @@ class Shelf extends Component {
             } : null}
             className={classes.shelf}
           >
+            {/* Actions */}
             <Grid item xs={12}>
               <Grid container justify="flex-end" spacing={2}>
                 {this.props.on3D ? <Grid item>
@@ -108,7 +107,7 @@ class Shelf extends Component {
                     <ThreeDRotationRounded style={{ color: this.state.color }} />
                   </IconButton>
                 </Grid> : null}
-                {this.props.editable ? <Grid item>
+                {this.props.editable && obj ? <Grid item>
                   <ImageEditor
                     iconColor={this.state.color}
                     onChange={this.onEdit}
@@ -119,34 +118,37 @@ class Shelf extends Component {
                 </Grid> : null}
               </Grid>
             </Grid>
-
+            {/* PNG image */}
             <Grid item
               xs={10}
               className={classes.imageShelf}
-              style={obj.type === 'png' ? {
+              style={obj && obj.type === 'png' ? {
                 backgroundImage: `url('${obj.url}')`,
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'contain'
               } : null}
             />
+            {/* Author */}
             <Grid item xs={6}>
               <Grid container alignItems="center" spacing={1} >
-                <Grid item className={classes.link} component={RouterLink} to={author.link}>
+                <Grid item className={classes.link} component={RouterLink} to={author.link || '#'}>
                   <Avatar alt={author.displayname} src={author.avatar} />
                 </Grid>
-                <Grid item xs={8} className={classes.link} component={RouterLink} to={author.link}>
+                <Grid item xs={8} className={classes.link} component={RouterLink} to={author.link || '#'}>
                   <Typography style={{ color: this.state.color }} noWrap>{author.displayname}</Typography>
                 </Grid>
               </Grid>
             </Grid>
+            {/* Colors */}
             <Grid item xs={6}>
               <ColorSelect
                 colors={colors}
-                value={obj.color}
+                value={obj ? obj.color : null}
                 onChange={this.onColor}
               />
             </Grid>
+
           </Grid>
         </Grid>
 
@@ -221,9 +223,8 @@ class Shelf extends Component {
 }
 
 Shelf.defaultProps = {
-  objects: [{}],
+  objects: [],
   onChange: () => { },
-  on3D: () => { },
   editable: false,
 }
 

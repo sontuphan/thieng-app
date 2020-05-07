@@ -6,13 +6,6 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import Avatar from '@material-ui/core/Avatar';
-
-import { SaveAltRounded, PublicRounded, ExpandMoreRounded } from '@material-ui/icons';
 
 import { BottomDrawer } from 'components/drawers';
 import Drain from 'components/drain';
@@ -31,93 +24,21 @@ class Editor extends Component {
   }
 
   render() {
-    let { classes } = this.props;
-
     return <Grid container spacing={2}>
       <Grid item xs={12}>
         <BottomDrawer
           visible={this.props.visible}
           onClose={this.props.onClose}
         >
-          <Grid container spacing={2} justify="center">
-            <Grid item xs={12} md={11} lg={10}>
-              <Grid container spacing={this.props.ui.width >= 960 ? 4 : 2}>
-
-                <Grid item xs={12} md={8}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <Stall
-                        id={this.state.id}
-                        editable
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Drain />
-                    </Grid>
-                  </Grid>
-                </Grid>
-
-                <Grid item xs={12} md={4}>
-                  <Grid container spacing={2} justify="center">
-
-                    <Grid item xs={10} md={12}>
-                      <Grid container justify="space-between" alignItems="center" spacing={2}>
-                        <Grid item>
-                          <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
-                            <Grid item>
-                              <Button
-                                variant="contained"
-                                color="primary"
-                                startIcon={<PublicRounded fontSize="small" />}
-                                onClick={this.onPublish}
-                                size="small"
-                              >
-                                <Typography noWrap>Publish</Typography>
-                              </Button>
-                            </Grid>
-                            <Grid item>
-                              <Button
-                                variant="outlined"
-                                startIcon={<SaveAltRounded fontSize="small" />}
-                                onClick={this.props.onClose}
-                                size="small"
-                              >
-                                <Typography noWrap>Save</Typography>
-                              </Button>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                        <Grid item>
-                          <IconButton size="small">
-                            <ExpandMoreRounded fontSize="small" />
-                          </IconButton>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={10} md={12}>
-                      <Divider />
-                    </Grid>
-                    <Grid item xs={10} md={12}>
-                      <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
-                        <Grid item>
-                          <Avatar
-                            alt={this.props.auth.displayname}
-                            src={this.props.auth.avatar}
-                            className={classes.avatar}
-                          />
-                        </Grid>
-                        <Grid item>
-                          <Typography>{this.props.auth.displayname}</Typography>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Drain />
-                    </Grid>
-                  </Grid>
-                </Grid>
-
-              </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Stall
+                id={this.state.id}
+                editable
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Drain />
             </Grid>
           </Grid>
         </BottomDrawer>
@@ -127,7 +48,6 @@ class Editor extends Component {
 }
 
 const mapStateToProps = state => ({
-  ui: state.ui,
   auth: state.auth,
 });
 
@@ -135,8 +55,12 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 }, dispatch);
 
+Editor.defaultProps = {
+  visible: false
+}
+
 Editor.propTypes = {
-  visible: PropTypes.bool.isRequired,
+  visible: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
 }
 

@@ -33,6 +33,7 @@ import styles from './styles';
 import PANEL from 'static/images/designer-2.jpg';
 import utils from 'helpers/utils';
 
+
 class User extends Component {
   constructor() {
     super();
@@ -44,18 +45,8 @@ class User extends Component {
     }
   }
 
-  focusDescription = (ref) => {
-    this.descriptionRef = ref;
-  }
-
   onEdit = () => {
-    this.setState({ editable: !this.state.editable }, () => {
-      this.descriptionRef.focus();
-    });
-  }
-
-  onLogout = () => {
-
+    this.setState({ editable: !this.state.editable });
   }
 
   render() {
@@ -134,9 +125,9 @@ class User extends Component {
                     </Grid>
                     <Grid item xs={12}>
                       <TextInput
-                        inputRef={this.focusDescription}
                         value={loremIpsum({ units: 'paragraph' })}
                         readOnly={!this.state.editable}
+                        focus={this.state.editable}
                       />
                     </Grid>
                   </Grid>
