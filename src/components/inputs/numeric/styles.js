@@ -14,5 +14,9 @@ export default theme => ({
   input: {
     width: '100%',
     textAlign: 'center'
+  },
+  disabledIcon: {
+    color: theme.palette.text.disabled,
+    cursor: 'not-allowed'
   }
 });

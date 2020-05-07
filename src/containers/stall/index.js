@@ -67,6 +67,33 @@ class Stall extends Component {
     });
   }
 
+  onDescription1 = (value) => {
+    this.setState({
+      object: {
+        ...this.state.object,
+        description1: value,
+      }
+    });
+  }
+
+  onDescription2 = (value) => {
+    this.setState({
+      object: {
+        ...this.state.object,
+        description2: value,
+      }
+    });
+  }
+
+  onPrice = (value) => {
+    this.setState({
+      object: {
+        ...this.state.object,
+        price: parseInt(value),
+      }
+    });
+  }
+
   onAmount = (amount) => {
     return this.setState({ amount });
   }
@@ -126,7 +153,10 @@ class Stall extends Component {
   }
 
   render() {
+    let { classes } = this.props;
     let { object, author } = this.state;
+
+    console.log(object)
 
     if (!object || !author) return null;
     return <Grid container spacing={2}>
@@ -158,24 +188,41 @@ class Stall extends Component {
           <Grid item xs={10} md={8}>
             <TextInput
               value={object.description1}
+              onChange={this.onDescription1}
               placeholder="Giới thiệu sản phẩm"
             />
           </Grid>
           <Grid item xs={10} md={8}>
             <TextInput
               value={object.description2}
+              onChange={this.onDescription2}
               placeholder="Mô tả kỹ thuật"
             />
           </Grid>
           <Grid item xs={12}>
             <Drain />
           </Grid>
-          {/* <Grid item xs={10} md={8}>
-            <Typography variant="h4" className={classes.originalPrice}>{utils.prettyNumber(object.price, 'long')} {object.unit}</Typography>
-          </Grid> */}
-          {/* <Grid item xs={10} md={8}>
-            <Typography variant="h1">{utils.prettyNumber(this.state.amount * object.price, 'long')} {object.unit}</Typography>
-          </Grid> */}
+          <Grid item xs={10} md={8}>
+            <Typography
+              variant="h4"
+              className={classes.originalPrice}
+            >{utils.prettyNumber(object.price, 'long')}</Typography>
+          </Grid>
+          <Grid item xs={10} md={8}>
+            <Grid container className={classes.noWrap} spacing={2}>
+              <Grid item>
+                <TextInput
+                  variant="h1"
+                  value={utils.prettyNumber(this.state.amount * object.price, 'long')}
+                  placeholder="0"
+                  onChange={this.onPrice}
+                />
+              </Grid>
+              <Grid item>
+                <Typography variant="h1">vnd</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
           <Grid item xs={12}>
             <Drain />
           </Grid>
@@ -184,6 +231,7 @@ class Stall extends Component {
               variant="outlined"
               value={this.state.amount}
               onChange={this.onAmount}
+              disabled
             />
           </Grid>
           <Grid item xs={10} md={8}>

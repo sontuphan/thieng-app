@@ -26,6 +26,7 @@ Utils.rand = () => {
 }
 
 Utils.prettyNumber = (num, type = 'long') => {
+  if (!num) return 0;
   if (typeof num !== 'number') throw new TypeError('Expected a number');
   if (num > 1e19) throw new RangeError('Input expected to be < 1e19');
   if (num < -1e19) throw new RangeError('Input expected to be > -1e19');

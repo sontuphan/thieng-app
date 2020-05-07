@@ -28,6 +28,7 @@ class NumericInput extends Component {
   }
 
   onChange = (e) => {
+    if (this.props.disabled) return;
     let value = e.target.value;
     if (!parseInt(value)) value = 0;
     if (value < 0) value = 0;
@@ -38,6 +39,7 @@ class NumericInput extends Component {
   }
 
   onAdd = () => {
+    if (this.props.disabled) return;
     let value = this.state.value + 1;
     return this.setState({ value }, () => {
       this.props.onChange(this.state.value);
@@ -45,6 +47,7 @@ class NumericInput extends Component {
   }
 
   onMinus = () => {
+    if (this.props.disabled) return;
     let value = this.state.value - 1;
     if (value < 0) value = 0;
     return this.setState({ value }, () => {
@@ -69,7 +72,7 @@ class NumericInput extends Component {
           <Grid container alignItems="center" spacing={2} className={classes.noWrap}>
             <Grid item onClick={this.onMinus}>
               <IconButton size="small">
-                <RemoveRounded />
+                <RemoveRounded className={this.props.disabled ? classes.disabledIcon : null} />
               </IconButton>
             </Grid>
             <Grid item className={classes.fullWidth}>
@@ -84,7 +87,7 @@ class NumericInput extends Component {
             </Grid>
             <Grid item>
               <IconButton size="small" onClick={this.onAdd}>
-                <AddRounded />
+                <AddRounded className={this.props.disabled ? classes.disabledIcon : null} />
               </IconButton>
             </Grid>
           </Grid>

@@ -47,7 +47,7 @@ class ProductCard extends Component {
             </Grid>
             <Grid item xs={12} className={classes.cursor} onClick={this.onView}>
               <Typography>{object.name}</Typography>
-              <Typography variant="h3">{utils.prettyNumber(object.price, 'long')} {object.unit}</Typography>
+              <Typography variant="h3">{utils.prettyNumber(object.price, 'long')} vnd</Typography>
             </Grid>
           </Grid>
         </Paper>

@@ -27,7 +27,6 @@ class TextInput extends Component {
   }
 
   focus = () => {
-    console.log('chay quai')
     if (!this.props.readOnly && this.props.focus)
       return this.ref.current.focus();
   }
