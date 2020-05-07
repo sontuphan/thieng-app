@@ -125,38 +125,25 @@ class ImageEditorDialog extends Component {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Grid container justify="space-between" alignItems="center" className={classes.action} spacing={2}>
+        <Grid container className={classes.action} justify="flex-end" spacing={2}>
           <Grid item>
             <Button
-              variant="outlined"
+              variant="contained"
               color="primary"
-              onClick={this.props.onClose}
+              onClick={this.onChange}
             >
-              <Typography>Need help?</Typography>
+              <Typography>OK</Typography>
             </Button>
           </Grid>
           <Grid item>
-            <Grid container className={classes.noWrap} justify="flex-end" spacing={2}>
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.onChange}
-                >
-                  <Typography>OK</Typography>
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={this.props.onDelete}
-                  startIcon={<DeleteRounded />}
-                >
-                  <Typography>Delete</Typography>
-                </Button>
-              </Grid>
-            </Grid>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={this.props.onDelete}
+              startIcon={<DeleteRounded />}
+            >
+              <Typography>Delete</Typography>
+            </Button>
           </Grid>
         </Grid>
       </DialogActions>

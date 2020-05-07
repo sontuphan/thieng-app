@@ -102,7 +102,7 @@ class Stall extends Component {
     let { object } = this.state;
     console.log(object);
   }
-  
+
   onDelete = () => {
 
   }
@@ -276,7 +276,7 @@ class Stall extends Component {
               variant="outlined"
               value={this.state.amount}
               onChange={this.onAmount}
-              disabled
+              disabled={this.props.editable}
             />
           </Grid>
           <Grid item xs={10} md={8}>

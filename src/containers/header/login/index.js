@@ -12,7 +12,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { CloseRounded } from '@material-ui/icons';
+import { CloseRounded, RoomServiceRounded } from '@material-ui/icons';
 import { FaGoogle, FaFacebookF, FaApple, FaTwitter } from 'react-icons/fa';
 
 import styles from './styles';
@@ -141,9 +141,9 @@ class LogIn extends Component {
         <Grid container className={classes.action} spacing={2}>
           <Grid item>
             <Button
-              variant="outlined"
               color="primary"
               onClick={onToggle}
+              startIcon={<RoomServiceRounded />}
             >
               <Typography>Need help?</Typography>
             </Button>
