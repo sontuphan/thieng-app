@@ -79,8 +79,8 @@ class Header extends Component {
   onUser = () => {
     let { auth } = this.props;
     this.onToggleDrawer(false);
-    if (!auth.userId) return console.error('Not signed in yet.');
-    return this.props.history.push('/user/' + auth.userId + '/home');
+    if (!auth.email) return console.error('Not signed in yet.');
+    return this.props.history.push('/user/' + auth.email + '/home');
   }
 
   renderProfile = () => {

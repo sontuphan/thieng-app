@@ -54,8 +54,8 @@ class App extends Component {
             <Redirect exact path="/newsfeed" to="/newsfeed/for-me" />
             <Route exact path="/newsfeed/:page" component={Newsfeed} />
             <Route path="/mall" component={Mall} />
-            <Redirect exact from="/user/:userId" to="/user/:userId/home" />
-            <Route exact path="/user/:userId/:page" component={User} />
+            <Redirect exact from="/user/:email" to="/user/:email/home" />
+            <Route exact path="/user/:email/:page" component={User} />
           </Switch>
 
           {/* Global app */}

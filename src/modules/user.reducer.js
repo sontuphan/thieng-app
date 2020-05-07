@@ -20,9 +20,9 @@ export const GET_USER = 'GET_USER';
 export const GET_USER_OK = 'GET_USER_OK';
 export const GET_USER_FAIL = 'GET_USER_FAIL';
 
-const _getUser = (userId) => {
+const _getUser = (email) => {
   for (let i = 0; i < UserSchema.length; i++) {
-    if (userId === UserSchema[i].userId) {
+    if (email === UserSchema[i].email) {
       return {
         status: 'OK',
         data: [UserSchema[i]],
@@ -32,12 +32,12 @@ const _getUser = (userId) => {
   }
 }
 
-export const getUser = (userId) => {
+export const getUser = (email) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
       dispatch({ type: GET_USER });
 
-      let data = _getUser(userId);
+      let data = _getUser(email);
       if (!data) {
         dispatch({
           type: GET_USER_FAIL,

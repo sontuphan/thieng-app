@@ -20,7 +20,7 @@ import { checkTreeRootInLocalStorage } from 'components/blueprint/tree/history';
 class Menu extends Component {
 
   render() {
-    let { match: { params: { userId, page } } } = this.props;
+    let { match: { params: { email, page } } } = this.props;
 
     return <Grid container spacing={2} justify="center">
       <Grid item>
@@ -30,7 +30,7 @@ class Menu extends Component {
             color={page === 'home' ? 'primary' : 'default'}
             startIcon={<HomeRounded />}
             component={RouterLink}
-            to={`/user/${userId}/home`}
+            to={`/user/${email}/home`}
           >
             <Typography>Home</Typography>
           </Button>
@@ -43,7 +43,7 @@ class Menu extends Component {
             color={page === 'store' ? 'primary' : 'default'}
             startIcon={<StorefrontRounded />}
             component={RouterLink}
-            to={`/user/${userId}/store`}
+            to={`/user/${email}/store`}
           >
             <Typography>Store</Typography>
           </Button>
@@ -56,7 +56,7 @@ class Menu extends Component {
             color={page === 'message' ? 'primary' : 'default'}
             startIcon={<ChatRounded />}
             component={RouterLink}
-            to={`/user/${userId}/message`}
+            to={`/user/${email}/message`}
             disabled
           >
             <Typography>Message</Typography>
@@ -70,7 +70,7 @@ class Menu extends Component {
             color={page === 'wallet' ? 'primary' : 'default'}
             startIcon={<AccountBalanceWalletRounded />}
             component={RouterLink}
-            to={`/user/${userId}/wallet`}
+            to={`/user/${email}/wallet`}
             disabled
           >
             <Typography>Wallet</Typography>
@@ -84,7 +84,7 @@ class Menu extends Component {
             color={page === 'settings' ? 'primary' : 'default'}
             startIcon={<SettingsRounded />}
             component={RouterLink}
-            to={`/user/${userId}/settings`}
+            to={`/user/${email}/settings`}
           >
             <Typography>Settings</Typography>
           </Button>

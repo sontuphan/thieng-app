@@ -38,7 +38,7 @@ const DEFAULT_TEXT = {
   }
 }
 
-export const getRandomProjects = (userId) => [
+export const getRandomProjects = (email) => [
   {
     id: 0,
     item: 0,
@@ -128,7 +128,7 @@ export const getRandomProjects = (userId) => [
         },
       ]
     },
-    author: userId,
+    author: email,
     comments: [0, 1],
     createdAt: dateformat("d mmm yyyy"),
   },
@@ -195,7 +195,7 @@ export const getRandomProjects = (userId) => [
         },
       ]
     },
-    author: userId,
+    author: email,
     comments: [2, 3],
     createdAt: dateformat("d mmm yyyy"),
   },
@@ -262,7 +262,7 @@ export const getRandomProjects = (userId) => [
         },
       ]
     },
-    author: userId,
+    author: email,
     comments: [4, 5],
     createdAt: dateformat("d mmm yyyy"),
   }

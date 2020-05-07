@@ -23,9 +23,9 @@ export const GET_PROJECTS = 'GET_PROJECTS';
 export const GET_PROJECTS_OK = 'GET_PROJECTS_OK';
 export const GET_PROJECTS_FAIL = 'GET_PROJECTS_FAIL';
 
-const _getUser = (userId) => {
+const _getUser = (id) => {
   for (let i = 0; i < UserSchema.length; i++) {
-    if (userId === UserSchema[i].userId) {
+    if (id === UserSchema[i].id) {
       return UserSchema[i];
     }
   }
@@ -45,8 +45,8 @@ const _getComments = (itemId) => {
   return comments;
 }
 
-const _getProjects = (userId, page, limit) => {
-  let projects = getRandomProjects(userId).concat(getRandomProjects(userId));
+const _getProjects = (email, page, limit) => {
+  let projects = getRandomProjects(email).concat(getRandomProjects(email));
   projects = projects.map(project => {
     let comments = _getComments(project.id)
     project.comments = comments;
@@ -59,12 +59,12 @@ const _getProjects = (userId, page, limit) => {
   };
 }
 
-export const getProjects = (userId, page, limit) => {
+export const getProjects = (email, page, limit) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
       dispatch({ type: GET_PROJECTS });
 
-      let data = _getProjects(userId, page, limit);
+      let data = _getProjects(email, page, limit);
       if (!data) {
         dispatch({
           type: GET_PROJECTS_FAIL,
