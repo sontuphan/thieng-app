@@ -93,10 +93,19 @@ class Stall extends Component {
   }
 
   onPublish = () => {
-    console.log(this.state.object)
+    let { object } = this.state;
+    object = { ...object, tags: ['New'] }
+    console.log(object);
   }
-  onSave = () => { }
-  onDelete = () => { }
+
+  onSave = () => {
+    let { object } = this.state;
+    console.log(object);
+  }
+  
+  onDelete = () => {
+
+  }
 
   onBuy = () => {
     let object = this.props.items.data[0];
@@ -107,7 +116,11 @@ class Stall extends Component {
 
   renderTag = () => {
     if (this.props.editable) {
-      return null;
+      return <Grid container spacing={1}>
+        <Grid item>
+          <Chip color="primary" label="New" size="small" />
+        </Grid>
+      </Grid>
     }
     else {
       return <Grid container spacing={1}>
