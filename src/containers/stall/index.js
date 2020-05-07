@@ -29,7 +29,6 @@ class Stall extends Component {
       id: props.id,
       name: '',
       amount: 1,
-      isLoading: false,
     }
   }
 
@@ -60,38 +59,32 @@ class Stall extends Component {
 
   onName = (value) => {
     this.setState({
-      object: {
-        ...this.state.object,
-        name: value,
-      }
+      object: { ...this.state.object, name: value }
     });
   }
 
   onDescription1 = (value) => {
     this.setState({
-      object: {
-        ...this.state.object,
-        description1: value,
-      }
+      object: { ...this.state.object, description1: value }
     });
   }
 
   onDescription2 = (value) => {
     this.setState({
-      object: {
-        ...this.state.object,
-        description2: value,
-      }
+      object: { ...this.state.object, description2: value }
     });
   }
 
   onPrice = (value) => {
     if (value) value = value.split(',').join('');
     this.setState({
-      object: {
-        ...this.state.object,
-        price: parseInt(value),
-      }
+      object: { ...this.state.object, price: parseInt(value) }
+    });
+  }
+
+  onImage = (value) => {
+    this.setState({
+      object: { ...this.state.object, images: value }
     });
   }
 
@@ -167,6 +160,7 @@ class Stall extends Component {
           author={author}
           objects={object.images}
           editable={this.props.editable}
+          onChange={this.onImage}
         />
       </Grid>
       {/* Contents */}

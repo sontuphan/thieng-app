@@ -70,11 +70,21 @@ class Shelf extends Component {
   }
 
   onAdd = (value) => {
-    console.log('add', value)
+    let { objects } = this.props;
+    objects.push({ ...value, type: 'jpg' });
+    return this.props.onChange(objects);
   }
 
   onEdit = (value) => {
-    console.log('edit', value)
+    let { showing } = this.state;
+    let { objects } = this.props;
+    if (!value.url && !value.color) {
+      objects = objects.filter((obj, index) => index !== showing);
+    }
+    else {
+      objects[showing] = { ...objects[showing], ...value }
+    }
+    return this.props.onChange(objects);
   }
 
   render() {
@@ -232,8 +242,8 @@ Shelf.propTypes = {
   author: PropTypes.object.isRequired,
   objects: PropTypes.array,
   on3D: PropTypes.func,
-  editable: PropTypes.bool,
   onChange: PropTypes.func,
+  editable: PropTypes.bool,
 }
 
 export default withRouter(withStyles(styles)(Shelf));
