@@ -10,13 +10,15 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Badge from '@material-ui/core/Badge';
+import Tooltip from '@material-ui/core/Tooltip';
 
-import { ThreeDRotationRounded, ArrowBackRounded, ArrowForwardRounded } from '@material-ui/icons';
+import {
+  ThreeDRotationRounded, ArrowBackRounded,
+  ArrowForwardRounded, ColorLensRounded, AddRounded
+} from '@material-ui/icons';
 
 import ColorSelect from './colorSelect';
 import Drain from 'components/drain';
-import ImageEditor from './imageEditor';
-import ImageUploader from './imageUploader';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -69,24 +71,6 @@ class Shelf extends Component {
     this.onStep(step);
   }
 
-  onAdd = (value) => {
-    let { objects } = this.props;
-    objects.push({ ...value, type: 'jpg' });
-    return this.props.onChange(objects);
-  }
-
-  onEdit = (value) => {
-    let { showing } = this.state;
-    let { objects } = this.props;
-    if (!value.url && !value.color) {
-      objects = objects.filter((obj, index) => index !== showing);
-    }
-    else {
-      objects[showing] = { ...objects[showing], ...value }
-    }
-    return this.props.onChange(objects);
-  }
-
   render() {
     let { classes, author, objects } = this.props;
     let { showing } = this.state;
@@ -118,13 +102,9 @@ class Shelf extends Component {
                   </IconButton>
                 </Grid> : null}
                 {this.props.editable && obj ? <Grid item>
-                  <ImageEditor
-                    iconColor={this.state.color}
-                    onChange={this.onEdit}
-                    url={obj.url}
-                    color={obj.color}
-                    visible
-                  />
+                  <IconButton onClick={this.props.onEdit}>
+                    <ColorLensRounded style={{ color: this.state.color }} />
+                  </IconButton>
                 </Grid> : null}
               </Grid>
             </Grid>
@@ -208,10 +188,14 @@ class Shelf extends Component {
                   </Grid>)
                 }
                 {this.props.editable ? <Grid item>
-                  <ImageUploader
-                    onChange={this.onAdd}
-                    visible
-                  />
+                  <Tooltip title="Add new image">
+                    <Avatar
+                      onClick={this.props.onAdd}
+                      className={classes.cursor}
+                    >
+                      <AddRounded />
+                    </Avatar>
+                  </Tooltip>
                 </Grid> : <Fragment />}
               </SwipeableViews>
             </Grid>
@@ -235,6 +219,8 @@ class Shelf extends Component {
 Shelf.defaultProps = {
   objects: [],
   onChange: () => { },
+  onAdd: () => { },
+  onEdit: () => { },
   editable: false,
 }
 
@@ -243,6 +229,8 @@ Shelf.propTypes = {
   objects: PropTypes.array,
   on3D: PropTypes.func,
   onChange: PropTypes.func,
+  onAdd: PropTypes.func,
+  onEdit: PropTypes.func,
   editable: PropTypes.bool,
 }
 

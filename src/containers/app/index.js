@@ -20,6 +20,7 @@ import User from 'containers/user';
 import Search from 'containers/search';
 import Cart from 'containers/cart';
 import Notification from 'containers/notification';
+import Editor from 'containers/editor';
 
 import theme from 'static/styles/theme';
 import 'static/styles/index.css';
@@ -68,6 +69,9 @@ class App extends Component {
             </Grid>
             <Grid item xs={12}>
               <Notification />
+            </Grid>
+            <Grid item xs={12}>
+              <Editor />
             </Grid>
           </Grid>
 

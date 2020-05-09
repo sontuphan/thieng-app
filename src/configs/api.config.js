@@ -8,12 +8,9 @@ var configs = {}
  */
 configs.development = {
   base: 'http://localhost:3001',
-  auth: {
-    origin: '/authentication'
-  },
-  user: {
-    origin: '/user',
-  }
+  auth: '/authentication',
+  user: '/user',
+  upload: '/upload'
 }
 
 /**

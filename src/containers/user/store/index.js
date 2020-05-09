@@ -24,7 +24,7 @@ class UserStore extends Component {
     super();
 
     this.state = {
-      visible: false,
+      visible: true,
       items: [],
       page: 0,
       limit: 12,

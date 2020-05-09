@@ -17,6 +17,7 @@ import { TextInput, NumericInput } from 'components/inputs';
 import { getItemById } from 'modules/items.reducer';
 import { getUser } from 'modules/user.reducer';
 import { setCart } from 'modules/cart.reducer';
+import { runImageEditor } from 'modules/imageEditor.reducer';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -27,6 +28,8 @@ class Stall extends Component {
 
     this.state = {
       id: props.id,
+      object: {},
+      author: {},
       name: '',
       amount: 1,
     }
@@ -57,33 +60,47 @@ class Stall extends Component {
     return this.loadData();
   }
 
+  onAdd = () => {
+    return this.props.runImageEditor().then(({ url, color }) => {
+      if (!url) return console.log('No image added');
+      let { object } = this.state;
+      if (!object.images) object.images = [];
+      object.images.push({ url, color });
+      return this.setState({ object });
+    }).catch(console.error);
+  }
+
+  onEdit = (url, color) => {
+    return this.props.runImageEditor(url, color);
+  }
+
   onName = (value) => {
-    this.setState({
+    return this.setState({
       object: { ...this.state.object, name: value }
     });
   }
 
   onDescription1 = (value) => {
-    this.setState({
+    return this.setState({
       object: { ...this.state.object, description1: value }
     });
   }
 
   onDescription2 = (value) => {
-    this.setState({
+    return this.setState({
       object: { ...this.state.object, description2: value }
     });
   }
 
   onPrice = (value) => {
     if (value) value = value.split(',').join('');
-    this.setState({
+    return this.setState({
       object: { ...this.state.object, price: parseInt(value) }
     });
   }
 
   onImage = (value) => {
-    this.setState({
+    return this.setState({
       object: { ...this.state.object, images: value }
     });
   }
@@ -211,6 +228,8 @@ class Stall extends Component {
           objects={object.images}
           editable={this.props.editable}
           onChange={this.onImage}
+          onAdd={this.onAdd}
+          onEdit={this.onEdit}
         />
       </Grid>
       {/* Contents */}
@@ -292,12 +311,14 @@ const mapStateToProps = state => ({
   auth: state.auth,
   items: state.items,
   users: state.users,
+  imageEditor: state.imageEditor,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getItemById,
   getUser,
   setCart,
+  runImageEditor,
 }, dispatch);
 
 Stall.defaultProps = {
