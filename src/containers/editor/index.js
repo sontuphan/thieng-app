@@ -71,6 +71,7 @@ class Editor extends Component {
 
   onClose = () => {
     return this.props.returnImageData().then(() => {
+      this.ref.current.value = null;
       return this.setState({ visible: false, file: null });
     }).catch(console.error);
   }

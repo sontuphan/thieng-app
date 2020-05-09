@@ -23,16 +23,19 @@ import styles from './styles';
 import utils from 'helpers/utils';
 
 class Stall extends Component {
-  constructor(props) {
+  constructor() {
     super();
 
     this.state = {
-      id: props.id,
       object: {},
       author: {},
       name: '',
       amount: 1,
     }
+  }
+
+  componentDidMount() {
+    return this.loadData();
   }
 
   loadData = () => {
@@ -43,21 +46,15 @@ class Stall extends Component {
       });
     }
     else {
-      return this.props.getItemById(this.state.id).then(re => {
+      return this.props.getItemById(this.props.id).then(re => {
         let item = re.data[0];
         return this.props.getUser(item.author);
       }).then(re => {
         let object = this.props.items.data[0];
         let author = this.props.users.data[0];
         this.setState({ object, author });
-      }).catch(er => {
-        return console.error(er);
-      });
+      }).catch(console.error);
     }
-  }
-
-  componentDidMount() {
-    return this.loadData();
   }
 
   onAdd = () => {
@@ -70,8 +67,14 @@ class Stall extends Component {
     }).catch(console.error);
   }
 
-  onEdit = (url, color) => {
-    return this.props.runImageEditor(url, color);
+  onEdit = (index) => {
+    let { object } = this.state;
+    let { url, color } = object.images[index];
+    return this.props.runImageEditor(url, color).then(({ url, color }) => {
+      if (!url) object.images = object.images.filter((o, i) => i !== index);
+      else object.images[index] = { url, color };
+      return this.setState({ object });
+    }).catch(console.error);
   }
 
   onName = (value) => {
@@ -140,9 +143,11 @@ class Stall extends Component {
       </Grid>
     }
     else {
+      const { object: { tags } } = this.state;
+      if (!tags) return null;
       return <Grid container spacing={1}>
         {
-          this.state.object.tags.map(tag => <Grid item key={tag}>
+          tags.map(tag => <Grid item key={tag}>
             <Chip color="primary" label={tag} size="small" />
           </Grid>)
         }

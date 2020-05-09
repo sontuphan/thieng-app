@@ -27,7 +27,7 @@ export const getRandomItems = () => [
       { ...randInterior(), color: null },
       { ...randInterior(), color: null },
     ],
-    author: '55b2b9ec679467c92bae0344cc2dd6cc61c06d2a111845d87fb77f681fe7c7e7',
+    author: 'sontu_snowboy_teen@yahoo.com.vn',
     comments: [0, 1]
   }, {
     id: 1,
@@ -42,7 +42,7 @@ export const getRandomItems = () => [
       { ...randInterior(), color: "#915B3C" },
       { ...randInterior(), color: null },
     ],
-    author: '55b2b9ec679467c92bae0344cc2dd6cc61c06d2a111845d87fb77f681fe7c7e7',
+    author: 'sontu_snowboy_teen@yahoo.com.vn',
     comments: [2, 3]
   }
 ]

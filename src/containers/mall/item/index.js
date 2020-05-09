@@ -69,8 +69,6 @@ class Item extends Component {
   }
 
   render() {
-    // let { classes } = this.props;
-
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
         <Stall id={this.state.id} />
@@ -83,8 +81,7 @@ class Item extends Component {
       <Grid item xs={12} md={6}>
         <Grid container justify="center" spacing={2}>
           <Grid item xs={10}>
-            <Recommendation id={this.state.id} quatity={6}
-            />
+            <Recommendation id={this.state.id} quatity={6} />
           </Grid>
           <Grid item xs={12}>
             <Drain small />

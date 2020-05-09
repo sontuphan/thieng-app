@@ -5,11 +5,11 @@ import designerImg4 from 'static/images/designer-4.jpg';
 const UserSchema = [
   {
     id: 0,
-    displayname: "Remy Sharp",
+    displayname: "Phan Son Tu",
     code: 'remy-sharp',
-    email: 'remy@gmail.com',
+    email: 'sontu_snowboy_teen@yahoo.com.vn',
     avatar: designerImg4,
-    link: '/user/remy-sharp',
+    link: '/user/sontu_snowboy_teen@yahoo.com.vn',
     hearts: 13573,
     products: 53,
   },

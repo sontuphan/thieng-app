@@ -102,7 +102,7 @@ class Shelf extends Component {
                   </IconButton>
                 </Grid> : null}
                 {this.props.editable && obj ? <Grid item>
-                  <IconButton onClick={this.props.onEdit}>
+                  <IconButton onClick={() => this.props.onEdit(this.state.showing)}>
                     <ColorLensRounded style={{ color: this.state.color }} />
                   </IconButton>
                 </Grid> : null}
