@@ -218,7 +218,6 @@ class Shelf extends Component {
 
 Shelf.defaultProps = {
   objects: [],
-  onChange: () => { },
   onAdd: () => { },
   onEdit: () => { },
   editable: false,
@@ -228,7 +227,6 @@ Shelf.propTypes = {
   author: PropTypes.object.isRequired,
   objects: PropTypes.array,
   on3D: PropTypes.func,
-  onChange: PropTypes.func,
   onAdd: PropTypes.func,
   onEdit: PropTypes.func,
   editable: PropTypes.bool,

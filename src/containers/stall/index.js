@@ -57,7 +57,7 @@ class Stall extends Component {
     }
   }
 
-  onAdd = () => {
+  onAddImage = () => {
     return this.props.runImageEditor().then(({ url, color }) => {
       if (!url) return console.log('No image added');
       let { object } = this.state;
@@ -67,7 +67,7 @@ class Stall extends Component {
     }).catch(console.error);
   }
 
-  onEdit = (index) => {
+  onEditImage = (index) => {
     let { object } = this.state;
     let { url, color } = object.images[index];
     return this.props.runImageEditor(url, color).then(({ url, color }) => {
@@ -99,12 +99,6 @@ class Stall extends Component {
     if (value) value = value.split(',').join('');
     return this.setState({
       object: { ...this.state.object, price: parseInt(value) }
-    });
-  }
-
-  onImage = (value) => {
-    return this.setState({
-      object: { ...this.state.object, images: value }
     });
   }
 
@@ -232,9 +226,8 @@ class Stall extends Component {
           author={author}
           objects={object.images}
           editable={this.props.editable}
-          onChange={this.onImage}
-          onAdd={this.onAdd}
-          onEdit={this.onEdit}
+          onAdd={this.onAddImage}
+          onEdit={this.onEditImage}
         />
       </Grid>
       {/* Contents */}
