@@ -7,8 +7,15 @@ import api from 'helpers/api';
  */
 
 const defaultState = {
-  url: null,
-  color: null,
+  file: {
+    name: null,
+    type: null,
+    source: null,
+    userId: null,
+    metadata: {
+      color: null
+    },
+  },
   visible: false,
   promise: {
     resolve: () => { },
@@ -19,19 +26,19 @@ const defaultState = {
 /**
  * Toogle on/off image editor app
  */
-export const RUN_IMAGE_EDITOR = 'RUN_IMAGE_EDITOR';
-export const RUN_IMAGE_EDITOR_OK = 'RUN_IMAGE_EDITOR_OK';
-export const RUN_IMAGE_EDITOR_FAIL = 'RUN_IMAGE_EDITOR_FAIL';
+export const RUN_EDITOR = 'RUN_EDITOR';
+export const RUN_EDITOR_OK = 'RUN_EDITOR_OK';
+export const RUN_EDITOR_FAIL = 'RUN_EDITOR_FAIL';
 
-export const runImageEditor = (url, color) => {
+export const runEditor = (file) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
-      dispatch({ type: RUN_IMAGE_EDITOR });
+      dispatch({ type: RUN_EDITOR });
 
       dispatch({
-        type: RUN_IMAGE_EDITOR_OK,
+        type: RUN_EDITOR_OK,
         reason: null,
-        data: { visible: true, url, color, promise: { resolve, reject } }
+        data: { visible: true, file, promise: { resolve, reject } }
       });
     });
   }
@@ -41,27 +48,27 @@ export const runImageEditor = (url, color) => {
 /**
  * Update data in flows
  */
-export const SET_IMAGE_DATA = 'SET_IMAGE_DATA';
-export const SET_IMAGE_DATA_OK = 'SET_IMAGE_DATA_OK';
-export const SET_IMAGE_DATA_FAIL = 'SET_IMAGE_DATA_FAIL';
+export const SET_DATA = 'SET_DATA';
+export const SET_DATA_OK = 'SET_DATA_OK';
+export const SET_DATA_FAIL = 'SET_DATA_FAIL';
 
-export const setImageData = (data) => {
+export const setData = (file) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
-      dispatch({ type: SET_IMAGE_DATA });
+      dispatch({ type: SET_DATA });
 
-      if (!data) {
+      if (!file) {
         dispatch({
-          type: SET_IMAGE_DATA_FAIL,
+          type: SET_DATA_FAIL,
           reason: 'Invalid inputs'
         });
         return reject('Invalid inputs');
       }
 
       dispatch({
-        type: SET_IMAGE_DATA_OK,
+        type: SET_DATA_OK,
         reason: null,
-        data
+        data: { file }
       });
       return resolve();
     });
@@ -114,21 +121,21 @@ export const uploadFile = (file) => {
 /**
  * Return data
  */
-export const RETURN_IMAGE_DATA = 'RETURN_IMAGE_DATA';
-export const RETURN_IMAGE_DATA_OK = 'RETURN_IMAGE_DATA_OK';
-export const RETURN_IMAGE_DATA_FAIL = 'RETURN_IMAGE_DATA_FAIL';
+export const RETURN_DATA = 'RETURN_DATA';
+export const RETURN_DATA_OK = 'RETURN_DATA_OK';
+export const RETURN_DATA_FAIL = 'RETURN_DATA_FAIL';
 
-export const returnImageData = () => {
+export const returnData = () => {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-      dispatch({ type: RETURN_IMAGE_DATA });
+      dispatch({ type: RETURN_DATA });
 
-      let { imageEditor: { url, color, promise } } = getState();
+      let { editor: { file, promise } } = getState();
 
-      promise.resolve({ url, color });
+      promise.resolve(file);
 
       dispatch({
-        type: RETURN_IMAGE_DATA_OK,
+        type: RETURN_DATA_OK,
         reason: null,
         data: { ...defaultState }
       });
@@ -143,17 +150,17 @@ export const returnImageData = () => {
  */
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case RUN_IMAGE_EDITOR_OK:
+    case RUN_EDITOR_OK:
       return { ...state, ...action.data };
-    case RUN_IMAGE_EDITOR_FAIL:
+    case RUN_EDITOR_FAIL:
       return { ...state, ...action.data };
-    case SET_IMAGE_DATA_OK:
+    case SET_DATA_OK:
       return { ...state, ...action.data };
-    case SET_IMAGE_DATA_FAIL:
+    case SET_DATA_FAIL:
       return { ...state, ...action.data };
-    case RETURN_IMAGE_DATA_OK:
+    case RETURN_DATA_OK:
       return { ...state, ...action.data };
-    case RETURN_IMAGE_DATA_FAIL:
+    case RETURN_DATA_FAIL:
       return { ...state, ...action.data };
     case UPLOAD_IMAGE_OK:
       return { ...state, ...action.data };

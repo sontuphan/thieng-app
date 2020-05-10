@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Link as RouterLink, withRouter } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import { Swipeable } from 'react-swipeable';
 
@@ -35,47 +35,48 @@ class Shelf extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.showing !== this.state.showing) {
-      utils.getAccessibleTextColor(this.props.objects[this.state.showing].url).then(color => {
+    const { showing } = this.state;
+    const { files } = this.props;
+    if (prevState.showing !== showing) {
+      utils.getAccessibleTextColor(files[showing].source).then(color => {
         this.setState({ color });
       });
     }
   }
 
   onColor = (color) => {
-    this.props.objects.forEach((obj, step) => {
-      if (obj.color === color) this.onStep(step);
+    const { files } = this.props;
+    files.forEach(({ metadata }, step) => {
+      if (metadata.color === color) this.onStep(step);
     });
   }
 
   onStep = (step) => {
-    let { objects } = this.props;
-    let translate = -step * (20 * objects.length - 100) / (objects.length - 1);
+    const { files } = this.props;
+    let translate = -step * (20 * files.length - 100) / (files.length - 1);
     if (translate > 0) translate = 0;
     this.setState({
       showing: step,
       translate: translate + 1
-    }, () => this.setState({ translate: translate }));
+    }, () => this.setState({ translate }));
   }
 
   onNext = () => {
-    let { objects } = this.props;
-    let step = this.state.showing + 1;
-    if (step >= objects.length) step = objects.length - 1;
+    const { files } = this.props;
+    let step = Math.min(this.state.showing + 1, files.length - 1);
     this.onStep(step);
   }
 
   onBack = () => {
-    let step = this.state.showing - 1;
-    if (step < 0) step = 0;
+    let step = Math.max(this.state.showing - 1, 0);
     this.onStep(step);
   }
 
   render() {
-    let { classes, author, objects } = this.props;
-    let { showing } = this.state;
-    let obj = objects[showing];
-    let colors = objects.map(obj => obj.color).filter(color => color);
+    const { classes, author, files } = this.props;
+    const { showing } = this.state;
+    const file = files[showing] || {};
+    const colors = files.map(file => file.metadata && file.metadata.color).filter(color => color);
 
     return <Swipeable onSwipedLeft={this.onNext} onSwipedRight={this.onBack}>
       <Grid container spacing={2}>
@@ -85,8 +86,8 @@ class Shelf extends Component {
             spacing={2}
             justify="center"
             alignItems="center"
-            style={obj && obj.type !== 'png' ? {
-              backgroundImage: `url('${obj.url}')`,
+            style={file.type && file.type !== 'image/png' ? {
+              backgroundImage: `url('${file.source}')`,
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover'
@@ -101,8 +102,8 @@ class Shelf extends Component {
                     <ThreeDRotationRounded style={{ color: this.state.color }} />
                   </IconButton>
                 </Grid> : null}
-                {this.props.editable && obj ? <Grid item>
-                  <IconButton onClick={() => this.props.onEdit(this.state.showing)}>
+                {this.props.editable && file.source ? <Grid item>
+                  <IconButton onClick={() => this.props.onEdit(showing)}>
                     <ColorLensRounded style={{ color: this.state.color }} />
                   </IconButton>
                 </Grid> : null}
@@ -112,8 +113,8 @@ class Shelf extends Component {
             <Grid item
               xs={10}
               className={classes.imageShelf}
-              style={obj && obj.type === 'png' ? {
-                backgroundImage: `url('${obj.url}')`,
+              style={file.type && file.type === 'image/png' ? {
+                backgroundImage: `url('${file.source}')`,
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'contain'
@@ -134,7 +135,7 @@ class Shelf extends Component {
             <Grid item xs={6}>
               <ColorSelect
                 colors={colors}
-                value={obj ? obj.color : null}
+                value={file.metadata && file.metadata.color}
                 onChange={this.onColor}
               />
             </Grid>
@@ -169,17 +170,17 @@ class Shelf extends Component {
                 disabled
               >
                 {
-                  objects.map((object, i) => <Grid item key={i}>
+                  files.map((file, i) => <Grid item key={i}>
                     <Grid container justify="center">
                       <Badge
                         overlap="circle"
                         variant="dot"
                         color="primary"
-                        invisible={this.state.showing !== i}
+                        invisible={showing !== i}
                       >
                         <Avatar
-                          alt={object.url}
-                          src={object.url}
+                          alt={file.source}
+                          src={file.source}
                           onClick={() => this.onStep(i)}
                           className={classes.cursor}
                         />
@@ -217,7 +218,7 @@ class Shelf extends Component {
 }
 
 Shelf.defaultProps = {
-  objects: [],
+  files: [],
   onAdd: () => { },
   onEdit: () => { },
   editable: false,
@@ -225,7 +226,7 @@ Shelf.defaultProps = {
 
 Shelf.propTypes = {
   author: PropTypes.object.isRequired,
-  objects: PropTypes.array,
+  files: PropTypes.array,
   on3D: PropTypes.func,
   onAdd: PropTypes.func,
   onEdit: PropTypes.func,

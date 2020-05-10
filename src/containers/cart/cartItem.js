@@ -46,7 +46,7 @@ class CartItem extends Component {
     if (!item) return null;
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
-        <ProductCard object={item} />
+        <ProductCard {...item} />
       </Grid>
       <Grid item xs={12}>
         <NumericInput

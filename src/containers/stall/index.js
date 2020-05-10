@@ -14,10 +14,10 @@ import Drain from 'components/drain';
 import Shelf from 'components/shelf';
 import { TextInput, NumericInput } from 'components/inputs';
 
-import { getItemById } from 'modules/items.reducer';
+import { getItemById, addItem } from 'modules/items.reducer';
 import { getUser } from 'modules/user.reducer';
 import { setCart } from 'modules/cart.reducer';
-import { runImageEditor } from 'modules/imageEditor.reducer';
+import { runEditor } from 'modules/editor.reducer';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -57,22 +57,22 @@ class Stall extends Component {
     }
   }
 
-  onAddImage = () => {
-    return this.props.runImageEditor().then(({ url, color }) => {
-      if (!url) return console.log('No image added');
+  onAdd = () => {
+    return this.props.runEditor().then(re => {
+      if (!re) return console.log('No file added');
       let { object } = this.state;
-      if (!object.images) object.images = [];
-      object.images.push({ url, color });
+      if (!object.files) object.files = [];
+      object.files.push(re);
       return this.setState({ object });
     }).catch(console.error);
   }
 
-  onEditImage = (index) => {
+  onEdit = (index) => {
     let { object } = this.state;
-    let { url, color } = object.images[index];
-    return this.props.runImageEditor(url, color).then(({ url, color }) => {
-      if (!url) object.images = object.images.filter((o, i) => i !== index);
-      else object.images[index] = { url, color };
+    let file = object.files[index];
+    return this.props.runEditor(file).then(re => {
+      if (!re) object.files = object.files.filter((o, i) => i !== index);
+      else object.files[index] = re;
       return this.setState({ object });
     }).catch(console.error);
   }
@@ -114,7 +114,8 @@ class Stall extends Component {
 
   onSave = () => {
     let { object } = this.state;
-    console.log(object);
+    object.files = object.files.map(file => file._id);
+    return this.props.addItem(object).then(console.log).catch(console.error);
   }
 
   onDelete = () => {
@@ -224,10 +225,10 @@ class Stall extends Component {
       <Grid item xs={12} md={6}>
         <Shelf
           author={author}
-          objects={object.images}
+          files={object.files}
           editable={this.props.editable}
-          onAdd={this.onAddImage}
-          onEdit={this.onEditImage}
+          onAdd={this.onAdd}
+          onEdit={this.onEdit}
         />
       </Grid>
       {/* Contents */}
@@ -309,14 +310,14 @@ const mapStateToProps = state => ({
   auth: state.auth,
   items: state.items,
   users: state.users,
-  imageEditor: state.imageEditor,
+  editor: state.editor,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getItemById,
+  getItemById, addItem,
   getUser,
   setCart,
-  runImageEditor,
+  runEditor,
 }, dispatch);
 
 Stall.defaultProps = {

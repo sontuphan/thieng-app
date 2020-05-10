@@ -20,13 +20,13 @@ import utils from 'helpers/utils';
 
 const DEFAULT_STATE = {
   isColor: false,
-  url: null,
+  source: null,
   colors: null,
   color: null,
 }
 
 
-class ImageEditorDialog extends Component {
+class EditorDialog extends Component {
   constructor() {
     super();
 
@@ -34,45 +34,49 @@ class ImageEditorDialog extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const { file: { source, metadata } } = this.props;
     if (prevProps.visible !== this.props.visible) {
-      if (this.props.visible)
+      if (this.props.visible) {
         return this.setState({
-          url: this.props.url,
-          color: this.props.color,
-          isColor: Boolean(this.props.color),
+          source,
+          color: metadata.color,
+          isColor: Boolean(metadata.color),
         });
+      }
       return this.setState({ ...DEFAULT_STATE });
     }
-    if (prevState.url !== this.state.url && this.state.url) {
-      utils.extractImageColors(this.state.url).then(palette => {
-        let colors = [palette.DarkVibrant.hex, palette.Vibrant.hex, palette.LightVibrant.hex, palette.DarkMuted.hex, palette.Muted.hex, palette.LightMuted.hex]
+    if (prevState.source !== this.state.source && this.state.source) {
+      utils.extractImageColors(source).then(palette => {
+        let colors = [
+          palette.DarkVibrant.hex, palette.Vibrant.hex, palette.LightVibrant.hex,
+          palette.DarkMuted.hex, palette.Muted.hex, palette.LightMuted.hex
+        ]
         let color = colors[0];
         if (this.props.color) {
-          color = this.props.color;
-          if (!colors.includes(this.props.color)) {
-            colors.push(color);
+          if (!colors.includes(metadata.color)) {
+            colors.push(metadata.color);
           }
         }
         this.setState({ color, colors });
-      }).catch(er => console.error(er));
+      }).catch(console.error);
     }
   }
 
   onChange = () => {
-    this.props.onSave({
-      url: this.state.url,
-      color: this.state.isColor ? this.state.color : null,
-    });
+    const { file } = this.props;
+    file.source = this.state.source;
+    file.metadata.color = this.state.isColor ? this.state.color : null;
+    return this.props.onSave(file);
   }
 
   onToogle = () => {
-    this.setState({
+    return this.setState({
       isColor: !this.state.isColor,
     });
   }
 
   onColor = (value) => {
-    this.setState({ color: value.hex });
+    return this.setState({ color: value.hex });
   }
 
   render() {
@@ -94,7 +98,7 @@ class ImageEditorDialog extends Component {
       <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8}>
-            <img width="100%" height="auto" alt={this.state.url} src={this.state.url} />
+            <img width="100%" height="auto" alt={this.state.source} src={this.state.source} />
           </Grid>
           <Grid item xs={12} md={4}>
             <Grid container spacing={2}>
@@ -151,20 +155,28 @@ class ImageEditorDialog extends Component {
   }
 }
 
-ImageEditorDialog.defaultProps = {
+EditorDialog.defaultProps = {
   visible: false,
+  file: {
+    name: null,
+    type: null,
+    source: null,
+    userId: null,
+    metadata: {
+      color: null
+    },
+  },
   onClose: () => { },
   onSave: () => { },
   onDelete: () => { },
 }
 
-ImageEditorDialog.propTypes = {
+EditorDialog.propTypes = {
   visible: PropTypes.bool,
+  file: PropTypes.object,
   onClose: PropTypes.func,
   onSave: PropTypes.func,
   onDelete: PropTypes.func,
-  url: PropTypes.string,
-  color: PropTypes.string,
 }
 
-export default withStyles(styles)(ImageEditorDialog);
+export default withStyles(styles)(EditorDialog);

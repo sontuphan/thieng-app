@@ -21,19 +21,19 @@ class ProductCard extends Component {
   }
 
   render() {
-    let { classes, object } = this.props;
-    let image = object.images[0];
+    let { classes } = this.props;
+    let { _id, name, tags, thumbnail, price } = this.props;
     return <Grid container spacing={2}>
       <Grid item xs={12}>
         <Paper elevation={0} className={classes.paper}>
           <Grid container justify="center" spacing={1}>
-            <Grid item xs={12} component={Link} href={`/mall/item/${object.id}`}>
-              <ImageCard image={image.url} imageType={image.type} />
+            <Grid item xs={12} component={Link} href={`/mall/item/${_id}`}>
+              <ImageCard image={thumbnail.source} imageType={thumbnail.type} />
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={1}>
                 {
-                  object.tags.map(tag => <Grid item key={tag}>
+                  tags.map(tag => <Grid item key={tag}>
                     <Chip
                       className={classes.chip}
                       color="primary"
@@ -46,8 +46,8 @@ class ProductCard extends Component {
               </Grid>
             </Grid>
             <Grid item xs={12} className={classes.cursor} onClick={this.onView}>
-              <Typography>{object.name}</Typography>
-              <Typography variant="h3">{utils.prettyNumber(object.price, 'long')} vnd</Typography>
+              <Typography>{name}</Typography>
+              <Typography variant="h3">{utils.prettyNumber(price, 'long')} vnd</Typography>
             </Grid>
           </Grid>
         </Paper>
@@ -56,8 +56,16 @@ class ProductCard extends Component {
   }
 }
 
+ProductCard.defaultProps = {
+  _id: null,
+  name: '',
+  tags: [],
+  thumbnail: {},
+  price: 0,
+}
+
 ProductCard.propTypes = {
-  object: PropTypes.object.isRequired,
+  _id: PropTypes.string.isRequired,
 }
 
 export default withRouter(withStyles(styles)(ProductCard));

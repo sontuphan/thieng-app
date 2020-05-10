@@ -1,4 +1,6 @@
 import { getRandomItems } from 'data/items';
+import configs from 'configs';
+import api from 'helpers/api';
 
 /**
  * Documents
@@ -96,8 +98,33 @@ export const getItemById = (id) => {
       return resolve(data);
     });
   };
-};
+}
 
+
+/**
+ * Add an item
+ */
+export const ADD_ITEM = 'ADD_ITEM';
+export const ADD_ITEM_OK = 'ADD_ITEM_OK';
+export const ADD_ITEM_FAIL = 'ADD_ITEM_FAIL';
+
+export const addItem = (data) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: ADD_ITEM });
+
+      console.log(data)
+      const { api: { base, item } } = configs;
+      api.post(`${base}${item}`, { item: data }, true).then(re => {
+        dispatch({ type: ADD_ITEM_OK, reason: null });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: ADD_ITEM_FAIL, reason: er });
+        return reject(er);
+      });
+    });
+  };
+};
 
 /**
  * Reducder
@@ -111,6 +138,10 @@ export default (state = defaultState, action) => {
     case GET_ITEM_BY_ID_OK:
       return { ...state, ...action.data };
     case GET_ITEM_BY_ID_FAIL:
+      return { ...state, ...action.data };
+    case ADD_ITEM_OK:
+      return { ...state, ...action.data };
+    case ADD_ITEM_FAIL:
       return { ...state, ...action.data };
     default:
       return state;

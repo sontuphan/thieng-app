@@ -7,12 +7,12 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
-import ImageEditorDialog from './dialog';
+import EditorDialog from './dialog';
 
 import {
-  runImageEditor, setImageData, returnImageData,
+  runEditor, setData, returnData,
   uploadFile,
-} from 'modules/imageEditor.reducer';
+} from 'modules/editor.reducer';
 
 import styles from './styles';
 
@@ -30,10 +30,10 @@ class Editor extends Component {
 
   componentDidUpdate(prevProps) {
     if (
-      prevProps.imageEditor.visible !== this.props.imageEditor.visible
-      && this.props.imageEditor.visible
+      prevProps.editor.visible !== this.props.editor.visible
+      && this.props.editor.visible
     ) {
-      if (this.props.imageEditor.url)
+      if (this.props.editor.source)
         return this.setState({ visible: true });
       return this.ref.current.click();
     }
@@ -42,35 +42,38 @@ class Editor extends Component {
   onFile = (e) => {
     const file = e.target.files[0];
     if (!file) return console.error('Cannot read file');
-    return this.props.setImageData({ url: URL.createObjectURL(file) }).then(() => {
+    return this.props.setData({
+      source: URL.createObjectURL(file),
+      metadata: { color: null }
+    }).then(() => {
       this.setState({ visible: true, file });
     }).catch(console.error);
   }
 
-  onSave = ({ url, color }) => {
+  onSave = (value) => {
     const { file } = this.state;
     if (file) { // Adding mode
-      URL.revokeObjectURL(url);
+      // Free memory
+      URL.revokeObjectURL(value.source);
       // Uploading files
       this.props.uploadFile(file).then(re => {
-        url = re.source;
-        this.props.setImageData({ url, color });
+        this.props.setData(re);
         return this.onClose();
       }).catch(console.error);
     }
     else { // Editing mode
-      this.props.setImageData({ url, color });
+      this.props.setData(value);
       return this.onClose();
     }
   }
 
   onDelete = () => {
-    this.props.setImageData({ url: null, color: null });
+    this.props.setData({ file: null });
     return this.onClose();
   }
 
   onClose = () => {
-    return this.props.returnImageData().then(() => {
+    return this.props.returnData().then(() => {
       this.ref.current.value = null;
       return this.setState({ visible: false, file: null });
     }).catch(console.error);
@@ -86,10 +89,9 @@ class Editor extends Component {
         onChange={this.onFile}
       />
       {/* Confirmation dialog */}
-      <ImageEditorDialog
+      <EditorDialog
         visible={this.state.visible}
-        url={this.props.imageEditor.url}
-        color={this.props.imageEditor.color}
+        file={this.props.editor.file}
         onSave={this.onSave}
         onDelete={this.onDelete}
         onClose={this.onClose}
@@ -100,11 +102,11 @@ class Editor extends Component {
 
 const mapStateToProps = state => ({
   ui: state.ui,
-  imageEditor: state.imageEditor,
+  editor: state.editor,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  runImageEditor, setImageData, returnImageData, uploadFile,
+  runEditor, setData, returnData, uploadFile,
 }, dispatch);
 
 export default withRouter(connect(

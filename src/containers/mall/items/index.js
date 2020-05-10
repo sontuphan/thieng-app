@@ -89,7 +89,7 @@ class Items extends Component {
         <Grid container spacing={2}>
           {
             items.map((obj, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
-              <ProductCard object={obj} />
+              <ProductCard {...obj} />
             </Grid>)
           }
         </Grid>

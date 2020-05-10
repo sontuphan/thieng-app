@@ -58,7 +58,7 @@ class Recommendation extends Component {
             </Grid>
           </Grid>
           {recommendation.map((obj, index) => <Grid key={index} item xs={6} sm={4}>
-            <ProductCard object={obj} />
+            <ProductCard {...obj} />
           </Grid>)}
         </Grid>
       </Grid>

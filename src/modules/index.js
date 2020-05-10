@@ -11,7 +11,7 @@ import recommendation from './recommendation.reducer';
 import projects from './projects.reducer';
 import cart from './cart.reducer';
 import notification from './notification.reducer';
-import imageEditor from './imageEditor.reducer';
+import editor from './editor.reducer';
 
 export default (history) => combineReducers({
   router: connectRouter(history),
@@ -25,5 +25,5 @@ export default (history) => combineReducers({
   projects,
   cart,
   notification,
-  imageEditor,
+  editor,
 });
