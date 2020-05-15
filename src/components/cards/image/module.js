@@ -8,7 +8,7 @@ export const useData = (_id) => {
 
   useEffect(() => {
     const { api: { base } } = configs;
-    if (_id) api.get(`${base}/item`, { _id }, true).then(re => {
+    if (_id) api.get(`${base}/file`, { _id }, true).then(re => {
       return setData(re.data);
     }).catch(er => {
       return setError(er);

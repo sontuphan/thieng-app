@@ -10,33 +10,36 @@ const defaultState = {
   data: [],
   pagination: {
     page: 0,
-    limit: 0
+    limit: 5,
   }
 }
 
 /**
  * Get item by id
  */
-export const GET_ITEM = 'GET_ITEM';
-export const GET_ITEM_OK = 'GET_ITEM_OK';
-export const GET_ITEM_FAIL = 'GET_ITEM_FAIL';
+export const GET_ITEMS = 'GET_ITEMS';
+export const GET_ITEMS_OK = 'GET_ITEMS_OK';
+export const GET_ITEMS_FAIL = 'GET_ITEMS_FAIL';
 
-export const getItem = (condition) => {
-  return dispatch => {
+export const getItems = (limit, page) => {
+  return (dispatch, prevState) => {
     return new Promise((resolve, reject) => {
-      dispatch({ type: GET_ITEM });
+      dispatch({ type: GET_ITEMS });
 
-      const { api: { base, item } } = configs;
-      api.get(`${base}${item}`, { condition }, true).then(re => {
+      const { items: { data } } = prevState();
+      const { api: { base } } = configs;
+      api.get(`${base}/items`, { limit, page }, true).then(re => {
         dispatch({
-          type: GET_ITEM_OK,
-          data: { data: re.data },
-          pagination: re.pagination
+          type: GET_ITEMS_OK,
+          data: {
+            data: data.concat(re.data),
+            pagination: re.pagination
+          }
         });
         return resolve(re.data);
       }).catch(er => {
         dispatch({
-          type: GET_ITEM_FAIL,
+          type: GET_ITEMS_FAIL,
           reason: er
         });
         return reject(er);
@@ -81,9 +84,9 @@ export const addItem = (data) => {
  */
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case GET_ITEM_OK:
+    case GET_ITEMS_OK:
       return { ...state, ...action.data };
-    case GET_ITEM_FAIL:
+    case GET_ITEMS_FAIL:
       return { ...state, ...action.data };
     case ADD_ITEM_OK:
       return { ...state, ...action.data };

@@ -12,7 +12,7 @@ import Drain from 'components/drain';
 import { ProductCard } from 'components/cards';
 import Menu from './menu';
 
-import { getItem } from 'modules/items.reducer';
+import { getItems } from 'modules/items.reducer';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -31,7 +31,7 @@ class Items extends Component {
 
   componentDidMount() {
     this.readParams();
-    this.props.getItem(this.state.page, this.state.limit);
+    this.props.getItems(this.state.page, this.state.limit);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -39,9 +39,9 @@ class Items extends Component {
       this.readParams();
 
     if (prevState.page !== this.state.page)
-      this.props.getItem(this.state.page, this.state.limit);
+      this.props.getItems(this.state.page, this.state.limit);
     if (prevState.limit !== this.state.limit)
-      this.props.getItem(this.state.page, this.state.limit);
+      this.props.getItems(this.state.page, this.state.limit);
 
     if (JSON.stringify(prevProps.items.data) !== JSON.stringify(this.props.items.data)) {
       let newItems = prevState.items.concat(this.props.items.data)
@@ -104,7 +104,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getItem
+  getItems
 }, dispatch);
 
 export default withRouter(connect(

@@ -12,7 +12,6 @@ configs.development = {
   user: '/user',
   upload: '/upload',
   item: '/item',
-  file: '/file',
 }
 
 /**

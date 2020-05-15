@@ -1,4 +1,6 @@
-export default theme => ({
+import { makeStyles } from '@material-ui/core/styles';
+
+export const useStyles = makeStyles(theme => ({
   image: {
     background: theme.background.primary,
     width: '100%',
@@ -37,4 +39,4 @@ export default theme => ({
       transform: 'scale(1.05)'
     },
   },
-});
+}));

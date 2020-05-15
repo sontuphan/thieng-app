@@ -1,52 +1,49 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 
-import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
+import { useStyles } from './styles';
+import { useData } from './module';
 
-import styles from './styles';
+function ImageCard(props) {
+  const classes = useStyles();
+  const data = useData(props._id);
 
-class ImageCard extends Component {
-
-  render() {
-    let { classes } = this.props;
-    return <Grid container justify="center">
-      <Grid item xs={12} onClick={this.props.onClick}>
-        <div className={classes.image}>
-          {this.props.imageType !== 'png' ?
-            <div className={classes.imageJPG}
-              style={{
-                backgroundImage: `url('${this.props.image}')`,
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover'
-              }} />
-            :
-            <div className={classes.imagePNG}
-              style={{
-                backgroundImage: `url('${this.props.image}')`,
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'contain'
-              }} />
-          }
-        </div>
-      </Grid>
+  if (!data) return null;
+  return <Grid container justify="center">
+    <Grid item xs={12} onClick={props.onClick}>
+      <div className={classes.image}>
+        {data.type === 'image/jpg' || data.type === 'image/jpeg' ?
+          <div className={classes.imageJPG}
+            style={{
+              backgroundImage: `url('${data.source}')`,
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover'
+            }} />
+          : null}
+        {data.type === 'image/png' ?
+          <div className={classes.imagePNG}
+            style={{
+              backgroundImage: `url('${data.source}')`,
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain'
+            }} />
+          : null}
+      </div>
     </Grid>
-  }
+  </Grid>
 }
 
 ImageCard.defaultProps = {
-  imageType: 'jpg',
   onClick: () => { }
 }
 
 ImageCard.propTypes = {
-  image: PropTypes.string.isRequired,
-  imageType: PropTypes.string,
+  _id: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 }
 
-export default withRouter(withStyles(styles)(ImageCard));
+export default ImageCard;

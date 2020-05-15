@@ -14,7 +14,7 @@ import Drain from 'components/drain';
 import Shelf from 'components/shelf';
 import { TextInput, NumericInput } from 'components/inputs';
 
-import { getItem, addItem } from 'modules/items.reducer';
+import { getItems, addItem } from 'modules/items.reducer';
 import { getUser } from 'modules/user.reducer';
 import { setCart } from 'modules/cart.reducer';
 import { runEditor } from 'modules/editor.reducer';
@@ -50,7 +50,7 @@ class Stall extends Component {
       });
     }
     else {
-      return this.props.getItem({ _id: this.props.id }).then(re => {
+      return this.props.getItems({ _id: this.props.id }).then(re => {
         let item = re[0];
         return this.props.getUser(item.author);
       }).then(re => {
@@ -331,7 +331,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getItem, addItem,
+  getItems, addItem,
   getUser,
   setCart,
   runEditor,

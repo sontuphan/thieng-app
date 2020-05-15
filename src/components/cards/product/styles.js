@@ -1,4 +1,6 @@
-export default theme => ({
+import { makeStyles } from '@material-ui/core/styles';
+
+export const useStyles = makeStyles(theme => ({
   chip: {
     ...theme.typography.body1,
   },
@@ -10,4 +12,4 @@ export default theme => ({
     //   boxShadow: theme.shadows[8],
     // },
   },
-});
+}));

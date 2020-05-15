@@ -14,7 +14,7 @@ import { AddBoxRounded, } from '@material-ui/icons';
 import { ProductCard } from 'components/cards';
 import Editor from './editor';
 
-import { getItem } from 'modules/items.reducer';
+import { getItems } from 'modules/items.reducer';
 
 import styles from './styles';
 
@@ -25,12 +25,11 @@ class UserStore extends Component {
 
     this.state = {
       visible: false,
-      items: [],
     }
   }
 
   componentDidMount() {
-    this.loadData();
+    this.props.getItems();
     window.addEventListener('scroll', this.onTheEnd);
   }
 
@@ -39,28 +38,20 @@ class UserStore extends Component {
   }
 
   onTheEnd = () => {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)
-      return this.loadData();
-  }
-
-  loadData = () => {
-    this.props.getItem().then(re => {
-      let { items } = this.state;
-      if (re) items = items.concat(re);
-      return this.setState({ items });
-    }).catch(er => {
-      return console.error(er);
-    });
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      let { items: { pagination: { limit, page } } } = this.props
+      return this.props.getItems(limit, page + 1);
+    }
   }
 
   renderItems = () => {
-    let { items } = this.state;
-    if (!items || !items.length) return null;
+    let { items: { data } } = this.props;
+    if (!data || !data.length) return null;
 
     return <Grid container spacing={2}>
       {
-        items.map(obj => <Grid key={obj._id} item xs={6} sm={4} md={3} lg={2}>
-          <ProductCard {...obj} />
+        data.map(obj => <Grid key={obj._id} item xs={6} sm={4} md={3} lg={2}>
+          <ProductCard _id={obj._id} />
         </Grid>)
       }
     </Grid>
@@ -113,7 +104,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getItem,
+  getItems,
 }, dispatch);
 
 export default withRouter(connect(

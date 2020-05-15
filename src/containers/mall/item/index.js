@@ -12,7 +12,7 @@ import { RichComment } from 'components/comments';
 import Stall from 'containers/stall';
 import Recommendation from 'containers/recommendation';
 
-import { getItem } from 'modules/items.reducer';
+import { getItems } from 'modules/items.reducer';
 import { getComments } from 'modules/comments.reducer';
 
 import styles from './styles';
@@ -36,7 +36,7 @@ class Item extends Component {
   }
 
   loadData = () => {
-    this.props.getItem().then(re => {
+    this.props.getItems().then(re => {
       let item = re[0];
       return this.props.getComments(item.id);
     }).catch(er => {
@@ -119,7 +119,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getItem,
+  getItems,
   getComments,
 }, dispatch);
 
