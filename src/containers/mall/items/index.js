@@ -17,35 +17,36 @@ import { getItems } from 'modules/items.reducer';
 import styles from './styles';
 import utils from 'helpers/utils';
 
+
 class Items extends Component {
   constructor() {
     super();
 
     this.state = {
-      items: [],
-      page: 0,
-      limit: 12,
       category: 'chairs'
     }
   }
 
   componentDidMount() {
     this.readParams();
-    this.props.getItems(this.state.page, this.state.limit);
+    let { items: { pagination: { limit, page } } } = this.props;
+    this.props.getItems(limit, page);
+    window.addEventListener('scroll', this.onTheEnd);
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (JSON.stringify(prevProps.match.params) !== JSON.stringify(this.props.match.params))
       this.readParams();
+  }
 
-    if (prevState.page !== this.state.page)
-      this.props.getItems(this.state.page, this.state.limit);
-    if (prevState.limit !== this.state.limit)
-      this.props.getItems(this.state.page, this.state.limit);
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onTheEnd);
+  }
 
-    if (JSON.stringify(prevProps.items.data) !== JSON.stringify(this.props.items.data)) {
-      let newItems = prevState.items.concat(this.props.items.data)
-      this.setState({ items: newItems });
+  onTheEnd = () => {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      let { items: { pagination: { limit, page } } } = this.props;
+      return this.props.getItems(limit, page + 1);
     }
   }
 
@@ -56,8 +57,8 @@ class Items extends Component {
 
   render() {
     let { classes } = this.props;
-    let { items } = this.state;
-    if (!items || !items.length) return null;
+    let { items: { data } } = this.props;
+    if (!data || !data.length) return null;
 
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
@@ -88,8 +89,8 @@ class Items extends Component {
       <Grid item xs={11} md={10}>
         <Grid container spacing={2}>
           {
-            items.map((obj, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
-              <ProductCard {...obj} />
+            data.map(obj => <Grid key={obj._id} item xs={6} sm={4} md={3} lg={2}>
+              <ProductCard _id={obj._id} />
             </Grid>)
           }
         </Grid>
@@ -104,7 +105,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getItems
+  getItems,
 }, dispatch);
 
 export default withRouter(connect(

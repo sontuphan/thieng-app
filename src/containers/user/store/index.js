@@ -29,7 +29,8 @@ class UserStore extends Component {
   }
 
   componentDidMount() {
-    this.props.getItems();
+    let { items: { pagination: { limit, page } } } = this.props;
+    this.props.getItems(limit, page);
     window.addEventListener('scroll', this.onTheEnd);
   }
 
@@ -39,7 +40,7 @@ class UserStore extends Component {
 
   onTheEnd = () => {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      let { items: { pagination: { limit, page } } } = this.props
+      let { items: { pagination: { limit, page } } } = this.props;
       return this.props.getItems(limit, page + 1);
     }
   }
