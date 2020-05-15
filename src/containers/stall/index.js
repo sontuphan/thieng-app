@@ -14,7 +14,7 @@ import Drain from 'components/drain';
 import Shelf from 'components/shelf';
 import { TextInput, NumericInput } from 'components/inputs';
 
-import { getItemById, addItem } from 'modules/items.reducer';
+import { getItem, addItem } from 'modules/items.reducer';
 import { getUser } from 'modules/user.reducer';
 import { setCart } from 'modules/cart.reducer';
 import { runEditor } from 'modules/editor.reducer';
@@ -38,6 +38,10 @@ class Stall extends Component {
     return this.loadData();
   }
 
+
+  /**
+   * Data loader
+   */
   loadData = () => {
     if (this.props.editable) {
       return this.setState({
@@ -46,8 +50,8 @@ class Stall extends Component {
       });
     }
     else {
-      return this.props.getItemById(this.props.id).then(re => {
-        let item = re.data[0];
+      return this.props.getItem({ _id: this.props.id }).then(re => {
+        let item = re[0];
         return this.props.getUser(item.author);
       }).then(re => {
         let object = this.props.items.data[0];
@@ -57,6 +61,10 @@ class Stall extends Component {
     }
   }
 
+
+  /**
+   * Create new items
+   */
   onAdd = () => {
     return this.props.runEditor().then(re => {
       if (!re) return console.log('No file added');
@@ -66,7 +74,6 @@ class Stall extends Component {
       return this.setState({ object });
     }).catch(console.error);
   }
-
   onEdit = (index) => {
     let { object } = this.state;
     let file = object.files[index];
@@ -76,58 +83,68 @@ class Stall extends Component {
       return this.setState({ object });
     }).catch(console.error);
   }
-
   onName = (value) => {
     return this.setState({
       object: { ...this.state.object, name: value }
     });
   }
-
   onDescription1 = (value) => {
     return this.setState({
       object: { ...this.state.object, description1: value }
     });
   }
-
   onDescription2 = (value) => {
     return this.setState({
       object: { ...this.state.object, description2: value }
     });
   }
-
   onPrice = (value) => {
     if (value) value = value.split(',').join('');
     return this.setState({
       object: { ...this.state.object, price: parseInt(value) }
     });
   }
-
   onAmount = (amount) => {
     return this.setState({ amount });
   }
 
+
+  /**
+   * Creation actions
+   */
   onPublish = () => {
     let { object } = this.state;
-    object = { ...object, tags: ['New'] }
+    object = {
+      ...object,
+      tags: ['New'],
+      status: 'selling',
+    }
     console.log(object);
   }
-
   onSave = () => {
     let { object } = this.state;
-    object.files = object.files.map(file => file._id);
+    object = {
+      ...object,
+      files: object.files.map(file => file._id),
+      status: 'creating',
+    }
     return this.props.addItem(object).then(console.log).catch(console.error);
   }
-
   onDelete = () => {
 
   }
 
+
+  /**
+   * Interaction actions 
+   */
   onBuy = () => {
     let object = this.props.items.data[0];
     let { amount } = this.state;
     let item = { ...object, amount }
     this.props.setCart(item);
   }
+
 
   renderTag = () => {
     if (this.props.editable) {
@@ -314,7 +331,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getItemById, addItem,
+  getItem, addItem,
   getUser,
   setCart,
   runEditor,
@@ -325,7 +342,7 @@ Stall.defaultProps = {
 }
 
 Stall.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.number,
   editable: PropTypes.bool,
 }
 

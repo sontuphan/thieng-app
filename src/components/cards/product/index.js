@@ -12,9 +12,24 @@ import Link from '@material-ui/core/Link';
 import { ImageCard } from 'components/cards';
 
 import styles from './styles';
+import { loadData } from './module';
 import utils from 'helpers/utils';
 
 class ProductCard extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      source: '',
+      type: '',
+    }
+  }
+
+  componentDidMount() {
+    let { thumbnail, files } = this.props;
+    if (!thumbnail) thumbnail = files[0];
+    return loadData(thumbnail).then(re => this.setState(re.data));
+  }
 
   onChip = (tag) => {
     console.log('onChip:', tag);
@@ -22,13 +37,15 @@ class ProductCard extends Component {
 
   render() {
     let { classes } = this.props;
-    let { _id, name, tags, thumbnail, price } = this.props;
+    let { _id, name, tags, price } = this.props;
+    let { source, type } = this.state;
+
     return <Grid container spacing={2}>
       <Grid item xs={12}>
         <Paper elevation={0} className={classes.paper}>
           <Grid container justify="center" spacing={1}>
             <Grid item xs={12} component={Link} href={`/mall/item/${_id}`}>
-              <ImageCard image={thumbnail.source} imageType={thumbnail.type} />
+              <ImageCard image={source} imageType={type} />
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={1}>
@@ -57,10 +74,9 @@ class ProductCard extends Component {
 }
 
 ProductCard.defaultProps = {
-  _id: null,
   name: '',
   tags: [],
-  thumbnail: {},
+  files: [],
   price: 0,
 }
 

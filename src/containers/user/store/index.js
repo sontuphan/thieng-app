@@ -14,7 +14,7 @@ import { AddBoxRounded, } from '@material-ui/icons';
 import { ProductCard } from 'components/cards';
 import Editor from './editor';
 
-import { getItems } from 'modules/items.reducer';
+import { getItem } from 'modules/items.reducer';
 
 import styles from './styles';
 
@@ -24,10 +24,8 @@ class UserStore extends Component {
     super();
 
     this.state = {
-      visible: true,
+      visible: false,
       items: [],
-      page: 0,
-      limit: 12,
     }
   }
 
@@ -46,18 +44,30 @@ class UserStore extends Component {
   }
 
   loadData = () => {
-    this.props.getItems(this.state.page, this.state.limit).then(re => {
-      let newData = this.state.items.concat(re.data);
-      return this.setState({ items: newData });
+    this.props.getItem().then(re => {
+      let { items } = this.state;
+      if (re) items = items.concat(re);
+      return this.setState({ items });
     }).catch(er => {
       return console.error(er);
     });
   }
 
-  render() {
-    let { classes } = this.props;
+  renderItems = () => {
     let { items } = this.state;
     if (!items || !items.length) return null;
+
+    return <Grid container spacing={2}>
+      {
+        items.map(obj => <Grid key={obj._id} item xs={6} sm={4} md={3} lg={2}>
+          <ProductCard {...obj} />
+        </Grid>)
+      }
+    </Grid>
+  }
+
+  render() {
+    let { classes } = this.props;
 
     return <Grid container justify="center" spacing={2}>
 
@@ -90,13 +100,7 @@ class UserStore extends Component {
       </Grid>
 
       <Grid item xs={12}>
-        <Grid container spacing={2}>
-          {
-            items.map((obj, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
-              <ProductCard {...obj} />
-            </Grid>)
-          }
-        </Grid>
+        {this.renderItems()}
       </Grid>
 
     </Grid>
@@ -109,7 +113,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getItems,
+  getItem,
 }, dispatch);
 
 export default withRouter(connect(

@@ -1,4 +1,3 @@
-import { getRandomItems } from 'data/items';
 import configs from 'configs';
 import api from 'helpers/api';
 
@@ -15,89 +14,35 @@ const defaultState = {
   }
 }
 
-
-/**
- * Get items
- */
-export const GET_ITEMS = 'GET_ITEMS';
-export const GET_ITEMS_OK = 'GET_ITEMS_OK';
-export const GET_ITEMS_FAIL = 'GET_ITEMS_FAIL';
-
-const _getItems = (page, limit) => {
-  let data = [];
-  for (let i = 0; i < limit; i++) {
-    data.push(getRandomItems()[i % 2]);
-  }
-  return { status: 'OK', data, pagination: { page, limit } };
-}
-
-export const getItems = (page, limit) => {
-  return dispatch => {
-    return new Promise((resolve, reject) => {
-      dispatch({ type: GET_ITEMS });
-
-      let data = _getItems(page, limit);
-      if (!data) {
-        dispatch({
-          type: GET_ITEMS_FAIL,
-          reason: 'Input is null.',
-        });
-        return reject('Input is null.');
-      }
-
-      dispatch({
-        type: GET_ITEMS_OK,
-        reason: null,
-        data: {
-          data: data.data,
-          pagination: data.pagination
-        }
-      });
-      return resolve(data);
-    });
-  };
-};
-
 /**
  * Get item by id
  */
-export const GET_ITEM_BY_ID = 'GET_ITEM_BY_ID';
-export const GET_ITEM_BY_ID_OK = 'GET_ITEM_BY_ID_OK';
-export const GET_ITEM_BY_ID_FAIL = 'GET_ITEM_BY_ID_FAIL';
+export const GET_ITEM = 'GET_ITEM';
+export const GET_ITEM_OK = 'GET_ITEM_OK';
+export const GET_ITEM_FAIL = 'GET_ITEM_FAIL';
 
-const _getItemById = (id) => {
-  return {
-    status: 'OK',
-    data: [getRandomItems()[id]],
-    pagination: { page: 0, limit: 1 }
-  };
-}
-
-export const getItemById = (id) => {
+export const getItem = (condition) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
-      dispatch({ type: GET_ITEM_BY_ID });
+      dispatch({ type: GET_ITEM });
 
-      let data = _getItemById(id);
-      if (!data) {
+      const { api: { base, item } } = configs;
+      api.get(`${base}${item}`, { condition }, true).then(re => {
         dispatch({
-          type: GET_ITEM_BY_ID_FAIL,
-          reason: 'Input is null.',
+          type: GET_ITEM_OK,
+          data: { data: re.data },
+          pagination: re.pagination
         });
-        return reject('Input is null.');
-      }
-
-      dispatch({
-        type: GET_ITEM_BY_ID_OK,
-        reason: null,
-        data: {
-          data: data.data,
-          pagination: data.pagination
-        }
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({
+          type: GET_ITEM_FAIL,
+          reason: er
+        });
+        return reject(er);
       });
-      return resolve(data);
     });
-  };
+  }
 }
 
 
@@ -113,13 +58,18 @@ export const addItem = (data) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: ADD_ITEM });
 
-      console.log(data)
       const { api: { base, item } } = configs;
       api.post(`${base}${item}`, { item: data }, true).then(re => {
-        dispatch({ type: ADD_ITEM_OK, reason: null });
+        dispatch({
+          type: ADD_ITEM_OK,
+          reason: null,
+        });
         return resolve(re.data);
       }).catch(er => {
-        dispatch({ type: ADD_ITEM_FAIL, reason: er });
+        dispatch({
+          type: ADD_ITEM_FAIL,
+          reason: er
+        });
         return reject(er);
       });
     });
@@ -131,13 +81,9 @@ export const addItem = (data) => {
  */
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case GET_ITEMS_OK:
+    case GET_ITEM_OK:
       return { ...state, ...action.data };
-    case GET_ITEMS_FAIL:
-      return { ...state, ...action.data };
-    case GET_ITEM_BY_ID_OK:
-      return { ...state, ...action.data };
-    case GET_ITEM_BY_ID_FAIL:
+    case GET_ITEM_FAIL:
       return { ...state, ...action.data };
     case ADD_ITEM_OK:
       return { ...state, ...action.data };
