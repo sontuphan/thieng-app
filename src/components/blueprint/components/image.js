@@ -11,7 +11,8 @@ import styles from './styles';
 
 class Image extends Component {
 
-  onChange = (data) => {
+  onChange = (er, data) => {
+    if (er) return console.error(er);
     this.props.tree.editImage(
       this.props.id,
       data.url,
@@ -43,7 +44,7 @@ class Image extends Component {
           <Grid container spacing={2} justify="center">
             {this.props.editable ? <Grid item>
               <ImageBar
-                defaultData={node}
+                value={node}
                 onChange={this.onChange}
                 onDelete={this.onDelete}
               />

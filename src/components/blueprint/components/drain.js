@@ -11,6 +11,7 @@ import styles from './styles';
 class Drain extends Component {
 
   onChange = (data) => {
+    console.log(data)
     this.props.tree.editDrain(
       this.props.id,
       data.height,
@@ -44,7 +45,7 @@ class Drain extends Component {
           <Grid container spacing={2} justify="center">
             {this.props.editable ? <Grid item>
               <DrainBar
-                defaultData={node}
+                value={node}
                 onChange={this.onChange}
                 onDelete={this.onDelete}
               />

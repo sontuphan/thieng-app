@@ -56,6 +56,10 @@ class Editor extends Component {
     this.setState({ status: value });
   }
 
+  onPublish = () => {
+    console.log(this.state);
+  }
+
   render() {
     let { classes } = this.props;
 
