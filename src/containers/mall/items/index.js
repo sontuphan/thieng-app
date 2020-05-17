@@ -30,7 +30,7 @@ class Items extends Component {
   componentDidMount() {
     this.readParams();
     let { items: { pagination: { limit, page } } } = this.props;
-    this.props.getItems(limit, page);
+    this.props.getItems(limit, page + 1);
     window.addEventListener('scroll', this.onTheEnd);
   }
 

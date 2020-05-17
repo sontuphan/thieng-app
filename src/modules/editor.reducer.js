@@ -99,8 +99,8 @@ export const uploadFile = (file) => {
       let data = new FormData();
       const type = file.type.split('/')[0];
       data.append(type, file);
-      const { api: { base, upload } } = configs;
-      api.post(`${base}${upload}/${type}`, data, true).then(re => {
+      const { api: { base } } = configs;
+      api.post(`${base}/file/${type}`, data, true).then(re => {
         dispatch({
           type: UPLOAD_IMAGE_OK,
           reason: null,

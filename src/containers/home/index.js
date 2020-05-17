@@ -20,7 +20,7 @@ import designerImg1 from 'static/images/designer-1.jpg';
 import designerImg2 from 'static/images/designer-2.jpg';
 import designerImg3 from 'static/images/designer-3.jpg';
 
-import { randInterior } from 'data/items';
+import { randInterior } from 'data/_items';
 
 const DESIGNERS = [
   {

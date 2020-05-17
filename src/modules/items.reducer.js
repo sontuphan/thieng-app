@@ -9,7 +9,7 @@ import api from 'helpers/api';
 const defaultState = {
   data: [],
   pagination: {
-    page: 0,
+    page: -1,
     limit: 5,
   }
 }
@@ -28,7 +28,7 @@ export const getItems = (limit, page) => {
 
       const { items: { data } } = prevState();
       const { api: { base } } = configs;
-      api.get(`${base}/items`, { limit, page }, true).then(re => {
+      api.get(`${base}/items`, { limit, page, condition: { mode: 'public' } }, true).then(re => {
         dispatch({
           type: GET_ITEMS_OK,
           data: {

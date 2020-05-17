@@ -10,7 +10,6 @@ configs.development = {
   base: 'http://localhost:3001',
   auth: '/authentication',
   user: '/user',
-  upload: '/upload',
   item: '/item',
 }
 

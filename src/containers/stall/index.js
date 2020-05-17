@@ -14,7 +14,7 @@ import Drain from 'components/drain';
 import Shelf from 'components/shelf';
 import { TextInput, NumericInput } from 'components/inputs';
 
-import { getItems, addItem } from 'modules/items.reducer';
+import { getItems } from 'modules/items.reducer';
 import { getUser } from 'modules/user.reducer';
 import { setCart } from 'modules/cart.reducer';
 import { runEditor } from 'modules/editor.reducer';
@@ -119,7 +119,7 @@ class Stall extends Component {
       tags: ['New'],
       status: 'selling',
     }
-    console.log(object);
+    return this.props.onPublish(object);
   }
   onSave = () => {
     let { object } = this.state;
@@ -128,10 +128,10 @@ class Stall extends Component {
       files: object.files.map(file => file._id),
       status: 'creating',
     }
-    return this.props.addItem(object).then(console.log).catch(console.error);
+    return this.props.onSave(object);
   }
   onDelete = () => {
-
+    return this.props.onDelete();
   }
 
 
@@ -331,7 +331,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getItems, addItem,
+  getItems,
   getUser,
   setCart,
   runEditor,

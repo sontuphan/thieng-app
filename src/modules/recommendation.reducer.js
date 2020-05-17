@@ -1,4 +1,4 @@
-import { getRandomItems } from 'data/items';
+import { getRandomItems } from 'data/_items';
 
 /**
  * Documents
