@@ -28,7 +28,7 @@ export const getItems = (limit, page) => {
 
       const { items: { data } } = prevState();
       const { api: { base } } = configs;
-      api.get(`${base}/items`, { limit, page, condition: { mode: 'public' } }, true).then(re => {
+      api.get(`${base}/social/items`, { limit, page, condition: { mode: 'public' } }, true).then(re => {
         dispatch({
           type: GET_ITEMS_OK,
           data: {
