@@ -53,7 +53,13 @@ class CarouselPagination extends Component {
       </Grid>
       <Grid container>
         <Grid item xs={12}>
-          <Button variant="contained" color="primary" size="large" fullWidth>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={this.props.onMore}
+            fullWidth
+          >
             <Typography>Nhiều hơn</Typography>
           </Button>
         </Grid>
@@ -68,6 +74,7 @@ CarouselPagination.propTypes = {
   paging: PropTypes.object.isRequired,
   onNext: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired,
+  onMore: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(CarouselPagination);

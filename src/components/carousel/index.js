@@ -26,10 +26,6 @@ class Carousel extends Component {
     this.setState({ page: this.state.page - 1 });
   }
 
-  onMore = () => {
-    console.log('onMore');
-  }
-
   onChange = (index) => {
     this.setState({ page: index });
   }
@@ -48,7 +44,7 @@ class Carousel extends Component {
           }}
           onBack={this.onBack}
           onNext={this.onNext}
-          onMore={this.onMore}
+          onMore={this.props.onMore}
         />
       </Grid>
       <Grid item xs={8}>
@@ -62,10 +58,15 @@ class Carousel extends Component {
   }
 }
 
+Carousel.defaultProps = {
+  onMore: () => { },
+}
+
 Carousel.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
   objects: PropTypes.array.isRequired,
+  onMore: PropTypes.func,
 }
 
 export default withStyles(styles)(Carousel);

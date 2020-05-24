@@ -48,13 +48,17 @@ class Home extends Component {
 
   scrollToHash = () => {
     let hash = this.props.location.hash;
-    if (!hash) return;
+    if (!hash) return console.error('Invalid hashtag');
     let id = hash.replace('#', '');
     let e = window.document.getElementById(id);
-    if (!e) return;
-    setTimeout(() => {
+    if (!e) return console.error('Invalid component');
+    return setTimeout(() => {
       e.scrollIntoView();
     }, 100);
+  }
+
+  onMore = () => {
+    return this.props.history.push('/mall');
   }
 
   render() {
@@ -79,6 +83,7 @@ class Home extends Component {
           title="Top 10"
           subtitle="Sản phẩm"
           objects={PRODUCTS}
+          onMore={this.onMore}
         />
       </Grid>
       <Grid item xs={12}>
