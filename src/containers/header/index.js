@@ -20,7 +20,7 @@ import Divider from '@material-ui/core/Divider';
 
 import {
   MenuRounded, NotificationsRounded,
-  SearchRounded, PersonRounded,
+  SearchRounded, PersonRounded, ShoppingBasketRounded
 } from '@material-ui/icons';
 
 import styles from './styles';
@@ -30,6 +30,7 @@ import { TopDrawer } from 'components/drawers';
 import { refreshSession, logIn } from 'modules/auth.reducer';
 import { toogleNotification } from 'modules/notification.reducer';
 import { toogleSearch } from 'modules/search.reducer';
+import { toogleCart } from 'modules/cart.reducer';
 
 class Header extends Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class Header extends Component {
 
     this.state = {
       routes: [
-        { text: "Bảng tin", link: '/newsfeed' },
+        // { text: "Bảng tin", link: '/newsfeed' },
         { text: "Siêu thị", link: '/mall' },
         // { text: "Đối tác", link: '/partner' },
         { text: "Liên hệ", link: '/home#contact' },
@@ -66,21 +67,26 @@ class Header extends Component {
     return this.props.logIn(re);
   }
 
-  onSearch = () => {
-    this.onToggleDrawer(false);
-    this.props.toogleSearch();
-  }
+  // onSearch = () => {
+  //   this.onToggleDrawer(false);
+  //   this.props.toogleSearch();
+  // }
 
-  onNotification = () => {
+  // onNotification = () => {
+  //   this.onToggleDrawer(false);
+  //   this.props.toogleNotification();
+  // }
+
+  onCart = () => {
     this.onToggleDrawer(false);
-    this.props.toogleNotification();
+    this.props.toogleCart();
   }
 
   onUser = () => {
     let { auth } = this.props;
     this.onToggleDrawer(false);
     if (!auth.email) return console.error('Not signed in yet.');
-    return this.props.history.push('/user/' + auth.email + '/home');
+    // return this.props.history.push('/user/' + auth.email + '/home');
   }
 
   renderProfile = () => {
@@ -193,16 +199,24 @@ class Header extends Component {
           <Paper elevation={0} className={classes.paper}>
             <Grid container alignItems="center" spacing={4}>
               {/* Search app */}
-              <Grid item>
+              {/* <Grid item>
                 <IconButton size="small" color="secondary" onClick={this.onSearch}>
                   <SearchRounded />
                 </IconButton>
-              </Grid>
+              </Grid> */}
               {/* Notification app */}
-              <Grid item>
+              {/* <Grid item>
                 <IconButton size="small" color="secondary" onClick={this.onNotification}>
                   <Badge badgeContent={3} color="primary">
                     <NotificationsRounded />
+                  </Badge>
+                </IconButton>
+              </Grid> */}
+              {/* Grocery app */}
+              <Grid item>
+                <IconButton size="small" color="secondary" onClick={this.onCart}>
+                  <Badge badgeContent={3} color="primary">
+                    <ShoppingBasketRounded />
                   </Badge>
                 </IconButton>
               </Grid>
@@ -233,6 +247,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   refreshSession, logIn,
   toogleNotification, toogleSearch,
+  toogleCart,
 }, dispatch);
 
 export default withRouter(connect(

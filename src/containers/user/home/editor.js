@@ -20,6 +20,8 @@ import { BottomDrawer } from 'components/drawers';
 import Drain from 'components/drain';
 import Cascade from 'components/blueprint/cascade';
 
+import { addProject } from 'modules/projects.reducer';
+
 import styles from './styles';
 
 const MAX_LENGTH_STATUS = 150;
@@ -57,7 +59,16 @@ class Editor extends Component {
   }
 
   onPublish = () => {
-    console.log(this.state);
+    const data = {
+      content: this.state.status,
+      tree: this.state.blueprint,
+    }
+    console.log(data);
+    // return this.props.addProject(data).then(re => {
+    //   console.log(re);
+    // }).catch(er => {
+    //   console.error(er);
+    // });
   }
 
   render() {
@@ -181,10 +192,11 @@ class Editor extends Component {
 const mapStateToProps = state => ({
   ui: state.ui,
   auth: state.auth,
+  projects: state.projects,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-
+  addProject
 }, dispatch);
 
 Editor.propTypes = {

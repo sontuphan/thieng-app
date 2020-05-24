@@ -15,7 +15,7 @@ const defaultState = {
 }
 
 /**
- * Get item by id
+ * Get items
  */
 export const GET_ITEMS = 'GET_ITEMS';
 export const GET_ITEMS_OK = 'GET_ITEMS_OK';
@@ -61,8 +61,8 @@ export const addItem = (data) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: ADD_ITEM });
 
-      const { api: { base, item } } = configs;
-      api.post(`${base}${item}`, { item: data }, true).then(re => {
+      const { api: { base } } = configs;
+      api.post(`${base}/item`, { item: data }, true).then(re => {
         dispatch({
           type: ADD_ITEM_OK,
           reason: null,

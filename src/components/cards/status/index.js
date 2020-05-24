@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
@@ -13,77 +12,82 @@ import { FavoriteRounded, ShareRounded, MoreHorizRounded } from '@material-ui/ic
 import { ImageCard } from 'components/cards';
 import { LiteComment } from 'components/comments';
 
-import styles from './styles';
+import { useStyles } from './styles';
+import { useData } from './module';
 import utils from 'helpers/utils';
 
-class StatusCard extends Component {
+function StatusCard(props) {
 
-  render() {
-    let { classes } = this.props;
-    let { author, auth, project } = this.props;
+  const classes = useStyles();
+  const data = useData(props._id);
+  let { auth } = props;
 
-    return <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <Paper elevation={0} className={classes.paper}>
-          <Grid container alignItems="center" spacing={1}>
-            <Grid item xs={10}>
-              <Grid container alignItems="center" spacing={1}>
-                <Grid item>
-                  <Avatar className={classes.avatar} alt={author.displayname} src={author.avatar} />
-                </Grid>
-                <Grid item>
-                  <Typography>{author.displayname}</Typography>
-                </Grid>
+  if (!data) return null;
+  return <Grid container spacing={2}>
+    <Grid item xs={12}>
+      <Paper elevation={0} className={classes.paper}>
+        <Grid container alignItems="center" spacing={1}>
+          <Grid item xs={10}>
+            <Grid container alignItems="center" spacing={1}>
+              <Grid item>
+                <Avatar
+                  className={classes.avatar}
+                  alt={data.author.displayname}
+                  src={data.author.avatar}
+                />
               </Grid>
-            </Grid>
-            <Grid item xs={2}>
-              <Grid container justify="flex-end" alignItems="center" spacing={2}>
-                <Grid item>
-                  <IconButton size="small">
-                    <MoreHorizRounded fontSize="small" />
-                  </IconButton>
-                </Grid>
+              <Grid item>
+                <Typography>{data.author.displayname}</Typography>
               </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container spacing={1}>
-                <Grid item xs={12} onClick={this.props.onClick}>
-                  <ImageCard image={project.thumbnail} />
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={8}>
-              <Typography style={{ fontWeight: "bold" }}>{utils.prettyNumber(12345, 'short')} lượt thích</Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <Grid container justify="flex-end" alignItems="center" spacing={1}>
-                <Grid item>
-                  <IconButton size="small">
-                    <FavoriteRounded color="primary" fontSize="small" />
-                  </IconButton>
-                </Grid>
-                <Grid item>
-                  <IconButton size="small">
-                    <ShareRounded fontSize="small" />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography><strong>{project.createdAt}</strong> - {project.status}</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <LiteComment
-                user={auth}
-                comments={project.comments}
-                onSend={this.props.onComment}
-              />
             </Grid>
           </Grid>
-        </Paper>
-      </Grid>
-    </Grid >
-  }
+          <Grid item xs={2}>
+            <Grid container justify="flex-end" alignItems="center" spacing={2}>
+              <Grid item>
+                <IconButton size="small">
+                  <MoreHorizRounded fontSize="small" />
+                </IconButton>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={1}>
+              <Grid item xs={12} onClick={props.onClick}>
+                <ImageCard _id={data.thumbnail} />
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={8}>
+            <Typography style={{ fontWeight: "bold" }}>{utils.prettyNumber(12345, 'short')} lượt thích</Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Grid container justify="flex-end" alignItems="center" spacing={1}>
+              <Grid item>
+                <IconButton size="small">
+                  <FavoriteRounded color="primary" fontSize="small" />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <IconButton size="small">
+                  <ShareRounded fontSize="small" />
+                </IconButton>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography><strong>{data.createdAt}</strong> - {data.content}</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <LiteComment
+              user={auth}
+              comments={data.comments}
+              onSend={props.onComment}
+            />
+          </Grid>
+        </Grid>
+      </Paper>
+    </Grid>
+  </Grid >
 }
 
 StatusCard.defaultProps = {
@@ -92,11 +96,10 @@ StatusCard.defaultProps = {
 }
 
 StatusCard.propTypes = {
+  _id: PropTypes.string.isRequired,
   auth: PropTypes.object,
-  author: PropTypes.object.isRequired,
-  project: PropTypes.object.isRequired,
   onClick: PropTypes.func,
   onComment: PropTypes.func,
 }
 
-export default withStyles(styles)(StatusCard);
+export default StatusCard;

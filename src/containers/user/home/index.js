@@ -15,9 +15,9 @@ import Status from 'containers/status';
 import Editor from './editor';
 
 import { getProjects } from 'modules/projects.reducer';
+import { checkTreeRootInLocalStorage } from 'components/blueprint/tree/history';
 
 import styles from './styles';
-import { checkTreeRootInLocalStorage } from 'components/blueprint/tree/history';
 
 
 class UserHome extends Component {
@@ -31,7 +31,8 @@ class UserHome extends Component {
   }
 
   componentDidMount() {
-    this.loadData();
+    let { projects: { pagination: { limit, page } } } = this.props;
+    this.props.getProjects(limit, page + 1);
     window.addEventListener('scroll', this.onTheEnd);
   }
 
@@ -40,24 +41,15 @@ class UserHome extends Component {
   }
 
   onTheEnd = () => {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)
-      return this.loadData();
-  }
-
-  loadData = () => {
-    let { match: { params: { email } } } = this.props;
-    this.props.getProjects(email).then(re => {
-      let newData = this.state.projects.concat(re.data);
-      return this.setState({ projects: newData });
-    }).catch(er => {
-      return console.error(er);
-    });
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      let { projects: { pagination: { limit, page } } } = this.props;
+      this.props.getProjects(limit, page + 1);
+    }
   }
 
   render() {
     let { classes } = this.props;
-    let { projects } = this.state;
-    if (!projects || !projects.length) return null;
+    let { projects: { data } } = this.props;
 
     return <Grid container justify="center" spacing={2}>
 
@@ -92,8 +84,8 @@ class UserHome extends Component {
       <Grid item xs={12}>
         <Grid container spacing={2}>
           {
-            projects.map((project, index) => <Grid item key={index} xs={12} sm={6} md={4} lg={3} xl={2}>
-              <Status project={project} />
+            data.map(blueprint => <Grid item key={blueprint._id} xs={12} sm={6} md={4} lg={3} xl={2}>
+              <Status _id={blueprint._id} />
             </Grid>)
           }
         </Grid>

@@ -151,12 +151,11 @@ class Status extends Component {
   render = () => {
     return <Fragment>
       <StatusCard
-        author={this.props.auth}
+        _id={this.props._id}
         auth={this.props.auth}
-        project={this.props.project}
         onClick={() => this.setState({ visible: true })}
       />
-      {this.renderFullStatus()}
+      {/* {this.renderFullStatus()} */}
     </Fragment>
   }
 
@@ -172,7 +171,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 Status.propTypes = {
-  project: PropTypes.object.isRequired,
+  _id: PropTypes.string.isRequired,
 }
 
 export default withRouter(connect(

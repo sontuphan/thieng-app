@@ -1,6 +1,5 @@
-import { getRandomProjects } from 'data/projects';
-import UserSchema from 'data/users';
-import CommentSchema from 'data/comments';
+import configs from 'configs';
+import api from 'helpers/api';
 
 /**
  * Documents
@@ -10,11 +9,10 @@ import CommentSchema from 'data/comments';
 const defaultState = {
   data: [],
   pagination: {
-    page: 0,
-    limit: 0
+    page: -1,
+    limit: 5,
   }
 }
-
 
 /**
  * Get projects
@@ -23,69 +21,63 @@ export const GET_PROJECTS = 'GET_PROJECTS';
 export const GET_PROJECTS_OK = 'GET_PROJECTS_OK';
 export const GET_PROJECTS_FAIL = 'GET_PROJECTS_FAIL';
 
-const _getUser = (id) => {
-  for (let i = 0; i < UserSchema.length; i++) {
-    if (id === UserSchema[i].id) {
-      return UserSchema[i];
-    }
-  }
-}
-
-const _getComments = (itemId) => {
-  let comments = [];
-  for (let i = 0; i < CommentSchema.length; i++) {
-    if (itemId === CommentSchema[i].item)
-      comments.push(CommentSchema[i]);
-  }
-  for (let i = 0; i < comments.length; i++) {
-    if (typeof comments[i].user === 'object') break;
-    let user = _getUser(comments[i].user);
-    comments[i].user = user
-  }
-  return comments;
-}
-
-const _getProjects = (email, page, limit) => {
-  let projects = getRandomProjects(email).concat(getRandomProjects(email));
-  projects = projects.map(project => {
-    let comments = _getComments(project.id)
-    project.comments = comments;
-    return project;
-  });
-  return {
-    status: 'OK',
-    data: projects,
-    pagination: { page, limit }
-  };
-}
-
-export const getProjects = (email, page, limit) => {
-  return dispatch => {
+export const getProjects = (limit, page) => {
+  return (dispatch, prevState) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: GET_PROJECTS });
 
-      let data = _getProjects(email, page, limit);
-      if (!data) {
+      const { projects: { data } } = prevState();
+      const { api: { base } } = configs;
+      api.get(`${base}/social/projects`, { limit, page, condition: { mode: 'public' } }, true).then(re => {
+        dispatch({
+          type: GET_PROJECTS_OK,
+          data: {
+            data: data.concat(re.data),
+            pagination: re.pagination
+          }
+        });
+        return resolve(re.data);
+      }).catch(er => {
         dispatch({
           type: GET_PROJECTS_FAIL,
-          reason: 'Input is null',
+          reason: er
         });
-        return reject('Input is null');
-      }
-
-      dispatch({
-        type: GET_PROJECTS_OK,
-        reason: null,
-        data: {
-          data: data.data,
-          pagination: data.pagination
-        }
+        return reject(er);
       });
-      return resolve(data);
+    });
+  }
+}
+
+
+/**
+ * Add a project
+ */
+export const ADD_PROJECT = 'ADD_PROJECT';
+export const ADD_PROJECT_OK = 'ADD_PROJECT_OK';
+export const ADD_PROJECT_FAIL = 'ADD_PROJECT_FAIL';
+
+export const addProject = (data) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: ADD_PROJECT });
+
+      const { api: { base } } = configs;
+      api.post(`${base}/project`, { project: data }, true).then(re => {
+        dispatch({
+          type: ADD_PROJECT_OK,
+          reason: null,
+        });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({
+          type: ADD_PROJECT_FAIL,
+          reason: er
+        });
+        return reject(er);
+      });
     });
   };
 };
-
 
 /**
  * Reducder
@@ -95,6 +87,10 @@ export default (state = defaultState, action) => {
     case GET_PROJECTS_OK:
       return { ...state, ...action.data };
     case GET_PROJECTS_FAIL:
+      return { ...state, ...action.data };
+    case ADD_PROJECT_OK:
+      return { ...state, ...action.data };
+    case ADD_PROJECT_FAIL:
       return { ...state, ...action.data };
     default:
       return state;

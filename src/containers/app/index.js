@@ -13,14 +13,14 @@ import Header from 'containers/header';
 import Footer from 'containers/footer';
 // Pages
 import Home from 'containers/home';
-import Newsfeed from 'containers/newsfeed';
+// import Newsfeed from 'containers/newsfeed';
 import Mall from 'containers/mall';
-import User from 'containers/user';
+// import User from 'containers/user';
 // Apllications
-import Search from 'containers/search';
+// import Search from 'containers/search';
 import Cart from 'containers/cart';
-import Notification from 'containers/notification';
-import Editor from 'containers/editor';
+// import Notification from 'containers/notification';
+// import Editor from 'containers/editor';
 
 import theme from 'static/styles/theme';
 import 'static/styles/index.css';
@@ -52,27 +52,27 @@ class App extends Component {
           <Switch>
             <Redirect exact from="/" to="/home" />
             <Route exact path="/home" component={Home} />
-            <Redirect exact path="/newsfeed" to="/newsfeed/for-me" />
-            <Route exact path="/newsfeed/:page" component={Newsfeed} />
+            {/* <Redirect exact path="/newsfeed" to="/newsfeed/for-me" /> */}
+            {/* <Route exact path="/newsfeed/:page" component={Newsfeed} /> */}
             <Route path="/mall" component={Mall} />
-            <Redirect exact from="/user/:email" to="/user/:email/home" />
-            <Route exact path="/user/:email/:page" component={User} />
+            {/* <Redirect exact from="/user/:email" to="/user/:email/home" /> */}
+            {/* <Route exact path="/user/:email/:page" component={User} /> */}
           </Switch>
 
           {/* Global app */}
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <Search />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <Cart />
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <Notification />
-            </Grid>
-            <Grid item xs={12}>
+            </Grid> */}
+            {/* <Grid item xs={12}>
               <Editor />
-            </Grid>
+            </Grid> */}
           </Grid>
 
         </Grid>

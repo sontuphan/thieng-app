@@ -35,14 +35,16 @@ class Carousel extends Component {
   }
 
   render() {
+    const { title, subtitle, objects } = this.props;
+
     return <Grid container spacing={2}>
       <Grid item xs={4}>
         <CarouselPagination {...this.state.pagination}
-          title={this.props.title}
-          subtitle={this.props.subtitle}
+          title={title}
+          subtitle={subtitle}
           paging={{
-            page: (this.state.page % this.props.objects.length + this.props.objects.length) % this.props.objects.length,
-            total: this.props.objects.length
+            page: (this.state.page % objects.length + objects.length) % objects.length,
+            total: objects.length
           }}
           onBack={this.onBack}
           onNext={this.onNext}
@@ -51,7 +53,7 @@ class Carousel extends Component {
       </Grid>
       <Grid item xs={8}>
         <CarouselSlide
-          objects={this.props.objects}
+          objects={objects}
           index={this.state.page}
           onChange={this.onChange}
         />

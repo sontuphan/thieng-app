@@ -1,4 +1,6 @@
-export default theme => ({
+import { makeStyles } from '@material-ui/core/styles';
+
+export const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(2),
     width: `calc(100% - ${theme.spacing(4)}px)`,
@@ -11,4 +13,4 @@ export default theme => ({
     width: theme.spacing(4),
     height: theme.spacing(4),
   }
-});
+}));
