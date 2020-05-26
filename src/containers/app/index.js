@@ -15,12 +15,12 @@ import Footer from 'containers/footer';
 import Home from 'containers/home';
 // import Newsfeed from 'containers/newsfeed';
 import Mall from 'containers/mall';
-// import User from 'containers/user';
+import User from 'containers/user';
 // Apllications
 // import Search from 'containers/search';
 import Cart from 'containers/cart';
 // import Notification from 'containers/notification';
-// import Editor from 'containers/editor';
+import Editor from 'containers/editor';
 
 import theme from 'static/styles/theme';
 import 'static/styles/index.css';
@@ -55,8 +55,8 @@ class App extends Component {
             {/* <Redirect exact path="/newsfeed" to="/newsfeed/for-me" /> */}
             {/* <Route exact path="/newsfeed/:page" component={Newsfeed} /> */}
             <Route path="/mall" component={Mall} />
-            {/* <Redirect exact from="/user/:email" to="/user/:email/home" /> */}
-            {/* <Route exact path="/user/:email/:page" component={User} /> */}
+            <Redirect exact from="/user/:email" to="/user/:email/store" />
+            <Route exact path="/user/:email/:page" component={User} />
           </Switch>
 
           {/* Global app */}
@@ -70,9 +70,9 @@ class App extends Component {
             {/* <Grid item xs={12}>
               <Notification />
             </Grid> */}
-            {/* <Grid item xs={12}>
+            <Grid item xs={12}>
               <Editor />
-            </Grid> */}
+            </Grid>
           </Grid>
 
         </Grid>

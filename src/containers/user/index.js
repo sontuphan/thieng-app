@@ -150,10 +150,10 @@ class User extends Component {
 
       <Grid item xs={11} md={10}>
         <Switch>
-          <Route exact path="/user/:email/home" component={UserHome} />
+          {/* <Route exact path="/user/:email/home" component={UserHome} /> */}
           <Route exact path="/user/:email/store" component={UserStore} />
-          <Route exact path="/user/:email/message" component={null} />
-          <Route exact path="/user/:email/settings" component={UserSettings} />
+          {/* <Route exact path="/user/:email/message" component={null} /> */}
+          {/* <Route exact path="/user/:email/settings" component={UserSettings} /> */}
         </Switch>
       </Grid>
 

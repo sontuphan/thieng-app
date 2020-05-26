@@ -31,6 +31,7 @@ class Menu extends Component {
             startIcon={<HomeRounded />}
             component={RouterLink}
             to={`/user/${email}/home`}
+            disabled
           >
             <Typography>Home</Typography>
           </Button>
@@ -85,6 +86,7 @@ class Menu extends Component {
             startIcon={<SettingsRounded />}
             component={RouterLink}
             to={`/user/${email}/settings`}
+            disabled
           >
             <Typography>Settings</Typography>
           </Button>
