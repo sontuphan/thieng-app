@@ -43,7 +43,7 @@ class Items extends Component {
   }
 
   loadData = () => {
-    let { items: { pagination: { limit, page } } } = this.props;
+    let { items: { mall: { pagination: { limit, page } } } } = this.props;
     let condition = { status: 'selling' }
     this.props.getItems(condition, limit, page + 1);
   }
@@ -92,11 +92,9 @@ class Items extends Component {
 
       <Grid item xs={11} md={10}>
         <Grid container spacing={2}>
-          {
-            data.map(obj => <Grid key={obj._id} item xs={6} sm={4} md={3} lg={2}>
-              <ProductCard _id={obj._id} />
-            </Grid>)
-          }
+          {data.map(obj => <Grid key={obj._id} item xs={6} sm={4} md={3} lg={2}>
+            <ProductCard _id={obj._id} />
+          </Grid>)}
         </Grid>
       </Grid>
 

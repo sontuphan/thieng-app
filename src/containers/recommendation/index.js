@@ -79,7 +79,7 @@ Recommendation.defaultProps = {
 }
 
 Recommendation.propTypes = {
-  id: PropTypes.number.isRequired,
+  _id: PropTypes.string.isRequired,
   quantity: PropTypes.number
 }
 

@@ -20,7 +20,7 @@ export const getItem = (_id) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: GET_ITEM });
       // Check id
-      if (_id) {
+      if (!_id) {
         let er = 'Invalid ID'
         dispatch({ type: GET_ITEM_FAIL, reason: er });
         return reject(er);
@@ -34,7 +34,9 @@ export const getItem = (_id) => {
       // Get online
       const { api: { base } } = configs;
       api.get(`${base}/item`, { _id }, true).then(re => {
-        dispatch({ type: GET_ITEM_OK, data: re.data });
+        const item = re.data;
+        const data = item ? { [item._id]: item } : {};
+        dispatch({ type: GET_ITEM_OK, data });
         return resolve(re.data);
       }).catch(er => {
         dispatch({ type: GET_ITEM_FAIL, reason: er });
@@ -56,7 +58,7 @@ export const getUser = (_id) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: GET_USER });
       // Check id
-      if (_id) {
+      if (!_id) {
         let er = 'Invalid ID'
         dispatch({ type: GET_USER_FAIL, reason: er });
         return reject(er);
@@ -70,7 +72,9 @@ export const getUser = (_id) => {
       // Get online
       const { api: { base } } = configs;
       api.get(`${base}/user`, { _id }, true).then(re => {
-        dispatch({ type: GET_USER_OK, data: re.data });
+        const user = re.data;
+        const data = user ? { [user._id]: user } : {};
+        dispatch({ type: GET_USER_OK, data });
         return resolve(re.data);
       }).catch(er => {
         dispatch({ type: GET_USER_FAIL, reason: er });

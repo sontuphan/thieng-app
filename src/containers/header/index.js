@@ -86,7 +86,7 @@ class Header extends Component {
     let { auth } = this.props;
     this.onToggleDrawer(false);
     if (!auth.email) return console.error('Not signed in yet.');
-    return this.props.history.push('/user/' + auth.email + '/home');
+    return this.props.history.push('/user/' + auth.email + '/store');
   }
 
   renderProfile = () => {
@@ -154,16 +154,14 @@ class Header extends Component {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <List>
-                  {
-                    this.state.routes.map(route => <ListItem
-                      key={route.link}
-                      button
-                      component={RouterLink}
-                      to={route.link}
-                      onClick={this.onToggleDrawer} >
-                      <ListItemText primary={route.text} />
-                    </ListItem>)
-                  }
+                  {this.state.routes.map(route => <ListItem
+                    key={route.link}
+                    button
+                    component={RouterLink}
+                    to={route.link}
+                    onClick={this.onToggleDrawer} >
+                    <ListItemText primary={route.text} />
+                  </ListItem>)}
                 </List>
                 <Divider />
                 <List>

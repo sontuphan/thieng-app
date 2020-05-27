@@ -23,7 +23,7 @@ function ProductCard(props) {
     <Grid item xs={12}>
       <Paper elevation={0} className={classes.paper}>
         <Grid container justify="center" spacing={1}>
-          <Grid item xs={12} component={Link} to={`/mall/item/${props._id}`}>
+          <Grid item xs={12} component={Link} to={`/item/${props._id}`}>
             <ImageCard _id={data.thumbnail} />
           </Grid>
           <Grid item xs={12}>

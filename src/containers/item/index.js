@@ -12,7 +12,7 @@ import { RichComment } from 'components/comments';
 import Stall from 'containers/stall';
 import Recommendation from 'containers/recommendation';
 
-import { getItems } from 'modules/items.reducer';
+import { getItem } from 'modules/bucket.reducer';
 import { getComments } from 'modules/comments.reducer';
 
 import styles from './styles';
@@ -22,46 +22,31 @@ class Item extends Component {
     super();
 
     this.state = {
-      id: 0,
-      amount: 1,
+      _id: null,
       isLoading: false,
     }
   }
 
-  handleId = () => {
-    let { match: { params: { id } } } = this.props;
-    id = Number(id)
-    if (typeof id !== 'number') id = 0;
-    this.setState({ id });
-  }
-
-  loadData = () => {
-    this.props.getItems().then(re => {
-      let item = re[0];
-      return this.props.getComments(item.id);
-    }).catch(er => {
-      return console.error(er);
-    });
+  handleParams = () => {
+    const { match: { params: { id } } } = this.props;
+    return this.setState({ _id: id });
   }
 
   componentDidMount() {
-    this.handleId();
-    this.loadData();
+    return this.handleParams();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (JSON.stringify(prevProps.match) !== JSON.stringify(this.props.match))
-      this.handleId();
-    if (prevState.id !== this.state.id)
-      this.loadData();
+      return this.handleParams();
   }
 
   onSend = () => {
-    console.log('Submit comment');
+    return console.log('Submit comment');
   }
 
   onMore = () => {
-    this.setState({ isLoading: true }, () => {
+    return this.setState({ isLoading: true }, () => {
       setTimeout(() => {
         this.setState({ isLoading: false });
       }, 3000);
@@ -69,9 +54,12 @@ class Item extends Component {
   }
 
   render() {
+    const { _id } = this.state;
+    if (!_id) return null;
+
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
-        <Stall id={this.state.id} />
+        <Stall _id={this.state._id} />
       </Grid>
 
       <Grid item xs={12}>
@@ -81,7 +69,7 @@ class Item extends Component {
       <Grid item xs={12} md={6}>
         <Grid container justify="center" spacing={2}>
           <Grid item xs={10}>
-            <Recommendation id={this.state.id} quatity={6} />
+            {/* <Recommendation _id={this.state._id} quatity={6} /> */}
           </Grid>
           <Grid item xs={12}>
             <Drain small />
@@ -119,7 +107,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getItems,
+  getItem,
   getComments,
 }, dispatch);
 

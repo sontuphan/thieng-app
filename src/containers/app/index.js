@@ -15,6 +15,7 @@ import Footer from 'containers/footer';
 import Home from 'containers/home';
 // import Newsfeed from 'containers/newsfeed';
 import Mall from 'containers/mall';
+import Item from 'containers/item';
 import User from 'containers/user';
 // Apllications
 // import Search from 'containers/search';
@@ -55,6 +56,7 @@ class App extends Component {
             {/* <Redirect exact path="/newsfeed" to="/newsfeed/for-me" /> */}
             {/* <Route exact path="/newsfeed/:page" component={Newsfeed} /> */}
             <Route path="/mall" component={Mall} />
+            <Route path="/item/:id" component={Item} />
             <Redirect exact from="/user/:email" to="/user/:email/store" />
             <Route exact path="/user/:email/:page" component={User} />
           </Switch>

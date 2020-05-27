@@ -46,11 +46,13 @@ class Stall extends Component {
       author: this.props.auth,
     });
     // View mode
+    let object = {}
+    let author = {}
     return this.props.getItem(this.props._id).then(item => {
-      return this.props.getUser(item.author);
-    }).then(re => {
-      const object = this.props.items.data[0];
-      const author = this.props.users.data[0];
+      object = item;
+      return this.props.getUser(item.userId);
+    }).then(user => {
+      author = user;
       return this.setState({ object, author });
     }).catch(console.error);
   }
@@ -211,8 +213,8 @@ class Stall extends Component {
   }
 
   render() {
-    let { classes } = this.props;
-    let { object, author } = this.state;
+    const { classes } = this.props;
+    const { object, author } = this.state;
 
     if (!object || !author) return null;
     return <Grid container spacing={2}>
@@ -304,7 +306,6 @@ class Stall extends Component {
 const mapStateToProps = state => ({
   auth: state.auth,
   bucket: state.bucket,
-  users: state.users,
   editor: state.editor,
 });
 

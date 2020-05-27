@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
-import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 import Drain from 'components/drain';
@@ -11,14 +10,10 @@ import Creation from './creation';
 import Selling from './selling';
 import Archive from './archive';
 
-import styles from './styles';
-
 
 class UserStore extends Component {
 
   render() {
-    // let { classes } = this.props;
-
     return <Grid container spacing={2}>
       <Grid item xs={12}>
         <Creation />
@@ -53,4 +48,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(UserStore)));
+)(UserStore));
