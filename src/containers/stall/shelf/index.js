@@ -1,8 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import { Swipeable } from 'react-swipeable';
+import async from 'async';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -23,20 +26,30 @@ import Drain from 'components/drain';
 import styles from './styles';
 import utils from 'helpers/utils';
 
+import { getFile } from 'modules/bucket.reducer';
+
 class Shelf extends Component {
   constructor() {
     super();
 
     this.state = {
+      files: [],
       showing: 0,
       translate: 0,
       color: '#ffffff',
     }
   }
 
+  componentDidMount() {
+    return this.loadData();
+  }
+
   componentDidUpdate(prevProps, prevState) {
     const { showing } = this.state;
     const { files } = this.props;
+    if (JSON.stringify(prevProps.files) !== JSON.stringify(files)) {
+      this.loadData();
+    }
     if (prevState.showing !== showing) {
       utils.getAccessibleTextColor(files[showing].source).then(color => {
         this.setState({ color });
@@ -44,25 +57,35 @@ class Shelf extends Component {
     }
   }
 
+  loadData = () => {
+    const { files, getFile } = this.props;
+    return async.map(files, (file, cb) => {
+      return getFile(file).then(re => cb(null, re)).catch(er => cb(er, null));
+    }, (er, re) => {
+      if (er) console.error(er);
+      return this.setState({ files: re });
+    });
+  }
+
   onColor = (color) => {
-    const { files } = this.props;
+    const { files } = this.state;
     files.forEach(({ metadata }, step) => {
-      if (metadata.color === color) this.onStep(step);
+      if (metadata.color === color) return this.onStep(step);
     });
   }
 
   onStep = (step) => {
-    const { files } = this.props;
+    const { files } = this.state;
     let translate = -step * (20 * files.length - 100) / (files.length - 1);
     if (translate > 0) translate = 0;
-    this.setState({
+    return this.setState({
       showing: step,
       translate: translate + 1
     }, () => this.setState({ translate }));
   }
 
   onNext = () => {
-    const { files } = this.props;
+    const { files } = this.state;
     let step = Math.min(this.state.showing + 1, files.length - 1);
     this.onStep(step);
   }
@@ -73,8 +96,8 @@ class Shelf extends Component {
   }
 
   render() {
-    const { classes, author, files } = this.props;
-    const { showing } = this.state;
+    const { classes, author } = this.props;
+    const { showing, files } = this.state;
     const file = files[showing] || {};
     const colors = files.map(file => file.metadata && file.metadata.color).filter(color => color);
 
@@ -233,4 +256,15 @@ Shelf.propTypes = {
   editable: PropTypes.bool,
 }
 
-export default withRouter(withStyles(styles)(Shelf));
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getFile,
+}, dispatch);
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Shelf)));

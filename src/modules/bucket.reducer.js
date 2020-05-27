@@ -84,6 +84,44 @@ export const getUser = (_id) => {
   }
 }
 
+/**
+ * Get a file
+ */
+export const GET_FILE = 'GET_FILE';
+export const GET_FILE_OK = 'GET_FILE_OK';
+export const GET_FILE_FAIL = 'GET_FILE_FAIL';
+
+export const getFile = (_id) => {
+  return (dispatch, prevState) => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: GET_FILE });
+      // Check id
+      if (!_id) {
+        let er = 'Invalid ID'
+        dispatch({ type: GET_FILE_FAIL, reason: er });
+        return reject(er);
+      }
+      // Get offline
+      const { bucket } = prevState();
+      if (bucket[_id]) {
+        dispatch({ type: GET_FILE_OK });
+        return resolve(bucket[_id]);
+      }
+      // Get online
+      const { api: { base } } = configs;
+      api.get(`${base}/file`, { _id }, true).then(re => {
+        const file = re.data;
+        const data = file ? { [file._id]: file } : {};
+        dispatch({ type: GET_FILE_OK, data });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: GET_FILE_FAIL, reason: er });
+        return reject(er);
+      });
+    });
+  }
+}
+
 
 /**
  * Reducder
@@ -97,6 +135,10 @@ export default (state = defaultState, action) => {
     case GET_USER_OK:
       return { ...state, ...action.data };
     case GET_USER_FAIL:
+      return { ...state, ...action.data };
+    case GET_FILE_OK:
+      return { ...state, ...action.data };
+    case GET_FILE_FAIL:
       return { ...state, ...action.data };
     default:
       return state;
