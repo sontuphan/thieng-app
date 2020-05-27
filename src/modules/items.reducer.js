@@ -5,12 +5,26 @@ import api from 'helpers/api';
  * Documents
  * @default defaultData
  */
-
+const PAGINATION = {
+  page: -1,
+  limit: 5,
+}
 const defaultState = {
-  data: [],
-  pagination: {
-    page: -1,
-    limit: 5,
+  mall: {
+    data: [],
+    pagination: { ...PAGINATION }
+  },
+  creation: {
+    data: [],
+    pagination: { ...PAGINATION }
+  },
+  selling: {
+    data: [],
+    pagination: { ...PAGINATION }
+  },
+  archive: {
+    data: [],
+    pagination: { ...PAGINATION }
   }
 }
 
@@ -21,27 +35,26 @@ export const GET_ITEMS = 'GET_ITEMS';
 export const GET_ITEMS_OK = 'GET_ITEMS_OK';
 export const GET_ITEMS_FAIL = 'GET_ITEMS_FAIL';
 
-export const getItems = (limit, page) => {
+export const getItems = (condition, limit, page, component = 'mall') => {
   return (dispatch, prevState) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: GET_ITEMS });
 
-      const { items: { data } } = prevState();
+      const { items: { [component]: { data } } } = prevState();
       const { api: { base } } = configs;
-      api.get(`${base}/social/items`, { limit, page, condition: { mode: 'public' } }, true).then(re => {
+      api.get(`${base}/social/items`, { condition, limit, page }, true).then(re => {
         dispatch({
           type: GET_ITEMS_OK,
           data: {
-            data: data.concat(re.data),
-            pagination: re.pagination
+            [component]: {
+              data: data.concat(re.data),
+              pagination: re.pagination
+            }
           }
         });
         return resolve(re.data);
       }).catch(er => {
-        dispatch({
-          type: GET_ITEMS_FAIL,
-          reason: er
-        });
+        dispatch({ type: GET_ITEMS_FAIL, reason: er });
         return reject(er);
       });
     });
@@ -63,16 +76,10 @@ export const addItem = (data) => {
 
       const { api: { base } } = configs;
       api.post(`${base}/item`, { item: data }, true).then(re => {
-        dispatch({
-          type: ADD_ITEM_OK,
-          reason: null,
-        });
+        dispatch({ type: ADD_ITEM_OK, reason: null });
         return resolve(re.data);
       }).catch(er => {
-        dispatch({
-          type: ADD_ITEM_FAIL,
-          reason: er
-        });
+        dispatch({ type: ADD_ITEM_FAIL, reason: er });
         return reject(er);
       });
     });

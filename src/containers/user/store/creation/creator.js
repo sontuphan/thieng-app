@@ -16,23 +16,13 @@ import { addItem } from 'modules/items.reducer';
 import styles from './styles';
 
 
-class Editor extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      id: Math.floor(Math.random() * 100)
-    }
-  }
+class Creator extends Component {
 
   /**
    * Creation actions
    */
-  onPublish = (value) => {
-    console.log(value);
-    return this.props.onClose();
-  }
-  onSave = (value) => {
+  onAddItem = (value) => {
+    console.log('onAddItem', value);
     return this.props.addItem(value).then(re => {
       console.log(re);
       return this.props.onClose();
@@ -40,7 +30,7 @@ class Editor extends Component {
       console.error(er);
     });
   }
-  onDelete = () => {
+  onDeleteItem = () => {
 
   }
 
@@ -54,10 +44,9 @@ class Editor extends Component {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Stall
-                id={this.state.id}
-                onPublish={this.onPublish}
-                onSave={this.onSave}
-                onDelete={this.onDelete}
+                _id=''
+                onAdd={this.onAddItem}
+                onDelete={this.onDeleteItem}
                 editable
               />
             </Grid>
@@ -80,11 +69,11 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   addItem,
 }, dispatch);
 
-Editor.defaultProps = {
+Creator.defaultProps = {
   visible: false
 }
 
-Editor.propTypes = {
+Creator.propTypes = {
   visible: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
 }
@@ -92,4 +81,4 @@ Editor.propTypes = {
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Editor)));
+)(withStyles(styles)(Creator)));

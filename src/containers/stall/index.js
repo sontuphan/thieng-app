@@ -14,8 +14,7 @@ import Drain from 'components/drain';
 import Shelf from 'components/shelf';
 import { TextInput, NumericInput } from 'components/inputs';
 
-import { getItems } from 'modules/items.reducer';
-import { getUser } from 'modules/user.reducer';
+import { getItem, getUser } from 'modules/bucket.reducer';
 import { setCart } from 'modules/cart.reducer';
 import { runEditor } from 'modules/editor.reducer';
 
@@ -29,7 +28,6 @@ class Stall extends Component {
     this.state = {
       object: {},
       author: {},
-      name: '',
       amount: 1,
     }
   }
@@ -38,32 +36,27 @@ class Stall extends Component {
     return this.loadData();
   }
 
-
   /**
    * Data loader
    */
   loadData = () => {
-    if (this.props.editable) {
-      return this.setState({
-        object: {},
-        author: this.props.auth,
-      });
-    }
-    else {
-      return this.props.getItems({ _id: this.props.id }).then(re => {
-        let item = re[0];
-        return this.props.getUser(item.author);
-      }).then(re => {
-        let object = this.props.items.data[0];
-        let author = this.props.users.data[0];
-        this.setState({ object, author });
-      }).catch(console.error);
-    }
+    // Editable mode
+    if (this.props.editable) return this.setState({
+      object: { tags: ['New'] },
+      author: this.props.auth,
+    });
+    // View mode
+    return this.props.getItem(this.props._id).then(item => {
+      return this.props.getUser(item.author);
+    }).then(re => {
+      const object = this.props.items.data[0];
+      const author = this.props.users.data[0];
+      return this.setState({ object, author });
+    }).catch(console.error);
   }
 
-
   /**
-   * Create new items
+   * Create a new item
    */
   onAdd = () => {
     return this.props.runEditor().then(re => {
@@ -100,136 +93,121 @@ class Stall extends Component {
   }
   onPrice = (value) => {
     if (value) value = value.split(',').join('');
-    return this.setState({
-      object: { ...this.state.object, price: parseInt(value) }
-    });
+    const object = { ...this.state.object, price: parseInt(value) }
+    return this.setState({ object });
   }
-  onAmount = (amount) => {
-    return this.setState({ amount });
-  }
-
 
   /**
    * Creation actions
    */
   onPublish = () => {
     let { object } = this.state;
-    object = {
-      ...object,
-      tags: ['New'],
-      status: 'selling',
-    }
-    return this.props.onPublish(object);
+    object = { ...object, status: 'selling' }
+    return this.props.onAdd(object);
   }
   onSave = () => {
     let { object } = this.state;
     object = {
-      ...object,
-      files: object.files.map(file => file._id),
-      status: 'creating',
+      ...object, status: 'creating',
+      files: object.files.map(file => file._id)
     }
-    return this.props.onSave(object);
+    return this.props.onAdd(object);
   }
   onDelete = () => {
     return this.props.onDelete();
   }
 
-
   /**
-   * Interaction actions 
+   * Selling actions 
    */
+  onAmount = (amount) => {
+    return this.setState({ amount });
+  }
   onBuy = () => {
     let object = this.props.items.data[0];
     let { amount } = this.state;
     let item = { ...object, amount }
-    this.props.setCart(item);
+    return this.props.setCart(item);
   }
 
-
   renderTag = () => {
-    if (this.props.editable) {
-      return <Grid container spacing={1}>
-        <Grid item>
-          <Chip color="primary" label="New" size="small" />
-        </Grid>
+    // Editable mode
+    if (this.props.editable) return <Grid container spacing={1}>
+      <Grid item>
+        <Chip color="primary" label="New" size="small" />
       </Grid>
-    }
-    else {
-      const { object: { tags } } = this.state;
-      if (!tags) return null;
-      return <Grid container spacing={1}>
-        {
-          tags.map(tag => <Grid item key={tag}>
-            <Chip color="primary" label={tag} size="small" />
-          </Grid>)
-        }
-      </Grid>
-    }
+    </Grid>
+    // View mode
+    const { object: { tags } } = this.state;
+    if (!tags) return null;
+    return <Grid container spacing={1}>
+      {tags.map(tag => <Grid item key={tag}>
+        <Chip color="primary" label={tag} size="small" />
+      </Grid>)}
+    </Grid>
   }
 
   renderAction = () => {
-    if (this.props.editable) {
-      return <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={this.onPublish}
-            fullWidth
-          >
-            <Typography>Publish</Typography>
-          </Button>
-        </Grid>
-        <Grid item xs={4}>
-          <Button
-            variant="outlined"
-            color="primary"
-            size="large"
-            onClick={this.onSave}
-            fullWidth
-          >
-            <Typography>Save</Typography>
-          </Button>
-        </Grid>
-        <Grid item xs={4}>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            onClick={this.onDelete}
-            fullWidth
-          >
-            <Typography>Delete</Typography>
-          </Button>
-        </Grid>
+    // Editable mode
+    if (this.props.editable) return <Grid container spacing={2}>
+      <Grid item xs={4}>
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          onClick={this.onPublish}
+          fullWidth
+        >
+          <Typography>Publish</Typography>
+        </Button>
       </Grid>
-    }
-    else {
-      return <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={this.onBuy}
-            fullWidth
-          >
-            <Typography>Mua</Typography>
-          </Button>
-        </Grid>
-        <Grid item xs={6}>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            fullWidth
-          >
-            <Typography>Huỷ</Typography>
-          </Button>
-        </Grid>
+      <Grid item xs={4}>
+        <Button
+          variant="outlined"
+          color="primary"
+          size="large"
+          onClick={this.onSave}
+          fullWidth
+        >
+          <Typography>Save</Typography>
+        </Button>
       </Grid>
-    }
+      <Grid item xs={4}>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          onClick={this.onDelete}
+          fullWidth
+        >
+          <Typography>Delete</Typography>
+        </Button>
+      </Grid>
+    </Grid>
+    // View mode
+    return <Grid container spacing={2}>
+      <Grid item xs={6}>
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          onClick={this.onBuy}
+          fullWidth
+        >
+          <Typography>Mua</Typography>
+        </Button>
+      </Grid>
+      <Grid item xs={6}>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          fullWidth
+        >
+          <Typography>Huỷ</Typography>
+        </Button>
+      </Grid>
+    </Grid>
   }
 
   render() {
@@ -325,24 +303,27 @@ class Stall extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  items: state.items,
+  bucket: state.bucket,
   users: state.users,
   editor: state.editor,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getItems,
-  getUser,
+  getItem, getUser,
   setCart,
   runEditor,
 }, dispatch);
 
 Stall.defaultProps = {
-  editable: false
+  onAdd: () => { },
+  onDelete: () => { },
+  editable: false,
 }
 
 Stall.propTypes = {
-  id: PropTypes.number,
+  _id: PropTypes.string.isRequired,
+  onAdd: PropTypes.func,
+  onDelete: PropTypes.func,
   editable: PropTypes.bool,
 }
 

@@ -12,11 +12,13 @@ import Divider from '@material-ui/core/Divider';
 import { AddBoxRounded, } from '@material-ui/icons';
 
 import { ProductCard } from 'components/cards';
-import Editor from './editor';
+import Creator from './creator';
 
 import { getItems } from 'modules/items.reducer';
 
 import styles from './styles';
+
+const COMPONENT = 'creation';
 
 
 class Creation extends Component {
@@ -29,32 +31,22 @@ class Creation extends Component {
   }
 
   componentDidMount() {
-    let { items: { pagination: { limit, page } } } = this.props;
-    this.props.getItems(limit, page + 1);
-    window.addEventListener('scroll', this.onTheEnd);
+    this.loadData();
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.onTheEnd);
-  }
-
-  onTheEnd = () => {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      let { items: { pagination: { limit, page } } } = this.props;
-      return this.props.getItems(limit, page + 1);
-    }
+  loadData = () => {
+    let { items: { [COMPONENT]: { pagination: { limit, page } } } } = this.props;
+    let condition = { status: 'creating' }
+    return this.props.getItems(condition, limit, page + 1, COMPONENT);
   }
 
   renderItems = () => {
-    let { items: { data } } = this.props;
+    let { items: { [COMPONENT]: { data } } } = this.props;
     if (!data || !data.length) return null;
-
     return <Grid container spacing={2}>
-      {
-        data.map(obj => <Grid key={obj._id} item xs={6} sm={4} md={3} lg={2}>
-          <ProductCard _id={obj._id} />
-        </Grid>)
-      }
+      {data.map(obj => <Grid key={obj._id} item xs={6} sm={4} md={3} lg={2}>
+        <ProductCard _id={obj._id} />
+      </Grid>)}
     </Grid>
   }
 
@@ -85,7 +77,7 @@ class Creation extends Component {
       </Grid>
 
       <Grid item xs={12}>
-        <Editor
+        <Creator
           visible={this.state.visible}
           onClose={() => this.setState({ visible: false })}
         />

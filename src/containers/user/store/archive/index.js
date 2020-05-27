@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
-import { EditRounded, } from '@material-ui/icons';
+import { DeleteForeverRounded } from '@material-ui/icons';
 
 import { ProductCard } from 'components/cards';
 
@@ -17,8 +17,10 @@ import { getItems } from 'modules/items.reducer';
 
 import styles from './styles';
 
+const COMPONENT = 'archive';
 
-class Selling extends Component {
+
+class Archive extends Component {
   constructor() {
     super();
 
@@ -27,16 +29,23 @@ class Selling extends Component {
     }
   }
 
-  renderItems = () => {
-    let { items: { data } } = this.props;
-    if (!data || !data.length) return null;
+  componentDidMount() {
+    this.loadData();
+  }
 
+  loadData = () => {
+    let { items: { [COMPONENT]: { pagination: { limit, page } } } } = this.props;
+    let condition = { status: 'archived' }
+    return this.props.getItems(condition, limit, page + 1, COMPONENT);
+  }
+
+  renderItems = () => {
+    let { items: { [COMPONENT]: { data } } } = this.props;
+    if (!data || !data.length) return null;
     return <Grid container spacing={2}>
-      {
-        data.map(obj => <Grid key={obj._id} item xs={6} sm={4} md={3} lg={2}>
-          <ProductCard _id={obj._id} />
-        </Grid>)
-      }
+      {data.map(obj => <Grid key={obj._id} item xs={6} sm={4} md={3} lg={2}>
+        <ProductCard _id={obj._id} />
+      </Grid>)}
     </Grid>
   }
 
@@ -48,7 +57,7 @@ class Selling extends Component {
       <Grid item xs={12}>
         <Grid container className={classes.noWrap} alignItems="center" justify="flex-end" spacing={2}>
           <Grid item>
-            <Typography variant="h3">Selling</Typography>
+            <Typography variant="h3">Archive</Typography>
           </Grid>
           <Grid item className={classes.stretch}>
             <Divider />
@@ -57,10 +66,10 @@ class Selling extends Component {
             <Button
               variant="contained"
               color="primary"
-              startIcon={<EditRounded />}
+              startIcon={<DeleteForeverRounded />}
               onClick={() => this.setState({ visible: true })}
             >
-              <Typography>Edit</Typography>
+              <Typography>Delete</Typography>
             </Button>
           </Grid>
         </Grid>
@@ -86,4 +95,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Selling)));
+)(withStyles(styles)(Archive)));

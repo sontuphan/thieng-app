@@ -29,8 +29,7 @@ class Items extends Component {
 
   componentDidMount() {
     this.readParams();
-    let { items: { pagination: { limit, page } } } = this.props;
-    this.props.getItems(limit, page + 1);
+    this.loadData();
     window.addEventListener('scroll', this.onTheEnd);
   }
 
@@ -43,10 +42,15 @@ class Items extends Component {
     window.removeEventListener('scroll', this.onTheEnd);
   }
 
+  loadData = () => {
+    let { items: { pagination: { limit, page } } } = this.props;
+    let condition = { status: 'selling' }
+    this.props.getItems(condition, limit, page + 1);
+  }
+
   onTheEnd = () => {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      let { items: { pagination: { limit, page } } } = this.props;
-      return this.props.getItems(limit, page + 1);
+      this.loadData();
     }
   }
 
