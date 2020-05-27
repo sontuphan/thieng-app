@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 import Drain from 'components/drain';
-import Shelf from 'components/shelf';
+import Shelf from './shelf';
 import { TextInput, NumericInput } from 'components/inputs';
 
 import { getItem, getUser } from 'modules/bucket.reducer';
