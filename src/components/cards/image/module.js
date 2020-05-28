@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
-import configs from 'configs';
-import api from 'helpers/api';
+import { useDispatch, useStore } from 'react-redux';
+import { getFile } from 'modules/bucket.reducer';
 
 export const useData = (_id) => {
   const [data, setData] = useState();
   const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const store = useStore();
 
   useEffect(() => {
-    const { api: { base } } = configs;
-    if (_id) api.get(`${base}/file`, { _id }, true).then(re => {
-      return setData(re.data);
+    if (_id) getFile(_id)(dispatch, store.getState).then(re => {
+      return setData(re);
     }).catch(er => {
       return setError(er);
     });

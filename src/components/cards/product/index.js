@@ -18,26 +18,23 @@ function ProductCard(props) {
   const data = useData(props._id);
 
   if (!data) return null;
-  if (!data.thumbnail) data.thumbnail = data.files[0];
   return <Grid container spacing={2}>
     <Grid item xs={12}>
       <Paper elevation={0} className={classes.paper}>
         <Grid container justify="center" spacing={1}>
-          <Grid item xs={12} component={Link} to={`/item/${props._id}`}>
-            <ImageCard _id={data.thumbnail} />
+          <Grid item xs={12} component={Link} to={`/item/${data._id}`}>
+            <ImageCard _id={data.thumbnail || data.files[0]} />
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={1}>
-              {
-                data.tags.map(tag => <Grid item key={tag}>
-                  <Chip
-                    className={classes.chip}
-                    color="primary"
-                    label={tag}
-                    size="small"
-                  />
-                </Grid>)
-              }
+              {data.tags.map(tag => <Grid item key={tag}>
+                <Chip
+                  className={classes.chip}
+                  color="primary"
+                  label={tag}
+                  size="small"
+                />
+              </Grid>)}
             </Grid>
           </Grid>
           <Grid item xs={12} className={classes.cursor}>
@@ -48,6 +45,9 @@ function ProductCard(props) {
       </Paper>
     </Grid>
   </Grid >
+}
+
+ProductCard.defaultProps = {
 }
 
 ProductCard.propTypes = {
