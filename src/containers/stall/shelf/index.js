@@ -6,6 +6,7 @@ import { Link as RouterLink, withRouter } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import { Swipeable } from 'react-swipeable';
 import async from 'async';
+import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -20,13 +21,14 @@ import {
   ArrowForwardRounded, ColorLensRounded, AddRounded
 } from '@material-ui/icons';
 
-import ColorSelect from './colorSelect';
+import ColorSelector from './colorSelector';
 import Drain from 'components/drain';
 
 import styles from './styles';
 import utils from 'helpers/utils';
 
 import { getFile } from 'modules/bucket.reducer';
+
 
 class Shelf extends Component {
   constructor() {
@@ -47,7 +49,7 @@ class Shelf extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { showing } = this.state;
     const { files } = this.props;
-    if (JSON.stringify(prevProps.files) !== JSON.stringify(files)) {
+    if (!isEqual(prevProps.files, files)) {
       this.loadData();
     }
     if (prevState.showing !== showing) {
@@ -62,7 +64,7 @@ class Shelf extends Component {
     return async.map(files, (file, cb) => {
       return getFile(file).then(re => cb(null, re)).catch(er => cb(er, null));
     }, (er, re) => {
-      if (er) console.error(er);
+      if (er) return console.error(er);
       return this.setState({ files: re });
     });
   }
@@ -99,7 +101,8 @@ class Shelf extends Component {
     const { classes, author } = this.props;
     const { showing, files } = this.state;
     const file = files[showing] || {};
-    const colors = files.map(file => file.metadata && file.metadata.color).filter(color => color);
+    const colors = ['#ffffff', '#000000']
+    // const colors = files.map(file => file.metadata && file.metadata.color).filter(color => color);
 
     return <Swipeable onSwipedLeft={this.onNext} onSwipedRight={this.onBack}>
       <Grid container spacing={2}>
@@ -156,7 +159,7 @@ class Shelf extends Component {
             </Grid>
             {/* Colors */}
             <Grid item xs={6}>
-              <ColorSelect
+              <ColorSelector
                 colors={colors}
                 value={file.metadata && file.metadata.color}
                 onChange={this.onColor}
@@ -257,7 +260,6 @@ Shelf.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

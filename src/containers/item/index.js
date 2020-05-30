@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
+import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -37,7 +38,7 @@ class Item extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (JSON.stringify(prevProps.match) !== JSON.stringify(this.props.match))
+    if (!isEqual(prevProps.match, this.props.match))
       return this.handleParams();
   }
 

@@ -9,7 +9,7 @@ import { FiberManualRecord } from '@material-ui/icons';
 
 import styles from './styles';
 
-class ColorSelect extends Component {
+class ColorSelector extends Component {
   constructor() {
     super();
 
@@ -41,10 +41,10 @@ class ColorSelect extends Component {
   }
 }
 
-ColorSelect.propTypes = {
+ColorSelector.propTypes = {
   colors: PropTypes.array.isRequired,
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 }
 
-export default withStyles(styles)(ColorSelect);
+export default withStyles(styles)(ColorSelector);

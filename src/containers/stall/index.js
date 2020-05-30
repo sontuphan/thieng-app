@@ -6,13 +6,13 @@ import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 import Drain from 'components/drain';
-import Shelf from './shelf';
 import { TextInput, NumericInput } from 'components/inputs';
+import Shelf from './shelf';
+import Tags from './tags';
 
 import { getItem, getUser } from 'modules/bucket.reducer';
 import { setCart } from 'modules/cart.reducer';
@@ -65,7 +65,7 @@ class Stall extends Component {
       if (!re) return console.log('No file added');
       let { object } = this.state;
       if (!object.files) object.files = [];
-      object.files.push(re);
+      object.files.push(re._id);
       return this.setState({ object });
     }).catch(console.error);
   }
@@ -130,23 +130,6 @@ class Stall extends Component {
     let { amount } = this.state;
     let item = { ...object, amount }
     return this.props.setCart(item);
-  }
-
-  renderTag = () => {
-    // Editable mode
-    if (this.props.editable) return <Grid container spacing={1}>
-      <Grid item>
-        <Chip color="primary" label="New" size="small" />
-      </Grid>
-    </Grid>
-    // View mode
-    const { object: { tags } } = this.state;
-    if (!tags) return null;
-    return <Grid container spacing={1}>
-      {tags.map(tag => <Grid item key={tag}>
-        <Chip color="primary" label={tag} size="small" />
-      </Grid>)}
-    </Grid>
   }
 
   renderAction = () => {
@@ -217,6 +200,7 @@ class Stall extends Component {
     const { object, author } = this.state;
 
     if (!object || !author) return null;
+
     return <Grid container spacing={2}>
       {/* Shelf */}
       <Grid item xs={12} md={6}>
@@ -235,7 +219,7 @@ class Stall extends Component {
             <Drain />
           </Grid>
           <Grid item xs={10} md={8}>
-            {this.renderTag()}
+            <Tags tags={object.tags} />
           </Grid>
           <Grid item xs={10} md={8}>
             <TextInput
