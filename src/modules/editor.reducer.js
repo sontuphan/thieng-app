@@ -58,18 +58,12 @@ export const setData = (file) => {
       dispatch({ type: SET_DATA });
 
       if (!file) {
-        dispatch({
-          type: SET_DATA_FAIL,
-          reason: 'Invalid inputs'
-        });
-        return reject('Invalid inputs');
+        let er = 'Invalid inputs';
+        dispatch({ type: SET_DATA_FAIL, reason: er });
+        return reject(er);
       }
 
-      dispatch({
-        type: SET_DATA_OK,
-        reason: null,
-        data: { file }
-      });
+      dispatch({ type: SET_DATA_OK, data: { file } });
       return resolve();
     });
   }
@@ -83,34 +77,27 @@ export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
 export const UPLOAD_IMAGE_OK = 'UPLOAD_IMAGE_OK';
 export const UPLOAD_IMAGE_FAIL = 'UPLOAD_IMAGE_FAIL';
 
-export const uploadFile = (file) => {
+export const uploadFile = (file, metadata) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
       dispatch({ type: UPLOAD_IMAGE });
 
       if (!file || !file.type) {
-        dispatch({
-          type: UPLOAD_IMAGE_FAIL,
-          reason: 'Invalid inputs'
-        });
-        return reject('Invalid inputs');
+        let er = 'Invalid inputs';
+        dispatch({ type: UPLOAD_IMAGE_FAIL, reason: er });
+        return reject(er);
       }
 
       let data = new FormData();
       const type = file.type.split('/')[0];
       data.append(type, file);
+      data.append('metadata', JSON.stringify(metadata));
       const { api: { base } } = configs;
       api.post(`${base}/file/${type}`, data, true).then(re => {
-        dispatch({
-          type: UPLOAD_IMAGE_OK,
-          reason: null,
-        });
+        dispatch({ type: UPLOAD_IMAGE_OK });
         return resolve(re.data);
       }).catch(er => {
-        dispatch({
-          type: UPLOAD_IMAGE_FAIL,
-          reason: er
-        });
+        dispatch({ type: UPLOAD_IMAGE_FAIL, reason: er });
         return reject(er);
       });
     });

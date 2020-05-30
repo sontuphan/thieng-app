@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes, { object } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
@@ -7,7 +7,6 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 
 import Drain from 'components/drain';
 import { TextInput, NumericInput } from 'components/inputs';
@@ -17,6 +16,7 @@ import Tags from './tags';
 import { getItem, getUser } from 'modules/bucket.reducer';
 import { setCart } from 'modules/cart.reducer';
 import { runEditor } from 'modules/editor.reducer';
+import { EditableButtonGroup, BuyableButtonGroup } from './buttons';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -111,10 +111,7 @@ class Stall extends Component {
   }
   onSave = () => {
     let { object } = this.state;
-    object = {
-      ...object, status: 'creating',
-      files: object.files.map(file => file._id)
-    }
+    object = { ...object, status: 'creating' }
     return this.props.onAdd(object);
   }
   onDelete = () => {
@@ -133,83 +130,23 @@ class Stall extends Component {
     let item = { ...object, amount }
     return this.props.setCart(item);
   }
-
-  renderAction = () => {
-    // Editable mode
-    if (this.props.editable) return <Grid container spacing={2}>
-      <Grid item xs={4}>
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={this.onPublish}
-          fullWidth
-        >
-          <Typography>Publish</Typography>
-        </Button>
-      </Grid>
-      <Grid item xs={4}>
-        <Button
-          variant="outlined"
-          color="primary"
-          size="large"
-          onClick={this.onSave}
-          fullWidth
-        >
-          <Typography>Save</Typography>
-        </Button>
-      </Grid>
-      <Grid item xs={4}>
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          onClick={this.onDelete}
-          fullWidth
-        >
-          <Typography>Delete</Typography>
-        </Button>
-      </Grid>
-    </Grid>
-    // View mode
-    return <Grid container spacing={2}>
-      <Grid item xs={6}>
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={this.onBuy}
-          fullWidth
-        >
-          <Typography>Mua</Typography>
-        </Button>
-      </Grid>
-      <Grid item xs={6}>
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          fullWidth
-        >
-          <Typography>Huỷ</Typography>
-        </Button>
-      </Grid>
-    </Grid>
+  onCancel = () => {
+    return console.log('onCancel');
   }
+
+
 
   render() {
     const { classes } = this.props;
-    const { object: { files }, author } = this.state;
-    console.log(files)
+    const { object, author } = this.state;
 
     if (!object || !author) return null;
-
     return <Grid container spacing={2}>
       {/* Shelf */}
       <Grid item xs={12} md={6}>
         <Shelf
           author={author}
-          files={[...files]} /* Tricky copy array to update component */
+          fileIds={[...object.files]} /* Tricky copy array to update component */
           editable={this.props.editable}
           onAdd={this.onAdd}
           onEdit={this.onEdit}
@@ -282,7 +219,15 @@ class Stall extends Component {
             />
           </Grid>
           <Grid item xs={10} md={8}>
-            {this.renderAction()}
+            {this.props.editable ?
+              <EditableButtonGroup
+                onPublish={this.onPublish}
+                onSave={this.onSave}
+                onDelete={this.onDelete}
+              /> : <BuyableButtonGroup
+                onBuy={this.onBuy}
+                onCancel={this.onCancel}
+              />}
           </Grid>
         </Grid>
       </Grid>

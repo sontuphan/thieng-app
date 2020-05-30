@@ -29,12 +29,9 @@ class Editor extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      prevProps.editor.visible !== this.props.editor.visible
-      && this.props.editor.visible
-    ) {
-      if (this.props.editor.source)
-        return this.setState({ visible: true });
+    const { editor: { visible, source } } = this.props;
+    if (prevProps.editor.visible !== visible && visible) {
+      if (source) return this.setState({ visible });
       return this.ref.current.click();
     }
   }
@@ -56,7 +53,7 @@ class Editor extends Component {
       // Free memory
       URL.revokeObjectURL(value.source);
       // Uploading files
-      this.props.uploadFile(file).then(re => {
+      this.props.uploadFile(file, value.metadata).then(re => {
         this.props.setData(re);
         return this.onClose();
       }).catch(console.error);

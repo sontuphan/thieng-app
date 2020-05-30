@@ -22,7 +22,6 @@ class Creator extends Component {
    * Creation actions
    */
   onAddItem = (value) => {
-    console.log('onAddItem', value);
     return this.props.addItem(value).then(re => {
       console.log(re);
       return this.props.onClose();

@@ -63,12 +63,11 @@ class Editor extends Component {
       content: this.state.status,
       tree: this.state.blueprint,
     }
-    console.log(data);
-    // return this.props.addProject(data).then(re => {
-    //   console.log(re);
-    // }).catch(er => {
-    //   console.error(er);
-    // });
+    return this.props.addProject(data).then(re => {
+      console.log(re);
+    }).catch(er => {
+      console.error(er);
+    });
   }
 
   render() {

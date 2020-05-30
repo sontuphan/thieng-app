@@ -1,5 +1,3 @@
-import api from '../helpers/api';
-
 /**
  * Documents
  * @default defaultData
@@ -28,19 +26,15 @@ export const toogleSearch = () => {
       let prevVisible = prevState.search.visible;
 
       if (typeof prevVisible !== 'boolean') {
-        dispatch({
-          type: TOOGLE_SEARCH_FAIL,
-          reason: 'Undifined search state.',
-        });
-        return reject('Undifined search state.');
+        let er = 'Undifined search state';
+        dispatch({ type: TOOGLE_SEARCH_FAIL, reason: er });
+        return reject(er);
       }
 
       dispatch({
         type: TOOGLE_SEARCH_OK,
         reason: null,
-        data: {
-          visible: !prevVisible,
-        }
+        data: { visible: !prevVisible }
       });
       return resolve(!prevVisible);
     });
@@ -61,29 +55,16 @@ export const searchText = (value) => {
       dispatch({ type: SEARCH_TEXT });
 
       if (!value) {
-        dispatch({
-          type: SEARCH_TEXT_FAIL,
-          reason: 'Input is null.',
-        });
-        return reject('Input is null.');
+        let er = 'Invalid input';
+        dispatch({ type: SEARCH_TEXT_FAIL, reason: er });
+        return reject(er);
       }
-
-      api.get('http://localhost:3001/user', {}, true).then(re => {
-        console.log(re);
-      }).catch(er => {
-        console.log(er);
-      });
 
       let prevState = getState();
       let data = null;
       if (prevState.search.value !== value) data = { value: value, repeat: 0 }
       else data = { value: value, repeat: prevState.search.repeat + 1 }
-
-      dispatch({
-        type: SEARCH_TEXT_OK,
-        reason: null,
-        data: data
-      });
+      dispatch({ type: SEARCH_TEXT_OK, reason: null, data: data });
       return resolve(value);
     });
   };

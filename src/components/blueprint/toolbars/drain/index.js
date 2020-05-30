@@ -18,7 +18,6 @@ const DrainBar = (props) => {
 
   const onHeight = (e) => {
     const height = parseInt(e.target.value);
-    console.log(height, !height)
     if (!height) return;
     if (height) return props.onChange({ height });
   }

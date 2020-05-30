@@ -47,12 +47,12 @@ class Shelf extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { showing } = this.state;
-    const { files } = this.props;
-    if (!isEqual(prevProps.files, files)) {
+    const { fileIds } = this.props;
+    if (!isEqual(prevProps.fileIds, fileIds)) {
       this.loadData();
     }
-    if (prevState.showing !== showing) {
+    const { showing, files } = this.state;
+    if (!isEqual(prevState.showing, showing)) {
       utils.getAccessibleTextColor(files[showing].source).then(color => {
         return this.setState({ color });
       });
@@ -60,9 +60,9 @@ class Shelf extends Component {
   }
 
   loadData = () => {
-    const { files, getFile } = this.props;
-    return async.map(files, (file, cb) => {
-      return getFile(file).then(re => cb(null, re)).catch(er => cb(er, null));
+    const { fileIds, getFile } = this.props;
+    return async.map(fileIds, (fileId, cb) => {
+      return getFile(fileId).then(re => cb(null, re)).catch(er => cb(er, null));
     }, (er, re) => {
       if (er) return console.error(er);
       return this.setState({ files: re });
@@ -241,7 +241,7 @@ class Shelf extends Component {
 }
 
 Shelf.defaultProps = {
-  files: [],
+  fileIds: [],
   onAdd: () => { },
   onEdit: () => { },
   editable: false,
@@ -249,7 +249,7 @@ Shelf.defaultProps = {
 
 Shelf.propTypes = {
   author: PropTypes.object.isRequired,
-  files: PropTypes.array,
+  fileIds: PropTypes.array,
   on3D: PropTypes.func,
   onAdd: PropTypes.func,
   onEdit: PropTypes.func,
@@ -257,7 +257,6 @@ Shelf.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  bucket: state.bucket,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -11,7 +11,6 @@ import styles from './styles';
 class Drain extends Component {
 
   onChange = (data) => {
-    console.log(data)
     this.props.tree.editDrain(
       this.props.id,
       data.height,
