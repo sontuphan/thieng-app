@@ -54,7 +54,7 @@ class Shelf extends Component {
     }
     if (prevState.showing !== showing) {
       utils.getAccessibleTextColor(files[showing].source).then(color => {
-        this.setState({ color });
+        return this.setState({ color });
       });
     }
   }
@@ -71,7 +71,7 @@ class Shelf extends Component {
 
   onColor = (color) => {
     const { files } = this.state;
-    files.forEach(({ metadata }, step) => {
+    return files.forEach(({ metadata }, step) => {
       if (metadata.color === color) return this.onStep(step);
     });
   }
@@ -89,20 +89,19 @@ class Shelf extends Component {
   onNext = () => {
     const { files } = this.state;
     let step = Math.min(this.state.showing + 1, files.length - 1);
-    this.onStep(step);
+    return this.onStep(step);
   }
 
   onBack = () => {
     let step = Math.max(this.state.showing - 1, 0);
-    this.onStep(step);
+    return this.onStep(step);
   }
 
   render() {
-    const { classes, author } = this.props;
+    const { classes, author, editable } = this.props;
     const { showing, files } = this.state;
     const file = files[showing] || {};
-    const colors = ['#ffffff', '#000000']
-    // const colors = files.map(file => file.metadata && file.metadata.color).filter(color => color);
+    const colors = files.map(file => file.metadata && file.metadata.color).filter(color => color);
 
     return <Swipeable onSwipedLeft={this.onNext} onSwipedRight={this.onBack}>
       <Grid container spacing={2}>
@@ -128,7 +127,7 @@ class Shelf extends Component {
                     <ThreeDRotationRounded style={{ color: this.state.color }} />
                   </IconButton>
                 </Grid> : null}
-                {this.props.editable && file.source ? <Grid item>
+                {editable && file.source ? <Grid item>
                   <IconButton onClick={() => this.props.onEdit(showing)}>
                     <ColorLensRounded style={{ color: this.state.color }} />
                   </IconButton>
@@ -195,26 +194,24 @@ class Shelf extends Component {
                 slideClassName={classes.slide}
                 disabled
               >
-                {
-                  files.map((file, i) => <Grid item key={i}>
-                    <Grid container justify="center">
-                      <Badge
-                        overlap="circle"
-                        variant="dot"
-                        color="primary"
-                        invisible={showing !== i}
-                      >
-                        <Avatar
-                          alt={file.source}
-                          src={file.source}
-                          onClick={() => this.onStep(i)}
-                          className={classes.cursor}
-                        />
-                      </Badge>
-                    </Grid>
-                  </Grid>)
-                }
-                {this.props.editable ? <Grid item>
+                {files.map((file, i) => <Grid item key={i}>
+                  <Grid container justify="center">
+                    <Badge
+                      overlap="circle"
+                      variant="dot"
+                      color="primary"
+                      invisible={showing !== i}
+                    >
+                      <Avatar
+                        alt={file.source}
+                        src={file.source}
+                        onClick={() => this.onStep(i)}
+                        className={classes.cursor}
+                      />
+                    </Badge>
+                  </Grid>
+                </Grid>)}
+                {editable ? <Grid item>
                   <Tooltip title="Add new image">
                     <Avatar
                       onClick={this.props.onAdd}
@@ -260,6 +257,7 @@ Shelf.propTypes = {
 }
 
 const mapStateToProps = state => ({
+  bucket: state.bucket,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

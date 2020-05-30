@@ -47,14 +47,12 @@ class Home extends Component {
   }
 
   scrollToHash = () => {
-    let hash = this.props.location.hash;
+    const { location: { hash } } = this.props;
     if (!hash) return console.error('Invalid hashtag');
-    let id = hash.replace('#', '');
-    let e = window.document.getElementById(id);
+    const id = hash.replace('#', '');
+    const e = window.document.getElementById(id);
     if (!e) return console.error('Invalid component');
-    return setTimeout(() => {
-      e.scrollIntoView();
-    }, 100);
+    return setTimeout(() => e.scrollIntoView(), 100);
   }
 
   onMore = () => {

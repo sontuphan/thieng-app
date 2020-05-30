@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { object } from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
@@ -26,7 +26,10 @@ class Stall extends Component {
     super();
 
     this.state = {
-      object: {},
+      object: {
+        tags: ['New'],
+        files: [],
+      },
       author: {},
       amount: 1,
     }
@@ -42,8 +45,7 @@ class Stall extends Component {
   loadData = () => {
     // Editable mode
     if (this.props.editable) return this.setState({
-      object: { tags: ['New'] },
-      author: this.props.auth,
+      author: this.props.auth
     });
     // View mode
     let object = {}
@@ -197,7 +199,8 @@ class Stall extends Component {
 
   render() {
     const { classes } = this.props;
-    const { object, author } = this.state;
+    const { object: { files }, author } = this.state;
+    console.log(files)
 
     if (!object || !author) return null;
 
@@ -206,7 +209,7 @@ class Stall extends Component {
       <Grid item xs={12} md={6}>
         <Shelf
           author={author}
-          files={object.files}
+          files={[...files]} /* Tricky copy array to update component */
           editable={this.props.editable}
           onAdd={this.onAdd}
           onEdit={this.onEdit}
