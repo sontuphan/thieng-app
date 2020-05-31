@@ -13,6 +13,7 @@ import Drain from 'components/drain';
 import { TextInput, NumericInput } from 'components/inputs';
 import Shelf from './shelf';
 import Tags from './tags';
+import Categories from './categories';
 
 import { getFile, getItem } from 'modules/bucket.reducer';
 import { setCart } from 'modules/cart.reducer';
@@ -29,7 +30,7 @@ class Stall extends Component {
     this.state = {
       object: {
         tags: ['New'],
-        files: [],
+        fileIds: [],
       },
       userId: null,
       amount: 1,
@@ -67,19 +68,19 @@ class Stall extends Component {
     return this.props.runEditor().then(re => {
       if (!re) return console.log('No file added');
       let { object } = this.state;
-      if (!object.files) object.files = [];
-      object.files.push(re._id);
+      if (!object.fileIds) object.fileIds = [];
+      object.fileIds.push(re._id);
       return this.setState({ object });
     }).catch(console.error);
   }
   onEdit = (index) => {
     let { object } = this.state;
-    let fileId = object.files[index];
+    let fileId = object.fileIds[index];
     return this.props.getFile(fileId).then(file => {
       return this.props.runEditor(file);
     }).then(re => {
-      if (!re.source) object.files = object.files.filter((f, i) => i !== index);
-      else object.files[index] = re._id;
+      if (!re.source) object.fileIds = object.fileIds.filter((f, i) => i !== index);
+      else object.fileIds[index] = re._id;
       return this.setState({ object });
     }).catch(console.error);
   }
@@ -102,6 +103,12 @@ class Stall extends Component {
     if (value) value = value.split(',').join('');
     const object = { ...this.state.object, price: parseInt(value) }
     return this.setState({ object });
+  }
+  onCategory = (value) => {
+    console.log(value)
+    return this.setState({
+      object: { ...this.state.object, category: value }
+    });
   }
 
   /**
@@ -147,7 +154,7 @@ class Stall extends Component {
       <Grid item xs={12} md={6}>
         <Shelf
           userId={userId}
-          fileIds={[...object.files]} /* Tricky copy array to update component */
+          fileIds={[...object.fileIds]} /* Tricky copy array to update component */
           editable={this.props.editable}
           onAdd={this.onAdd}
           onEdit={this.onEdit}
@@ -212,12 +219,15 @@ class Stall extends Component {
             <Drain />
           </Grid>
           <Grid item xs={10} md={8}>
-            <NumericInput
-              variant="outlined"
-              value={this.state.amount}
-              onChange={this.onAmount}
-              disabled={this.props.editable}
-            />
+            {this.props.editable ? <Categories
+              value={object.category}
+              onChange={this.onCategory}
+            /> : <NumericInput
+                variant="outlined"
+                value={this.state.amount}
+                onChange={this.onAmount}
+                disabled={this.props.editable}
+              />}
           </Grid>
           <Grid item xs={10} md={8}>
             {this.props.editable ?

@@ -24,7 +24,7 @@ function ProductCard(props) {
       <Paper elevation={0} className={classes.paper}>
         <Grid container justify="center" spacing={1}>
           <Grid item xs={12} {...imageProps}>
-            <ImageCard _id={data.thumbnail || data.files[0]} />
+            <ImageCard _id={data.thumbnailId || data.fileIds[0]} />
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={1}>

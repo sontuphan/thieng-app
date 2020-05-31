@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 import { ExpandMoreRounded, ExpandLessRounded } from '@material-ui/icons';
-import { FaChair, FaTableTennis, FaTree, FaConciergeBell } from 'react-icons/fa';
+import { FaChair, FaTableTennis, FaTree, FaDice } from 'react-icons/fa';
 import { GiDesk, GiBedLamp, GiCookingPot, GiCeilingLight } from 'react-icons/gi';
 import { MdTexture } from 'react-icons/md';
 
@@ -62,7 +62,7 @@ class Menu extends Component {
         <Button
           variant="outlined"
           color={category === 'others' ? 'primary' : 'default'}
-          startIcon={<FaConciergeBell />}
+          startIcon={<FaDice />}
           component={RouterLink}
           to={'/mall/others'}
         >

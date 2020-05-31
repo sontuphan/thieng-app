@@ -5,17 +5,18 @@ import api from 'helpers/api';
  * Documents
  * @default defaultData
  */
-
-const defaultState = {
-  file: {
-    name: null,
-    type: null,
-    source: null,
-    userId: null,
-    metadata: {
-      color: null
-    },
+const defaultFile = {
+  _id: null,
+  name: null,
+  type: null,
+  source: null,
+  userId: null,
+  metadata: {
+    color: null
   },
+}
+const defaultState = {
+  file: { ...defaultFile },
   visible: false,
   promise: {
     resolve: () => { },
@@ -57,7 +58,7 @@ export const setData = (file) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: SET_DATA });
 
-      if (!file) file = { ...defaultState.file }
+      if (!file) file = { ...defaultFile }
       dispatch({ type: SET_DATA_OK, data: { file } });
       return resolve();
     });
