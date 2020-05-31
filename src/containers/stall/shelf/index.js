@@ -224,14 +224,16 @@ class Shelf extends Component {
                   </Grid>
                 </Grid>)}
                 {editable ? <Grid item>
-                  <Tooltip title="Add new image">
-                    <Avatar
-                      onClick={this.props.onAdd}
-                      className={classes.cursor}
-                    >
-                      <AddRounded />
-                    </Avatar>
-                  </Tooltip>
+                  <Grid container justify="center">
+                    <Tooltip title="Add new image">
+                      <Avatar
+                        onClick={this.props.onAdd}
+                        className={classes.cursor}
+                      >
+                        <AddRounded />
+                      </Avatar>
+                    </Tooltip>
+                  </Grid>
                 </Grid> : <Fragment />}
               </SwipeableViews>
             </Grid>
