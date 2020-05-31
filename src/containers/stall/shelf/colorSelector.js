@@ -27,16 +27,14 @@ class ColorSelector extends Component {
   render() {
     let { classes } = this.props;
     return <Grid container justify="flex-end" alignItems="center" spacing={1}>
-      {
-        this.props.colors.map(color => <Grid item key={color}>
-          <IconButton size="small" onClick={() => { this.onSelect(color) }}>
-            <FiberManualRecord
-              className={classes.effect}
-              style={{ color }}
-              fontSize={color === this.props.value ? "large" : "small"} />
-          </IconButton>
-        </Grid>)
-      }
+      {this.props.colors.map(color => <Grid item key={color}>
+        <IconButton size="small" onClick={() => { this.onSelect(color) }}>
+          <FiberManualRecord
+            className={classes.transition}
+            style={{ color }}
+            fontSize={color === this.props.value ? 'large' : 'small'} />
+        </IconButton>
+      </Grid>)}
     </Grid>
   }
 }

@@ -16,13 +16,14 @@ import utils from 'helpers/utils';
 function ProductCard(props) {
   const classes = useStyles();
   const data = useData(props._id);
-
   if (!data) return null;
+  const imageProps = props.onClick ? { onClick: props.onClick } : { component: Link, to: `/item/${data._id}` }
+  
   return <Grid container spacing={2}>
     <Grid item xs={12}>
       <Paper elevation={0} className={classes.paper}>
         <Grid container justify="center" spacing={1}>
-          <Grid item xs={12} component={Link} to={`/item/${data._id}`}>
+          <Grid item xs={12} {...imageProps}>
             <ImageCard _id={data.thumbnail || data.files[0]} />
           </Grid>
           <Grid item xs={12}>
@@ -52,6 +53,7 @@ ProductCard.defaultProps = {
 
 ProductCard.propTypes = {
   _id: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
 }
 
 export default ProductCard;

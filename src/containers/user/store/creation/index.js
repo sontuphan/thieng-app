@@ -26,6 +26,7 @@ class Creation extends Component {
     super();
 
     this.state = {
+      editableId: null,
       visible: false,
     }
   }
@@ -40,12 +41,16 @@ class Creation extends Component {
     return this.props.getItems(condition, limit, page + 1, COMPONENT);
   }
 
+  onEdit = (editableId) => {
+    return this.setState({ editableId, visible: true });
+  }
+
   renderItems = () => {
     let { items: { [COMPONENT]: { data } } } = this.props;
     if (!data || !data.length) return null;
     return <Grid container spacing={2}>
       {data.map(obj => <Grid key={obj._id} item xs={6} sm={4} md={3} lg={2}>
-        <ProductCard _id={obj._id} />
+        <ProductCard _id={obj._id} onClick={() => this.onEdit(obj._id)} />
       </Grid>)}
     </Grid>
   }
@@ -78,6 +83,7 @@ class Creation extends Component {
 
       <Grid item xs={12}>
         <Creator
+          _id={this.state.editableId}
           visible={this.state.visible}
           onClose={() => this.setState({ visible: false })}
         />

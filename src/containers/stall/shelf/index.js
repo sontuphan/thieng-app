@@ -27,7 +27,7 @@ import Drain from 'components/drain';
 import styles from './styles';
 import utils from 'helpers/utils';
 
-import { getFile } from 'modules/bucket.reducer';
+import { getFile, getUser } from 'modules/bucket.reducer';
 
 
 class Shelf extends Component {
@@ -36,6 +36,7 @@ class Shelf extends Component {
 
     this.state = {
       files: [],
+      author: {},
       showing: 0,
       translate: 0,
       color: '#ffffff',
@@ -43,13 +44,14 @@ class Shelf extends Component {
   }
 
   componentDidMount() {
-    return this.loadData();
+    this.loadUser();
+    this.loadFiles();
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { fileIds } = this.props;
     if (!isEqual(prevProps.fileIds, fileIds)) {
-      this.loadData();
+      this.loadFiles();
     }
     const { showing, files } = this.state;
     if (!isEqual(prevState.showing, showing)) {
@@ -59,7 +61,14 @@ class Shelf extends Component {
     }
   }
 
-  loadData = () => {
+  loadUser = () => {
+    const { userId, getUser } = this.props;
+    return getUser(userId).then(user => {
+      this.setState({ author: user });
+    }).catch(console.error);
+  }
+
+  loadFiles = () => {
     const { fileIds, getFile } = this.props;
     return async.map(fileIds, (fileId, cb) => {
       return getFile(fileId).then(re => cb(null, re)).catch(er => cb(er, null));
@@ -98,8 +107,8 @@ class Shelf extends Component {
   }
 
   render() {
-    const { classes, author, editable } = this.props;
-    const { showing, files } = this.state;
+    const { classes, editable } = this.props;
+    const { showing, files, author } = this.state;
     const file = files[showing] || {};
     const colors = files.map(file => file.metadata && file.metadata.color).filter(color => color);
 
@@ -248,7 +257,7 @@ Shelf.defaultProps = {
 }
 
 Shelf.propTypes = {
-  author: PropTypes.object.isRequired,
+  userId: PropTypes.string.isRequired,
   fileIds: PropTypes.array,
   on3D: PropTypes.func,
   onAdd: PropTypes.func,
@@ -260,7 +269,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getFile,
+  getFile, getUser,
 }, dispatch);
 
 export default withRouter(connect(

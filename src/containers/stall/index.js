@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
+import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -13,7 +14,7 @@ import { TextInput, NumericInput } from 'components/inputs';
 import Shelf from './shelf';
 import Tags from './tags';
 
-import { getItem, getUser } from 'modules/bucket.reducer';
+import { getItem } from 'modules/bucket.reducer';
 import { setCart } from 'modules/cart.reducer';
 import { runEditor } from 'modules/editor.reducer';
 import { EditableButtonGroup, BuyableButtonGroup } from './buttons';
@@ -30,7 +31,7 @@ class Stall extends Component {
         tags: ['New'],
         files: [],
       },
-      author: {},
+      userId: null,
       amount: 1,
     }
   }
@@ -39,24 +40,26 @@ class Stall extends Component {
     return this.loadData();
   }
 
+  componentDidUpdate(prevProps) {
+    const { _id } = this.props;
+    if (!isEqual(prevProps._id, _id)) {
+      this.loadData();
+    }
+  }
+
   /**
    * Data loader
    */
   loadData = () => {
-    // Editable mode
-    if (this.props.editable) return this.setState({
-      author: this.props.auth
-    });
     // View mode
-    let object = {}
-    let author = {}
-    return this.props.getItem(this.props._id).then(item => {
-      object = item;
-      return this.props.getUser(item.userId);
-    }).then(user => {
-      author = user;
-      return this.setState({ object, author });
-    }).catch(console.error);
+    let userId = this.props.auth._id;
+    return this.props.getItem(this.props._id).then(object => {
+      if (!this.props.editable) userId = object.userId;
+      return this.setState({ object, userId });
+    }).catch(er => {
+      console.error(er);
+      return this.setState({ userId });
+    });
   }
 
   /**
@@ -134,18 +137,16 @@ class Stall extends Component {
     return console.log('onCancel');
   }
 
-
-
   render() {
     const { classes } = this.props;
-    const { object, author } = this.state;
+    const { object, userId } = this.state;
 
-    if (!object || !author) return null;
+    if (!object || !userId) return null;
     return <Grid container spacing={2}>
       {/* Shelf */}
       <Grid item xs={12} md={6}>
         <Shelf
-          author={author}
+          userId={userId}
           fileIds={[...object.files]} /* Tricky copy array to update component */
           editable={this.props.editable}
           onAdd={this.onAdd}
@@ -242,7 +243,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getItem, getUser,
+  getItem,
   setCart,
   runEditor,
 }, dispatch);

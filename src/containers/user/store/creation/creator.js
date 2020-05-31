@@ -43,7 +43,7 @@ class Creator extends Component {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Stall
-                _id=''
+                _id={this.props._id}
                 onAdd={this.onAddItem}
                 onDelete={this.onDeleteItem}
                 editable
@@ -69,10 +69,12 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 Creator.defaultProps = {
+  _id: '',
   visible: false
 }
 
 Creator.propTypes = {
+  _id: PropTypes.string,
   visible: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
 }
