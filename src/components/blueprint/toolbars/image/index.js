@@ -19,7 +19,7 @@ const uploadFile = (file) => {
     const type = file.type.split('/')[0];
     data.append(type, file);
     const { api: { base } } = configs;
-    api.post(`${base}/file/${type}`, data, true).then(re => {
+    api.post(`${base}/file/${type}`, data).then(re => {
       return resolve({ url: re.data.source });
     }).catch(er => {
       return reject(er);

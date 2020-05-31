@@ -14,7 +14,7 @@ export const useData = (_id) => {
     }).catch(er => {
       return setError(er);
     });
-  }, [_id]);
+  }, [_id, dispatch, store.getState]);
 
   return data || error;
 }

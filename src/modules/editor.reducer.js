@@ -114,7 +114,7 @@ export const uploadFile = (file, metadata) => {
       data.append(type, file);
       data.append('metadata', JSON.stringify(metadata));
       const { api: { base } } = configs;
-      return api.post(`${base}/file/${type}`, data, true).then(re => {
+      return api.post(`${base}/file/${type}`, data).then(re => {
         dispatch({ type: UPLOAD_FILE_OK });
         return resolve(re.data);
       }).catch(er => {
@@ -144,7 +144,7 @@ export const updateFile = (file) => {
       }
 
       const { api: { base } } = configs;
-      return api.put(`${base}/file`, { file }, true).then(re => {
+      return api.put(`${base}/file`, { file }).then(re => {
         dispatch({ type: UPDATE_FILE_OK });
         return resolve(re.data);
       }).catch(er => {
@@ -174,7 +174,7 @@ export const deleteFile = (file) => {
       }
 
       const { api: { base } } = configs;
-      return api.delete(`${base}/file`, { file }, true).then(re => {
+      return api.delete(`${base}/file`, { file }).then(re => {
         dispatch({ type: DELETE_FILE_OK });
         return resolve(re.data);
       }).catch(er => {

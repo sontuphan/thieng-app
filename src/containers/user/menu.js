@@ -20,7 +20,7 @@ import { checkTreeRootInLocalStorage } from 'components/blueprint/tree/history';
 class Menu extends Component {
 
   render() {
-    let { match: { params: { email, page } } } = this.props;
+    const { match: { params: { email, page } } } = this.props;
 
     return <Grid container spacing={2} justify="center">
       <Grid item>

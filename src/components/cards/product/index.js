@@ -18,7 +18,7 @@ function ProductCard(props) {
   const data = useData(props._id);
   if (!data) return null;
   const imageProps = props.onClick ? { onClick: props.onClick } : { component: Link, to: `/item/${data._id}` }
-  
+
   return <Grid container spacing={2}>
     <Grid item xs={12}>
       <Paper elevation={0} className={classes.paper}>

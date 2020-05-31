@@ -33,7 +33,7 @@ export const getItem = (_id) => {
       }
       // Get online
       const { api: { base } } = configs;
-      api.get(`${base}/item`, { _id }, true).then(re => {
+      api.get(`${base}/item`, { _id }).then(re => {
         const item = re.data;
         const data = item ? { [item._id]: item } : {};
         dispatch({ type: GET_ITEM_OK, data });
@@ -71,7 +71,7 @@ export const getUser = (_id) => {
       }
       // Get online
       const { api: { base } } = configs;
-      api.get(`${base}/user`, { _id }, true).then(re => {
+      api.get(`${base}/user`, { _id }).then(re => {
         const user = re.data;
         const data = user ? { [user._id]: user } : {};
         dispatch({ type: GET_USER_OK, data });
@@ -109,7 +109,7 @@ export const getFile = (_id) => {
       }
       // Get online
       const { api: { base } } = configs;
-      api.get(`${base}/file`, { _id }, true).then(re => {
+      api.get(`${base}/file`, { _id }).then(re => {
         const file = re.data;
         const data = file ? { [file._id]: file } : {};
         dispatch({ type: GET_FILE_OK, data });

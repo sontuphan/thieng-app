@@ -8,16 +8,14 @@ const api = {}
  */
 
 // Create
-api.post = (url, params = null, auth = false) => {
+api.post = (url, params = null) => {
   return new Promise((resolve, reject) => {
-    let authHeader = authentication.getAuthHeader();
-    if (auth && !authHeader) return reject('Unauthentication.');
-
+    const authHeader = authentication.getAuthHeader();
     axios({
       method: 'post',
       url: url,
       data: params,
-      headers: auth ? { 'Authorization': authHeader } : null
+      headers: authHeader ? { 'Authorization': authHeader } : null
     }).then(re => {
       let data = re.data;
       if (data.status === 'ERROR') return reject(data.error);
@@ -29,16 +27,14 @@ api.post = (url, params = null, auth = false) => {
 }
 
 // Read
-api.get = (url, params = null, auth = false) => {
+api.get = (url, params = null) => {
   return new Promise((resolve, reject) => {
-    let authHeader = authentication.getAuthHeader();
-    if (auth && !authHeader) return reject('Unauthentication.');
-
+    const authHeader = authentication.getAuthHeader();
     axios({
       method: 'get',
       url: url,
       params: params,
-      headers: auth ? { 'Authorization': authHeader } : null
+      headers: authHeader ? { 'Authorization': authHeader } : null
     }).then(re => {
       let data = re.data;
       if (data.status === 'ERROR') return reject(data.error);
@@ -50,16 +46,14 @@ api.get = (url, params = null, auth = false) => {
 }
 
 // Update
-api.put = (url, params = null, auth = false) => {
+api.put = (url, params = null) => {
   return new Promise((resolve, reject) => {
-    let authHeader = authentication.getAuthHeader();
-    if (auth && !authHeader) return reject('Unauthentication.');
-
+    const authHeader = authentication.getAuthHeader();
     axios({
       method: 'put',
       url: url,
       data: params,
-      headers: auth ? { 'Authorization': authHeader } : null
+      headers: authHeader ? { 'Authorization': authHeader } : null
     }).then(re => {
       let data = re.data;
       if (data.status === 'ERROR') return reject(data.error);
@@ -71,16 +65,14 @@ api.put = (url, params = null, auth = false) => {
 }
 
 // Delete
-api.delete = (url, params = null, auth = false) => {
+api.delete = (url, params = null) => {
   return new Promise((resolve, reject) => {
-    let authHeader = authentication.getAuthHeader();
-    if (auth && !authHeader) return reject('Unauthentication.');
-
+    const authHeader = authentication.getAuthHeader();
     axios({
       method: 'delete',
       url: url,
       data: params,
-      headers: auth ? { 'Authorization': authHeader } : null
+      headers: authHeader ? { 'Authorization': authHeader } : null
     }).then(re => {
       let data = re.data;
       if (data.status === 'ERROR') return reject(data.error);

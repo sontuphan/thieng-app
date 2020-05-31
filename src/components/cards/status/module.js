@@ -9,7 +9,7 @@ export const useData = (_id) => {
   useEffect(() => {
     const { api: { base } } = configs;
     let blueprint = null;
-    if (_id) api.get(`${base}/blueprint`, { _id }, true).then(re => {
+    if (_id) api.get(`${base}/blueprint`, { _id }).then(re => {
       blueprint = re.data;
       return api.get(`${base}/social/users`, { _id: blueprint.userId })
     }).then(re => {

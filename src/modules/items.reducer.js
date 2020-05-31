@@ -42,7 +42,7 @@ export const getItems = (condition, limit, page, component = 'mall') => {
 
       const { items: { [component]: { data } } } = prevState();
       const { api: { base } } = configs;
-      api.get(`${base}/social/items`, { condition, limit, page }, true).then(re => {
+      api.get(`${base}/social/items`, { condition, limit, page }).then(re => {
         dispatch({
           type: GET_ITEMS_OK,
           data: {
@@ -75,7 +75,7 @@ export const addItem = (data) => {
       dispatch({ type: ADD_ITEM });
 
       const { api: { base } } = configs;
-      api.post(`${base}/item`, { item: data }, true).then(re => {
+      api.post(`${base}/item`, { item: data }).then(re => {
         dispatch({ type: ADD_ITEM_OK, reason: null });
         return resolve(re.data);
       }).catch(er => {

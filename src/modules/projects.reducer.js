@@ -28,7 +28,7 @@ export const getProjects = (limit, page) => {
 
       const { projects: { data } } = prevState();
       const { api: { base } } = configs;
-      api.get(`${base}/social/projects`, { limit, page, condition: { mode: 'public' } }, true).then(re => {
+      api.get(`${base}/social/projects`, { limit, page, condition: { mode: 'public' } }).then(re => {
         dispatch({
           type: GET_PROJECTS_OK,
           data: {
@@ -62,7 +62,7 @@ export const addProject = (data) => {
       dispatch({ type: ADD_PROJECT });
 
       const { api: { base } } = configs;
-      api.post(`${base}/project`, { project: data }, true).then(re => {
+      api.post(`${base}/project`, { project: data }).then(re => {
         dispatch({
           type: ADD_PROJECT_OK,
           reason: null,

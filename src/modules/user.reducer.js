@@ -1,4 +1,5 @@
-import UserSchema from 'data/users';
+import configs from 'configs';
+import api from 'helpers/api';
 
 /**
  * Documents
@@ -16,45 +17,29 @@ const defaultState = {
 /**
  * Get user by code
  */
-export const GET_USER_BY_CODE = 'GET_USER_BY_CODE';
-export const GET_USER_BY_CODE_OK = 'GET_USER_BY_CODE_OK';
-export const GET_USER_BY_CODE_FAIL = 'GET_USER_BY_CODE_FAIL';
+export const UPDATE_USER = 'UPDATE_USER';
+export const UPDATE_USER_OK = 'UPDATE_USER_OK';
+export const UPDATE_USER_FAIL = 'UPDATE_USER_FAIL';
 
-const _getUserByCode = (code) => {
-  for (let i = 0; i < UserSchema.length; i++) {
-    if (code === UserSchema[i].code) {
-      return {
-        status: 'OK',
-        data: [UserSchema[i]],
-        pagination: { page: 0, limit: 1 }
-      };
-    }
-  }
-}
-
-export const getUserByCode = (code) => {
+export const updateUser = (user) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
-      dispatch({ type: GET_USER_BY_CODE });
+      dispatch({ type: UPDATE_USER });
 
-      let data = _getUserByCode(code);
-      if (!data) {
-        dispatch({
-          type: GET_USER_BY_CODE_FAIL,
-          reason: 'Input is null.',
-        });
-        return reject('Input is null.');
+      if (!user) {
+        let er = 'Input is null';
+        dispatch({ type: UPDATE_USER_FAIL, reason: er });
+        return reject(er);
       }
 
-      dispatch({
-        type: GET_USER_BY_CODE_OK,
-        reason: null,
-        data: {
-          data: data.data,
-          pagination: data.pagination
-        }
+      const { api: { base } } = configs;
+      return api.put(`${base}/user`, { user }).then(re => {
+        dispatch({ type: UPDATE_USER_OK });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: UPDATE_USER_FAIL, reason: er });
+        return reject(er);
       });
-      return resolve(data);
     });
   };
 };
@@ -65,9 +50,9 @@ export const getUserByCode = (code) => {
  */
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case GET_USER_BY_CODE_OK:
+    case UPDATE_USER_OK:
       return { ...state, ...action.data };
-    case GET_USER_BY_CODE_FAIL:
+    case UPDATE_USER_FAIL:
       return { ...state, ...action.data };
     default:
       return state;
