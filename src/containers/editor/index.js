@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-
+import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -11,7 +11,7 @@ import EditorDialog from './dialog';
 
 import {
   runEditor, setData, returnData,
-  uploadFile,
+  uploadFile, updateFile,
 } from 'modules/editor.reducer';
 
 import styles from './styles';
@@ -29,8 +29,8 @@ class Editor extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { editor: { visible, source } } = this.props;
-    if (prevProps.editor.visible !== visible && visible) {
+    const { editor: { visible, file: { source } } } = this.props;
+    if (!isEqual(prevProps.editor.visible, visible) && visible) {
       if (source) return this.setState({ visible });
       return this.ref.current.click();
     }
@@ -50,17 +50,17 @@ class Editor extends Component {
   onSave = (value) => {
     const { file } = this.state;
     if (file) { // Adding mode
-      // Free memory
-      URL.revokeObjectURL(value.source);
-      // Uploading files
-      this.props.uploadFile(file, value.metadata).then(re => {
+      URL.revokeObjectURL(value.source); // Free memory
+      return this.props.uploadFile(file, value.metadata).then(re => {
         this.props.setData(re);
         return this.onClose();
       }).catch(console.error);
     }
     else { // Editing mode
-      this.props.setData(value);
-      return this.onClose();
+      return this.props.updateFile(value).then(re => {
+        this.props.setData(re);
+        return this.onClose();
+      }).catch(console.error);
     }
   }
 
@@ -103,7 +103,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  runEditor, setData, returnData, uploadFile,
+  runEditor, setData, returnData,
+  uploadFile, updateFile,
 }, dispatch);
 
 export default withRouter(connect(

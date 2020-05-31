@@ -14,7 +14,7 @@ import { TextInput, NumericInput } from 'components/inputs';
 import Shelf from './shelf';
 import Tags from './tags';
 
-import { getItem } from 'modules/bucket.reducer';
+import { getFile, getItem } from 'modules/bucket.reducer';
 import { setCart } from 'modules/cart.reducer';
 import { runEditor } from 'modules/editor.reducer';
 import { EditableButtonGroup, BuyableButtonGroup } from './buttons';
@@ -51,7 +51,6 @@ class Stall extends Component {
    * Data loader
    */
   loadData = () => {
-    // View mode
     let userId = this.props.auth._id;
     return this.props.getItem(this.props._id).then(object => {
       if (!this.props.editable) userId = object.userId;
@@ -76,10 +75,12 @@ class Stall extends Component {
   }
   onEdit = (index) => {
     let { object } = this.state;
-    let file = object.files[index];
-    return this.props.runEditor(file).then(re => {
-      if (!re) object.files = object.files.filter((o, i) => i !== index);
-      else object.files[index] = re;
+    let fileId = object.files[index];
+    return this.props.getFile(fileId).then(file => {
+      return this.props.runEditor(file);
+    }).then(re => {
+      if (!re) object.files = object.files.filter(fileId => fileId !== re._id);
+      else object.files[index] = re._id;
       return this.setState({ object });
     }).catch(console.error);
   }
@@ -238,12 +239,11 @@ class Stall extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  bucket: state.bucket,
   editor: state.editor,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getItem,
+  getFile, getItem,
   setCart,
   runEditor,
 }, dispatch);

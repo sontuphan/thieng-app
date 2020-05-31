@@ -71,7 +71,7 @@ export const setData = (file) => {
 
 
 /**
- * Upload files
+ * Upload an image
  */
 export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
 export const UPLOAD_IMAGE_OK = 'UPLOAD_IMAGE_OK';
@@ -93,7 +93,7 @@ export const uploadFile = (file, metadata) => {
       data.append(type, file);
       data.append('metadata', JSON.stringify(metadata));
       const { api: { base } } = configs;
-      api.post(`${base}/file/${type}`, data, true).then(re => {
+      return api.post(`${base}/file/${type}`, data, true).then(re => {
         dispatch({ type: UPLOAD_IMAGE_OK });
         return resolve(re.data);
       }).catch(er => {
@@ -104,6 +104,35 @@ export const uploadFile = (file, metadata) => {
   }
 }
 
+/**
+ * Update file
+ */
+export const UPDATE_FILE = 'UPDATE_FILE';
+export const UPDATE_FILE_OK = 'UPDATE_FILE_OK';
+export const UPDATE_FILE_FAIL = 'UPDATE_FILE_FAIL';
+
+export const updateFile = (file) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: UPDATE_FILE });
+
+      if (!file) {
+        let er = 'Invalid inputs';
+        dispatch({ type: UPDATE_FILE_FAIL, reason: er });
+        return reject(er);
+      }
+
+      const { api: { base } } = configs;
+      return api.post(`${base}/file`, { file }, true).then(re => {
+        dispatch({ type: UPDATE_FILE_OK });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: UPDATE_FILE_FAIL, reason: er });
+        return reject(er);
+      });
+    });
+  }
+}
 
 /**
  * Return data
@@ -152,6 +181,10 @@ export default (state = defaultState, action) => {
     case UPLOAD_IMAGE_OK:
       return { ...state, ...action.data };
     case UPLOAD_IMAGE_FAIL:
+      return { ...state, ...action.data };
+    case UPDATE_FILE_OK:
+      return { ...state, ...action.data };
+    case UPDATE_FILE_FAIL:
       return { ...state, ...action.data };
     default:
       return state;

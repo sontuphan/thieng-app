@@ -25,7 +25,4 @@ export default theme => ({
   cursor: {
     cursor: 'pointer',
   },
-  transition: {
-    transition: theme.transitions.create(),
-  }
 });
