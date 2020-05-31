@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { BlockPicker } from 'react-color';
+import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -34,16 +35,16 @@ class EditorDialog extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { file: { source, metadata } } = this.props;
-    if (prevProps.visible !== this.props.visible) {
-      if (this.props.visible) {
-        return this.setState({
-          source,
-          color: metadata.color,
-          isColor: Boolean(metadata.color),
-        });
-      }
-      return this.setState({ ...DEFAULT_STATE });
+    const { visible, file: { source, metadata } } = this.props;
+    if (!isEqual(prevProps.visible, visible) && visible) {
+      this.setState({
+        source,
+        color: metadata && metadata.color,
+        isColor: Boolean(metadata && metadata.color),
+      });
+    }
+    if (!isEqual(prevProps.visible, visible) && !visible) {
+      this.setState({ ...DEFAULT_STATE });
     }
     if (prevState.source !== this.state.source && this.state.source) {
       utils.extractImageColors(source).then(palette => {
@@ -52,20 +53,19 @@ class EditorDialog extends Component {
           palette.DarkMuted.hex, palette.Muted.hex, palette.LightMuted.hex
         ]
         let color = colors[0];
-        if (this.props.color) {
-          if (!colors.includes(metadata.color)) {
-            colors.push(metadata.color);
-          }
+        if (this.props.color && !colors.includes(metadata.color)) {
+          colors.push(metadata.color);
         }
-        this.setState({ color, colors });
+        return this.setState({ color, colors });
       }).catch(console.error);
     }
   }
 
   onChange = () => {
     const { file } = this.props;
-    file.source = this.state.source;
-    file.metadata.color = this.state.isColor ? this.state.color : null;
+    const { isColor, color, source } = this.state;
+    file.source = source;
+    file.metadata = { color: isColor ? color : null };
     return this.props.onSave(file);
   }
 
@@ -143,7 +143,7 @@ class EditorDialog extends Component {
             <Button
               variant="contained"
               color="secondary"
-              onClick={this.props.onDelete}
+              onClick={() => this.props.onDelete(this.props.file)}
               startIcon={<DeleteRounded />}
             >
               <Typography>Delete</Typography>

@@ -60,7 +60,7 @@ class Item extends Component {
 
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
-        <Stall _id={this.state._id} />
+        <Stall itemId={this.state._id} />
       </Grid>
 
       <Grid item xs={12}>

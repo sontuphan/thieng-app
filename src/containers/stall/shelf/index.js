@@ -54,6 +54,9 @@ class Shelf extends Component {
       this.loadFiles();
     }
     const { showing, files } = this.state;
+    if (!isEqual(prevState.files, files)) {
+      this.setState({ showing: Math.max(0, Math.min(files.length - 1, showing)) });
+    }
     if (!isEqual(prevState.showing, showing)) {
       utils.getAccessibleTextColor(files[showing].source).then(color => {
         return this.setState({ color });

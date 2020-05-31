@@ -57,79 +57,9 @@ export const setData = (file) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: SET_DATA });
 
-      if (!file) {
-        let er = 'Invalid inputs';
-        dispatch({ type: SET_DATA_FAIL, reason: er });
-        return reject(er);
-      }
-
+      if (!file) file = { ...defaultState.file }
       dispatch({ type: SET_DATA_OK, data: { file } });
       return resolve();
-    });
-  }
-}
-
-
-/**
- * Upload an image
- */
-export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
-export const UPLOAD_IMAGE_OK = 'UPLOAD_IMAGE_OK';
-export const UPLOAD_IMAGE_FAIL = 'UPLOAD_IMAGE_FAIL';
-
-export const uploadFile = (file, metadata) => {
-  return dispatch => {
-    return new Promise((resolve, reject) => {
-      dispatch({ type: UPLOAD_IMAGE });
-
-      if (!file || !file.type) {
-        let er = 'Invalid inputs';
-        dispatch({ type: UPLOAD_IMAGE_FAIL, reason: er });
-        return reject(er);
-      }
-
-      let data = new FormData();
-      const type = file.type.split('/')[0];
-      data.append(type, file);
-      data.append('metadata', JSON.stringify(metadata));
-      const { api: { base } } = configs;
-      return api.post(`${base}/file/${type}`, data, true).then(re => {
-        dispatch({ type: UPLOAD_IMAGE_OK });
-        return resolve(re.data);
-      }).catch(er => {
-        dispatch({ type: UPLOAD_IMAGE_FAIL, reason: er });
-        return reject(er);
-      });
-    });
-  }
-}
-
-/**
- * Update file
- */
-export const UPDATE_FILE = 'UPDATE_FILE';
-export const UPDATE_FILE_OK = 'UPDATE_FILE_OK';
-export const UPDATE_FILE_FAIL = 'UPDATE_FILE_FAIL';
-
-export const updateFile = (file) => {
-  return dispatch => {
-    return new Promise((resolve, reject) => {
-      dispatch({ type: UPDATE_FILE });
-
-      if (!file) {
-        let er = 'Invalid inputs';
-        dispatch({ type: UPDATE_FILE_FAIL, reason: er });
-        return reject(er);
-      }
-
-      const { api: { base } } = configs;
-      return api.post(`${base}/file`, { file }, true).then(re => {
-        dispatch({ type: UPDATE_FILE_OK });
-        return resolve(re.data);
-      }).catch(er => {
-        dispatch({ type: UPDATE_FILE_FAIL, reason: er });
-        return reject(er);
-      });
     });
   }
 }
@@ -160,6 +90,100 @@ export const returnData = () => {
   }
 }
 
+/**
+ * Upload a file
+ */
+export const UPLOAD_FILE = 'UPLOAD_FILE';
+export const UPLOAD_FILE_OK = 'UPLOAD_FILE_OK';
+export const UPLOAD_FILE_FAIL = 'UPLOAD_FILE_FAIL';
+
+export const uploadFile = (file, metadata) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: UPLOAD_FILE });
+
+      if (!file || !file.type) {
+        let er = 'Invalid inputs';
+        dispatch({ type: UPLOAD_FILE_FAIL, reason: er });
+        return reject(er);
+      }
+
+      let data = new FormData();
+      const type = file.type.split('/')[0];
+      data.append(type, file);
+      data.append('metadata', JSON.stringify(metadata));
+      const { api: { base } } = configs;
+      return api.post(`${base}/file/${type}`, data, true).then(re => {
+        dispatch({ type: UPLOAD_FILE_OK });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: UPLOAD_FILE_FAIL, reason: er });
+        return reject(er);
+      });
+    });
+  }
+}
+
+/**
+ * Update file
+ */
+export const UPDATE_FILE = 'UPDATE_FILE';
+export const UPDATE_FILE_OK = 'UPDATE_FILE_OK';
+export const UPDATE_FILE_FAIL = 'UPDATE_FILE_FAIL';
+
+export const updateFile = (file) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: UPDATE_FILE });
+
+      if (!file) {
+        let er = 'Invalid inputs';
+        dispatch({ type: UPDATE_FILE_FAIL, reason: er });
+        return reject(er);
+      }
+
+      const { api: { base } } = configs;
+      return api.put(`${base}/file`, { file }, true).then(re => {
+        dispatch({ type: UPDATE_FILE_OK });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: UPDATE_FILE_FAIL, reason: er });
+        return reject(er);
+      });
+    });
+  }
+}
+
+/**
+ * Delete a file
+ */
+export const DELETE_FILE = 'DELETE_FILE';
+export const DELETE_FILE_OK = 'DELETE_FILE_OK';
+export const DELETE_FILE_FAIL = 'DELETE_FILE_FAIL';
+
+export const deleteFile = (file) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: DELETE_FILE });
+
+      if (!file) {
+        let er = 'Invalid inputs';
+        dispatch({ type: DELETE_FILE_FAIL, reason: er });
+        return reject(er);
+      }
+
+      const { api: { base } } = configs;
+      return api.delete(`${base}/file`, { file }, true).then(re => {
+        dispatch({ type: DELETE_FILE_OK });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: DELETE_FILE_FAIL, reason: er });
+        return reject(er);
+      });
+    });
+  }
+}
+
 
 /**
  * Reducder
@@ -178,13 +202,17 @@ export default (state = defaultState, action) => {
       return { ...state, ...action.data };
     case RETURN_DATA_FAIL:
       return { ...state, ...action.data };
-    case UPLOAD_IMAGE_OK:
+    case UPLOAD_FILE_OK:
       return { ...state, ...action.data };
-    case UPLOAD_IMAGE_FAIL:
+    case UPLOAD_FILE_FAIL:
       return { ...state, ...action.data };
     case UPDATE_FILE_OK:
       return { ...state, ...action.data };
     case UPDATE_FILE_FAIL:
+      return { ...state, ...action.data };
+    case DELETE_FILE_OK:
+      return { ...state, ...action.data };
+    case DELETE_FILE_FAIL:
       return { ...state, ...action.data };
     default:
       return state;

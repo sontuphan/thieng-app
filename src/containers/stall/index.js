@@ -37,12 +37,13 @@ class Stall extends Component {
   }
 
   componentDidMount() {
+    this.setState({ userId: this.props.auth._id });
     return this.loadData();
   }
 
   componentDidUpdate(prevProps) {
-    const { _id } = this.props;
-    if (!isEqual(prevProps._id, _id)) {
+    const { itemId } = this.props;
+    if (!isEqual(prevProps.itemId, itemId)) {
       this.loadData();
     }
   }
@@ -51,14 +52,12 @@ class Stall extends Component {
    * Data loader
    */
   loadData = () => {
-    let userId = this.props.auth._id;
-    return this.props.getItem(this.props._id).then(object => {
-      if (!this.props.editable) userId = object.userId;
-      return this.setState({ object, userId });
-    }).catch(er => {
-      console.error(er);
-      return this.setState({ userId });
-    });
+    const { itemId, editable } = this.props;
+    if (!this.props.itemId) return;
+    return this.props.getItem(itemId).then(object => {
+      if (editable) return this.setState({ object });
+      return this.setState({ object, userId: object.userId });
+    }).catch(console.error);
   }
 
   /**
@@ -79,7 +78,7 @@ class Stall extends Component {
     return this.props.getFile(fileId).then(file => {
       return this.props.runEditor(file);
     }).then(re => {
-      if (!re) object.files = object.files.filter(fileId => fileId !== re._id);
+      if (!re.source) object.files = object.files.filter((f, i) => i !== index);
       else object.files[index] = re._id;
       return this.setState({ object });
     }).catch(console.error);
@@ -255,7 +254,7 @@ Stall.defaultProps = {
 }
 
 Stall.propTypes = {
-  _id: PropTypes.string.isRequired,
+  itemId: PropTypes.string.isRequired,
   onAdd: PropTypes.func,
   onDelete: PropTypes.func,
   editable: PropTypes.bool,

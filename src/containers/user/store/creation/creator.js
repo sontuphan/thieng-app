@@ -23,11 +23,8 @@ class Creator extends Component {
    */
   onAddItem = (value) => {
     return this.props.addItem(value).then(re => {
-      console.log(re);
       return this.props.onClose();
-    }).catch(er => {
-      console.error(er);
-    });
+    }).catch(console.error);
   }
   onDeleteItem = () => {
 
@@ -43,7 +40,7 @@ class Creator extends Component {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Stall
-                _id={this.props._id}
+                itemId={this.props.itemId}
                 onAdd={this.onAddItem}
                 onDelete={this.onDeleteItem}
                 editable
@@ -69,14 +66,14 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 Creator.defaultProps = {
-  _id: '',
-  visible: false
+  visible: false,
+  onClose: () => { },
 }
 
 Creator.propTypes = {
-  _id: PropTypes.string,
+  itemId: PropTypes.string.isRequired,
   visible: PropTypes.bool,
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
 }
 
 export default withRouter(connect(

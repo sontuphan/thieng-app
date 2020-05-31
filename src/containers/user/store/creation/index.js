@@ -26,7 +26,7 @@ class Creation extends Component {
     super();
 
     this.state = {
-      editableId: null,
+      editableId: '',
       visible: false,
     }
   }
@@ -83,7 +83,7 @@ class Creation extends Component {
 
       <Grid item xs={12}>
         <Creator
-          _id={this.state.editableId}
+          itemId={this.state.editableId}
           visible={this.state.visible}
           onClose={() => this.setState({ visible: false })}
         />

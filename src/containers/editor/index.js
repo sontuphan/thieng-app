@@ -11,7 +11,7 @@ import EditorDialog from './dialog';
 
 import {
   runEditor, setData, returnData,
-  uploadFile, updateFile,
+  uploadFile, updateFile, deleteFile
 } from 'modules/editor.reducer';
 
 import styles from './styles';
@@ -29,9 +29,9 @@ class Editor extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { editor: { visible, file: { source } } } = this.props;
+    const { editor: { visible, file } } = this.props;
     if (!isEqual(prevProps.editor.visible, visible) && visible) {
-      if (source) return this.setState({ visible });
+      if (file && file.source) return this.setState({ visible });
       return this.ref.current.click();
     }
   }
@@ -64,9 +64,11 @@ class Editor extends Component {
     }
   }
 
-  onDelete = () => {
-    this.props.setData({ file: null });
-    return this.onClose();
+  onDelete = (value) => {
+    this.props.deleteFile(value).then(re => {
+      this.props.setData(null);
+      return this.onClose();
+    }).catch(console.error);
   }
 
   onClose = () => {
@@ -104,7 +106,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   runEditor, setData, returnData,
-  uploadFile, updateFile,
+  uploadFile, updateFile, deleteFile,
 }, dispatch);
 
 export default withRouter(connect(
