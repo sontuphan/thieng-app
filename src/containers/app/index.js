@@ -55,7 +55,8 @@ class App extends Component {
             <Route exact path="/home" component={Home} />
             {/* <Redirect exact path="/newsfeed" to="/newsfeed/for-me" /> */}
             {/* <Route exact path="/newsfeed/:page" component={Newsfeed} /> */}
-            <Route path="/mall" component={Mall} />
+            <Redirect exact from="/mall" to="/mall/all" />
+            <Route exact path="/mall/:category" component={Mall} />
             <Route path="/item/:id" component={Item} />
             <Redirect exact from="/user/:email" to="/user/:email/store" />
             <Route exact path="/user/:email/:page" component={User} />

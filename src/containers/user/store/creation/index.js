@@ -8,6 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 import { AddBoxRounded, } from '@material-ui/icons';
 
@@ -56,31 +58,12 @@ class Creation extends Component {
   }
 
   render() {
-    let { classes } = this.props;
+    const { classes } = this.props;
 
     return <Grid container justify="center" spacing={2}>
-
       <Grid item xs={12}>
-        <Grid container className={classes.noWrap} alignItems="center" justify="flex-end" spacing={2}>
-          <Grid item>
-            <Typography variant="h3">Creation</Typography>
-          </Grid>
-          <Grid item className={classes.stretch}>
-            <Divider />
-          </Grid>
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<AddBoxRounded />}
-              onClick={() => this.setState({ visible: true })}
-            >
-              <Typography>New</Typography>
-            </Button>
-          </Grid>
-        </Grid>
+        {this.renderItems()}
       </Grid>
-
       <Grid item xs={12}>
         <Creator
           itemId={this.state.editableId}
@@ -88,11 +71,15 @@ class Creation extends Component {
           onClose={() => this.setState({ visible: false })}
         />
       </Grid>
-
-      <Grid item xs={12}>
-        {this.renderItems()}
-      </Grid>
-
+      <div className={classes.float}>
+        <Fab
+          color="primary"
+          size="medium"
+          onClick={() => this.setState({ visible: true })}
+        >
+          <AddIcon />
+        </Fab>
+      </div>
     </Grid>
   }
 }

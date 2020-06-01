@@ -1,8 +1,7 @@
 export default theme => ({
-  noWrap: {
-    flexWrap: 'nowrap',
-  },
-  stretch: {
-    flex: '1 1 auto',
-  },
+  float: {
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+  }
 });

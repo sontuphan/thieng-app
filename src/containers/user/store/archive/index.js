@@ -53,32 +53,9 @@ class Archive extends Component {
     let { classes } = this.props;
 
     return <Grid container justify="center" spacing={2}>
-
-      <Grid item xs={12}>
-        <Grid container className={classes.noWrap} alignItems="center" justify="flex-end" spacing={2}>
-          <Grid item>
-            <Typography variant="h3">Archive</Typography>
-          </Grid>
-          <Grid item className={classes.stretch}>
-            <Divider />
-          </Grid>
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<DeleteForeverRounded />}
-              onClick={() => this.setState({ visible: true })}
-            >
-              <Typography>Delete</Typography>
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
-
       <Grid item xs={12}>
         {this.renderItems()}
       </Grid>
-
     </Grid>
   }
 }
