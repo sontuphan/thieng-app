@@ -9,9 +9,8 @@ import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 
-import { FaChair, FaTableTennis, FaTree, FaDice } from 'react-icons/fa';
-import { GiDesk, GiBedLamp, GiCookingPot, GiCeilingLight } from 'react-icons/gi';
-import { MdTexture } from 'react-icons/md';
+import configs from 'configs';
+console.log(configs)
 
 const useStyles = makeStyles(theme => ({
   noWrap: {
@@ -25,54 +24,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const categories = [
-  {
-    value: 'chairs',
-    name: 'Chairs',
-    icon: <FaChair />
-  },
-  {
-    value: 'desks',
-    name: 'Desks',
-    icon: <GiDesk />
-  },
-  {
-    value: 'floor',
-    name: 'Floor',
-    icon: <MdTexture />
-  },
-  {
-    value: 'light',
-    name: 'Light',
-    icon: <GiCeilingLight />
-  },
-  {
-    value: 'bedroom',
-    name: 'Bedroom',
-    icon: <GiBedLamp />
-  },
-  {
-    value: 'playground',
-    name: 'Playground',
-    icon: <FaTableTennis />
-  },
-  {
-    value: 'kitchen',
-    name: 'Kitchen',
-    icon: <GiCookingPot />
-  },
-  {
-    value: 'garden',
-    name: 'Garden',
-    icon: <FaTree />
-  },
-  {
-    value: 'others',
-    name: 'Others',
-    icon: <FaDice />
-  }
-]
-
 function Categories(props) {
   const classes = useStyles();
 
@@ -85,7 +36,7 @@ function Categories(props) {
         value={props.value}
         onChange={e => props.onChange(e.target.value)}
       >
-        {categories.map(category => <MenuItem key={category.value} value={category.value}>
+        {configs.category.pureList.map(category => <MenuItem key={category.value} value={category.value}>
           <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
             <Grid item className={classes.icon}>
               {category.icon}

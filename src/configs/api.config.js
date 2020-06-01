@@ -1,7 +1,7 @@
 /**
  * Contructor
  */
-var configs = {}
+const configs = {}
 
 /**
  * Development configurations
