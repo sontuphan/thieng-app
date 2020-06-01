@@ -201,7 +201,7 @@ class Stall extends Component {
             >{utils.prettyNumber(object.price, 'long') || '0'} vnd</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Grid container className={classes.noWrap} spacing={2}>
+            <Grid container spacing={2}>
               <Grid item>
                 <TextInput
                   variant="h1"
