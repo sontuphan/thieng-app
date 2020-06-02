@@ -5,16 +5,10 @@ import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-
-import { AddBoxRounded, } from '@material-ui/icons';
 
 import { ProductCard } from 'components/cards';
 import Creator from './creator';
+import Action from './action';
 
 import { getItems } from 'modules/items.reducer';
 
@@ -58,7 +52,7 @@ class Creation extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
 
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
@@ -71,15 +65,7 @@ class Creation extends Component {
           onClose={() => this.setState({ visible: false })}
         />
       </Grid>
-      <div className={classes.float}>
-        <Fab
-          color="primary"
-          size="medium"
-          onClick={() => this.setState({ visible: true })}
-        >
-          <AddIcon />
-        </Fab>
-      </div>
+      <Action onAdd={() => this.setState({ visible: true })} />
     </Grid>
   }
 }

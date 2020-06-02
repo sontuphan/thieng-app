@@ -43,7 +43,7 @@ class UserStore extends Component {
         color="secondary"
         onClick={() => this.setSubpage(subpage.value)}
       >
-        <Typography variant={value == subpage.value ? 'h3' : 'body1'}>{subpage.name}</Typography>
+        <Typography variant={value === subpage.value ? 'h3' : 'body1'}>{subpage.name}</Typography>
       </Button>
     </Grid>)
   }

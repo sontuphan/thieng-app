@@ -5,11 +5,6 @@ import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-
-import { EditRounded, } from '@material-ui/icons';
 
 import { ProductCard } from 'components/cards';
 
@@ -50,7 +45,7 @@ class Selling extends Component {
   }
 
   render() {
-    let { classes } = this.props;
+    // let { classes } = this.props;
 
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
