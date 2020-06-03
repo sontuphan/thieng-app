@@ -17,9 +17,9 @@ import Archive from './archive';
 import styles from './styles';
 
 const SUBPAGES = [
-  { value: 'selling', name: 'Selling', body: <Selling /> },
-  { value: 'creating', name: 'Creating', body: <Creation /> },
-  { value: 'archived', name: 'Archived', body: <Archive /> },
+  { value: 'selling', name: 'Cửa hàng', body: <Selling /> },
+  { value: 'creating', name: 'Xưởng', body: <Creation /> },
+  { value: 'archived', name: 'Thùng rác', body: <Archive /> },
 ]
 
 

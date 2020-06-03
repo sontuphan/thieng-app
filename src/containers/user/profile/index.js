@@ -53,7 +53,7 @@ class Profile extends Component {
   loadData = () => {
     const { userId, getUser } = this.props;
     return getUser(userId).then(user => {
-      return this.setState({ user });
+      if (user) return this.setState({ user });
     }).catch(console.error);
   }
 
