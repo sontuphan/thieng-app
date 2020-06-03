@@ -39,7 +39,7 @@ class Selling extends Component {
     if (!data || !data.length) return null;
     return <Grid container spacing={2}>
       {data.map(obj => <Grid key={obj._id} item xs={6} sm={4} md={3} lg={2}>
-        <ProductCard _id={obj._id} />
+        <ProductCard itemId={obj._id} />
       </Grid>)}
     </Grid>
   }

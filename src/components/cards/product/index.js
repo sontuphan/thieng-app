@@ -15,7 +15,7 @@ import utils from 'helpers/utils';
 
 function ProductCard(props) {
   const classes = useStyles();
-  const data = useData(props._id);
+  const data = useData(props.itemId);
   if (!data) return null;
   const imageProps = props.onClick ? { onClick: props.onClick } : { component: Link, to: `/item/${data._id}` }
 
@@ -49,10 +49,11 @@ function ProductCard(props) {
 }
 
 ProductCard.defaultProps = {
+  onClick: null,
 }
 
 ProductCard.propTypes = {
-  _id: PropTypes.string.isRequired,
+  itemId: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 }
 

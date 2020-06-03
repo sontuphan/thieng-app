@@ -28,7 +28,7 @@ class UserStore extends Component {
     super();
 
     this.state = {
-      value: SUBPAGES[1].value,
+      value: SUBPAGES[0].value,
     }
   }
 

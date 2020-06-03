@@ -6,11 +6,14 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
+import { BottomDrawer } from 'components/drawers';
 import { ProductCard } from 'components/cards';
-import Creator from './creator';
+import Drain from 'components/drain';
+import Stall from 'containers/stall';
 import Action from './action';
 
 import { getItems } from 'modules/items.reducer';
+import { addItem, updateItem } from 'modules/items.reducer';
 
 import styles from './styles';
 
@@ -37,8 +40,20 @@ class Creation extends Component {
     return this.props.getItems(condition, limit, page + 1, COMPONENT);
   }
 
-  onEdit = (editableId) => {
+  onClick = (editableId) => {
     return this.setState({ editableId, visible: true });
+  }
+
+  onAdd = (value) => {
+    return this.props.addItem(value).then(re => {
+      return this.setState({ visible: false });
+    }).catch(console.error);
+  }
+
+  onUpdate = (value) => {
+    return this.props.updateItem(value).then(re => {
+      return this.setState({ visible: false });
+    }).catch(console.error);
   }
 
   renderItems = () => {
@@ -46,7 +61,10 @@ class Creation extends Component {
     if (!data || !data.length) return null;
     return <Grid container spacing={2}>
       {data.map(obj => <Grid key={obj._id} item xs={6} sm={4} md={3} lg={2}>
-        <ProductCard _id={obj._id} onClick={() => this.onEdit(obj._id)} />
+        <ProductCard
+          itemId={obj._id}
+          onClick={() => this.setState({ editableId: obj._id, visible: true })}
+        />
       </Grid>)}
     </Grid>
   }
@@ -59,13 +77,26 @@ class Creation extends Component {
         {this.renderItems()}
       </Grid>
       <Grid item xs={12}>
-        <Creator
-          itemId={this.state.editableId}
+        <BottomDrawer
           visible={this.state.visible}
           onClose={() => this.setState({ visible: false })}
-        />
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Stall
+                itemId={this.state.editableId}
+                onAdd={this.onAdd}
+                onUpdate={this.onUpdate}
+                editable
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Drain />
+            </Grid>
+          </Grid>
+        </BottomDrawer>
       </Grid>
-      <Action onAdd={() => this.setState({ visible: true })} />
+      <Action onAdd={() => this.setState({ editableId: '', visible: true })} />
     </Grid>
   }
 }
@@ -77,6 +108,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getItems,
+  addItem, updateItem,
 }, dispatch);
 
 export default withRouter(connect(

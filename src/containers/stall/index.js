@@ -24,21 +24,20 @@ import styles from './styles';
 import utils from 'helpers/utils';
 
 class Stall extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       object: {
         tags: ['New'],
         fileIds: [],
       },
-      userId: null,
+      userId: props.auth._id,
       amount: 1,
     }
   }
 
   componentDidMount() {
-    this.setState({ userId: this.props.auth._id });
     return this.loadData();
   }
 
@@ -105,7 +104,6 @@ class Stall extends Component {
     return this.setState({ object });
   }
   onCategory = (value) => {
-    console.log(value)
     return this.setState({
       object: { ...this.state.object, category: value }
     });
@@ -115,17 +113,25 @@ class Stall extends Component {
    * Creation actions
    */
   onPublish = () => {
+    const { itemId, onAdd, onUpdate } = this.props;
     let { object } = this.state;
     object = { ...object, status: 'selling' }
-    return this.props.onAdd(object);
+    if (itemId) return onUpdate(object);
+    return onAdd(object);
   }
   onSave = () => {
+    const { itemId, onAdd, onUpdate } = this.props;
     let { object } = this.state;
     object = { ...object, status: 'creating' }
-    return this.props.onAdd(object);
+    if (itemId) return onUpdate(object);
+    return onAdd(object);
   }
   onDelete = () => {
-    return this.props.onDelete();
+    const { itemId, onAdd, onUpdate } = this.props;
+    let { object } = this.state;
+    object = { ...object, status: 'archived' }
+    if (itemId) return onUpdate(object);
+    return onAdd(object);
   }
 
   /**
@@ -259,14 +265,14 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 Stall.defaultProps = {
   onAdd: () => { },
-  onDelete: () => { },
+  onUpdate: () => { },
   editable: false,
 }
 
 Stall.propTypes = {
   itemId: PropTypes.string.isRequired,
   onAdd: PropTypes.func,
-  onDelete: PropTypes.func,
+  onUpdate: PropTypes.func,
   editable: PropTypes.bool,
 }
 

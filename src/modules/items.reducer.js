@@ -62,7 +62,6 @@ export const getItems = (condition, limit, page, component = 'mall') => {
   }
 }
 
-
 /**
  * Add an item
  */
@@ -70,13 +69,13 @@ export const ADD_ITEM = 'ADD_ITEM';
 export const ADD_ITEM_OK = 'ADD_ITEM_OK';
 export const ADD_ITEM_FAIL = 'ADD_ITEM_FAIL';
 
-export const addItem = (data) => {
+export const addItem = (item) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
       dispatch({ type: ADD_ITEM });
 
       const { api: { base } } = configs;
-      return api.post(`${base}/item`, { item: data }).then(re => {
+      return api.post(`${base}/item`, { item }).then(re => {
         dispatch({ type: ADD_ITEM_OK, reason: null });
         return resolve(re.data);
       }).catch(er => {
@@ -85,7 +84,31 @@ export const addItem = (data) => {
       });
     });
   };
-};
+}
+
+/**
+ * Update an item
+ */
+export const UPDATE_ITEM = 'UPDATE_ITEM';
+export const UPDATE_ITEM_OK = 'UPDATE_ITEM_OK';
+export const UPDATE_ITEM_FAIL = 'UPDATE_ITEM_FAIL';
+
+export const updateItem = (item) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: UPDATE_ITEM });
+
+      const { api: { base } } = configs;
+      return api.put(`${base}/item`, { item }).then(re => {
+        dispatch({ type: UPDATE_ITEM_OK, reason: null });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: UPDATE_ITEM_FAIL, reason: er });
+        return reject(er);
+      });
+    });
+  };
+}
 
 /**
  * Reducder
@@ -99,6 +122,10 @@ export default (state = defaultState, action) => {
     case ADD_ITEM_OK:
       return { ...state, ...action.data };
     case ADD_ITEM_FAIL:
+      return { ...state, ...action.data };
+    case UPDATE_ITEM_OK:
+      return { ...state, ...action.data };
+    case UPDATE_ITEM_FAIL:
       return { ...state, ...action.data };
     default:
       return state;
