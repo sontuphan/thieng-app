@@ -10,7 +10,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import configs from 'configs';
-console.log(configs)
 
 const useStyles = makeStyles(theme => ({
   noWrap: {

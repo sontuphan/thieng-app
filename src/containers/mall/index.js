@@ -8,60 +8,51 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+
+import { SettingsRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import { ProductCard } from 'components/cards';
 import Menu from './menu';
 
 import { getItems } from 'modules/items.reducer';
-import { getItem } from 'modules/bucket.reducer';
 
 import styles from './styles';
 import utils from 'helpers/utils';
 
 
 class Mall extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      items: [],
-      category: 'chairs'
-    }
-  }
 
   componentDidMount() {
-    this.readParams();
-    this.loadData();
+    this.loadData(true);
     window.addEventListener('scroll', this.onTheEnd);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (!isEqual(prevProps.match, this.props.match))
-      this.readParams();
-    if (!isEqual(prevState.category, this.state.category))
-      this.loadData();
+  componentDidUpdate(prevProps) {
+    if (!isEqual(prevProps.match, this.props.match)) {
+      const { match: { params: { category } } } = this.props;
+      if (category) this.loadData(true);
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onTheEnd);
   }
 
-  loadData = () => {
+  loadData = (reset = false) => {
     let { items: { mall: { pagination: { limit, page } } } } = this.props;
     let condition = { status: 'selling' }
-    return this.props.getItems(condition, limit, page + 1);
+    const { match: { params: { category } } } = this.props;
+    if (category !== 'all') condition.category = category;
+    page = reset ? 0 : page + 1;
+    return this.props.getItems(condition, limit, page);
   }
 
   onTheEnd = () => {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
       return this.loadData();
     }
-  }
-
-  readParams = () => {
-    let { match: { params: { category } } } = this.props;
-    this.setState({ category });
   }
 
   renderItems = (items) => {
@@ -76,6 +67,7 @@ class Mall extends Component {
   render() {
     const { classes } = this.props;
     const { items: { mall: { data } } } = this.props;
+    const { match: { params: { category } } } = this.props;
 
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
@@ -92,10 +84,15 @@ class Mall extends Component {
       <Grid item xs={11} md={10}>
         <Grid container className={classes.noWrap} alignItems="center" justify="flex-end" spacing={2}>
           <Grid item>
-            <Typography variant="h3">{utils.paramToHeader(this.state.category)}</Typography>
+            <Typography variant="h3">{utils.paramToHeader(category)}</Typography>
           </Grid>
           <Grid item className={classes.stretch}>
             <Divider />
+          </Grid>
+          <Grid item>
+            <IconButton size="small">
+              <SettingsRounded fontSize="small" />
+            </IconButton>
           </Grid>
         </Grid>
       </Grid>
@@ -118,7 +115,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getItems,
-  getItem,
 }, dispatch);
 
 export default withRouter(connect(

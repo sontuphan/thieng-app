@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Grow from '@material-ui/core/Grow';
 
 import { ExpandMoreRounded, ExpandLessRounded } from '@material-ui/icons';
 
@@ -41,15 +42,17 @@ class Menu extends Component {
 
     return <Grid container spacing={2} justify="center">
       {categories.map(item => <Grid item key={item.value}>
-        <Button
-          variant="outlined"
-          color={category === item.value ? 'primary' : 'default'}
-          startIcon={item.icon}
-          component={RouterLink}
-          to={'/mall/' + item.value}
-        >
-          <Typography>{item.name}</Typography>
-        </Button>
+        <Grow in>
+          <Button
+            variant="outlined"
+            color={category === item.value ? 'primary' : 'default'}
+            startIcon={item.icon}
+            component={RouterLink}
+            to={'/mall/' + item.value}
+          >
+            <Typography>{item.name}</Typography>
+          </Button>
+        </Grow>
       </Grid>)}
 
       {!expanded ? <Grid item>

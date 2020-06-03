@@ -40,14 +40,15 @@ export const getItems = (condition, limit, page, component = 'mall') => {
     return new Promise((resolve, reject) => {
       dispatch({ type: GET_ITEMS });
 
-      const { items: { [component]: { data } } } = prevState();
+      const { items: { [component]: { data, pagination } } } = prevState();
+      const accumulative = page === pagination.page + 1
       const { api: { base } } = configs;
-      api.get(`${base}/social/items`, { condition, limit, page }).then(re => {
+      return api.get(`${base}/social/items`, { condition, limit, page }).then(re => {
         dispatch({
           type: GET_ITEMS_OK,
           data: {
             [component]: {
-              data: data.concat(re.data),
+              data: accumulative ? data.concat(re.data) : re.data,
               pagination: re.pagination
             }
           }
@@ -75,7 +76,7 @@ export const addItem = (data) => {
       dispatch({ type: ADD_ITEM });
 
       const { api: { base } } = configs;
-      api.post(`${base}/item`, { item: data }).then(re => {
+      return api.post(`${base}/item`, { item: data }).then(re => {
         dispatch({ type: ADD_ITEM_OK, reason: null });
         return resolve(re.data);
       }).catch(er => {
