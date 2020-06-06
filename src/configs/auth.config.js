@@ -20,8 +20,12 @@ configs.development = {
  * Staging configurations
  */
 configs.staging = {
-  google: {},
-  facebook: {},
+  google: {
+    clientId: '114004784341-bk6g9beaf47m6tlkldi22f5vg7lu1k3m.apps.googleusercontent.com',
+  },
+  facebook: {
+    appId: '253210775907246'
+  },
   apple: {}
 };
 
