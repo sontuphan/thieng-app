@@ -33,8 +33,12 @@ configs.staging = {
  * Production configurations
  */
 configs.production = {
-  google: {},
-  facebook: {},
+  google: {
+    clientId: '136230061935-9n99neq7tglljcshks7intu5vtrhnl5d.apps.googleusercontent.com',
+  },
+  facebook: {
+    appId: '1205622886439533'
+  },
   apple: {}
 };
 

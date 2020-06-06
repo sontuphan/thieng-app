@@ -16,7 +16,7 @@ configs.development = {
  * Staging configurations
  */
 configs.staging = {
-  base: 'http://103.69.193.244:3001',
+  base: 'https://staging-api.thiengviet.com',
   auth: '/authentication',
   user: '/user',
 }
@@ -25,7 +25,9 @@ configs.staging = {
  * Production configurations
  */
 configs.production = {
-
+  base: 'https://api.thiengviet.com',
+  auth: '/authentication',
+  user: '/user',
 }
 
 /**
