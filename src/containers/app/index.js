@@ -51,6 +51,7 @@ class App extends Component {
         <Grid item xs={11} md={10}>
           <Header />
         </Grid>
+        <Grid item xs={12} className={classes.safe} /> {/* Safe space */}
         <Grid item xs={12}>
 
           {/* Pages */}

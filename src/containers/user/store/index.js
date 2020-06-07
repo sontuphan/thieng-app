@@ -72,9 +72,6 @@ class UserStore extends Component {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Drain />
-      </Grid>
-      <Grid item xs={12}>
         {this.renderBody()}
       </Grid>
       <Grid item xs={12}>

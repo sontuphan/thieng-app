@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Switch from '@material-ui/core/Switch';
+import Typography from '@material-ui/core/Typography';
 
 import { BottomDrawer } from 'components/drawers';
 import { ProductCard } from 'components/cards';
@@ -27,6 +29,8 @@ class Creation extends Component {
     this.state = {
       editableId: '',
       visible: false,
+      selected: [],
+      multipleChoice: false,
     }
   }
 
@@ -40,8 +44,19 @@ class Creation extends Component {
     return this.props.getItems(condition, limit, page + 1, COMPONENT);
   }
 
-  onClick = (editableId) => {
-    return this.setState({ editableId, visible: true });
+  onToogle = (e) => {
+    return this.setState({ multipleChoice: e.target.checked });
+  }
+
+  onClick = (i) => {
+    const { items: { [COMPONENT]: { data } } } = this.props;
+    const { multipleChoice } = this.state;
+    if (multipleChoice) {
+      let { selected } = this.state;
+      selected[i] = !selected[i];
+      return this.setState({ selected });
+    }
+    return this.setState({ editableId: data[i]._id, visible: true });
   }
 
   onAdd = (value) => {
@@ -57,13 +72,17 @@ class Creation extends Component {
   }
 
   renderItems = () => {
-    let { items: { [COMPONENT]: { data } } } = this.props;
+    const { items: { [COMPONENT]: { data } } } = this.props;
+    const { multipleChoice, selected } = this.state;
+
     if (!data || !data.length) return null;
     return <Grid container spacing={2}>
-      {data.map(obj => <Grid key={obj._id} item xs={6} sm={4} md={3} lg={2}>
+      {data.map((obj, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
         <ProductCard
           itemId={obj._id}
-          onClick={() => this.setState({ editableId: obj._id, visible: true })}
+          onClick={() => this.onClick(i)}
+          selective={multipleChoice}
+          selected={selected[i]}
         />
       </Grid>)}
     </Grid>
@@ -73,6 +92,20 @@ class Creation extends Component {
     // const { classes } = this.props;
 
     return <Grid container justify="center" spacing={2}>
+      <Grid item xs={12}>
+        <Grid container justify="flex-end" alignItems="center" spacing={2}>
+          <Grid item>
+            <Typography>Chọn nhiều sản phẩm</Typography>
+          </Grid>
+          <Grid item>
+            <Switch
+              color="primary"
+              checked={this.state.multipleChoice}
+              onChange={this.onToogle}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
       <Grid item xs={12}>
         {this.renderItems()}
       </Grid>
@@ -96,7 +129,10 @@ class Creation extends Component {
           </Grid>
         </BottomDrawer>
       </Grid>
-      <Action onAdd={() => this.setState({ editableId: '', visible: true })} />
+      <Action
+        onAdd={() => this.setState({ editableId: '', visible: true })}
+        onDelete={() => { }}
+      />
     </Grid>
   }
 }

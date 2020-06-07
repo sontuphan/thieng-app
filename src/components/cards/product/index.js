@@ -6,6 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
+import Checkbox from '@material-ui/core/Checkbox';
+import Zoom from '@material-ui/core/Zoom';
 
 import { ImageCard } from 'components/cards';
 
@@ -43,6 +45,14 @@ function ProductCard(props) {
             <Typography variant="h3">{utils.prettyNumber(data.price, 'long')} vnd</Typography>
           </Grid>
         </Grid>
+        <Zoom in={props.selective}>
+          <Checkbox
+            color="primary"
+            className={classes.radio}
+            checked={props.selected}
+            onChange={(e) => props.onClick(e.target.checked)}
+          />
+        </Zoom>
       </Paper>
     </Grid>
   </Grid >
@@ -50,11 +60,15 @@ function ProductCard(props) {
 
 ProductCard.defaultProps = {
   onClick: null,
+  selective: false,
+  selected: false,
 }
 
 ProductCard.propTypes = {
   itemId: PropTypes.string.isRequired,
   onClick: PropTypes.func,
+  selective: PropTypes.bool,
+  selected: PropTypes.bool,
 }
 
 export default ProductCard;
