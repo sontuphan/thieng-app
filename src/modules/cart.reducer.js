@@ -10,7 +10,7 @@ const KEY = 'cart';
 
 const defaultState = {
   data: storage.get(KEY) || [],
-  visible: true
+  visible: false
 }
 
 /**

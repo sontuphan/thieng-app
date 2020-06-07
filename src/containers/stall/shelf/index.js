@@ -160,10 +160,10 @@ class Shelf extends Component {
             {/* Author */}
             <Grid item xs={6}>
               <Grid container alignItems="center" spacing={1} >
-                <Grid item className={classes.link} component={RouterLink} to={author.link || '#'}>
+                <Grid item className={classes.link} component={RouterLink} to={'#'}>
                   <Avatar alt={author.displayname} src={author.avatar} />
                 </Grid>
-                <Grid item xs={8} className={classes.link} component={RouterLink} to={author.link || '#'}>
+                <Grid item xs={8} className={classes.link} component={RouterLink} to={'#'}>
                   <Typography style={{ color: this.state.color }} noWrap>{author.displayname}</Typography>
                 </Grid>
               </Grid>
