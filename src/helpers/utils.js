@@ -26,6 +26,7 @@ Utils.rand = () => {
 }
 
 Utils.prettyNumber = (num, type = 'long') => {
+  if (num === 0) return 0;
   if (!num) return null;
   if (typeof num !== 'number') return null;
   if (num > 1e19) return null;

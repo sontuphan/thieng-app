@@ -1,9 +1,5 @@
 export default theme => {
-  console.log(theme)
   return {
-    paper: {
-      padding: `${theme.spacing(1)}px 0px`,
-    },
     avatar: {
       cursor: 'pointer',
       height: 30,
@@ -14,6 +10,9 @@ export default theme => {
     },
     noWrap: {
       flexWrap: 'noWrap',
-    }
+    },
+    stretch: {
+      flex: '1 1 auto',
+    },
   }
 };

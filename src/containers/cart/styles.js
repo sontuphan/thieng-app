@@ -1,4 +1,7 @@
 export default theme => ({
+  selectIcon: {
+    padding: '16.5px 14px'
+  },
   noWrap: {
     flexWrap: 'nowrap',
   },

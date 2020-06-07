@@ -25,8 +25,10 @@ import Editor from 'containers/editor';
 
 import theme from 'static/styles/theme';
 import 'static/styles/index.css';
+import styles from './styles';
 
 import { setScreen } from 'modules/ui.reducer';
+
 
 class App extends Component {
   constructor(props) {
@@ -42,8 +44,10 @@ class App extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return <ThemeProvider theme={theme}>
       <Grid container justify="center" spacing={2}>
+        <Grid item xs={12} className={classes.safe} /> {/* Safe space */}
         <Grid item xs={11} md={10}>
           <Header />
         </Grid>
@@ -101,4 +105,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles({})(App)));
+)(withStyles(styles)(App)));

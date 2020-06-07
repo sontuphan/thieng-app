@@ -9,5 +9,5 @@ sudo sh docker.sh
 ## Start docker
 
 ```
-sudo docker run -it -p 3000:3000 -w /home/thieng-app tuphanson/thieng-app bash
+docker run -it -w /home/thieng-app --name app tuphanson/thieng-app bash
 ```

@@ -23,11 +23,11 @@ import styles from './styles';
 
 
 class DeliveryInformation extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      name: '',
+      name: props.auth.displayname,
       phone: '',
       address: '',
       selectedAddress: 0,
@@ -65,8 +65,7 @@ class DeliveryInformation extends Component {
   }
 
   render() {
-    let { classes } = this.props;
-
+    const { classes } = this.props;
     return <Grid container spacing={2}>
       <Grid item xs={12}>
         <Grid
@@ -130,6 +129,7 @@ class DeliveryInformation extends Component {
               color="secondary"
               value={this.state.selectedAddress}
               onChange={this.onSelect}
+              classes={{ root: classes.selectIcon }}
               fullWidth
             >
               <MenuItem value={0}>

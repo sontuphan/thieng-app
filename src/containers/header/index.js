@@ -15,7 +15,6 @@ import Badge from '@material-ui/core/Badge';
 import Link from '@material-ui/core/Link';
 import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
-import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 
 import {
@@ -90,55 +89,39 @@ class Header extends Component {
   }
 
   renderProfile = () => {
-    let { classes, auth } = this.props;
-
+    const { classes, auth, ui } = this.props;
     if (!auth.isValid) {
-      return <Button
-        variant="contained"
-        color="primary"
-        startIcon={<PersonRounded />}
-        onClick={this.onToggleLogInModal}
-      >
-        <Typography>Đăng nhập</Typography>
+      return <Button variant="contained" color="primary" startIcon={<PersonRounded />} onClick={this.onToggleLogInModal} >
+        <Typography noWrap>Đăng nhập</Typography>
       </Button >
     }
-
-    if (this.props.ui.width >= 960) {
+    else if (ui.width >= 960) {
       return <Tooltip title={auth.displayname}>
-        <Avatar
-          alt={auth.avatar}
-          src={auth.avatar}
-          className={classes.avatar}
-          onClick={this.onUser}
-        />
+        <Avatar alt={auth.avatar} src={auth.avatar} className={classes.avatar} onClick={this.onUser} />
       </Tooltip>
     }
-
-    return <Grid
-      container
-      alignItems="center"
-      className={classes.noWrap}
-      onClick={this.onUser}
-      spacing={2}>
-      <Grid item>
-        <Typography>{auth.displayname}</Typography>
+    else {
+      return <Grid container alignItems="center" className={classes.noWrap} onClick={this.onUser} spacing={2}>
+        <Grid item className={classes.stretch} >
+          <Typography noWrap>{auth.displayname}</Typography>
+        </Grid>
+        <Grid item>
+          <Avatar alt={auth.avatar} src={auth.avatar} className={classes.avatar} />
+        </Grid>
       </Grid>
-      <Grid item>
-        <Avatar alt={auth.avatar} src={auth.avatar} className={classes.avatar} />
-      </Grid>
-    </Grid>
+    }
   }
 
   renderRoute = () => {
+    const { classes } = this.props;
+    const { routes, visibleDrawer } = this.state;
     if (this.props.ui.width >= 960) {
-      return <Grid container alignItems="center" spacing={4}>
-        {
-          this.state.routes.map(route => <Grid item key={route.link}>
-            <Link color="textPrimary" underline="none" component={RouterLink} to={route.link}>
-              <Typography><span className="link">{route.text}</span></Typography>
-            </Link>
-          </Grid>)
-        }
+      return <Grid container alignItems="center" className={classes.noWrap} spacing={4}>
+        {routes.map(route => <Grid item key={route.link}>
+          <Link color="textPrimary" underline="none" component={RouterLink} to={route.link}>
+            <Typography noWrap><span className="link">{route.text}</span></Typography>
+          </Link>
+        </Grid>)}
         < Grid item >
           {this.renderProfile()}
         </Grid >
@@ -150,16 +133,17 @@ class Header extends Component {
           <IconButton size="small" color="secondary" onClick={this.onToggleDrawer}>
             <MenuRounded />
           </IconButton>
-          <TopDrawer visible={this.state.visibleDrawer} onClose={this.onToggleDrawer} >
+          <TopDrawer visible={visibleDrawer} onClose={this.onToggleDrawer} >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <List>
-                  {this.state.routes.map(route => <ListItem
+                  {routes.map(route => <ListItem
                     key={route.link}
                     button
                     component={RouterLink}
                     to={route.link}
-                    onClick={this.onToggleDrawer} >
+                    onClick={this.onToggleDrawer}
+                  >
                     <ListItemText primary={route.text} />
                   </ListItem>)}
                 </List>
@@ -182,50 +166,46 @@ class Header extends Component {
   }
 
   render() {
-    let { classes } = this.props;
+    const { classes } = this.props;
     return <Fragment>
-      <Grid container justify="space-between" alignItems="center">
-
+      <Grid container className={classes.noWrap} spacing={2}>
         {/* Logo */}
         <Grid item className={classes.logo}>
           <Link color="textPrimary" underline="none" component={RouterLink} to={'/home'}>
             <Typography variant="h3">Thiêng Việt</Typography>
           </Link>
         </Grid>
-
-        <Grid item>
-          <Paper elevation={0} className={classes.paper}>
-            <Grid container alignItems="center" spacing={4}>
-              {/* Search app */}
-              {/* <Grid item>
+        {/* Menu */}
+        <Grid item className={classes.stretch}>
+          <Grid container alignItems="center" justify="flex-end" spacing={4}>
+            {/* Search app */}
+            {/* <Grid item>
                 <IconButton size="small" color="secondary" onClick={this.onSearch}>
                   <SearchRounded />
                 </IconButton>
               </Grid> */}
-              {/* Notification app */}
-              {/* <Grid item>
+            {/* Notification app */}
+            {/* <Grid item>
                 <IconButton size="small" color="secondary" onClick={this.onNotification}>
                   <Badge badgeContent={3} color="primary">
                     <NotificationsRounded />
                   </Badge>
                 </IconButton>
               </Grid> */}
-              {/* Grocery app */}
-              <Grid item>
-                <IconButton size="small" color="secondary" onClick={this.onCart}>
-                  <Badge badgeContent={3} color="primary">
-                    <ShoppingBasketRounded />
-                  </Badge>
-                </IconButton>
-              </Grid>
-              {/* Routers & Authentication*/}
-              <Grid item>
-                {this.renderRoute()}
-              </Grid>
+            {/* Grocery app */}
+            <Grid item>
+              <IconButton size="small" color="secondary" onClick={this.onCart}>
+                <Badge badgeContent={3} color="primary">
+                  <ShoppingBasketRounded />
+                </Badge>
+              </IconButton>
             </Grid>
-          </Paper>
+            {/* Routers & Authentication*/}
+            <Grid item>
+              {this.renderRoute()}
+            </Grid>
+          </Grid>
         </Grid>
-
       </Grid>
       <LogIn
         visible={this.state.visibleLogInModal}

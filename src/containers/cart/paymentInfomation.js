@@ -48,21 +48,16 @@ class PaymentInfomation extends Component {
   }
 
   getBill = () => {
-    let amount = this.props.cart.data.reduce((total, item) => total + item.amount * item.price, 0);
+    const { cart: { data } } = this.props;
+    const amount = data.reduce((total, item) => total + item.amount * item.price, 0);
     return `${utils.prettyNumber(amount, 'long')} vnd`;
   }
 
   render() {
-    let { classes } = this.props;
-
+    const { classes } = this.props;
     return <Grid container alignItems="center" spacing={2}>
       <Grid item xs={12}>
-        <Grid
-          container
-          alignItems="center"
-          className={classes.noWrap}
-          spacing={2}
-        >
+        <Grid container className={classes.noWrap} alignItems="center" spacing={2} >
           <Grid item>
             <Typography variant="h3">Payment information</Typography>
           </Grid>
@@ -111,6 +106,7 @@ class PaymentInfomation extends Component {
             color="secondary"
             value={this.state.payment}
             onChange={this.onPayment}
+            classes={{ root: classes.selectIcon }}
           >
             <MenuItem value={'cod'}>
               <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
