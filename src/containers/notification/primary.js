@@ -15,6 +15,7 @@ import { ShoppingCartRounded, ExpandMoreRounded } from '@material-ui/icons';
 
 import { EventCard } from 'components/cards';
 import Drain from 'components/drain';
+import { CircularProgressButton } from 'components/buttons';
 
 import { toogleCart } from 'modules/cart.reducer';
 import { toogleNotification, getEvents } from 'modules/notification.reducer';
@@ -99,14 +100,14 @@ class PrimaryNotification extends Component {
       </Grid>)}
 
       <Grid item >
-        <Button
+        <CircularProgressButton
           size="small"
-          endIcon={this.state.isLoading ? <CircularProgress size={16} /> : <ExpandMoreRounded fontSize="small" />}
+          endIcon={<ExpandMoreRounded fontSize="small" />}
           onClick={this.onMore}
-          disabled={this.state.isLoading}
+          isLoading={this.state.isLoading}
         >
           <Typography>More</Typography>
-        </Button>
+        </CircularProgressButton>
       </Grid>
     </Grid>
   }

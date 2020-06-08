@@ -7,13 +7,12 @@ import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { SendRounded, ExpandMoreRounded } from '@material-ui/icons';
 
 import SingleRichComment from './single';
+import { CircularProgressButton } from 'components/buttons';
 
 import styles from './styles';
 
@@ -88,14 +87,14 @@ class RichComment extends Component {
         {this.renderOutput()}
       </Grid>
       <Grid item>
-        <Button
+        <CircularProgressButton
           size="small"
-          endIcon={this.props.isLoading ? <CircularProgress size={16} /> : <ExpandMoreRounded fontSize="small" />}
+          endIcon={<ExpandMoreRounded fontSize="small" />}
           onClick={this.props.onMore}
-          disabled={this.props.isLoading}
+          isLoading={this.props.isLoading}
         >
           <Typography>More</Typography>
-        </Button>
+        </CircularProgressButton>
       </Grid>
     </Grid>
   }

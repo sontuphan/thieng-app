@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Fab from '@material-ui/core/Fab';
 import Zoom from '@material-ui/core/Zoom';
 
 import { DeleteRounded } from '@material-ui/icons';
+
+import { FloatCircularProgressButton } from 'components/buttons';
 
 
 export const useStyles = makeStyles(theme => ({
@@ -23,13 +24,14 @@ function Action(props) {
     <Grid container spacing={2}>
       <Grid item>
         <Zoom in>
-          <Fab
+          <FloatCircularProgressButton
             color="primary"
-            size="medium"
+            size="small"
             onClick={props.onDelete}
+            isLoading={props.isLoading}
           >
             <DeleteRounded />
-          </Fab>
+          </FloatCircularProgressButton>
         </Zoom>
       </Grid>
     </Grid>
@@ -37,10 +39,12 @@ function Action(props) {
 }
 
 Action.defaultProps = {
+  isLoading: false,
   onDelete: () => { },
 }
 
 Action.propTypes = {
+  isLoading: PropTypes.bool,
   onDelete: PropTypes.func,
 }
 

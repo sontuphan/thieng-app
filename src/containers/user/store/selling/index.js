@@ -27,6 +27,7 @@ class Selling extends Component {
       visible: false,
       selected: [],
       multipleChoice: false,
+      isLoading: false,
     }
   }
 
@@ -49,12 +50,14 @@ class Selling extends Component {
   onClick = (itemId) => {
     const { multipleChoice } = this.state;
     if (multipleChoice) {
-      let { selected } = this.state;
-      let index = selected.indexOf(itemId);
-      if (index === -1) selected.push(itemId);
-      else if (index === selected.length - 1) selected.pop();
-      else selected[index] = selected.pop();
-      return this.setState({ selected });
+      return () => {
+        let { selected } = this.state;
+        let index = selected.indexOf(itemId);
+        if (index === -1) selected.push(itemId);
+        else if (index === selected.length - 1) selected.pop();
+        else selected[index] = selected.pop();
+        return this.setState({ selected });
+      }
     }
     return null;
   }
@@ -62,6 +65,7 @@ class Selling extends Component {
   onDelete = () => {
     const { updateItem } = this.props;
     const { selected } = this.state;
+    this.setState({ isLoading: true });
     return async.eachSeries(selected, (itemId, cb) => {
       return updateItem({ _id: itemId, status: 'archived' }).then(re => {
         return cb();
@@ -70,7 +74,8 @@ class Selling extends Component {
       });
     }, (er) => {
       if (er) return console.error(er);
-      return this.loadData(true);
+      this.loadData(true);
+      return this.setState({ isLoading: false });
     });
   }
 
@@ -82,7 +87,7 @@ class Selling extends Component {
       {data.map((obj, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
         <ProductCard
           itemId={obj._id}
-          onClick={() => this.onClick(obj._id)}
+          onClick={this.onClick(obj._id)}
           selective={multipleChoice}
           selected={selected.includes(obj._id)}
         />
@@ -92,7 +97,7 @@ class Selling extends Component {
 
   render() {
     // let { classes } = this.props;
-    const { multipleChoice } = this.state;
+    const { multipleChoice, isLoading } = this.state;
 
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
@@ -112,7 +117,7 @@ class Selling extends Component {
       <Grid item xs={12}>
         {this.renderItems()}
       </Grid>
-      {multipleChoice ? <Action onDelete={this.onDelete} /> : null}
+      {multipleChoice ? <Action isLoading={isLoading} onDelete={this.onDelete} /> : null}
     </Grid>
   }
 }
