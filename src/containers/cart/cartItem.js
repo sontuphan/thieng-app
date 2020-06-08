@@ -40,8 +40,8 @@ class CartItem extends Component {
   }
 
   render() {
-    let { classes } = this.props;
-    let { item } = this.props;
+    const { classes } = this.props;
+    const { item } = this.props;
 
     if (!item) return null;
     return <Grid container justify="center" spacing={2}>

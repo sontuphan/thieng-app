@@ -75,7 +75,7 @@ class DeliveryInformation extends Component {
           spacing={2}
         >
           <Grid item>
-            <Typography variant="h3">Delivery information</Typography>
+            <Typography variant="h3">Giao hàng</Typography>
           </Grid>
           <Grid item className={classes.stretch} xs={12}>
             <Divider />
@@ -88,7 +88,7 @@ class DeliveryInformation extends Component {
       {/* Name */}
       <Grid item xs={12} md={6}>
         <TextField
-          label="Receiver's full name"
+          label="Tên người nhận"
           color="secondary"
           variant="outlined"
           value={this.state.name}
@@ -100,7 +100,7 @@ class DeliveryInformation extends Component {
       {/* Phone */}
       <Grid item xs={12} md={6}>
         <TextField
-          label="Receiver's phone number"
+          label="Số điện thoại người nhận"
           color="secondary"
           variant="outlined"
           value={this.state.phone}
@@ -114,7 +114,7 @@ class DeliveryInformation extends Component {
         <Grid container className={classes.noWrap} spacing={2}>
           <Grid item className={classes.stretch}>
             <TextField
-              label="Receiver's address"
+              label="Địa chỉ người nhận"
               color="secondary"
               variant="outlined"
               value={this.state.address}
@@ -160,7 +160,7 @@ class DeliveryInformation extends Component {
       {/* Note */}
       <Grid item xs={12}>
         <TextField
-          label="Your notes for us"
+          label="Chú thích thêm"
           color="secondary"
           variant="outlined"
           value={this.state.note}

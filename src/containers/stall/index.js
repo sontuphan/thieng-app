@@ -141,10 +141,9 @@ class Stall extends Component {
     return this.setState({ amount });
   }
   onBuy = () => {
-    let object = this.props.items.data[0];
-    let { amount } = this.state;
-    let item = { ...object, amount }
-    return this.props.setCart(item);
+    const { itemId, setCart } = this.props;
+    const { amount, object } = this.state;
+    return setCart({ _id: itemId, amount, price: object.price });
   }
   onCancel = () => {
     return console.log('onCancel');

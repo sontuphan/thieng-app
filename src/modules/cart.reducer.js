@@ -62,24 +62,20 @@ export const setCart = (item) => {
       dispatch({ type: SET_CART });
 
       if (!item || typeof item !== 'object') {
-        dispatch({
-          type: SET_CART_FAIL,
-          reason: 'Input is null.',
-        });
-        return reject('Input is null.');
+        const er = 'Invalid items';
+        dispatch({ type: SET_CART_FAIL, reason: er, });
+        return reject(er);
       }
 
       let { cart: { data } } = getState();
       // Delete item
-      if (item.amount <= 0) {
-        data = data.filter(e => e.id !== item.id);
-      }
+      if (item.amount <= 0) data = data.filter(e => e._id !== item._id);
       // Add item
       else {
         let exist = false;
         for (let i = 0; i < data.length; i++) {
           let prevItem = data[i];
-          if (prevItem.id === item.id) {
+          if (prevItem._id === item._id) {
             data[i] = item;
             exist = true;
             break;

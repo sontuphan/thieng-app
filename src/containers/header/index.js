@@ -167,6 +167,7 @@ class Header extends Component {
 
   render() {
     const { classes } = this.props;
+    const { cart: { data } } = this.props;
     return <Fragment>
       <Grid container className={classes.noWrap} spacing={2}>
         {/* Logo */}
@@ -195,7 +196,7 @@ class Header extends Component {
             {/* Grocery app */}
             <Grid item>
               <IconButton size="small" color="secondary" onClick={this.onCart}>
-                <Badge badgeContent={3} color="primary">
+                <Badge badgeContent={data.length} color="primary">
                   <ShoppingBasketRounded />
                 </Badge>
               </IconButton>

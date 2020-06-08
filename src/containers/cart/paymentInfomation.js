@@ -59,7 +59,7 @@ class PaymentInfomation extends Component {
       <Grid item xs={12}>
         <Grid container className={classes.noWrap} alignItems="center" spacing={2} >
           <Grid item>
-            <Typography variant="h3">Payment information</Typography>
+            <Typography variant="h3">Thanh toán</Typography>
           </Grid>
           <Grid item className={classes.stretch} xs={12}>
             <Divider />
@@ -75,7 +75,7 @@ class PaymentInfomation extends Component {
             <ReceiptRounded fontSize="small" color="primary" />
           </Grid>
           <Grid item>
-            <Typography>Total</Typography>
+            <Typography>Tổng</Typography>
           </Grid>
           <Grid item className={classes.stretch}>
             <Divider />
@@ -88,7 +88,7 @@ class PaymentInfomation extends Component {
       {/* Promotion code */}
       <Grid item xs={12} sm={6} md={4}>
         <TextField
-          label="Promotion Code"
+          label="Mã giảm giá"
           color="secondary"
           variant="outlined"
           value={this.state.code}
@@ -100,9 +100,9 @@ class PaymentInfomation extends Component {
       {/* Payment */}
       <Grid item xs={12} sm={6} md={4}>
         <FormControl variant="outlined" fullWidth>
-          <InputLabel color="secondary">Payment Method</InputLabel>
+          <InputLabel color="secondary">Phương thức thanh toán</InputLabel>
           <Select
-            label="Payment Method"
+            label="Phương thức thanh toán"
             color="secondary"
             value={this.state.payment}
             onChange={this.onPayment}
@@ -114,7 +114,7 @@ class PaymentInfomation extends Component {
                   <LocalAtmRounded fontSize="small" />
                 </Grid>
                 <Grid item className={classes.stretch}>
-                  <Typography>Cash on Delivery (COD)</Typography>
+                  <Typography>Giao hàng nhận tiền (COD)</Typography>
                 </Grid>
               </Grid>
             </MenuItem>
@@ -124,7 +124,7 @@ class PaymentInfomation extends Component {
                   <CreditCardRounded fontSize="small" />
                 </Grid>
                 <Grid item className={classes.stretch}>
-                  <Typography>Credit</Typography>
+                  <Typography>Thẻ ghi nợ (Credit)</Typography>
                 </Grid>
               </Grid>
             </MenuItem>
@@ -134,7 +134,7 @@ class PaymentInfomation extends Component {
                   <AccountBalanceRounded fontSize="small" />
                 </Grid>
                 <Grid item className={classes.stretch}>
-                  <Typography>Bank Card</Typography>
+                  <Typography>Thẻ ngân hàng</Typography>
                 </Grid>
               </Grid>
             </MenuItem>

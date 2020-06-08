@@ -23,41 +23,20 @@ import styles from './styles';
 
 
 class Cart extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      amount: 0,
-    }
-  }
-
-  onChange = (item, amount) => {
-    item.amount = amount;
-    this.props.setCart(item);
-  }
-
-  onCancel = (item) => {
-    this.props.setCart({ ...item, amount: 0 });
-  }
 
   render() {
-    let { classes } = this.props;
-    let items = this.props.cart.data;
+    const { classes } = this.props;
+    const { cart: { data } } = this.props;
 
     return <Grid container spacing={2}>
       <Grid item xs={12}>
-        <BottomDrawer
-          visible={this.props.cart.visible}
-          onClose={this.props.toogleCart}
-        >
+        <BottomDrawer visible={this.props.cart.visible} onClose={this.props.toogleCart}>
           <Grid container spacing={2} justify="center">
             <Grid item xs={11} md={10}>
               <Grid container spacing={2}>
-                {
-                  items.map(item => <Grid item key={item.id} xs={6} sm={4} md={3} lg={2}>
-                    <CartItem item={item} />
-                  </Grid>)
-                }
+                {data.map(item => <Grid item key={item._id} xs={6} sm={4} md={3} lg={2}>
+                  <CartItem item={item} />
+                </Grid>)}
               </Grid>
             </Grid>
             <Grid item xs={12}>
@@ -76,14 +55,9 @@ class Cart extends Component {
               <Drain small />
             </Grid>
             <Grid item xs={11} md={10}>
-              <Grid
-                container
-                alignItems="center"
-                className={classes.noWrap}
-                spacing={2}
-              >
+              <Grid container alignItems="center" className={classes.noWrap} spacing={2} >
                 <Grid item>
-                  <Typography>Please ensure your information is correct!</Typography>
+                  <Typography>Hãy kiểm tra thật kỹ đơn hàng nhé <span role="img" aria-label="smile">☺️</span>!</Typography>
                 </Grid>
                 <Grid item className={classes.stretch} xs={12}>
                   <Divider />
@@ -94,7 +68,7 @@ class Cart extends Component {
                     color="primary"
                     startIcon={<FlightTakeoffRounded />}
                   >
-                    <Typography>Done</Typography>
+                    <Typography>Xong</Typography>
                   </Button>
                 </Grid>
               </Grid>

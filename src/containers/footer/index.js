@@ -6,24 +6,64 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+
+import { MailRounded, Facebook } from '@material-ui/icons';
 
 import styles from './styles';
 
 
 class Footer extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      email: 'thiengviet@gmail.com',
+      facebook: 'https://www.facebook.com/Tre-Thi%C3%AAng-Vi%E1%BB%87t-101229158264093/',
+    }
+  }
+
+  onEmail = () => {
+    const { email } = this.state;
+    return window.open(`mailto:${email}`);
+  }
+
+  onFacebook = () => {
+    const { facebook } = this.state;
+    return window.open(facebook, '_blank');
+  }
+
   render() {
-    let { classes } = this.props;
+    const { classes, ui: { width } } = this.props;
 
     return <Grid container alignItems="center" className={classes.footer} spacing={2}>
-      <Grid item xs={12} className={classes.row}>
-        <Typography>Copyright © 2020 Thiêng Việt</Typography>
+      <Grid item xs={12} md={6}>
+        <Grid container alignItems="center" justify={width >= 960 ? 'flex-start' : 'center'} spacing={2}>
+          <Grid item>
+            <IconButton onClick={this.onEmail} color="primary">
+              <MailRounded />
+            </IconButton>
+          </Grid>
+          <Grid item>
+            <IconButton onClick={this.onFacebook} color="primary">
+              <Facebook />
+            </IconButton>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <Grid container justify={width >= 960 ? 'flex-end' : 'center'} spacing={2}>
+          <Grid item>
+            <Typography>Copyright © 2020 Thiêng Việt</Typography>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   }
 }
 
 const mapStateToProps = state => ({
-
+  ui: state.ui,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

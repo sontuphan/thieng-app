@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -11,6 +12,7 @@ import Badge from '@material-ui/core/Badge';
 import {
   HomeRounded, AccountBalanceWalletRounded,
   SettingsRounded, ChatRounded, StorefrontRounded,
+  ViewStreamRounded,
 } from '@material-ui/icons';
 
 import styles from './styles';
@@ -21,6 +23,7 @@ class Menu extends Component {
 
   render() {
     const { match: { params: { email, page } } } = this.props;
+    const { items: { creation: { data } } } = this.props;
 
     return <Grid container spacing={2} justify="center">
       <Grid item>
@@ -38,7 +41,7 @@ class Menu extends Component {
         </Badge>
       </Grid>
       <Grid item>
-        <Badge badgeContent={4} color="primary">
+        <Badge badgeContent={data.length} color="primary">
           <Button
             variant="outlined"
             color={page === 'store' ? 'primary' : 'default'}
@@ -47,6 +50,19 @@ class Menu extends Component {
             to={`/user/${email}/store`}
           >
             <Typography>Store</Typography>
+          </Button>
+        </Badge>
+      </Grid>
+      <Grid item>
+        <Badge badgeContent={0} color="primary">
+          <Button
+            variant="outlined"
+            color={page === 'orders' ? 'primary' : 'default'}
+            startIcon={<ViewStreamRounded />}
+            component={RouterLink}
+            to={`/user/${email}/orders`}
+          >
+            <Typography>Orders</Typography>
           </Button>
         </Badge>
       </Grid>
@@ -97,12 +113,15 @@ class Menu extends Component {
   }
 }
 
-Menu.defaultProps = {
-  category: ''
-}
+const mapStateToProps = state => ({
+  items: state.items,
+});
 
-Menu.propTypes = {
-  category: PropTypes.string
-}
+const mapDispatchToProps = dispatch => bindActionCreators({
 
-export default withRouter(withStyles(styles)(Menu));
+}, dispatch);
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Menu)));

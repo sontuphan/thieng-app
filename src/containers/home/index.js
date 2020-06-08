@@ -87,7 +87,7 @@ class Home extends Component {
       <Grid item xs={12}>
         <Drain large />
       </Grid>
-      <Grid item xs={12} id="contact">
+      <Grid item xs={12}>
         <Contact />
       </Grid>
     </Grid >
