@@ -92,7 +92,7 @@ class Profile extends Component {
                     <Typography variant="body2">{user.displayname}</Typography>
                   </Grid>
                   <Grid item>
-                    <Tooltip title="Edit Your Description">
+                    <Tooltip title="Chỉnh sửa lời giới thiệu">
                       <IconButton onClick={this.onEdit} size="small">
                         <ToggleIcon
                           className={classes.toggleIcon}
@@ -104,7 +104,7 @@ class Profile extends Component {
                     </Tooltip>
                   </Grid>
                   <Grid item>
-                    <Tooltip title="Sign Out">
+                    <Tooltip title="Đăng xuất">
                       <IconButton onClick={this.props.logOut} size="small">
                         <ExitToAppRounded fontSize="small" />
                       </IconButton>

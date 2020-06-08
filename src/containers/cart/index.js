@@ -57,7 +57,7 @@ class Cart extends Component {
             <Grid item xs={11} md={10}>
               <Grid container alignItems="center" className={classes.noWrap} spacing={2} >
                 <Grid item>
-                  <Typography>Hãy kiểm tra thật kỹ đơn hàng nhé <span role="img" aria-label="smile">☺️</span>!</Typography>
+                  <Typography>Hãy kiểm tra thật kỹ đơn hàng nhé! <span role="img" aria-label="smile">😊</span></Typography>
                 </Grid>
                 <Grid item className={classes.stretch} xs={12}>
                   <Divider />

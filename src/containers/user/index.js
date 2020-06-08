@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 
-import { SettingsApplicationsRounded } from '@material-ui/icons';
+import { CloudUploadRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import Profile from './profile';
@@ -19,7 +19,6 @@ import UserStore from './store';
 import UserSettings from './settings';
 
 import styles from './styles';
-import PANEL from 'static/images/designer-2.jpg';
 
 
 class User extends Component {
@@ -32,7 +31,7 @@ class User extends Component {
         <Grid container justify="flex-end" spacing={2}>
           <Grid item>
             <IconButton>
-              <SettingsApplicationsRounded />
+              <CloudUploadRounded />
             </IconButton>
           </Grid>
         </Grid>
@@ -44,7 +43,7 @@ class User extends Component {
             >
               <div className={classes.image}
                 style={{
-                  backgroundImage: `url('${PANEL}')`,
+                  backgroundImage: `url('https://source.unsplash.com/featured/?interior')`,
                   backgroundPosition: 'center',
                   backgroundRepeat: 'no-repeat',
                   backgroundSize: 'cover'

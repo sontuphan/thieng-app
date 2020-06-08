@@ -36,7 +36,7 @@ class Menu extends Component {
             to={`/user/${email}/home`}
             disabled
           >
-            <Typography>Home</Typography>
+            <Typography>Trang chủ</Typography>
           </Button>
         </Badge>
       </Grid>
@@ -49,7 +49,7 @@ class Menu extends Component {
             component={RouterLink}
             to={`/user/${email}/store`}
           >
-            <Typography>Store</Typography>
+            <Typography>Cửa hàng</Typography>
           </Button>
         </Badge>
       </Grid>
@@ -62,7 +62,7 @@ class Menu extends Component {
             component={RouterLink}
             to={`/user/${email}/orders`}
           >
-            <Typography>Orders</Typography>
+            <Typography>Đơn hàng</Typography>
           </Button>
         </Badge>
       </Grid>
@@ -76,7 +76,7 @@ class Menu extends Component {
             to={`/user/${email}/message`}
             disabled
           >
-            <Typography>Message</Typography>
+            <Typography>Tin nhắn</Typography>
           </Button>
         </Badge>
       </Grid>
@@ -90,7 +90,7 @@ class Menu extends Component {
             to={`/user/${email}/wallet`}
             disabled
           >
-            <Typography>Wallet</Typography>
+            <Typography>Ví</Typography>
           </Button>
         </Badge>
       </Grid>
@@ -104,7 +104,7 @@ class Menu extends Component {
             to={`/user/${email}/settings`}
             disabled
           >
-            <Typography>Settings</Typography>
+            <Typography>Cài đặt</Typography>
           </Button>
         </Badge>
       </Grid>

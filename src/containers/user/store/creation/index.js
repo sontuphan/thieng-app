@@ -48,15 +48,19 @@ class Creation extends Component {
     return this.setState({ multipleChoice: e.target.checked });
   }
 
-  onClick = (i) => {
-    const { items: { [COMPONENT]: { data } } } = this.props;
+  onClick = (itemId) => {
     const { multipleChoice } = this.state;
     if (multipleChoice) {
-      let { selected } = this.state;
-      selected[i] = !selected[i];
-      return this.setState({ selected });
+      return () => {
+        let { selected } = this.state;
+        let index = selected.indexOf(itemId);
+        if (index === -1) selected.push(itemId);
+        else if (index === selected.length - 1) selected.pop();
+        else selected[index] = selected.pop();
+        return this.setState({ selected });
+      }
     }
-    return this.setState({ editableId: data[i]._id, visible: true });
+    return () => this.setState({ editableId: itemId, visible: true });
   }
 
   onAdd = (value) => {
@@ -80,9 +84,9 @@ class Creation extends Component {
       {data.map((obj, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
         <ProductCard
           itemId={obj._id}
-          onClick={() => this.onClick(i)}
+          onClick={this.onClick(obj._id)}
           selective={multipleChoice}
-          selected={selected[i]}
+          selected={selected.includes(obj._id)}
         />
       </Grid>)}
     </Grid>

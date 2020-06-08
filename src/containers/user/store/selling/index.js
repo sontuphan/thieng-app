@@ -73,8 +73,8 @@ class Selling extends Component {
         return cb(er);
       });
     }, (er) => {
-      if (er) return console.error(er);
-      this.loadData(true);
+      if (er) console.error(er);
+      else this.loadData(true);
       return this.setState({ isLoading: false });
     });
   }
@@ -96,7 +96,7 @@ class Selling extends Component {
   }
 
   render() {
-    // let { classes } = this.props;
+    // const { classes } = this.props;
     const { multipleChoice, isLoading } = this.state;
 
     return <Grid container justify="center" spacing={2}>

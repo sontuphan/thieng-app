@@ -40,12 +40,12 @@ class Footer extends Component {
       <Grid item xs={12} md={6}>
         <Grid container alignItems="center" justify={width >= 960 ? 'flex-start' : 'center'} spacing={2}>
           <Grid item>
-            <IconButton onClick={this.onEmail} color="primary">
+            <IconButton onClick={this.onEmail} color="secondary">
               <MailRounded />
             </IconButton>
           </Grid>
           <Grid item>
-            <IconButton onClick={this.onFacebook} color="primary">
+            <IconButton onClick={this.onFacebook} color="secondary">
               <Facebook />
             </IconButton>
           </Grid>

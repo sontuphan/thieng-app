@@ -27,6 +27,7 @@ class Archive extends Component {
       visible: false,
       selected: [],
       multipleChoice: false,
+      isLoading: false,
     }
   }
 
@@ -49,12 +50,14 @@ class Archive extends Component {
   onClick = (itemId) => {
     const { multipleChoice } = this.state;
     if (multipleChoice) {
-      let { selected } = this.state;
-      let index = selected.indexOf(itemId);
-      if (index === -1) selected.push(itemId);
-      else if (index === selected.length - 1) selected.pop();
-      else selected[index] = selected.pop();
-      return this.setState({ selected });
+      return () => {
+        let { selected } = this.state;
+        let index = selected.indexOf(itemId);
+        if (index === -1) selected.push(itemId);
+        else if (index === selected.length - 1) selected.pop();
+        else selected[index] = selected.pop();
+        return this.setState({ selected });
+      }
     }
     return null;
   }
@@ -62,6 +65,7 @@ class Archive extends Component {
   onRestore = () => {
     const { updateItem } = this.props;
     const { selected } = this.state;
+    this.setState({ isLoading: true });
     return async.eachSeries(selected, (itemId, cb) => {
       return updateItem({ _id: itemId, status: 'selling' }).then(re => {
         return cb();
@@ -69,8 +73,9 @@ class Archive extends Component {
         return cb(er);
       });
     }, (er) => {
-      if (er) return console.error(er);
-      return this.loadData(true);
+      if (er) console.error(er);
+      else this.loadData(true);
+      return this.setState({ isLoading: false });
     });
   }
 
@@ -82,7 +87,7 @@ class Archive extends Component {
       {data.map(obj => <Grid key={obj._id} item xs={6} sm={4} md={3} lg={2}>
         <ProductCard
           itemId={obj._id}
-          onClick={() => this.onClick(obj._id)}
+          onClick={this.onClick(obj._id)}
           selective={multipleChoice}
           selected={selected.includes(obj._id)}
         />
@@ -91,8 +96,8 @@ class Archive extends Component {
   }
 
   render() {
-    // let { classes } = this.props;
-    const { multipleChoice } = this.state;
+    // const { classes } = this.props;
+    const { multipleChoice, isLoading } = this.state;
 
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
@@ -112,7 +117,7 @@ class Archive extends Component {
       <Grid item xs={12}>
         {this.renderItems()}
       </Grid>
-      {multipleChoice ? <Action onRestore={this.onRestore} /> : null}
+      {multipleChoice ? <Action isLoading={isLoading} onRestore={this.onRestore} /> : null}
     </Grid>
   }
 }
