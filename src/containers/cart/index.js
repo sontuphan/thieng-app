@@ -17,20 +17,34 @@ import CartItem from './cartItem';
 import DeliveryInfomation from './deliveryInfomation';
 import PaymentInfomation from './paymentInfomation';
 
-import { toogleCart, setCart } from 'modules/cart.reducer';
+import { toogleCart } from 'modules/cart.reducer';
 
 import styles from './styles';
 
 
 class Cart extends Component {
+  constructor() {
+    super();
+
+    this.state = {}
+  }
+
+  onPaymentInfo = (value) => {
+    return this.setState(value);
+  }
+
+  onDeliveryInfo = (value) => {
+    return this.setState(value);
+  }
 
   render() {
     const { classes } = this.props;
-    const { cart: { data } } = this.props;
+    const { toogleCart, cart: { data, visible } } = this.props;
+    console.log(this.state, data)
 
     return <Grid container spacing={2}>
       <Grid item xs={12}>
-        <BottomDrawer visible={this.props.cart.visible} onClose={this.props.toogleCart}>
+        <BottomDrawer visible={visible} onClose={toogleCart}>
           <Grid container spacing={2} justify="center">
             <Grid item xs={11} md={10}>
               <Grid container spacing={2}>
@@ -43,13 +57,13 @@ class Cart extends Component {
               <Drain small />
             </Grid>
             <Grid item xs={11} md={10}>
-              <PaymentInfomation />
+              <PaymentInfomation onChange={this.onPaymentInfo} />
             </Grid>
             <Grid item xs={12}>
               <Drain small />
             </Grid>
             <Grid item xs={11} md={10}>
-              <DeliveryInfomation />
+              <DeliveryInfomation onChange={this.onDeliveryInfo} />
             </Grid>
             <Grid item xs={12}>
               <Drain small />
@@ -57,7 +71,7 @@ class Cart extends Component {
             <Grid item xs={11} md={10}>
               <Grid container alignItems="center" className={classes.noWrap} spacing={2} >
                 <Grid item>
-                  <Typography>Hãy kiểm tra thật kỹ đơn hàng nhé! <span role="img" aria-label="smile">😊</span></Typography>
+                  <Typography>Kiểm tra thật kỹ đơn hàng nhé! <span role="img" aria-label="smile">😊</span></Typography>
                 </Grid>
                 <Grid item className={classes.stretch} xs={12}>
                   <Divider />
@@ -91,7 +105,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   toogleCart,
-  setCart,
 }, dispatch);
 
 export default withRouter(connect(

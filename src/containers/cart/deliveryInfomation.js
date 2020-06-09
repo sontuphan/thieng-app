@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -18,6 +20,7 @@ import {
 import Drain from 'components/drain';
 
 import { toogleCart, setCart } from 'modules/cart.reducer';
+import { getUser } from 'modules/bucket.reducer';
 
 import styles from './styles';
 
@@ -27,7 +30,8 @@ class DeliveryInformation extends Component {
     super(props);
 
     this.state = {
-      name: props.auth.displayname,
+      user: {},
+      name: '',
       phone: '',
       address: '',
       selectedAddress: 0,
@@ -35,33 +39,67 @@ class DeliveryInformation extends Component {
     }
   }
 
+  componentDidMount() {
+    this.loadData();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { user, selectedAddress } = this.state;
+    if (!isEqual(prevState.user, user)) {
+      return this.setState({
+        name: user.displayname,
+        phone: user.phone,
+        address: user.addresses[selectedAddress],
+      });
+    }
+  }
+
+  loadData = () => {
+    const { auth, getUser } = this.props;
+    const userId = auth._id;
+    return getUser(userId).then(user => {
+      if (user) return this.setState({ user });
+    }).catch(console.error);
+  }
+
+  returnData = () => {
+    const data = { ...this.state };
+    delete data.user;
+    delete data.selectedAddress;
+    return this.props.onChange(data);
+  }
+
   onName = (e) => {
     let name = e.target.value;
     if (!name) name = '';
-    this.setState({ name });
+    return this.setState({ name }, this.returnData);
   }
 
   onPhone = (e) => {
     let phone = e.target.value;
     if (!phone) phone = '';
-    this.setState({ phone });
+    return this.setState({ phone }, this.returnData);
   }
 
   onAddress = (e) => {
     let address = e.target.value;
     if (!address) address = '';
-    this.setState({ address });
+    return this.setState({ address }, this.returnData);
   }
 
   onSelect = (e) => {
     let selectedAddress = e.target.value;
-    this.setState({ selectedAddress });
+    const { user } = this.state;
+    if (!user) return this.setState({ selectedAddress }, this.returnData);
+    let address = user.addresses[selectedAddress];
+    if (!address) address = '';
+    return this.setState({ selectedAddress, address }, this.returnData);
   }
 
   onNote = (e) => {
     let note = e.target.value;
     if (!note) note = '';
-    this.setState({ note });
+    return this.setState({ note }, this.returnData);
   }
 
   render() {
@@ -180,9 +218,17 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toogleCart,
-  setCart,
+  toogleCart, setCart,
+  getUser
 }, dispatch);
+
+DeliveryInformation.defaultProps = {
+  onChange: () => { },
+}
+
+DeliveryInformation.propTypes = {
+  onChange: PropTypes.func,
+}
 
 export default withRouter(connect(
   mapStateToProps,

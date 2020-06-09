@@ -32,11 +32,13 @@ class CartItem extends Component {
   }
 
   onChange = (amount) => {
-    this.props.setCart({ ...this.props.item, amount });
+    const { item, setCart } = this.props;
+    return setCart({ ...item, amount });
   }
 
   onCancel = () => {
-    this.props.setCart({ ...this.props.item, amount: 0 });
+    const { item, setCart } = this.props;
+    return setCart({ ...item, amount: 0 });
   }
 
   render() {

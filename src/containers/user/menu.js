@@ -12,7 +12,7 @@ import Badge from '@material-ui/core/Badge';
 import {
   HomeRounded, AccountBalanceWalletRounded,
   SettingsRounded, ChatRounded, StorefrontRounded,
-  ViewStreamRounded,
+  ViewStreamRounded, TimelineRounded,
 } from '@material-ui/icons';
 
 import styles from './styles';
@@ -91,6 +91,19 @@ class Menu extends Component {
             disabled
           >
             <Typography>Ví</Typography>
+          </Button>
+        </Badge>
+      </Grid>
+      <Grid item>
+        <Badge badgeContent={0} color="primary">
+          <Button
+            variant="outlined"
+            color={page === 'history' ? 'primary' : 'default'}
+            startIcon={<TimelineRounded />}
+            component={RouterLink}
+            to={`/user/${email}/history`}
+          >
+            <Typography>Lịch sử mua hàng</Typography>
           </Button>
         </Badge>
       </Grid>

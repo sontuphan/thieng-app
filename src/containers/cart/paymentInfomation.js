@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -37,15 +38,21 @@ class PaymentInfomation extends Component {
     }
   }
 
+  returnData = () => {
+    const data = this.state;
+    return this.props.onChange(data);
+  }
+
   onCode = (e) => {
     let code = e.target.value;
     if (!code) code = '';
-    this.setState({ code });
+    return this.setState({ code }, this.returnData);
   }
 
   onPayment = (e) => {
     let payment = e.target.value;
-    this.setState({ payment });
+    if (!payment) payment = 'cod';
+    return this.setState({ payment }, this.returnData);
   }
 
   getBill = () => {
@@ -166,6 +173,14 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   toogleCart,
   setCart,
 }, dispatch);
+
+PaymentInfomation.defaultProps = {
+  onChange: () => { },
+}
+
+PaymentInfomation.propTypes = {
+  onChange: PropTypes.func,
+}
 
 export default withRouter(connect(
   mapStateToProps,

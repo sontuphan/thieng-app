@@ -29,20 +29,12 @@ export const toogleCart = () => {
       let prevVisible = prevState.cart.visible;
 
       if (typeof prevVisible !== 'boolean') {
-        dispatch({
-          type: TOOGLE_CART_FAIL,
-          reason: 'Undifined cart state.',
-        });
-        return reject('Undifined cart state.');
+        const er = 'Undifined cart state';
+        dispatch({ type: TOOGLE_CART_FAIL, reason: er });
+        return reject(er);
       }
 
-      dispatch({
-        type: TOOGLE_CART_OK,
-        reason: null,
-        data: {
-          visible: !prevVisible,
-        }
-      });
+      dispatch({ type: TOOGLE_CART_OK, data: { visible: !prevVisible } });
       return resolve(!prevVisible);
     });
   }
@@ -84,13 +76,7 @@ export const setCart = (item) => {
         if (!exist) data.push(item);
       }
       storage.set(KEY, data);
-      dispatch({
-        type: SET_CART_OK,
-        reason: null,
-        data: {
-          data: data,
-        }
-      });
+      dispatch({ type: SET_CART_OK, data: { data: data } });
       return resolve(null);
     });
   }
