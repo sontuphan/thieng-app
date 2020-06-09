@@ -33,8 +33,8 @@ class PaymentInfomation extends Component {
     super();
 
     this.state = {
-      code: '',
-      payment: 'cod',
+      promoCode: '',
+      paymentMethod: 'cod',
     }
   }
 
@@ -44,15 +44,15 @@ class PaymentInfomation extends Component {
   }
 
   onCode = (e) => {
-    let code = e.target.value;
-    if (!code) code = '';
-    return this.setState({ code }, this.returnData);
+    let promoCode = e.target.value;
+    if (!promoCode) promoCode = '';
+    return this.setState({ promoCode }, this.returnData);
   }
 
   onPayment = (e) => {
-    let payment = e.target.value;
-    if (!payment) payment = 'cod';
-    return this.setState({ payment }, this.returnData);
+    let paymentMethod = e.target.value;
+    if (!paymentMethod) paymentMethod = 'cod';
+    return this.setState({ paymentMethod }, this.returnData);
   }
 
   getBill = () => {
@@ -99,7 +99,7 @@ class PaymentInfomation extends Component {
           label="Mã giảm giá"
           color="secondary"
           variant="outlined"
-          value={this.state.code}
+          value={this.state.promoCode}
           onChange={this.onCode}
           multiline
           fullWidth
@@ -112,7 +112,7 @@ class PaymentInfomation extends Component {
           <Select
             label="Phương thức thanh toán"
             color="secondary"
-            value={this.state.payment}
+            value={this.state.paymentMethod}
             onChange={this.onPayment}
             classes={{ root: classes.selectIcon }}
           >

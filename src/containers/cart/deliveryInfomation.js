@@ -31,9 +31,9 @@ class DeliveryInformation extends Component {
 
     this.state = {
       user: {},
-      name: '',
-      phone: '',
-      address: '',
+      receiverName: '',
+      receiverPhone: '',
+      receiverAddress: '',
       selectedAddress: 0,
       note: '',
     }
@@ -47,9 +47,9 @@ class DeliveryInformation extends Component {
     const { user, selectedAddress } = this.state;
     if (!isEqual(prevState.user, user)) {
       return this.setState({
-        name: user.displayname,
-        phone: user.phone,
-        address: user.addresses[selectedAddress],
+        receiverName: user.displayname,
+        receiverPhone: user.phone || '',
+        receiverAddress: user.addresses[selectedAddress] || '',
       });
     }
   }
@@ -70,30 +70,30 @@ class DeliveryInformation extends Component {
   }
 
   onName = (e) => {
-    let name = e.target.value;
-    if (!name) name = '';
-    return this.setState({ name }, this.returnData);
+    let receiverName = e.target.value;
+    if (!receiverName) receiverName = '';
+    return this.setState({ receiverName }, this.returnData);
   }
 
   onPhone = (e) => {
-    let phone = e.target.value;
-    if (!phone) phone = '';
-    return this.setState({ phone }, this.returnData);
+    let receiverPhone = e.target.value;
+    if (!receiverPhone) receiverPhone = '';
+    return this.setState({ receiverPhone }, this.returnData);
   }
 
   onAddress = (e) => {
-    let address = e.target.value;
-    if (!address) address = '';
-    return this.setState({ address }, this.returnData);
+    let receiverAddress = e.target.value;
+    if (!receiverAddress) receiverAddress = '';
+    return this.setState({ receiverAddress }, this.returnData);
   }
 
   onSelect = (e) => {
     let selectedAddress = e.target.value;
     const { user } = this.state;
     if (!user) return this.setState({ selectedAddress }, this.returnData);
-    let address = user.addresses[selectedAddress];
-    if (!address) address = '';
-    return this.setState({ selectedAddress, address }, this.returnData);
+    let receiverAddress = user.addresses[selectedAddress];
+    if (!receiverAddress) receiverAddress = '';
+    return this.setState({ selectedAddress, receiverAddress }, this.returnData);
   }
 
   onNote = (e) => {
@@ -129,7 +129,7 @@ class DeliveryInformation extends Component {
           label="Tên người nhận"
           color="secondary"
           variant="outlined"
-          value={this.state.name}
+          value={this.state.receiverName}
           onChange={this.onName}
           multiline
           fullWidth
@@ -141,7 +141,7 @@ class DeliveryInformation extends Component {
           label="Số điện thoại người nhận"
           color="secondary"
           variant="outlined"
-          value={this.state.phone}
+          value={this.state.receiverPhone}
           onChange={this.onPhone}
           multiline
           fullWidth
@@ -155,7 +155,7 @@ class DeliveryInformation extends Component {
               label="Địa chỉ người nhận"
               color="secondary"
               variant="outlined"
-              value={this.state.address}
+              value={this.state.receiverAddress}
               onChange={this.onAddress}
               multiline
               fullWidth

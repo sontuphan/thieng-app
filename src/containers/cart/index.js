@@ -37,10 +37,28 @@ class Cart extends Component {
     return this.setState(value);
   }
 
+  onDone = () => {
+    const { cart: { data } } = this.props;
+    const info = { ...this.state }
+    const group = data.reduce((g, i) => {
+      let item = { ...i }
+      const { userId } = item;
+      if (!g[userId]) g[userId] = [];
+      item.itemId = item._id;
+      delete item.userId;
+      delete item._id;
+      g[userId].push(item);
+      return g;
+    }, {});
+    const carts = Object.keys(group).map(sellerId => {
+      return { ...info, sellerId, items: group[sellerId] }
+    });
+    console.log(carts)
+  }
+
   render() {
     const { classes } = this.props;
     const { toogleCart, cart: { data, visible } } = this.props;
-    console.log(this.state, data)
 
     return <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -81,6 +99,7 @@ class Cart extends Component {
                     variant="contained"
                     color="primary"
                     startIcon={<FlightTakeoffRounded />}
+                    onClick={this.onDone}
                   >
                     <Typography>Xong</Typography>
                   </Button>
