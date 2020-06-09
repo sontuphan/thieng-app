@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
+import async from 'async';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -17,7 +18,7 @@ import CartItem from './cartItem';
 import DeliveryInfomation from './deliveryInfomation';
 import PaymentInfomation from './paymentInfomation';
 
-import { toogleCart } from 'modules/cart.reducer';
+import { toogleCart, addCart, clearCart } from 'modules/cart.reducer';
 
 import styles from './styles';
 
@@ -39,7 +40,9 @@ class Cart extends Component {
 
   onDone = () => {
     const { cart: { data } } = this.props;
+    const { toogleCart, addCart, clearCart } = this.props;
     const info = { ...this.state }
+    // Normalize data
     const group = data.reduce((g, i) => {
       let item = { ...i }
       const { userId } = item;
@@ -53,7 +56,14 @@ class Cart extends Component {
     const carts = Object.keys(group).map(sellerId => {
       return { ...info, sellerId, items: group[sellerId] }
     });
-    console.log(carts)
+    // Submit data
+    return async.map(carts, (cart, cb) => {
+      return addCart(cart).then(re => cb(null, re)).catch(er => cb(er, null));
+    }, (er, re) => {
+      if (er) console.error(er);
+      else clearCart();
+      return toogleCart();
+    });
   }
 
   render() {
@@ -123,7 +133,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toogleCart,
+  toogleCart, addCart, clearCart,
 }, dispatch);
 
 export default withRouter(connect(
