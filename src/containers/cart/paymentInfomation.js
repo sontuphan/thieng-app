@@ -19,6 +19,7 @@ import {
 } from '@material-ui/icons';
 
 import Drain from 'components/drain';
+import { Momo } from 'components/icons';
 
 import { toogleCart, setCart } from 'modules/cart.reducer';
 
@@ -115,6 +116,16 @@ class PaymentInfomation extends Component {
                 </Grid>
                 <Grid item className={classes.stretch}>
                   <Typography>Giao hàng nhận tiền (COD)</Typography>
+                </Grid>
+              </Grid>
+            </MenuItem>
+            <MenuItem value={'momo'}>
+              <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
+                <Grid item className={classes.icon}>
+                  <Momo fontSize="small" />
+                </Grid>
+                <Grid item className={classes.stretch}>
+                  <Typography>Momo</Typography>
                 </Grid>
               </Grid>
             </MenuItem>
