@@ -10,7 +10,7 @@ import { AddRounded } from '@material-ui/icons';
 import { FloatCircularProgressButton } from 'components/buttons';
 
 
-export const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({
   float: {
     position: 'fixed',
     bottom: theme.spacing(2),

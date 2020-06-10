@@ -14,6 +14,7 @@ import { TextInput, NumericInput } from 'components/inputs';
 import Shelf from './shelf';
 import Tags from './tags';
 import Categories from './categories';
+import Thumbnail from './thumbnail';
 
 import { getFile, getItem } from 'modules/bucket.reducer';
 import { setCart } from 'modules/cart.reducer';
@@ -31,6 +32,7 @@ class Stall extends Component {
       object: {
         tags: ['New'],
         fileIds: [],
+        thumbnailId: null,
       },
       userId: props.auth._id,
       amount: 1,
@@ -63,16 +65,17 @@ class Stall extends Component {
   /**
    * Create a new item
    */
-  onAdd = () => {
+  onAddFile = () => {
     return this.props.runEditor().then(re => {
       if (!re) return console.log('No file added');
       let { object } = this.state;
       if (!object.fileIds) object.fileIds = [];
       object.fileIds.push(re._id);
+      if (!object.thumbnailId) object.thumbnailId = re._id;
       return this.setState({ object });
     }).catch(console.error);
   }
-  onEdit = (index) => {
+  onEditFile = (index) => {
     let { object } = this.state;
     let fileId = object.fileIds[index];
     return this.props.getFile(fileId).then(file => {
@@ -82,6 +85,11 @@ class Stall extends Component {
       else object.fileIds[index] = re._id;
       return this.setState({ object });
     }).catch(console.error);
+  }
+  onThumbnail = (index) => {
+    let { object } = this.state;
+    object.thumbnailId = object.fileIds[index];
+    return this.setState({ object });
   }
   onName = (value) => {
     return this.setState({
@@ -135,7 +143,7 @@ class Stall extends Component {
   }
 
   /**
-   * Selling actions 
+   * Selling actions
    */
   onAmount = (amount) => {
     return this.setState({ amount });
@@ -162,13 +170,27 @@ class Stall extends Component {
     return <Grid container spacing={2}>
       {/* Shelf */}
       <Grid item xs={12} md={6}>
-        <Shelf
-          userId={userId}
-          fileIds={[...object.fileIds]} /* Tricky copy array to update component */
-          editable={this.props.editable}
-          onAdd={this.onAdd}
-          onEdit={this.onEdit}
-        />
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Shelf
+              userId={userId}
+              fileIds={[...object.fileIds]} /* Tricky copy array to update component */
+              editable={this.props.editable}
+              onAdd={this.onAddFile}
+              onEdit={this.onEditFile}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Drain />
+          </Grid>
+          <Grid item xs={12}>
+            <Thumbnail
+              fileIds={object.fileIds}
+              onChange={this.onThumbnail}
+              value={object.fileIds.indexOf(object.thumbnailId)}
+            />
+          </Grid>
+        </Grid>
       </Grid>
       {/* Contents */}
       <Grid item xs={12} md={6}>
