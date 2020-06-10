@@ -8,8 +8,15 @@ import Badge from '@material-ui/core/Badge';
 import { useData } from './module';
 
 const useStyles = makeStyles(theme => ({
+  fullWidth: {
+    width: '100%',
+  },
   each: {
+    width: '100%',
     cursor: 'pointer',
+  },
+  img: {
+    borderRadius: theme.shape.borderRadius
   }
 }));
 
@@ -18,8 +25,20 @@ function Each(props) {
   const { fileId, selected, onClick } = props;
   const data = useData(fileId);
   if (!data) return null;
-  return <Badge overlap="rectangle" variant="dot" color="primary" invisible={!selected}>
-    <Avatar variant="square" onClick={onClick} src={data.source} className={classes.each} />
+  return <Badge
+    overlap="rectangle"
+    variant="dot"
+    color="primary"
+    invisible={!selected}
+    className={classes.fullWidth}
+  >
+    <Avatar
+      variant="square"
+      onClick={onClick}
+      src={data.source}
+      className={classes.each}
+      classes={{ img: classes.img }}
+    />
   </Badge>
 }
 

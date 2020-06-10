@@ -9,7 +9,7 @@ import Each from './each';
 function Thumbnail(props) {
   const { fileIds, onChange, value } = props;
   return <Grid container spacing={2}>
-    {fileIds.map((fileId, i) => <Grid key={i} item>
+    {fileIds.map((fileId, i) => <Grid key={i} item xs={3}>
       <Each fileId={fileId} onClick={() => onChange(i)} selected={value === i} />
     </Grid>)}
   </Grid>

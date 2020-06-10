@@ -8,6 +8,9 @@ import isEqual from 'react-fast-compare';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+
+import { PhotoAlbumRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import { TextInput, NumericInput } from 'components/inputs';
@@ -170,27 +173,13 @@ class Stall extends Component {
     return <Grid container spacing={2}>
       {/* Shelf */}
       <Grid item xs={12} md={6}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Shelf
-              userId={userId}
-              fileIds={[...object.fileIds]} /* Tricky copy array to update component */
-              editable={this.props.editable}
-              onAdd={this.onAddFile}
-              onEdit={this.onEditFile}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Drain />
-          </Grid>
-          <Grid item xs={12}>
-            <Thumbnail
-              fileIds={object.fileIds}
-              onChange={this.onThumbnail}
-              value={object.fileIds.indexOf(object.thumbnailId)}
-            />
-          </Grid>
-        </Grid>
+        <Shelf
+          userId={userId}
+          fileIds={[...object.fileIds]} /* Tricky copy array to update component */
+          editable={this.props.editable}
+          onAdd={this.onAddFile}
+          onEdit={this.onEditFile}
+        />
       </Grid>
       {/* Contents */}
       <Grid item xs={12} md={6}>
@@ -274,6 +263,45 @@ class Stall extends Component {
           </Grid>
         </Grid>
       </Grid>
+      {/* Drain */}
+      <Grid item xs={12}>
+        <Drain />
+      </Grid>
+      {/* Additional settings */}
+      {this.props.editable ? <Grid item xs={12} md={6}>
+        <Grid container justify="center" spacing={2}>
+          <Grid item xs={10} md={8}>
+            <Typography variant="h2">Cài đặt khác</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Drain small />
+          </Grid>
+          <Grid item xs={10} md={8}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Grid container alignItems="center" className={classes.onWrap} spacing={2}>
+                  <Grid item >
+                    <PhotoAlbumRounded color="primary" fontSize="small" />
+                  </Grid>
+                  <Grid item className={classes.stretch}>
+                    <Divider />
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Typography>Chọn một ảnh để dùng làm đại diện cho sản phẩm.</Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Thumbnail
+                  fileIds={object.fileIds}
+                  onChange={this.onThumbnail}
+                  value={object.fileIds.indexOf(object.thumbnailId)}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid> : null}
     </Grid>
   }
 }
