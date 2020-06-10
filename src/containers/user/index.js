@@ -16,6 +16,8 @@ import Profile from './profile';
 import Menu from './menu';
 import UserHome from './home';
 import UserStore from './store';
+import UserWarehouse from './warehouse';
+import UserFactory from './factory';
 import UserSettings from './settings';
 
 import styles from './styles';
@@ -74,6 +76,8 @@ class User extends Component {
         <Switch>
           {/* <Route exact path="/user/:email/home" component={UserHome} /> */}
           <Route exact path="/user/:email/store" component={UserStore} />
+          <Route exact path="/user/:email/warehouse" component={UserWarehouse} />
+          <Route exact path="/user/:email/factory" component={UserFactory} />
           {/* <Route exact path="/user/:email/message" component={null} /> */}
           {/* <Route exact path="/user/:email/settings" component={UserSettings} /> */}
         </Switch>

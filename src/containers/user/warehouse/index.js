@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 import { ProductCard } from 'components/cards';
 import Action from './action';
@@ -16,10 +17,10 @@ import { getItems, updateItem } from 'modules/items.reducer';
 
 import styles from './styles';
 
-const COMPONENT = 'archive';
+const COMPONENT = 'warehouse';
 
 
-class Archive extends Component {
+class UserWarehouse extends Component {
   constructor() {
     super();
 
@@ -49,17 +50,15 @@ class Archive extends Component {
 
   onClick = (itemId) => {
     const { multipleChoice } = this.state;
-    if (multipleChoice) {
-      return () => {
-        let { selected } = this.state;
-        let index = selected.indexOf(itemId);
-        if (index === -1) selected.push(itemId);
-        else if (index === selected.length - 1) selected.pop();
-        else selected[index] = selected.pop();
-        return this.setState({ selected });
-      }
+    if (!multipleChoice) return null;
+    return () => {
+      let { selected } = this.state;
+      let index = selected.indexOf(itemId);
+      if (index === -1) selected.push(itemId);
+      else if (index === selected.length - 1) selected.pop();
+      else selected[index] = selected.pop();
+      return this.setState({ selected });
     }
-    return null;
   }
 
   onRestore = () => {
@@ -96,12 +95,18 @@ class Archive extends Component {
   }
 
   render() {
-    // const { classes } = this.props;
+    const { classes } = this.props;
     const { multipleChoice, isLoading } = this.state;
 
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
-        <Grid container justify="flex-end" alignItems="center" spacing={2}>
+        <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
+          <Grid item>
+            <Typography variant="h3">Nhà kho</Typography>
+          </Grid>
+          <Grid item className={classes.stretch}>
+            <Divider />
+          </Grid>
           <Grid item>
             <Typography>Chọn nhiều sản phẩm</Typography>
           </Grid>
@@ -134,4 +139,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Archive)));
+)(withStyles(styles)(UserWarehouse)));

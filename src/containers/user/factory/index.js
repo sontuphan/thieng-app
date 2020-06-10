@@ -2,45 +2,47 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import async from 'async';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
+import { BottomDrawer } from 'components/drawers';
 import { ProductCard } from 'components/cards';
+import Drain from 'components/drain';
+import Stall from 'containers/stall';
 import Action from './action';
 
-import { getItems, updateItem } from 'modules/items.reducer';
+import { getItems } from 'modules/items.reducer';
+import { addItem, updateItem } from 'modules/items.reducer';
 
 import styles from './styles';
 
-const COMPONENT = 'selling';
+const COMPONENT = 'factory';
 
 
-class Selling extends Component {
+class UserFactory extends Component {
   constructor() {
     super();
 
     this.state = {
+      editableId: '',
       visible: false,
       selected: [],
       multipleChoice: false,
-      isLoading: false,
     }
   }
 
   componentDidMount() {
-    this.loadData(true);
+    this.loadData();
   }
 
-  loadData = (reset = false) => {
+  loadData = () => {
     let { items: { [COMPONENT]: { pagination: { limit, page } } } } = this.props;
-    page = reset ? 0 : page + 1;
-    const { getItems } = this.props;
-    const condition = { status: 'selling' }
-    return getItems(condition, limit, page, COMPONENT);
+    let condition = { status: 'creating' }
+    return this.props.getItems(condition, limit, page + 1, COMPONENT);
   }
 
   onToogle = (e) => {
@@ -59,29 +61,25 @@ class Selling extends Component {
         return this.setState({ selected });
       }
     }
-    return null;
+    return () => this.setState({ editableId: itemId, visible: true });
   }
 
-  onDelete = () => {
-    const { updateItem } = this.props;
-    const { selected } = this.state;
-    this.setState({ isLoading: true });
-    return async.eachSeries(selected, (itemId, cb) => {
-      return updateItem({ _id: itemId, status: 'archived' }).then(re => {
-        return cb();
-      }).catch(er => {
-        return cb(er);
-      });
-    }, (er) => {
-      if (er) console.error(er);
-      else this.loadData(true);
-      return this.setState({ isLoading: false });
-    });
+  onAdd = (value) => {
+    return this.props.addItem(value).then(re => {
+      return this.setState({ visible: false });
+    }).catch(console.error);
+  }
+
+  onUpdate = (value) => {
+    return this.props.updateItem(value).then(re => {
+      return this.setState({ visible: false });
+    }).catch(console.error);
   }
 
   renderItems = () => {
     const { items: { [COMPONENT]: { data } } } = this.props;
     const { multipleChoice, selected } = this.state;
+
     if (!data || !data.length) return null;
     return <Grid container spacing={2}>
       {data.map((obj, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
@@ -96,12 +94,17 @@ class Selling extends Component {
   }
 
   render() {
-    // const { classes } = this.props;
-    const { multipleChoice, isLoading } = this.state;
+    const { classes } = this.props;
 
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
-        <Grid container justify="flex-end" alignItems="center" spacing={2}>
+        <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
+          <Grid item>
+            <Typography variant="h3">Xưởng</Typography>
+          </Grid>
+          <Grid item className={classes.stretch}>
+            <Divider />
+          </Grid>
           <Grid item>
             <Typography>Chọn nhiều sản phẩm</Typography>
           </Grid>
@@ -117,7 +120,30 @@ class Selling extends Component {
       <Grid item xs={12}>
         {this.renderItems()}
       </Grid>
-      {multipleChoice ? <Action isLoading={isLoading} onDelete={this.onDelete} /> : null}
+      <Grid item xs={12}>
+        <BottomDrawer
+          visible={this.state.visible}
+          onClose={() => this.setState({ visible: false })}
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Stall
+                itemId={this.state.editableId}
+                onAdd={this.onAdd}
+                onUpdate={this.onUpdate}
+                editable
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Drain />
+            </Grid>
+          </Grid>
+        </BottomDrawer>
+      </Grid>
+      <Action
+        onAdd={() => this.setState({ editableId: '', visible: true })}
+        onDelete={() => { }}
+      />
     </Grid>
   }
 }
@@ -128,10 +154,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getItems, updateItem,
+  getItems,
+  addItem, updateItem,
 }, dispatch);
 
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Selling)));
+)(withStyles(styles)(UserFactory)));

@@ -14,15 +14,15 @@ const defaultState = {
     data: [],
     pagination: { ...PAGINATION }
   },
-  creation: {
+  factory: {
     data: [],
     pagination: { ...PAGINATION }
   },
-  selling: {
+  store: {
     data: [],
     pagination: { ...PAGINATION }
   },
-  archive: {
+  warehouse: {
     data: [],
     pagination: { ...PAGINATION }
   }
