@@ -21,7 +21,6 @@ import {
   ArrowForwardRounded, ColorLensRounded, AddRounded
 } from '@material-ui/icons';
 
-import ColorSelector from './colorSelector';
 import Drain from 'components/drain';
 
 import styles from './styles';
@@ -81,13 +80,6 @@ class Shelf extends Component {
     });
   }
 
-  onColor = (color) => {
-    const { files } = this.state;
-    return files.forEach(({ metadata }, step) => {
-      if (metadata.color === color) return this.onStep(step);
-    });
-  }
-
   onStep = (step) => {
     const { files } = this.state;
     let translate = -step * (20 * files.length - 100) / (files.length - 1);
@@ -113,7 +105,6 @@ class Shelf extends Component {
     const { classes, editable } = this.props;
     const { showing, files, author } = this.state;
     const file = files[showing] || {};
-    const colors = files.map(file => file.metadata && file.metadata.color).filter(color => color);
 
     return <Swipeable onSwipedLeft={this.onNext} onSwipedRight={this.onBack}>
       <Grid container spacing={2}>
@@ -131,21 +122,6 @@ class Shelf extends Component {
             } : null}
             className={classes.shelf}
           >
-            {/* Actions */}
-            <Grid item xs={12}>
-              <Grid container justify="flex-end" spacing={2}>
-                {this.props.on3D ? <Grid item>
-                  <IconButton onClick={this.props.on3D}>
-                    <ThreeDRotationRounded style={{ color: this.state.color }} />
-                  </IconButton>
-                </Grid> : null}
-                {editable && file.source ? <Grid item>
-                  <IconButton onClick={() => this.props.onEdit(showing)}>
-                    <ColorLensRounded style={{ color: this.state.color }} />
-                  </IconButton>
-                </Grid> : null}
-              </Grid>
-            </Grid>
             {/* PNG image */}
             <Grid item
               xs={10}
@@ -168,13 +144,29 @@ class Shelf extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            {/* Colors */}
+            {/* Actions */}
             <Grid item xs={6}>
-              <ColorSelector
-                colors={colors}
-                value={file.metadata && file.metadata.color}
-                onChange={this.onColor}
-              />
+              <Grid container justify="flex-end" spacing={2}>
+                {this.props.on3D ? <Grid item>
+                  <IconButton onClick={this.props.on3D}>
+                    <ThreeDRotationRounded style={{ color: this.state.color }} />
+                  </IconButton>
+                </Grid> : null}
+                {editable && file.source ? <Grid item>
+                  <Tooltip title="Chỉnh sửa ảnh">
+                    <IconButton onClick={() => this.props.onEdit(showing)}>
+                      <ColorLensRounded style={{ color: this.state.color }} />
+                    </IconButton>
+                  </Tooltip>
+                </Grid> : null}
+                {editable ? <Grid item>
+                  <Tooltip title="Thêm ảnh mới">
+                    <IconButton onClick={this.props.onAdd}>
+                      <AddRounded style={{ color: this.state.color }} />
+                    </IconButton>
+                  </Tooltip>
+                </Grid> : null}
+              </Grid>
             </Grid>
 
           </Grid>
@@ -223,18 +215,6 @@ class Shelf extends Component {
                     </Badge>
                   </Grid>
                 </Grid>)}
-                {editable ? <Grid item>
-                  <Grid container justify="center">
-                    <Tooltip title="Add new image">
-                      <Avatar
-                        onClick={this.props.onAdd}
-                        className={classes.cursor}
-                      >
-                        <AddRounded />
-                      </Avatar>
-                    </Tooltip>
-                  </Grid>
-                </Grid> : <Fragment />}
               </SwipeableViews>
             </Grid>
             <Grid item xs={2} md={1}>
