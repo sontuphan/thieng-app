@@ -38,8 +38,9 @@ class Item extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!isEqual(prevProps.match, this.props.match))
-      return this.handleParams();
+    if (!isEqual(prevProps.match, this.props.match)) {
+      this.handleParams();
+    }
   }
 
   onSend = () => {
@@ -70,7 +71,7 @@ class Item extends Component {
       <Grid item xs={12} md={6}>
         <Grid container justify="center" spacing={2}>
           <Grid item xs={10}>
-            {/* <Recommendation _id={this.state._id} quatity={6} /> */}
+            <Recommendation itemId={this.state._id} quatity={6} />
           </Grid>
           <Grid item xs={12}>
             <Drain small />

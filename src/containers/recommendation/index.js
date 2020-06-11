@@ -17,6 +17,7 @@ import { recommendItems } from 'modules/recommendation.reducer';
 
 import styles from './styles';
 
+
 class Recommendation extends Component {
 
   componentDidMount() {
@@ -24,7 +25,8 @@ class Recommendation extends Component {
   }
 
   loadData = () => {
-    this.props.recommendItems(this.props.quantity);
+    const { quantity, recommendItems } = this.props;
+    return recommendItems({ status: 'selling' }, quantity);
   }
 
   onShuffle = () => {
@@ -33,9 +35,7 @@ class Recommendation extends Component {
 
   render() {
     // let { classes } = this.props;
-    let recommendation = this.props.recommendation.data;
-
-    if (!recommendation) return null;
+    const { recommendation: { data } } = this.props;
 
     return <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -57,8 +57,8 @@ class Recommendation extends Component {
               </Grid>
             </Grid>
           </Grid>
-          {recommendation.map((obj, index) => <Grid key={index} item xs={6} sm={4}>
-            <ProductCard {...obj} />
+          {data.map((item, i) => <Grid key={i} item xs={6} sm={4}>
+            <ProductCard itemId={item._id} />
           </Grid>)}
         </Grid>
       </Grid>
@@ -79,7 +79,7 @@ Recommendation.defaultProps = {
 }
 
 Recommendation.propTypes = {
-  _id: PropTypes.string.isRequired,
+  itemId: PropTypes.string.isRequired,
   quantity: PropTypes.number
 }
 

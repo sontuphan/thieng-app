@@ -1,4 +1,5 @@
-import { getRandomItems } from 'data/_items';
+import configs from 'configs';
+import api from 'helpers/api';
 
 /**
  * Documents
@@ -7,7 +8,7 @@ import { getRandomItems } from 'data/_items';
 
 const defaultState = {
   data: [],
-  limit: 0,
+  sample: 0,
 }
 
 
@@ -18,37 +19,22 @@ export const RECOMMEND_ITEMS = 'RECOMMEND_ITEMS';
 export const RECOMMEND_ITEMS_OK = 'RECOMMEND_ITEMS_OK';
 export const RECOMMEND_ITEMS_FAIL = 'RECOMMEND_ITEMS_FAIL';
 
-const _recommendItems = (limit) => {
-  let data = [];
-  for (let i = 0; i < limit; i++) {
-    data.push(getRandomItems()[i % 2]);
-  }
-  return { status: 'OK', data };
-}
-
-export const recommendItems = (limit) => {
+export const recommendItems = (condition, sample) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
       dispatch({ type: RECOMMEND_ITEMS });
 
-      let data = _recommendItems(limit);
-      if (!data) {
+      const { api: { base } } = configs;
+      return api.get(`${base}/recommendation/items`, { condition, sample }).then(re => {
         dispatch({
-          type: RECOMMEND_ITEMS_FAIL,
-          reason: 'Input is null.',
+          type: RECOMMEND_ITEMS_OK,
+          data: { data: re.data, sample }
         });
-        return reject('Input is null.');
-      }
-
-      dispatch({
-        type: RECOMMEND_ITEMS_OK,
-        reason: null,
-        data: {
-          data: data.data,
-          limit: limit
-        }
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: RECOMMEND_ITEMS_FAIL, reason: er });
+        return reject(er);
       });
-      return resolve(data);
     });
   };
 };
