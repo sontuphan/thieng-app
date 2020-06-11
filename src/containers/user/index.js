@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { CloudUploadRounded } from '@material-ui/icons';
 
@@ -32,9 +33,11 @@ class User extends Component {
       <Grid item xs={12} className={classes.header}>
         <Grid container justify="flex-end" spacing={2}>
           <Grid item>
-            <IconButton>
-              <CloudUploadRounded />
-            </IconButton>
+            <Tooltip title="Tải lên ảnh nền">
+              <IconButton>
+                <CloudUploadRounded />
+              </IconButton>
+            </Tooltip>
           </Grid>
         </Grid>
         <div className={classes.panel}>
