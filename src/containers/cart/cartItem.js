@@ -72,7 +72,7 @@ class CartItem extends Component {
             <Divider />
           </Grid>
           <Grid item>
-            <Typography variant="h3">{utils.prettyNumber(item.amount * item.price, 'long')} vnd</Typography>
+            <Typography variant="h3">{utils.prettyNumber(item.amount * item.price, 'long')} đ</Typography>
           </Grid>
         </Grid>
       </Grid>

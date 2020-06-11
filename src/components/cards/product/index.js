@@ -42,7 +42,7 @@ function ProductCard(props) {
           </Grid>
           <Grid item xs={12} className={classes.cursor}>
             <Typography>{data.name}</Typography>
-            <Typography variant="h3">{utils.prettyNumber(data.price, 'long')} vnd</Typography>
+            <Typography variant="h3">{utils.prettyNumber(data.price, 'long')} đ</Typography>
           </Grid>
         </Grid>
         <Zoom in={props.selective}>
