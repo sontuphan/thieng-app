@@ -20,8 +20,6 @@ import { addItem, updateItem } from 'modules/items.reducer';
 
 import styles from './styles';
 
-const COMPONENT = 'factory';
-
 
 class UserFactory extends Component {
   constructor() {
@@ -40,10 +38,10 @@ class UserFactory extends Component {
   }
 
   loadData = (reset = false) => {
-    let { items: { [COMPONENT]: { pagination: { limit, page } } } } = this.props;
+    let { items: { factory: { pagination: { limit, page } } } } = this.props;
     let condition = { status: 'creating' }
     page = reset ? 0 : page + 1;
-    return this.props.getItems(condition, limit, page, COMPONENT);
+    return this.props.getItems(condition, limit, page, 'factory');
   }
 
   onToogle = (e) => {
@@ -78,7 +76,7 @@ class UserFactory extends Component {
   }
 
   renderItems = () => {
-    const { items: { [COMPONENT]: { data } } } = this.props;
+    const { items: { factory: { data } } } = this.props;
     const { multipleChoice, selected } = this.state;
     if (!data || !data.length) return null;
     return <Grid container spacing={2}>

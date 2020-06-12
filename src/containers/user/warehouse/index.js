@@ -17,8 +17,6 @@ import { getItems, updateItem } from 'modules/items.reducer';
 
 import styles from './styles';
 
-const COMPONENT = 'warehouse';
-
 
 class UserWarehouse extends Component {
   constructor() {
@@ -37,11 +35,11 @@ class UserWarehouse extends Component {
   }
 
   loadData = (reset = false) => {
-    let { items: { [COMPONENT]: { pagination: { limit, page } } } } = this.props;
+    let { items: { warehouse: { pagination: { limit, page } } } } = this.props;
     page = reset ? 0 : page + 1;
     const { getItems } = this.props;
     const condition = { status: 'archived' }
-    return getItems(condition, limit, page, COMPONENT);
+    return getItems(condition, limit, page, 'warehouse');
   }
 
   onToogle = (e) => {
@@ -79,7 +77,7 @@ class UserWarehouse extends Component {
   }
 
   renderItems = () => {
-    let { items: { [COMPONENT]: { data } } } = this.props;
+    let { items: { warehouse: { data } } } = this.props;
     const { multipleChoice, selected } = this.state;
     if (!data || !data.length) return null;
     return <Grid container spacing={2}>

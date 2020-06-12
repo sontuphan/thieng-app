@@ -17,8 +17,6 @@ import { getItems, updateItem } from 'modules/items.reducer';
 
 import styles from './styles';
 
-const COMPONENT = 'store';
-
 
 class UserStore extends Component {
   constructor() {
@@ -37,11 +35,11 @@ class UserStore extends Component {
   }
 
   loadData = (reset = false) => {
-    let { items: { [COMPONENT]: { pagination: { limit, page } } } } = this.props;
+    let { items: { store: { pagination: { limit, page } } } } = this.props;
     page = reset ? 0 : page + 1;
     const { getItems } = this.props;
     const condition = { status: 'selling' }
-    return getItems(condition, limit, page, COMPONENT);
+    return getItems(condition, limit, page, 'store');
   }
 
   onToogle = (e) => {
@@ -81,7 +79,7 @@ class UserStore extends Component {
   }
 
   renderItems = () => {
-    const { items: { [COMPONENT]: { data } } } = this.props;
+    const { items: { store: { data } } } = this.props;
     const { multipleChoice, selected } = this.state;
     if (!data || !data.length) return null;
     return <Grid container spacing={2}>
