@@ -15,25 +15,25 @@ export const GET_ITEM = 'GET_ITEM';
 export const GET_ITEM_OK = 'GET_ITEM_OK';
 export const GET_ITEM_FAIL = 'GET_ITEM_FAIL';
 
-export const getItem = (_id) => {
+export const getItem = (_id, reset = false) => {
   return (dispatch, prevState) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: GET_ITEM });
       // Check id
       if (!_id) {
-        let er = 'Invalid ID'
+        const er = 'Invalid ID';
         dispatch({ type: GET_ITEM_FAIL, reason: er });
         return reject(er);
       }
       // Get offline
       const { bucket } = prevState();
-      if (bucket[_id]) {
+      if (bucket[_id] && !reset) {
         dispatch({ type: GET_ITEM_OK });
         return resolve(bucket[_id]);
       }
       // Get online
       const { api: { base } } = configs;
-      api.get(`${base}/item`, { _id }).then(re => {
+      return api.get(`${base}/item`, { _id }).then(re => {
         const item = re.data;
         const data = item ? { [item._id]: item } : {};
         dispatch({ type: GET_ITEM_OK, data });
@@ -53,25 +53,25 @@ export const GET_USER = 'GET_USER';
 export const GET_USER_OK = 'GET_USER_OK';
 export const GET_USER_FAIL = 'GET_USER_FAIL';
 
-export const getUser = (_id) => {
+export const getUser = (_id, reset = false) => {
   return (dispatch, prevState) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: GET_USER });
       // Check id
       if (!_id) {
-        let er = 'Invalid ID'
+        const er = 'Invalid ID';
         dispatch({ type: GET_USER_FAIL, reason: er });
         return reject(er);
       }
       // Get offline
       const { bucket } = prevState();
-      if (bucket[_id]) {
+      if (bucket[_id] && !reset) {
         dispatch({ type: GET_USER_OK });
         return resolve(bucket[_id]);
       }
       // Get online
       const { api: { base } } = configs;
-      api.get(`${base}/user`, { _id }).then(re => {
+      return api.get(`${base}/user`, { _id }).then(re => {
         const user = re.data;
         const data = user ? { [user._id]: user } : {};
         dispatch({ type: GET_USER_OK, data });
@@ -91,25 +91,25 @@ export const GET_FILE = 'GET_FILE';
 export const GET_FILE_OK = 'GET_FILE_OK';
 export const GET_FILE_FAIL = 'GET_FILE_FAIL';
 
-export const getFile = (_id) => {
+export const getFile = (_id, reset = false) => {
   return (dispatch, prevState) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: GET_FILE });
       // Check id
       if (!_id) {
-        let er = 'Invalid ID'
+        const er = 'Invalid ID';
         dispatch({ type: GET_FILE_FAIL, reason: er });
         return reject(er);
       }
       // Get offline
       const { bucket } = prevState();
-      if (bucket[_id]) {
+      if (bucket[_id] && !reset) {
         dispatch({ type: GET_FILE_OK });
         return resolve(bucket[_id]);
       }
       // Get online
       const { api: { base } } = configs;
-      api.get(`${base}/file`, { _id }).then(re => {
+      return api.get(`${base}/file`, { _id }).then(re => {
         const file = re.data;
         const data = file ? { [file._id]: file } : {};
         dispatch({ type: GET_FILE_OK, data });

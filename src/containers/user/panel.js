@@ -31,10 +31,10 @@ class Panel extends Component {
     }
   }
 
-  loadData = () => {
+  loadData = (reset = false) => {
     const { auth: { _id }, getUser, getFile } = this.props;
     if (!_id) return;
-    return getUser(_id).then(user => {
+    return getUser(_id, reset).then(user => {
       if (!user || !user.panel) return;
       return getFile(user.panel);
     }).catch(console.error);
@@ -55,7 +55,7 @@ class Panel extends Component {
     return runEditor().then(file => {
       if (!file) return console.log('No file added');
       return updateUser({ panel: file._id });
-    }).catch(console.error);
+    }).then(() => this.loadData(true)).catch(console.error);
   }
 
   render() {
