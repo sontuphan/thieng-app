@@ -39,10 +39,11 @@ class UserFactory extends Component {
     this.loadData();
   }
 
-  loadData = () => {
+  loadData = (reset = false) => {
     let { items: { [COMPONENT]: { pagination: { limit, page } } } } = this.props;
     let condition = { status: 'creating' }
-    return this.props.getItems(condition, limit, page + 1, COMPONENT);
+    page = reset ? 0 : page + 1;
+    return this.props.getItems(condition, limit, page, COMPONENT);
   }
 
   onToogle = (e) => {
@@ -66,20 +67,19 @@ class UserFactory extends Component {
 
   onAdd = (value) => {
     return this.props.addItem(value).then(re => {
-      return this.setState({ visible: false });
-    }).catch(console.error);
+      return this.loadData(true);
+    }).then(() => this.setState({ visible: false })).catch(console.error);
   }
 
   onUpdate = (value) => {
     return this.props.updateItem(value).then(re => {
-      return this.setState({ visible: false });
-    }).catch(console.error);
+      return this.loadData(true);
+    }).then(() => this.setState({ visible: false })).catch(console.error);
   }
 
   renderItems = () => {
     const { items: { [COMPONENT]: { data } } } = this.props;
     const { multipleChoice, selected } = this.state;
-
     if (!data || !data.length) return null;
     return <Grid container spacing={2}>
       {data.map((obj, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>

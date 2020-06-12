@@ -27,10 +27,8 @@ const useStyles = makeStyles(theme => ({
 function Discount(props) {
   const classes = useStyles();
   const { onChange, value } = props;
-  const info = `
-    Chọn phần trăm cho chương trình khuyến mãi. 
-    Bạn có thể kiểm tra lại ở phần nhãn phía trên của sản phẩm.
-  `
+  const info = `Chọn phần trăm cho chương trình khuyến mãi. 
+    Bạn có thể kiểm tra lại ở phần nhãn phía trên của sản phẩm.`
   return <Grid container spacing={2}>
     <Grid item xs={12}>
       <Grid container alignItems="center" className={classes.onWrap} spacing={2}>

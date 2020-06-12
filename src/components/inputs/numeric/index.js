@@ -62,11 +62,9 @@ class NumericInput extends Component {
       <Grid item xs={12}>
         <Paper
           variant={this.props.variant === 'outlined' ? 'outlined' : 'elevation'}
-          className={
-            this.props.size === 'large' ?
-              classes.largePaper : this.props.size === 'small' ?
-                classes.smallPaper : classes.defaultPaper
-          }
+          className={this.props.size === 'large' ?
+            classes.largePaper : this.props.size === 'small' ?
+              classes.smallPaper : classes.defaultPaper}
           elevation={this.props.elevation}
         >
           <Grid container alignItems="center" spacing={2} className={classes.noWrap}>
