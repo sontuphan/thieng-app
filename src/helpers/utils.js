@@ -121,4 +121,10 @@ Utils.isEmail = (email) => {
   return true;
 }
 
+Utils.discountTagToNumber = (tag) => {
+  const tester = /\d?%/;
+  if (!tester.test(tag)) return false;
+  return Number(tag.split('%')[0]);
+}
+
 export default Utils;

@@ -15,6 +15,7 @@ import Shelf from './shelf';
 import Tags from './tags';
 import Categories from './categories';
 import Thumbnail from './thumbnail';
+import Discount from './discount';
 
 import { getFile, getItem } from 'modules/bucket.reducer';
 import { setCart } from 'modules/cart.reducer';
@@ -33,6 +34,7 @@ class Stall extends Component {
         tags: ['New'],
         fileIds: [],
         thumbnailId: null,
+        category: 'others',
       },
       userId: props.auth._id,
       amount: 1,
@@ -81,7 +83,12 @@ class Stall extends Component {
     return this.props.getFile(fileId).then(file => {
       return this.props.runEditor(file);
     }).then(re => {
-      if (!re.source) object.fileIds = object.fileIds.filter((f, i) => i !== index);
+      if (!re.source) {
+        // Remove from object array
+        object.fileIds = object.fileIds.filter(fid => fid !== fileId);
+        // Check thumbnail
+        if (object.thumbnailId === fileId) object.thumbnailId = object.fileIds[0];
+      }
       else object.fileIds[index] = re._id;
       return this.setState({ object });
     }).catch(console.error);
@@ -89,6 +96,13 @@ class Stall extends Component {
   onThumbnail = (index) => {
     let { object } = this.state;
     object.thumbnailId = object.fileIds[index];
+    return this.setState({ object });
+  }
+  onDiscount = (value) => {
+    let { object } = this.state;
+    let existed = object.tags.some(tag => utils.discountTagToNumber(tag));
+    if (existed) object.tags = object.tags.filter(tag => !utils.discountTagToNumber(tag));
+    object.tags.push(`${value}%`);
     return this.setState({ object });
   }
   onName = (value) => {
@@ -278,6 +292,15 @@ class Stall extends Component {
               fileIds={object.fileIds}
               onChange={this.onThumbnail}
               value={object.fileIds.indexOf(object.thumbnailId)}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Drain small />
+          </Grid>
+          <Grid item xs={10} md={8}>
+            <Discount
+              onChange={this.onDiscount}
+              value={object.tags.map(tag => utils.discountTagToNumber(tag)).filter(discount => discount)[0]}
             />
           </Grid>
         </Grid>
