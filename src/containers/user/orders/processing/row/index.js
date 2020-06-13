@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+
+import { ArrowForwardRounded } from '@material-ui/icons';
 
 import utils from 'helpers/utils';
 import { useStyles } from './styles';
@@ -27,6 +30,7 @@ export function Header(props) {
     <TableCell align="right">
       <Typography className={classes.header}>Trạng thái</Typography >
     </TableCell>
+    <TableCell />
   </TableRow>
 }
 
@@ -74,6 +78,11 @@ function Row(props) {
     </TableCell>
     <TableCell align="right">
       <Typography>{getOrderStatus(data.status)}</Typography >
+    </TableCell>
+    <TableCell>
+      <IconButton size="small">
+        <ArrowForwardRounded />
+      </IconButton>
     </TableCell>
   </TableRow>
 }

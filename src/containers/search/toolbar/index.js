@@ -29,7 +29,7 @@ class SearchToolbar extends Component {
     return <TextField
       variant="outlined"
       color="secondary"
-      placeholder="Search..."
+      placeholder="Tên sản phẩm"
       size="small"
       onChange={this.input}
       InputProps={{

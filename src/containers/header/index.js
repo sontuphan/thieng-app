@@ -66,10 +66,10 @@ class Header extends Component {
     return this.props.logIn(re);
   }
 
-  // onSearch = () => {
-  //   this.onToggleDrawer(false);
-  //   this.props.toogleSearch();
-  // }
+  onSearch = () => {
+    this.onToggleDrawer(false);
+    this.props.toogleSearch();
+  }
 
   // onNotification = () => {
   //   this.onToggleDrawer(false);
@@ -180,11 +180,11 @@ class Header extends Component {
         <Grid item className={classes.stretch}>
           <Grid container alignItems="center" justify="flex-end" spacing={4}>
             {/* Search app */}
-            {/* <Grid item>
-                <IconButton size="small" color="secondary" onClick={this.onSearch}>
-                  <SearchRounded />
-                </IconButton>
-              </Grid> */}
+            <Grid item>
+              <IconButton size="small" color="secondary" onClick={this.onSearch}>
+                <SearchRounded />
+              </IconButton>
+            </Grid>
             {/* Notification app */}
             {/* <Grid item>
                 <IconButton size="small" color="secondary" onClick={this.onNotification}>

@@ -48,7 +48,7 @@ class Search extends Component {
                 spacing={2}
               >
                 <Grid item>
-                  <Typography variant="h3">Search Center</Typography>
+                  <Typography variant="h3">Tìm kiếm</Typography>
                 </Grid>
                 <Grid item className={classes.stretch} xs={12}>
                   <Divider />

@@ -18,7 +18,7 @@ import Mall from 'containers/mall';
 import Item from 'containers/item';
 import User from 'containers/user';
 // Apllications
-// import Search from 'containers/search';
+import Search from 'containers/search';
 import Cart from 'containers/cart';
 // import Notification from 'containers/notification';
 import Editor from 'containers/editor';
@@ -69,9 +69,9 @@ class App extends Component {
 
           {/* Global app */}
           <Grid container spacing={2}>
-            {/* <Grid item xs={12}>
+            <Grid item xs={12}>
               <Search />
-            </Grid> */}
+            </Grid>
             <Grid item xs={12}>
               <Cart />
             </Grid>

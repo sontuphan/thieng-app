@@ -60,13 +60,11 @@ class CartItem extends Component {
       <Grid item xs={12}>
         <Grid container alignItems="center" className={classes.noWrap} spacing={2}>
           <Grid item>
-            <Grid item>
-              <Tooltip title="Cancel">
-                <IconButton size="small" onClick={this.onCancel}>
-                  <CancelRounded />
-                </IconButton>
-              </Tooltip>
-            </Grid>
+            <Tooltip title="Hủy mua">
+              <IconButton size="small" onClick={this.onCancel}>
+                <CancelRounded />
+              </IconButton>
+            </Tooltip>
           </Grid>
           <Grid item className={classes.stretch}>
             <Divider />
