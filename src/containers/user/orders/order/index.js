@@ -31,8 +31,7 @@ class Order extends Component {
   render() {
     const { classes } = this.props;
     const { visible, orderId, onClose, bucket } = this.props;
-    const order = bucket[orderId];
-    if (!order) return null;
+    const order = bucket[orderId] || {};
 
     return <Slide direction="left" in={visible} mountOnEnter unmountOnExit>
       <Grid container spacing={2}>
