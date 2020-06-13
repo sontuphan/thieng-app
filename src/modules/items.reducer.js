@@ -41,9 +41,9 @@ export const getItems = (condition, limit, page, component = 'mall') => {
       dispatch({ type: GET_ITEMS });
 
       const { items: { [component]: { data, pagination } } } = prevState();
-      const accumulative = page === pagination.page + 1
+      const accumulative = page === pagination.page + 1;
       const { api: { base } } = configs;
-      return api.get(`${base}/social/items`, { condition, limit, page }).then(re => {
+      return api.get(`${base}/public/items`, { condition, limit, page }).then(re => {
         dispatch({
           type: GET_ITEMS_OK,
           data: {

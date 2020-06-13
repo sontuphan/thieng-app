@@ -41,7 +41,7 @@ function Discount(props) {
         <Grid item className={classes.stretch}>
           <Divider />
         </Grid>
-        <Tooltip title={info} className={classes.info}>
+        <Tooltip title={info} enterTouchDelay={100} className={classes.info}>
           <InfoRounded fontSize="small" />
         </Tooltip>
       </Grid>

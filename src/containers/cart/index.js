@@ -18,7 +18,8 @@ import CartItem from './cartItem';
 import DeliveryInfomation from './deliveryInfomation';
 import PaymentInfomation from './paymentInfomation';
 
-import { toogleCart, addCart, clearCart } from 'modules/cart.reducer';
+import { toogleCart, clearCart } from 'modules/cart.reducer';
+import { addOrder } from 'modules/order.reducer';
 
 import styles from './styles';
 
@@ -40,7 +41,7 @@ class Cart extends Component {
 
   onDone = () => {
     const { cart: { data } } = this.props;
-    const { toogleCart, addCart, clearCart } = this.props;
+    const { toogleCart, addOrder, clearCart } = this.props;
     const info = { ...this.state }
     // Normalize data
     const group = data.reduce((g, i) => {
@@ -58,7 +59,7 @@ class Cart extends Component {
     });
     // Submit data
     return async.map(carts, (cart, cb) => {
-      return addCart(cart).then(re => cb(null, re)).catch(er => cb(er, null));
+      return addOrder(cart).then(re => cb(null, re)).catch(er => cb(er, null));
     }, (er, re) => {
       if (er) console.error(er);
       else clearCart();
@@ -133,7 +134,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toogleCart, addCart, clearCart,
+  toogleCart, clearCart,
+  addOrder,
 }, dispatch);
 
 export default withRouter(connect(

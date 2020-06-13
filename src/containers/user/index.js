@@ -15,6 +15,7 @@ import UserHome from './home';
 import UserStore from './store';
 import UserWarehouse from './warehouse';
 import UserFactory from './factory';
+import UserOrders from './orders';
 import UserSettings from './settings';
 
 import styles from './styles';
@@ -54,6 +55,7 @@ class User extends Component {
           <Route exact path="/user/:email/store" component={UserStore} />
           <Route exact path="/user/:email/warehouse" component={UserWarehouse} />
           <Route exact path="/user/:email/factory" component={UserFactory} />
+          <Route exact path="/user/:email/orders" component={UserOrders} />
           {/* <Route exact path="/user/:email/message" component={null} /> */}
           {/* <Route exact path="/user/:email/settings" component={UserSettings} /> */}
         </Switch>

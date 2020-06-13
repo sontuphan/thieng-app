@@ -230,7 +230,7 @@ class Stall extends Component {
             <Typography
               variant="h4"
               className={classes.originalPrice}
-            >{utils.prettyNumber(object.price, 'long') || '0'} đ</Typography>
+            >{utils.prettyNumber(object.price, 'long') || '0'} ₫</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
             <Grid container spacing={2}>
@@ -243,7 +243,7 @@ class Stall extends Component {
                 />
               </Grid>
               <Grid item>
-                <Typography variant="h1">đ</Typography>
+                <Typography variant="h1">₫</Typography>
               </Grid>
             </Grid>
           </Grid>

@@ -28,7 +28,7 @@ export const getProjects = (limit, page) => {
 
       const { projects: { data } } = prevState();
       const { api: { base } } = configs;
-      api.get(`${base}/social/projects`, { limit, page, condition: { mode: 'public' } }).then(re => {
+      api.get(`${base}/public/projects`, { limit, page, condition: { mode: 'public' } }).then(re => {
         dispatch({
           type: GET_PROJECTS_OK,
           data: {

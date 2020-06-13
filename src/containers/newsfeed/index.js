@@ -95,7 +95,7 @@ class Newsfeed extends Component {
       <Grid item xs={11} md={10}>
         <Grid container spacing={2}>
           {
-            projects.map(project => <Grid key={utils.rand()} item xs={12} sm={6} md={4} lg={3} xl={2}>
+            projects.map((project, i) => <Grid key={i} item xs={12} sm={6} md={4} lg={3} xl={2}>
               <Status project={project} />
             </Grid>)
           }

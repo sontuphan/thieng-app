@@ -13,6 +13,7 @@ import projects from './projects.reducer';
 import cart from './cart.reducer';
 import notification from './notification.reducer';
 import editor from './editor.reducer';
+import order from './order.reducer';
 
 export default (history) => combineReducers({
   router: connectRouter(history),
@@ -28,4 +29,5 @@ export default (history) => combineReducers({
   cart,
   notification,
   editor,
+  order,
 });

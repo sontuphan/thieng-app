@@ -80,6 +80,32 @@ const theme = createMuiTheme({
       letterSpacing: 0,
       textTransform: 'None'
     },
+  },
+  overrides: {
+    MuiTableCell: {
+      root: {
+        fontFamily: ['"Open Sans"', 'sans-serif'].join(','),
+        fontWeight: 300,
+        fontSize: 13,
+      },
+      head: {
+        fontWeight: 700,
+      }
+    },
+    MuiTablePagination: {
+      caption: {
+        fontFamily: ['"Open Sans"', 'sans-serif'].join(','),
+        fontWeight: 300,
+        fontSize: 13,
+      },
+    },
+    MuiSelect: {
+      root: {
+        fontFamily: ['"Open Sans"', 'sans-serif'].join(','),
+        fontWeight: 300,
+        fontSize: 13,
+      },
+    }
   }
 });
 

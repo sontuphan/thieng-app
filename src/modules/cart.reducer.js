@@ -1,6 +1,4 @@
-import configs from 'configs';
 import storage from 'helpers/storage';
-import api from 'helpers/api';
 
 const KEY = 'cart';
 
@@ -104,31 +102,6 @@ export const clearCart = () => {
 }
 
 /**
- * Add cart
- */
-export const ADD_CART = 'ADD_CART';
-export const ADD_CART_OK = 'ADD_CART_OK';
-export const ADD_CART_FAIL = 'ADD_CART_FAIL';
-
-export const addCart = (cart) => {
-  return dispatch => {
-    return new Promise((resolve, reject) => {
-      dispatch({ type: ADD_CART });
-
-      const { api: { base } } = configs;
-      return api.post(`${base}/cart`, { cart }).then(re => {
-        dispatch({ type: ADD_CART_OK, reason: null });
-        return resolve(re.data);
-      }).catch(er => {
-        dispatch({ type: ADD_CART_FAIL, reason: er });
-        return reject(er);
-      });
-    });
-  };
-}
-
-
-/**
  * Reducder
  */
 export default (state = defaultState, action) => {
@@ -144,10 +117,6 @@ export default (state = defaultState, action) => {
     case CLEAR_CART_OK:
       return { ...state, ...action.data };
     case CLEAR_CART_FAIL:
-      return { ...state, ...action.data };
-    case ADD_CART_OK:
-      return { ...state, ...action.data };
-    case ADD_CART_FAIL:
       return { ...state, ...action.data };
     default:
       return state;

@@ -38,7 +38,7 @@ function Thumbnail(props) {
         <Grid item className={classes.stretch}>
           <Divider />
         </Grid>
-        <Tooltip title="Chọn một ảnh để dùng làm đại diện cho sản phẩm." className={classes.info}>
+        <Tooltip title="Chọn một ảnh để dùng làm đại diện cho sản phẩm." enterTouchDelay={100} className={classes.info}>
           <InfoRounded fontSize="small" />
         </Tooltip>
       </Grid>

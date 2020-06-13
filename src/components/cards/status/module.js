@@ -11,7 +11,7 @@ export const useData = (_id) => {
     let blueprint = null;
     if (_id) api.get(`${base}/blueprint`, { _id }).then(re => {
       blueprint = re.data;
-      return api.get(`${base}/social/users`, { _id: blueprint.userId })
+      return api.get(`${base}/public/users`, { _id: blueprint.userId })
     }).then(re => {
       blueprint.author = re.data[0]
       return setData(blueprint);

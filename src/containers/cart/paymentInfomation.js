@@ -57,8 +57,8 @@ class PaymentInfomation extends Component {
 
   getBill = () => {
     const { cart: { data } } = this.props;
-    const amount = data.reduce((total, item) => total + item.amount * item.price, 0);
-    return `${utils.prettyNumber(amount, 'long')} đ`;
+    const amount = data.reduce((total, {amount,price}) => total + amount * price, 0);
+    return `${utils.prettyNumber(amount, 'long')} ₫`;
   }
 
   render() {

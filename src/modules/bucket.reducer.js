@@ -122,6 +122,44 @@ export const getFile = (_id, reset = false) => {
   }
 }
 
+/**
+ * Get an order
+ */
+export const GET_ORDER = 'GET_ORDER';
+export const GET_ORDER_OK = 'GET_ORDER_OK';
+export const GET_ORDER_FAIL = 'GET_ORDER_FAIL';
+
+export const getOrder = (_id, reset = false) => {
+  return (dispatch, prevState) => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: GET_ORDER });
+      // Check id
+      if (!_id) {
+        const er = 'Invalid ID';
+        dispatch({ type: GET_FILE_FAIL, reason: er });
+        return reject(er);
+      }
+      // Get offline
+      const { bucket } = prevState();
+      if (bucket[_id] && !reset) {
+        dispatch({ type: GET_ORDER_OK });
+        return resolve(bucket[_id]);
+      }
+      // Get online
+      const { api: { base } } = configs;
+      return api.get(`${base}/order`, { _id }).then(re => {
+        const order = re.data;
+        const data = order ? { [order._id]: order } : {};
+        dispatch({ type: GET_ORDER_OK, data });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: GET_ORDER_FAIL, reason: er });
+        return reject(er);
+      });
+    });
+  }
+}
+
 
 /**
  * Reducder
@@ -139,6 +177,10 @@ export default (state = defaultState, action) => {
     case GET_FILE_OK:
       return { ...state, ...action.data };
     case GET_FILE_FAIL:
+      return { ...state, ...action.data };
+    case GET_ORDER_OK:
+      return { ...state, ...action.data };
+    case GET_ORDER_FAIL:
       return { ...state, ...action.data };
     default:
       return state;

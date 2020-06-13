@@ -86,7 +86,7 @@ class EditorDialog extends Component {
       <DialogTitle>
         <Grid container spacing={2} alignItems="center" className={classes.noWrap}>
           <Grid item className={classes.stretch}>
-            <Typography variant="h3">Image Uploader</Typography>
+            <Typography variant="h3">Chỉnh sửa ảnh</Typography>
           </Grid>
           <Grid item>
             <IconButton color="secondary" size="small" onClick={this.props.onClose}>
@@ -105,7 +105,7 @@ class EditorDialog extends Component {
               <Grid item xs={12}>
                 <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
                   <Grid item className={classes.stretch}>
-                    <Typography>Enable theme color</Typography>
+                    <Typography>Màu sắc sản phẩm</Typography>
                   </Grid>
                   <Grid item>
                     <Switch
@@ -136,7 +136,7 @@ class EditorDialog extends Component {
               color="primary"
               onClick={this.onChange}
             >
-              <Typography>OK</Typography>
+              <Typography>Xong</Typography>
             </Button>
           </Grid>
           <Grid item>
@@ -146,7 +146,7 @@ class EditorDialog extends Component {
               onClick={() => this.props.onDelete(this.props.file)}
               startIcon={<DeleteRounded />}
             >
-              <Typography>Delete</Typography>
+              <Typography>Xóa</Typography>
             </Button>
           </Grid>
         </Grid>
