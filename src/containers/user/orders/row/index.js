@@ -80,7 +80,7 @@ function Row(props) {
       <Typography>{getOrderStatus(data.status)}</Typography >
     </TableCell>
     <TableCell>
-      <IconButton size="small">
+      <IconButton size="small" onClick={props.onClick}>
         <ArrowForwardRounded />
       </IconButton>
     </TableCell>
@@ -88,10 +88,12 @@ function Row(props) {
 }
 
 Row.defaultProps = {
+  onClick: () => { },
 }
 
 Row.propTypes = {
   orderId: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
 }
 
 export default Row;

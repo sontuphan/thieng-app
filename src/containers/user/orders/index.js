@@ -47,7 +47,7 @@ class UserOrders extends Component {
               onClick={() => this.setState({ tab: 'processing' })}
               color={this.state.tab === 'processing' ? 'primary' : 'default'}
             >
-              <Typography>Cần xử lý</Typography>
+              <Typography>Xử lý</Typography>
             </Button>
           </Grid>
           <Grid item>
