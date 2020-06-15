@@ -28,7 +28,7 @@ class NumericInput extends Component {
   }
 
   onChange = (e) => {
-    if (this.props.disabled) return;
+    if (this.props.disabled || this.props.readOnly) return;
     let value = e.target.value;
     if (!parseInt(value)) value = 0;
     if (value < 0) value = 0;
@@ -39,7 +39,7 @@ class NumericInput extends Component {
   }
 
   onAdd = () => {
-    if (this.props.disabled) return;
+    if (this.props.disabled || this.props.readOnly) return;
     let value = this.state.value + 1;
     return this.setState({ value }, () => {
       this.props.onChange(this.state.value);
@@ -47,7 +47,7 @@ class NumericInput extends Component {
   }
 
   onMinus = () => {
-    if (this.props.disabled) return;
+    if (this.props.disabled || this.props.readOnly) return;
     let value = this.state.value - 1;
     if (value < 0) value = 0;
     return this.setState({ value }, () => {
@@ -68,11 +68,11 @@ class NumericInput extends Component {
           elevation={this.props.elevation}
         >
           <Grid container alignItems="center" spacing={2} className={classes.noWrap}>
-            <Grid item onClick={this.onMinus}>
+            {this.props.readOnly ? null : <Grid item onClick={this.onMinus}>
               <IconButton size="small">
                 <RemoveRounded className={this.props.disabled ? classes.disabledIcon : null} />
               </IconButton>
-            </Grid>
+            </Grid>}
             <Grid item className={classes.fullWidth}>
               <InputBase
                 onChange={this.onChange}
@@ -83,11 +83,11 @@ class NumericInput extends Component {
                 disabled={this.props.disabled}
               />
             </Grid>
-            <Grid item>
+            {this.props.readOnly ? null : <Grid item>
               <IconButton size="small" onClick={this.onAdd}>
                 <AddRounded className={this.props.disabled ? classes.disabledIcon : null} />
               </IconButton>
-            </Grid>
+            </Grid>}
           </Grid>
         </Paper>
       </Grid>
