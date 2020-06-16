@@ -18,8 +18,8 @@ import Menu from './menu';
 
 import { getItems } from 'modules/items.reducer';
 
+import configs from 'configs';
 import styles from './styles';
-import utils from 'helpers/utils';
 
 
 class Mall extends Component {
@@ -84,7 +84,7 @@ class Mall extends Component {
       <Grid item xs={11} md={10}>
         <Grid container className={classes.noWrap} alignItems="center" justify="flex-end" spacing={2}>
           <Grid item>
-            <Typography variant="h3">{utils.paramToHeader(category)}</Typography>
+            <Typography variant="h3">{configs.category.fullList.filter(e => e.value === category)[0].name}</Typography>
           </Grid>
           <Grid item className={classes.stretch}>
             <Divider />

@@ -57,11 +57,11 @@ class Menu extends Component {
 
       {!expanded ? <Grid item>
         <Button endIcon={<ExpandMoreRounded />} onClick={this.onMore}>
-          <Typography>More</Typography>
+          <Typography>Thêm</Typography>
         </Button>
       </Grid> : <Grid item>
           <Button endIcon={<ExpandLessRounded />} onClick={this.onLess}>
-            <Typography>Less</Typography>
+            <Typography>Thu lại</Typography>
           </Button>
         </Grid>}
     </Grid>

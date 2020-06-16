@@ -49,7 +49,7 @@ class Recommendation extends Component {
                 <Button
                   variant="outlined"
                   color="primary"
-                  endIcon={<ShuffleRounded />}
+                  startIcon={<ShuffleRounded />}
                   onClick={this.onShuffle}
                 >
                   <Typography>Khác</Typography>

@@ -92,12 +92,6 @@ Utils.getAccessibleTextColor = (backgroundImage) => {
   });
 }
 
-Utils.paramToHeader = (string) => {
-  if (!string) return '';
-  let s = string.charAt(0).toUpperCase() + string.slice(1);
-  return s.replace('-', ' ');
-}
-
 Utils.isEmail = (email) => {
   const tester = /^[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
   if (!email) return false;

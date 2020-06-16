@@ -11,17 +11,17 @@ import { TiSortAlphabetically } from 'react-icons/ti';
 const configs = {}
 
 const pureList = [
-  { value: 'chairs', name: 'Chairs', icon: <FaChair /> },
-  { value: 'desks', name: 'Desks', icon: <GiDesk /> },
-  { value: 'floor', name: 'Floor', icon: <MdTexture /> },
-  { value: 'light', name: 'Light', icon: <GiCeilingLight /> },
-  { value: 'bedroom', name: 'Bedroom', icon: <GiBedLamp /> },
-  { value: 'playground', name: 'Playground', icon: <FaTableTennis /> },
-  { value: 'kitchen', name: 'Kitchen', icon: <GiCookingPot /> },
-  { value: 'garden', name: 'Garden', icon: <FaTree /> },
-  { value: 'others', name: 'Others', icon: <FaDice /> },
+  { value: 'chairs', name: 'Ghế', icon: <FaChair /> },
+  { value: 'desks', name: 'Bàn', icon: <GiDesk /> },
+  { value: 'floor', name: 'Sàn gỗ', icon: <MdTexture /> },
+  { value: 'light', name: 'Đèn', icon: <GiCeilingLight /> },
+  { value: 'bedroom', name: 'Phòng ngủ', icon: <GiBedLamp /> },
+  { value: 'playground', name: 'Sân chơi', icon: <FaTableTennis /> },
+  { value: 'kitchen', name: 'Nhà bếp', icon: <GiCookingPot /> },
+  { value: 'garden', name: 'Vườn', icon: <FaTree /> },
+  { value: 'others', name: 'Khác', icon: <FaDice /> },
 ]
-const fullList = [{ value: 'all', name: 'All', icon: <TiSortAlphabetically /> }].concat(pureList);
+const fullList = [{ value: 'all', name: 'Tất cả', icon: <TiSortAlphabetically /> }].concat(pureList);
 const shortList = fullList.filter((item, index) => index <= 5);
 
 
