@@ -126,7 +126,7 @@ class PaymentInfomation extends Component {
                 </Grid>
               </Grid>
             </MenuItem>
-            <MenuItem value={'momo'}>
+            <MenuItem value={'momo'} disabled>
               <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
                 <Grid item className={classes.icon}>
                   <Momo fontSize="small" />
@@ -136,7 +136,7 @@ class PaymentInfomation extends Component {
                 </Grid>
               </Grid>
             </MenuItem>
-            <MenuItem value={'credit'}>
+            <MenuItem value={'credit'} disabled>
               <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
                 <Grid item className={classes.icon}>
                   <CreditCardRounded fontSize="small" />
@@ -146,7 +146,7 @@ class PaymentInfomation extends Component {
                 </Grid>
               </Grid>
             </MenuItem>
-            <MenuItem value={'bank'}>
+            <MenuItem value={'bank'} disabled>
               <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
                 <Grid item className={classes.icon}>
                   <AccountBalanceRounded fontSize="small" />
