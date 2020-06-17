@@ -25,7 +25,7 @@ function OrderItems(props) {
   const { order } = props;
   if (!order.items) return null;
   return <Grid container spacing={2}>
-    {order.items.map((item, i) => <Grid item key={i} xs={6} md={3}>
+    {order.items.map((item, i) => <Grid item key={i} xs={6} sm={4} md={3} lg={2}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <ProductCard itemId={item.itemId} />

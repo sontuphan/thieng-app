@@ -85,7 +85,7 @@ class Order extends Component {
       <Grid item xs={12}>
         <Grid container alignItems="center" className={classes.noWrap} spacing={2}>
           <Grid item>
-            <Typography variant="h3">Trạng thái đơn hàng</Typography>
+            <Typography variant="h3">Tình trạng đơn hàng</Typography>
           </Grid>
           <Grid item className={classes.stretch} xs={12}>
             <Divider />
