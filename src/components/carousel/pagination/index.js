@@ -60,7 +60,7 @@ class CarouselPagination extends Component {
             onClick={this.props.onMore}
             fullWidth
           >
-            <Typography>Nhiều hơn</Typography>
+            <Typography>Thêm</Typography>
           </Button>
         </Grid>
       </Grid>

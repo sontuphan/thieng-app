@@ -48,7 +48,7 @@ class Home extends Component {
 
   scrollToHash = () => {
     const { location: { hash } } = this.props;
-    if (!hash) return console.error('Invalid hashtag');
+    if (!hash) return console.warn('Invalid hashtag');
     const id = hash.replace('#', '');
     const e = window.document.getElementById(id);
     if (!e) return console.error('Invalid component');

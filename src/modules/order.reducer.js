@@ -66,6 +66,54 @@ export const addOrder = (order) => {
   };
 }
 
+/**
+ * Update order
+ */
+export const UPDATE_ORDER = 'UPDATE_ORDER';
+export const UPDATE_ORDER_OK = 'UPDATE_ORDER_OK';
+export const UPDATE_ORDER_FAIL = 'UPDATE_ORDER_FAIL';
+
+export const updateOrder = (order) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: UPDATE_ORDER });
+
+      const { api: { base } } = configs;
+      return api.put(`${base}/order`, { order }).then(re => {
+        dispatch({ type: UPDATE_ORDER_OK, reason: null });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: UPDATE_ORDER_FAIL, reason: er });
+        return reject(er);
+      });
+    });
+  };
+}
+
+/**
+ * Update order status
+ */
+export const UPDATE_ORDER_STATUS = 'UPDATE_ORDER_STATUS';
+export const UPDATE_ORDER_STATUS_OK = 'UPDATE_ORDER_STATUS_OK';
+export const UPDATE_ORDER_STATUS_FAIL = 'UPDATE_ORDER_STATUS_FAIL';
+
+export const updateOrderStatus = (order) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: UPDATE_ORDER_STATUS });
+
+      const { api: { base } } = configs;
+      return api.put(`${base}/private/order/status`, { order }).then(re => {
+        dispatch({ type: UPDATE_ORDER_STATUS_OK, reason: null });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: UPDATE_ORDER_STATUS_FAIL, reason: er });
+        return reject(er);
+      });
+    });
+  };
+}
+
 
 /**
  * Reducder
@@ -79,6 +127,14 @@ export default (state = defaultState, action) => {
     case ADD_ORDER_OK:
       return { ...state, ...action.data };
     case ADD_ORDER_FAIL:
+      return { ...state, ...action.data };
+    case UPDATE_ORDER_OK:
+      return { ...state, ...action.data };
+    case UPDATE_ORDER_FAIL:
+      return { ...state, ...action.data };
+    case UPDATE_ORDER_STATUS_OK:
+      return { ...state, ...action.data };
+    case UPDATE_ORDER_STATUS_FAIL:
       return { ...state, ...action.data };
     default:
       return state;

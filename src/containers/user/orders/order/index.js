@@ -20,6 +20,7 @@ import Select from '@material-ui/core/Select';
 import {
   ArrowBackRounded, ReceiptRounded,
   LocalAtmRounded, CreditCardRounded, AccountBalanceRounded,
+  ScheduleRounded, UnarchiveRounded, FlightRounded, BlockRounded, ThumbUpAltRounded,
 } from '@material-ui/icons';
 
 import { ProductCard } from 'components/cards';
@@ -28,9 +29,19 @@ import { Momo } from 'components/icons';
 import Drain from 'components/drain';
 
 import { getOrder } from 'modules/bucket.reducer';
+import { updateOrderStatus } from 'modules/order.reducer';
 
 import styles from './styles';
 import utils from 'helpers/utils';
+import { Button } from '@material-ui/core';
+
+const ACTIONS = [
+  { value: 'waiting', name: 'Chờ xử lý', icon: <ScheduleRounded /> },
+  { value: 'packaging', name: 'Đang đóng gói', icon: <UnarchiveRounded /> },
+  { value: 'delivering', name: 'Đang vận chuyển', icon: <FlightRounded /> },
+  { value: 'canceled', name: 'Đã hủy', icon: <BlockRounded /> },
+  { value: 'done', name: 'Hoàn thành', icon: <ThumbUpAltRounded /> },
+]
 
 
 class Order extends Component {
@@ -46,9 +57,9 @@ class Order extends Component {
     }
   }
 
-  loadData = () => {
+  loadData = (reset = false) => {
     const { orderId, getOrder } = this.props;
-    if (orderId) return getOrder(orderId);
+    if (orderId) return getOrder(orderId, reset);
   }
 
   renderItems = (order) => {
@@ -252,6 +263,45 @@ class Order extends Component {
     </Grid>
   }
 
+  renderStatusButton = (order, action) => {
+    const { updateOrderStatus } = this.props;
+    const updateStatus = () => {
+      return updateOrderStatus({ _id: order._id, status: action.value }).then(() => {
+        return this.loadData(true);
+      }).catch(console.error);
+    }
+    return <Button
+      variant="outlined"
+      color={order.status === action.value ? 'primary' : 'default'}
+      startIcon={action.icon}
+      onClick={updateStatus}
+    >
+      <Typography>{action.name}</Typography>
+    </Button>
+  }
+
+  renderActions = (order) => {
+    const { classes } = this.props;
+    return <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Grid container alignItems="center" className={classes.noWrap} spacing={2}>
+          <Grid item>
+            <Typography variant="h3">Trạng thái đơn hàng</Typography>
+          </Grid>
+          <Grid item className={classes.stretch} xs={12}>
+            <Divider />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <Drain small />
+      </Grid>
+      {ACTIONS.map((action, i) => <Grid item key={i}>
+        {this.renderStatusButton(order, action)}
+      </Grid>)}
+    </Grid>
+  }
+
   render() {
     const { classes } = this.props;
     const { visible, orderId, onClose, bucket } = this.props;
@@ -293,6 +343,12 @@ class Order extends Component {
         <Grid item xs={12}>
           {this.renderUserInfo(order)}
         </Grid>
+        <Grid item xs={12}>
+          <Drain small />
+        </Grid>
+        <Grid item xs={12}>
+          {this.renderActions(order)}
+        </Grid>
       </Grid>
     </Slide>
   }
@@ -305,6 +361,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getOrder,
+  updateOrderStatus,
 }, dispatch);
 
 Order.defaultProps = {
