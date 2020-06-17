@@ -13,8 +13,7 @@ import { HourglassEmptyRounded, DoneAllRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import ProcessingOrders from './processing';
-
-import { } from 'modules/bucket.reducer';
+import DoneOrders from './done';
 
 import styles from './styles';
 
@@ -67,6 +66,7 @@ class UserOrders extends Component {
       </Grid>
       <Grid item xs={12}>
         {this.state.tab === 'processing' ? <ProcessingOrders /> : null}
+        {this.state.tab === 'done' ? <DoneOrders /> : null}
       </Grid>
     </Grid>
   }

@@ -23,15 +23,20 @@ export const GET_ORDERS_OK = 'GET_ORDERS_OK';
 export const GET_ORDERS_FAIL = 'GET_ORDERS_FAIL';
 
 export const getOrders = (condition, limit, page) => {
-  return dispatch => {
+  return (dispatch, prevState) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: GET_ORDERS });
 
+      const { order: { data, pagination } } = prevState();
+      const accumulative = page === pagination.page + 1;
       const { api: { base } } = configs;
       return api.get(`${base}/private/orders`, { condition, limit, page }).then(re => {
         dispatch({
           type: GET_ORDERS_OK,
-          data: { data: re.data, pagination: re.pagination }
+          data: {
+            data: re.data.length ? re.data : (accumulative ? data : re.data),
+            pagination: re.data.length ? re.pagination : (accumulative ? pagination : re.pagination),
+          }
         });
         return resolve(re.data);
       }).catch(er => {

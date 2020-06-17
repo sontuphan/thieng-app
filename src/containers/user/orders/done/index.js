@@ -21,7 +21,7 @@ import { getOrders } from 'modules/order.reducer';
 import styles from './styles';
 
 
-class ProcesingOrders extends Component {
+class DoneOrders extends Component {
   constructor() {
     super();
 
@@ -38,7 +38,7 @@ class ProcesingOrders extends Component {
 
   loadData = (limit, page) => {
     const { getOrders } = this.props;
-    const condition = { $and: [{ status: { $ne: 'canceled' } }, { status: { $ne: 'done' } }] }
+    const condition = { $or: [{ status: 'canceled' }, { status: 'done' }] }
     return getOrders(condition, limit, page);
   }
 
@@ -117,4 +117,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(ProcesingOrders)));
+)(withStyles(styles)(DoneOrders)));
