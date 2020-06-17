@@ -5,8 +5,11 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
 
 import { ArrowForwardRounded } from '@material-ui/icons';
+
+import OrderThumbnail from './thumbnail';
 
 import utils from 'helpers/utils';
 import { useStyles } from './styles';
@@ -18,6 +21,7 @@ export function Header(props) {
     <TableCell>
       <Typography className={classes.header}>Mã đơn hàng</Typography >
     </TableCell>
+    <TableCell />
     <TableCell align="right">
       <Typography className={classes.header}>Ngày tạo</Typography >
     </TableCell>
@@ -66,6 +70,11 @@ function Row(props) {
   return <TableRow>
     <TableCell component="th" scope="row">
       <Typography>{data._id}</Typography >
+    </TableCell>
+    <TableCell>
+      <AvatarGroup max={3}>
+        {data.items.map((item, i) => <OrderThumbnail key={i} itemId={item.itemId} />)}
+      </AvatarGroup>
     </TableCell>
     <TableCell align="right">
       <Typography>{utils.prettyDatetime(data.createdAt)}</Typography >
