@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
+import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -13,6 +14,7 @@ import { } from '@material-ui/icons';
 import { TopDrawer } from 'components/drawers';
 import Drain from 'components/drain';
 import SearchToolbar from './toolbar';
+import { ProductCard } from 'components/cards';
 
 import { toogleSearch, searchText } from 'modules/search.reducer';
 
@@ -21,19 +23,24 @@ import styles from './styles';
 
 class Search extends Component {
 
-  onChange = (value) => {
-    this.props.searchText(value);
+  componentDidUpdate(prevProps) {
+    const { location, toogleSearch } = this.props;
+    if (!isEqual(prevProps.location, location) && prevProps.search.visible) {
+      toogleSearch();
+    }
+  }
+
+  onSearch = (value) => {
+    const condition = { name: value }
+    this.props.searchText(condition);
   }
 
   render() {
-    let { classes } = this.props;
-
+    const { classes } = this.props;
+    const { search: { visible, data }, toogleSearch } = this.props;
     return <Grid container spacing={2}>
       <Grid item xs={12}>
-        <TopDrawer
-          visible={this.props.search.visible}
-          onClose={this.props.toogleSearch}
-        >
+        <TopDrawer visible={visible} onClose={toogleSearch}>
           <Grid container spacing={2} justify="center">
 
             <Grid item xs={12}>
@@ -41,12 +48,7 @@ class Search extends Component {
             </Grid>
 
             <Grid item xs={11} md={10}>
-              <Grid
-                container
-                alignItems="center"
-                className={classes.noWrap}
-                spacing={2}
-              >
+              <Grid container alignItems="center" className={classes.noWrap} spacing={2}>
                 <Grid item>
                   <Typography variant="h3">Tìm kiếm</Typography>
                 </Grid>
@@ -54,7 +56,7 @@ class Search extends Component {
                   <Divider />
                 </Grid>
                 <Grid item xs={6}>
-                  <SearchToolbar onChange={this.onChange} fullWidth />
+                  <SearchToolbar onClick={this.onSearch} fullWidth />
                 </Grid>
               </Grid>
             </Grid>
@@ -65,9 +67,13 @@ class Search extends Component {
 
             <Grid item xs={11} md={10}>
               <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
-                  {/* Components */}
-                </Grid>
+                {data.map((item, i) => <Grid item key={i} xs={6} sm={4} md={3} lg={2}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <ProductCard itemId={item._id} />
+                    </Grid>
+                  </Grid>
+                </Grid>)}
               </Grid>
             </Grid>
           </Grid>

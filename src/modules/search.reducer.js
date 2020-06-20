@@ -1,3 +1,7 @@
+import isEqual from 'react-fast-compare';
+import configs from 'configs';
+import api from 'helpers/api';
+
 /**
  * Documents
  * @default defaultData
@@ -6,7 +10,12 @@
 const defaultState = {
   value: null,
   repeat: 0,
-  visible: false
+  visible: false,
+  data: [],
+  pagination: {
+    page: -1,
+    limit: 5,
+  }
 }
 
 
@@ -49,23 +58,38 @@ export const SEARCH_TEXT = 'SEARCH_TEXT';
 export const SEARCH_TEXT_OK = 'SEARCH_TEXT_OK';
 export const SEARCH_TEXT_FAIL = 'SEARCH_TEXT_FAIL';
 
-export const searchText = (value) => {
-  return (dispatch, getState) => {
+export const searchText = (condition, limit, page) => {
+  return (dispatch, prevState) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: SEARCH_TEXT });
 
-      if (!value) {
-        let er = 'Invalid input';
+      if (!condition) {
+        const er = 'Invalid input';
         dispatch({ type: SEARCH_TEXT_FAIL, reason: er });
         return reject(er);
       }
 
-      let prevState = getState();
-      let data = null;
-      if (prevState.search.value !== value) data = { value: value, repeat: 0 }
-      else data = { value: value, repeat: prevState.search.repeat + 1 }
-      dispatch({ type: SEARCH_TEXT_OK, reason: null, data: data });
-      return resolve(value);
+      const { search: { value, repeat, data, pagination } } = prevState();
+      let update = null;
+      if (!isEqual(value, condition)) update = { value: condition, repeat: 0 }
+      else update = { value: condition, repeat: repeat + 1 }
+
+      const accumulative = page === pagination.page + 1;
+      const { api: { base } } = configs;
+      return api.get(`${base}/public/items`, { condition, limit, page }).then(re => {
+        dispatch({
+          type: SEARCH_TEXT_OK,
+          data: {
+            ...update,
+            data: accumulative ? data.concat(re.data) : re.data,
+            pagination: re.pagination
+          }
+        });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: SEARCH_TEXT_FAIL, reason: er });
+        return reject(er);
+      });
     });
   };
 };
