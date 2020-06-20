@@ -4,5 +4,8 @@ export default theme => ({
   },
   stretch: {
     flex: '1 1 auto',
+  },
+  adornment: {
+    marginRight: -theme.spacing(1)
   }
 });
