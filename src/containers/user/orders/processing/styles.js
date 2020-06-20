@@ -5,7 +5,10 @@ export default theme => ({
   stretch: {
     flex: '1 1 auto',
   },
-  adornment: {
+  startAdornment: {
+    marginLeft: -theme.spacing(1)
+  },
+  endAdornment: {
     marginRight: -theme.spacing(1)
   }
 });

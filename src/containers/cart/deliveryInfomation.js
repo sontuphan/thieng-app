@@ -49,7 +49,7 @@ class DeliveryInformation extends Component {
       return this.setState({
         receiverName: user.displayname,
         receiverPhone: user.phone || '',
-        receiverAddress: user.addresses[selectedAddress] || '',
+        receiverAddress: (user.addresses && user.addresses[selectedAddress]) || '',
       });
     }
   }

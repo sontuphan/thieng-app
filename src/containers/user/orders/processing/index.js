@@ -16,7 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 
-import { SearchRounded } from '@material-ui/icons';
+import { SearchRounded, HighlightOffRounded } from '@material-ui/icons';
 
 import Row, { Header } from '../row';
 import Order from '../order';
@@ -25,7 +25,7 @@ import { getOrders } from 'modules/order.reducer';
 
 import styles from './styles';
 
-const DEFAULT_CONDITION = { status: { $ne: { $and: ['canceled', 'done'] } } }
+const DEFAULT_CONDITION = { $and: [{ status: { $ne: 'canceled' } }, { status: { $ne: 'done' } }] }
 
 class ProcesingOrders extends Component {
   constructor() {
@@ -68,12 +68,18 @@ class ProcesingOrders extends Component {
   }
 
   onSearch = () => {
-    console.log(this.state.condition)
     return this.loadData(5, 0);
   }
 
   onChangeCondition = (e) => {
     return this.setState({ condition: { ...this.state.condition, _id: e.target.value } });
+  }
+
+  onClearCondition = () => {
+    const condition = delete this.state.condition._id;
+    return this.setState({ condition: { ...condition } }, () => {
+      return this.onSearch();
+    });
   }
 
   render() {
@@ -89,8 +95,15 @@ class ProcesingOrders extends Component {
           size="small"
           onChange={this.onChangeCondition}
           InputProps={{
+            startAdornment: (
+              <InputAdornment position="start" className={classes.startAdornment}>
+                <IconButton size="small" onClick={this.onClearCondition} disabled={!this.state.condition._id}>
+                  <HighlightOffRounded />
+                </IconButton>
+              </InputAdornment>
+            ),
             endAdornment: (
-              <InputAdornment position="start" className={classes.adornment}>
+              <InputAdornment position="start" className={classes.endAdornment}>
                 <IconButton size="small" onClick={this.onSearch}>
                   <SearchRounded />
                 </IconButton>
