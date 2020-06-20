@@ -31,7 +31,7 @@ class Search extends Component {
   }
 
   onSearch = (value) => {
-    const condition = { name: value }
+    const condition = { $text: { $search: value } }
     this.props.searchText(condition);
   }
 
