@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { } from '@material-ui/icons';
 
@@ -22,6 +23,13 @@ import styles from './styles';
 
 
 class Search extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      waiting: false
+    }
+  }
 
   componentDidUpdate(prevProps) {
     const { location, toogleSearch } = this.props;
@@ -32,12 +40,39 @@ class Search extends Component {
 
   onSearch = (value) => {
     const condition = { $text: { $search: value } }
-    this.props.searchText(condition);
+    return this.setState({ waiting: true }, () => {
+      return setTimeout(() => {
+        return this.props.searchText(condition).then(() => {
+          return this.setState({ waiting: false });
+        }).catch(er => {
+          console.error(er);
+          return this.setState({ waiting: false });
+        });
+      }, 1000);
+    });
+  }
+
+  renderFeedback = () => {
+    const { search: { data } } = this.props;
+    const { waiting } = this.state;
+    if (waiting) return <Grid item xs={12}>
+      <CircularProgress size={16} />
+    </Grid>
+    if (!data.length) return <Grid item xs={12}>
+      <Typography>Chưa tìm thấy sản phẩm <span aria-label="emoji" role="img">😣</span></Typography>
+    </Grid>
+    return data.map((item, i) => <Grid item key={i} xs={6} sm={4} md={3} lg={2}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <ProductCard itemId={item._id} />
+        </Grid>
+      </Grid>
+    </Grid>);
   }
 
   render() {
     const { classes } = this.props;
-    const { search: { visible, data }, toogleSearch } = this.props;
+    const { search: { visible }, toogleSearch } = this.props;
     return <Grid container spacing={2}>
       <Grid item xs={12}>
         <TopDrawer visible={visible} onClose={toogleSearch}>
@@ -67,13 +102,7 @@ class Search extends Component {
 
             <Grid item xs={11} md={10}>
               <Grid container spacing={2}>
-                {data.map((item, i) => <Grid item key={i} xs={6} sm={4} md={3} lg={2}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <ProductCard itemId={item._id} />
-                    </Grid>
-                  </Grid>
-                </Grid>)}
+                {this.renderFeedback()}
               </Grid>
             </Grid>
           </Grid>

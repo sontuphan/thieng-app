@@ -12,6 +12,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 import Slide from '@material-ui/core/Slide';
+import Zoom from '@material-ui/core/Zoom';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
@@ -88,31 +89,33 @@ class ProcesingOrders extends Component {
 
     return <Grid container spacing={2}>
       <Grid item xs={12} >
-        <TextField
-          variant="outlined"
-          color="secondary"
-          placeholder="Mã đơn hàng"
-          size="small"
-          onChange={this.onChangeCondition}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start" className={classes.startAdornment}>
-                <IconButton size="small" onClick={this.onClearCondition} disabled={!this.state.condition._id}>
-                  <HighlightOffRounded />
-                </IconButton>
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="start" className={classes.endAdornment}>
-                <IconButton size="small" onClick={this.onSearch}>
-                  <SearchRounded />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          onKeyPress={e => e.key === 'Enter' && this.onSearch}
-          fullWidth
-        />
+        <Zoom in={!this.state.visible} mountOnEnter unmountOnExit>
+          <TextField
+            variant="outlined"
+            color="secondary"
+            placeholder="Mã đơn hàng"
+            size="small"
+            onChange={this.onChangeCondition}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start" className={classes.startAdornment}>
+                  <IconButton size="small" onClick={this.onClearCondition} disabled={!this.state.condition._id}>
+                    <HighlightOffRounded />
+                  </IconButton>
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="start" className={classes.endAdornment}>
+                  <IconButton size="small" onClick={this.onSearch}>
+                    <SearchRounded />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            onKeyPress={e => e.key === 'Enter' && this.onSearch}
+            fullWidth
+          />
+        </Zoom>
       </Grid>
       <Grid item xs={12}>
         <Slide direction="right" in={!this.state.visible} mountOnEnter unmountOnExit>
