@@ -13,6 +13,18 @@ import Divider from 'components/divider';
 
 import styles from './styles';
 
+const content = `
+  Tre - tự bao đời là biểu tượng cho hồn phách nước Việt. Từ ngàn xưa, 
+  tre sống trong huyền thoại, phù vệ Thánh Gióng gìn giữ non sông. 
+  Cây tre trăm đốt là hiện thân của chính nghĩa, chữ tín giúp chàng 
+  trai nghèo nên duyên vợ chồng. Tre ôm ấp thôn làng, chứng kiến những 
+  dấu mốc oai hùng và cả những nếp ngày đầm ấm. Mạnh mẽ và uyển chuyển, 
+  "chất" tre ngày nay tiếp tục chảy trong những vật dụng thân thuộc, 
+  bền theo thời gian và vững cho sức khoẻ. Gìn giữ, phát triển sản 
+  phẩm từ tre nhằm lưu giữ hồn Việt, lan toả phong cách sống an lành, 
+  lạc quan chính là ý nghĩa ẩn dưới thương hiệu "Thiêng Việt".
+`
+
 class Welcome extends Component {
 
   redirect = (to) => {
@@ -25,7 +37,7 @@ class Welcome extends Component {
         <Typography variant="h1">Chào mừng</Typography>
       </Grid>
       <Grid item xs={10} md={8}>
-        <Typography variant="h6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quam congue leo gravida morbi. Fusce tortor laoreet nunc eu. Scelerisque enim scelerisque velit scelerisque sagittis, cursus posuere viverra. Gravida id mauris nisi et. Laoreet sed quis turpis sit eu enim. Duis etiam hendrerit eu non cras fermentum neque aliquam. Facilisis purus.</Typography>
+        <Typography variant="h6">{content}</Typography>
       </Grid>
       <Grid item xs={12}>
         <Drain />

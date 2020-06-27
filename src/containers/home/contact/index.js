@@ -14,6 +14,23 @@ import Drain from 'components/drain';
 import styles from './styles';
 import utils from 'helpers/utils';
 
+const content = `
+  Say đắm chất liệu thiên nhiên & tin vào năng lực dân tộc, Với tinh thần 
+  "Thượng tôn tinh hoa đất Việt", Thiêng Việt mang tầm nhìn phát triển 
+  những thế mạnh của quê hương trong đời sống hiện đại. Thiêng Việt đề 
+  ra sứ mệnh dùng tre để gầy dựng đời sống bền vững cho người sản xuất, 
+  người sử dụng lẫn môi trường:
+`
+const items = `
+• Sản phẩm thân thiện, bảo vệ với môi trường. Phát triển không gian xanh qua việc trồng tre gây rừng 
+• Gìn giữ khả năng thủ công - mỹ nghệ truyền thống & tạo thu nhập đến các nghệ nhân 
+• Truyền cảm hứng và gợi mở hướng phát triển 
+• Tôn vinh giá trị văn hoá Việt giữa đời sống hiện đại •
+`
+const conclusion = `
+  Tất cả sẽ tạo ra một vòng tròn phát triển lành mạnh về sức khoẻ - kinh tế - tinh thần giữa cộng đồng.
+`
+
 class Contact extends Component {
   constructor() {
     super();
@@ -38,6 +55,7 @@ class Contact extends Component {
   }
 
   render() {
+    const {classes} = this.props;
     return <Grid container spacing={2}>
       <Grid item xs={12} md={6}>
         <Grid container justify="center" spacing={2}>
@@ -45,7 +63,13 @@ class Contact extends Component {
             <Typography variant="h1">Về chúng tôi</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography variant="h6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu vestibulum, lorem felis eget. Gravida auctor risus erat pharetra vel odio molestie mi. Ipsum vitae urna porta amet potenti mi pellentesque eu. Est, integer gravida felis eget dolor turpis vitae adipiscing massa. Nulla adipiscing amet, ipsum mattis amet volutpat ac. Dolor pellentesque volutpat massa nibh tincidunt bibendum a, quisque massa. Duis nulla malesuada vulputate nunc egestas elit habitasse bibendum id. Hendrerit dapibus lectus vel id parturient. At sed porttitor vestibulum commodo, sed quam. Amet.</Typography>
+            <Typography variant="h6">{content}</Typography>
+          </Grid>
+          <Grid item xs={10} md={8}>
+            <Typography variant="h6">{items}</Typography>
+          </Grid>
+          <Grid item xs={10} md={8}>
+            <Typography variant="h6">{conclusion}</Typography>
           </Grid>
           <Grid item xs={12}>
             <Drain />
@@ -58,7 +82,10 @@ class Contact extends Component {
             <Typography variant="h1">Liên hệ</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography variant="h6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet eu sit diam, sagittis, sed id turpis egestas elementum. A eget mi dis magna in tortor nec. Et purus pharetra cras feugiat lectus vel vitae lobortis non. Viverra ut nibh quis nulla ultricies tristique feugiat. Bibendum enim vitae tellus auctor viverra non scelerisque. Massa.</Typography>
+            <Typography variant="h6"><span className={classes.underline}>Địa chỉ:</span> Số 30, Đường 68 CL, Phường Cát Lái, Quận 2, Thành phố Hồ Chí Minh.</Typography>
+          </Grid>
+          <Grid item xs={10} md={8}>
+            <Typography variant="h6"><span className={classes.underline}>Số điện thoại:</span>  078.3333.689</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
             <Typography variant="h6">Đăng ký email để nhận thông báo về các chương trình khuyến mãi và quà tặng từ Thiêng Việt.</Typography>
