@@ -29,7 +29,7 @@ const MENU = {
   message: { name: 'Tin nhắn', value: 'message', icon: <ChatRounded />, disabled: true },
   wallet: { name: 'Ví', value: 'wallet', icon: <AccountBalanceWalletRounded />, disabled: true },
   history: { name: 'Lịch sử mua hàng', value: 'history', icon: <TimelineRounded />, disabled: true },
-  settings: { name: 'Cài đặt', value: 'settings', icon: <SettingsRounded />, disabled: true },
+  settings: { name: 'Cài đặt', value: 'settings', icon: <SettingsRounded />, disabled: false },
 }
 
 class Menu extends Component {

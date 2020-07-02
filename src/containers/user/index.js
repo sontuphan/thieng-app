@@ -57,7 +57,7 @@ class User extends Component {
           <Route exact path="/user/:email/factory" component={UserFactory} />
           <Route exact path="/user/:email/orders" component={UserOrders} />
           {/* <Route exact path="/user/:email/message" component={null} /> */}
-          {/* <Route exact path="/user/:email/settings" component={UserSettings} /> */}
+          <Route exact path="/user/:email/settings" component={UserSettings} />
         </Switch>
       </Grid>
     </Grid>
