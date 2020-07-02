@@ -57,7 +57,10 @@ class RichComment extends Component {
                 </IconButton>
               </InputAdornment>
             ),
-          }} multiline fullWidth />
+          }}
+          multiline
+          fullWidth
+        />
       </Grid>
     </Grid>
   }

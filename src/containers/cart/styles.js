@@ -10,5 +10,8 @@ export default theme => ({
   },
   icon: {
     height: 36,
-  }
+  },
+  adornment: {
+    marginRight: 0
+  },
 });

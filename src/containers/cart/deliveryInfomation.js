@@ -12,15 +12,20 @@ import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import {
   HomeRounded, BusinessRounded, LocationCityRounded,
+  SaveRounded,
 } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 
 import { toogleCart, setCart } from 'modules/cart.reducer';
 import { getUser } from 'modules/bucket.reducer';
+import { updateUser } from 'modules/user.reducer';
 
 import styles from './styles';
 
@@ -44,9 +49,13 @@ class DeliveryInformation extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const { auth } = this.props;
+    if (!isEqual(prevProps.auth, auth)) {
+      this.loadData();
+    }
     const { user, selectedAddress } = this.state;
     if (!isEqual(prevState.user, user)) {
-      return this.setState({
+      this.setState({
         receiverName: user.displayname,
         receiverPhone: user.phone || '',
         receiverAddress: (user.addresses && user.addresses[selectedAddress]) || '',
@@ -55,11 +64,24 @@ class DeliveryInformation extends Component {
   }
 
   loadData = () => {
-    const { auth, getUser } = this.props;
-    const userId = auth._id;
-    return getUser(userId).then(user => {
+    const { auth: { _id }, getUser } = this.props;
+    return getUser(_id).then(user => {
       if (user) return this.setState({ user });
     }).catch(console.error);
+  }
+
+  updatePhone = () => {
+    const { updateUser } = this.props;
+    const { receiverPhone } = this.state;
+    return updateUser({ phone: receiverPhone });
+  }
+
+  updateAddress = () => {
+    const { updateUser } = this.props;
+    const { user, receiverAddress, selectedAddress } = this.state;
+    let addresses = user.addresses;
+    addresses[selectedAddress] = receiverAddress;
+    return updateUser({ addresses });
   }
 
   returnData = () => {
@@ -143,6 +165,17 @@ class DeliveryInformation extends Component {
           variant="outlined"
           value={this.state.receiverPhone}
           onChange={this.onPhone}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="start" className={classes.adornment}>
+                <Tooltip title="Lưu số điện thoại này cho bạn">
+                  <IconButton size="small" onClick={this.updatePhone}>
+                    <SaveRounded fontSize="small" color="secondary" />
+                  </IconButton>
+                </Tooltip>
+              </InputAdornment>
+            ),
+          }}
           multiline
           fullWidth
         />
@@ -150,17 +183,6 @@ class DeliveryInformation extends Component {
       {/* Address */}
       <Grid item xs={12}>
         <Grid container className={classes.noWrap} spacing={2}>
-          <Grid item className={classes.stretch}>
-            <TextField
-              label="Địa chỉ người nhận"
-              color="secondary"
-              variant="outlined"
-              value={this.state.receiverAddress}
-              onChange={this.onAddress}
-              multiline
-              fullWidth
-            />
-          </Grid>
           <Grid item>
             <Select
               variant="outlined"
@@ -193,6 +215,28 @@ class DeliveryInformation extends Component {
               </MenuItem>
             </Select>
           </Grid>
+          <Grid item className={classes.stretch}>
+            <TextField
+              label="Địa chỉ người nhận"
+              color="secondary"
+              variant="outlined"
+              value={this.state.receiverAddress}
+              onChange={this.onAddress}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start" className={classes.adornment}>
+                    <Tooltip title="Lưu địa chỉ này cho bạn">
+                      <IconButton size="small" onClick={this.updateAddress}>
+                        <SaveRounded fontSize="small" color="secondary" />
+                      </IconButton>
+                    </Tooltip>
+                  </InputAdornment>
+                ),
+              }}
+              multiline
+              fullWidth
+            />
+          </Grid>
         </Grid>
       </Grid>
       {/* Note */}
@@ -219,7 +263,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   toogleCart, setCart,
-  getUser
+  getUser,
+  updateUser,
 }, dispatch);
 
 DeliveryInformation.defaultProps = {
