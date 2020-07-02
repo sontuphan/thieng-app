@@ -8,7 +8,6 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Badge from '@material-ui/core/Badge';
 
 import { ShoppingCartRounded, ExpandMoreRounded } from '@material-ui/icons';

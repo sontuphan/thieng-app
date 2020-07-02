@@ -20,7 +20,7 @@ import User from 'containers/user';
 // Apllications
 import Search from 'containers/search';
 import Cart from 'containers/cart';
-// import Notification from 'containers/notification';
+import Notification from 'containers/notification';
 import Editor from 'containers/editor';
 
 import theme from 'static/styles/theme';
@@ -75,9 +75,9 @@ class App extends Component {
             <Grid item xs={12}>
               <Cart />
             </Grid>
-            {/* <Grid item xs={12}>
+            <Grid item xs={12}>
               <Notification />
-            </Grid> */}
+            </Grid>
             <Grid item xs={12}>
               <Editor />
             </Grid>

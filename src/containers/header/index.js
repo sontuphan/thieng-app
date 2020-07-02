@@ -19,7 +19,7 @@ import Divider from '@material-ui/core/Divider';
 
 import {
   MenuRounded, NotificationsRounded,
-  SearchRounded, PersonRounded, ShoppingBasketRounded
+  SearchRounded, PersonRounded
 } from '@material-ui/icons';
 
 import styles from './styles';
@@ -71,13 +71,9 @@ class Header extends Component {
     this.props.toogleSearch();
   }
 
-  // onNotification = () => {
-  //   this.onToggleDrawer(false);
-  //   this.props.toogleNotification();
-  // }
-
-  onCart = () => {
+  onNotification = () => {
     this.onToggleDrawer(false);
+    // this.props.toogleNotification();
     this.props.toogleCart();
   }
 
@@ -186,18 +182,10 @@ class Header extends Component {
               </IconButton>
             </Grid>
             {/* Notification app */}
-            {/* <Grid item>
-                <IconButton size="small" color="secondary" onClick={this.onNotification}>
-                  <Badge badgeContent={3} color="primary">
-                    <NotificationsRounded />
-                  </Badge>
-                </IconButton>
-              </Grid> */}
-            {/* Grocery app */}
             <Grid item>
-              <IconButton size="small" color="secondary" onClick={this.onCart}>
+              <IconButton size="small" color="secondary" onClick={this.onNotification}>
                 <Badge badgeContent={data.length} color="primary">
-                  <ShoppingBasketRounded />
+                  <NotificationsRounded />
                 </Badge>
               </IconButton>
             </Grid>
