@@ -77,7 +77,8 @@ class ProcesingOrders extends Component {
   }
 
   onClearCondition = () => {
-    const condition = delete this.state.condition._id;
+    let { condition } = this.state;
+    delete condition._id;
     return this.setState({ condition: { ...condition } }, () => {
       return this.onSearch();
     });
@@ -96,6 +97,7 @@ class ProcesingOrders extends Component {
             placeholder="Mã đơn hàng"
             size="small"
             onChange={this.onChangeCondition}
+            value={this.state.condition._id || ''}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start" className={classes.startAdornment}>
