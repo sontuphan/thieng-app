@@ -11,6 +11,7 @@ import { } from '@material-ui/icons';
 import { TopDrawer } from 'components/drawers';
 import PrimaryNotification from './primary';
 import SecondaryNotification from './secondary';
+import FloatNotification from './float';
 
 import { toogleNotification } from 'modules/notification.reducer';
 
@@ -45,6 +46,7 @@ class Notification extends Component {
           </Grid>
         </TopDrawer>
       </Grid>
+      <FloatNotification />
     </Grid>
   }
 }

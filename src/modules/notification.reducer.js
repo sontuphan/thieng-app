@@ -9,6 +9,11 @@ import EventSchema from 'data/events';
 const defaultState = {
   notification: [],
   events: [],
+  confirmation: {
+    message: '',
+    type: 'info',
+    visible: false
+  },
   visible: false
 }
 
@@ -133,6 +138,36 @@ export const getEvents = () => {
   }
 }
 
+/**
+ * SET CONFIRMATION
+ */
+export const SET_CONFIRMATION = 'SET_CONFIRMATION';
+export const SET_CONFIRMATION_OK = 'SET_CONFIRMATION_OK';
+export const SET_CONFIRMATION_FAIL = 'SET_CONFIRMATION_FAIL';
+
+export const setConfirmation = (visible, message = '', type = 'info') => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: SET_CONFIRMATION });
+
+      if (typeof visible !== 'boolean') {
+        const er = 'Invalid input'
+        dispatch({ type: SET_CONFIRMATION_FAIL, reason: er });
+        return reject(er);
+      }
+
+      dispatch({
+        type: SET_CONFIRMATION_OK,
+        reason: null,
+        data: {
+          confirmation: { visible, message, type },
+        }
+      });
+      return resolve(null);
+    });
+  }
+}
+
 
 
 /**
@@ -151,6 +186,10 @@ export default (state = defaultState, action) => {
     case GET_EVENTS_OK:
       return { ...state, ...action.data };
     case GET_EVENTS_FAIL:
+      return { ...state, ...action.data };
+    case SET_CONFIRMATION_OK:
+      return { ...state, ...action.data };
+    case SET_CONFIRMATION_FAIL:
       return { ...state, ...action.data };
     default:
       return state;

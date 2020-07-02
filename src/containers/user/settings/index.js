@@ -22,6 +22,7 @@ import Drain from 'components/drain';
 
 import { getUser } from 'modules/bucket.reducer';
 import { updateUser } from 'modules/user.reducer';
+import { setConfirmation } from 'modules/notification.reducer';
 
 import styles from './styles';
 
@@ -56,8 +57,12 @@ class UserSettings extends Component {
 
   onSave = () => {
     const { user } = this.state;
-    const { updateUser } = this.props;
-    return updateUser(user);
+    const { updateUser, setConfirmation } = this.props;
+    return updateUser(user).then(re => {
+      return setConfirmation(true, 'Cập nhật thông tin thành công', 'success');
+    }).catch(er => {
+      return setConfirmation(true, 'Đã có lỗi xảy ra', 'error');
+    });
   }
 
   onAddress = (e) => {
@@ -204,6 +209,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   getUser,
   updateUser,
+  setConfirmation,
 }, dispatch);
 
 export default withRouter(connect(
