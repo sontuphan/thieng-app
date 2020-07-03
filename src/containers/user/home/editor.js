@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 
 import { SaveAltRounded, PublicRounded, ExpandMoreRounded } from '@material-ui/icons';
@@ -19,6 +18,7 @@ import Blueprint from 'components/blueprint';
 import { BottomDrawer } from 'components/drawers';
 import Drain from 'components/drain';
 import Cascade from 'components/blueprint/cascade';
+import { UserCard } from 'components/cards';
 
 import { addProject } from 'modules/projects.reducer';
 
@@ -137,18 +137,7 @@ class Editor extends Component {
                     <Grid item xs={10} md={12}>
                       <Grid container justify="space-between" alignItems="center" spacing={2}>
                         <Grid item>
-                          <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
-                            <Grid item>
-                              <Avatar
-                                alt={this.props.auth.displayname}
-                                src={this.props.auth.avatar}
-                                className={classes.avatar}
-                              />
-                            </Grid>
-                            <Grid item>
-                              <Typography>{this.props.auth.displayname}</Typography>
-                            </Grid>
-                          </Grid>
+                          <UserCard userId={this.props.auth._id} />
                         </Grid>
                         <Grid item>
                           <Typography>{this.state.status.length}/{MAX_LENGTH_STATUS}</Typography>

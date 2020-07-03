@@ -48,6 +48,38 @@ export const getOrders = (condition, limit, page) => {
 }
 
 /**
+ * Get my orders
+ */
+export const GET_MY_ORDERS = 'GET_MY_ORDERS';
+export const GET_MY_ORDERS_OK = 'GET_MY_ORDERS_OK';
+export const GET_MY_ORDERS_FAIL = 'GET_MY_ORDERS_FAIL';
+
+export const getMyOrders = (condition, limit, page) => {
+  return (dispatch, prevState) => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: GET_MY_ORDERS });
+
+      const { order: { data, pagination } } = prevState();
+      const accumulative = page === pagination.page + 1;
+      const { api: { base } } = configs;
+      return api.get(`${base}/private/my-orders`, { condition, limit, page }).then(re => {
+        dispatch({
+          type: GET_MY_ORDERS_OK,
+          data: {
+            data: accumulative ? data.concat(re.data) : re.data,
+            pagination: re.pagination,
+          }
+        });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: GET_MY_ORDERS_FAIL, reason: er });
+        return reject(er);
+      });
+    });
+  }
+}
+
+/**
  * Add order
  */
 export const ADD_ORDER = 'ADD_ORDER';
@@ -128,6 +160,10 @@ export default (state = defaultState, action) => {
     case GET_ORDERS_OK:
       return { ...state, ...action.data };
     case GET_ORDERS_FAIL:
+      return { ...state, ...action.data };
+    case GET_MY_ORDERS_OK:
+      return { ...state, ...action.data };
+    case GET_MY_ORDERS_FAIL:
       return { ...state, ...action.data };
     case ADD_ORDER_OK:
       return { ...state, ...action.data };

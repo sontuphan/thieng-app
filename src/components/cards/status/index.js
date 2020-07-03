@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 
@@ -11,13 +10,13 @@ import { FavoriteRounded, ShareRounded, MoreHorizRounded } from '@material-ui/ic
 
 import { ImageCard } from 'components/cards';
 import { LiteComment } from 'components/comments';
+import { UserCard } from 'components/cards';
 
 import { useStyles } from './styles';
 import { useData } from './module';
 import utils from 'helpers/utils';
 
 function StatusCard(props) {
-
   const classes = useStyles();
   const data = useData(props._id);
   let { auth } = props;
@@ -28,18 +27,7 @@ function StatusCard(props) {
       <Paper elevation={0} className={classes.paper}>
         <Grid container alignItems="center" spacing={1}>
           <Grid item xs={10}>
-            <Grid container alignItems="center" spacing={1}>
-              <Grid item>
-                <Avatar
-                  className={classes.avatar}
-                  alt={data.author.displayname}
-                  src={data.author.avatar}
-                />
-              </Grid>
-              <Grid item>
-                <Typography>{data.author.displayname}</Typography>
-              </Grid>
-            </Grid>
+            <UserCard userId={data.userId} />
           </Grid>
           <Grid item xs={2}>
             <Grid container justify="flex-end" alignItems="center" spacing={2}>

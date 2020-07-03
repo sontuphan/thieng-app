@@ -50,12 +50,7 @@ class NotiCard extends Component {
   render() {
     let { classes } = this.props;
 
-    return <Grid
-      container
-      className={classes.noWrap}
-      alignItems="center"
-      spacing={2}
-    >
+    return <Grid container className={classes.noWrap} alignItems="center" spacing={2} >
       <Grid item>
         <Avatar alt={this.props.avatar} src={this.props.avatar} />
       </Grid>

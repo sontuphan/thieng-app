@@ -96,7 +96,7 @@ class RichComment extends Component {
           onClick={this.props.onMore}
           isLoading={this.props.isLoading}
         >
-          <Typography>More</Typography>
+          <Typography>Thêm</Typography>
         </CircularProgressButton>
       </Grid>
     </Grid>

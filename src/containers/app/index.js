@@ -85,7 +85,7 @@ class App extends Component {
 
         </Grid>
         <Grid item xs={12}>
-          <Drain large />
+          <Drain small />
         </Grid>
         <Grid item xs={10}>
           <Footer />

@@ -105,7 +105,7 @@ class PrimaryNotification extends Component {
           onClick={this.onMore}
           isLoading={this.state.isLoading}
         >
-          <Typography>More</Typography>
+          <Typography>Thêm</Typography>
         </CircularProgressButton>
       </Grid>
     </Grid>

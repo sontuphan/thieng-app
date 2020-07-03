@@ -97,7 +97,7 @@ class SecondaryNotification extends Component {
           onClick={this.onMore}
           disabled={this.state.isLoading}
         >
-          <Typography>More</Typography>
+          <Typography>Thêm</Typography>
         </Button>
       </Grid>
 

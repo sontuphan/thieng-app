@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link as RouterLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import { Swipeable } from 'react-swipeable';
 import async from 'async';
@@ -10,7 +10,6 @@ import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Badge from '@material-ui/core/Badge';
@@ -22,6 +21,7 @@ import {
 } from '@material-ui/icons';
 
 import Drain from 'components/drain';
+import { UserCard } from 'components/cards';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -35,7 +35,6 @@ class Shelf extends Component {
 
     this.state = {
       files: [],
-      author: {},
       showing: 0,
       translate: 0,
       color: '#ffffff',
@@ -43,7 +42,6 @@ class Shelf extends Component {
   }
 
   componentDidMount() {
-    this.loadUser();
     this.loadFiles();
   }
 
@@ -61,13 +59,6 @@ class Shelf extends Component {
         return this.setState({ color });
       });
     }
-  }
-
-  loadUser = () => {
-    const { userId, getUser } = this.props;
-    return getUser(userId).then(user => {
-      this.setState({ author: user });
-    }).catch(console.error);
   }
 
   loadFiles = () => {
@@ -102,8 +93,9 @@ class Shelf extends Component {
   }
 
   render() {
-    const { classes, editable } = this.props;
-    const { showing, files, author } = this.state;
+    const { classes } = this.props;
+    const { userId, editable } = this.props;
+    const { showing, files } = this.state;
     const file = files[showing] || {};
 
     return <Swipeable onSwipedLeft={this.onNext} onSwipedRight={this.onBack}>
@@ -135,14 +127,7 @@ class Shelf extends Component {
             />
             {/* Author */}
             <Grid item xs={6}>
-              <Grid container alignItems="center" spacing={1} >
-                <Grid item className={classes.link} component={RouterLink} to={'#'}>
-                  <Avatar alt={author.displayname} src={author.avatar} />
-                </Grid>
-                <Grid item xs={8} className={classes.link} component={RouterLink} to={'#'}>
-                  <Typography style={{ color: this.state.color }} noWrap>{author.displayname}</Typography>
-                </Grid>
-              </Grid>
+              <UserCard color={this.state.color} userId={userId} />
             </Grid>
             {/* Actions */}
             <Grid item xs={6}>
