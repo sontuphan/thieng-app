@@ -12,8 +12,17 @@ export const useStyles = makeStyles(theme => ({
     //   boxShadow: theme.shadows[8],
     // },
   },
-  expansion: {
-    backgroundColor: '#ffffff',
+  expansionMore: {
     marginTop: -theme.spacing(6)
+  },
+  expansionLess: {
+    marginTop: -theme.spacing(6)
+  },
+  subexpansion: {
+    borderRadius: theme.shape.borderRadius,
+    width: '100%'
+  },
+  padding: {
+    paddingRight: `${theme.spacing(2)}px !important`
   }
 }));

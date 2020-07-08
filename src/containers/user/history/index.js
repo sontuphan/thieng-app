@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
@@ -73,9 +73,15 @@ class UserHistory extends Component {
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
-            {data.map(({ _id }, i) => <MyOrder orderId={_id} key={i} />)}
-          </Grid>
+          {data.map(({ _id }, i) => <Fragment key={i}>
+            <Grid item xs={12}>
+              <MyOrder orderId={_id} />
+            </Grid>
+            <Grid item xs={12}>
+              <Drain small />
+            </Grid>
+          </Fragment>
+          )}
         </Grid>
       </Grid>
       <Grid item xs={12}>

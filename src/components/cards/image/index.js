@@ -5,12 +5,20 @@ import Grid from '@material-ui/core/Grid';
 
 import { useStyles } from './styles';
 import { useData } from './module';
+import utils from 'helpers/utils';
 
 function ImageCard(props) {
+  // Define hooks
   const classes = useStyles();
   const data = useData(props._id);
-
+  // State changes
   if (!data) return null;
+  utils.extractImageColors(data.source).then(re => {
+    const backgroundColors = Object.keys(re).map(key => re[key].hex);
+    const textColors = Object.keys(re).map(key => re[key].bodyTextColor);
+    return props.onChange({ backgroundColors, textColors });
+  }).catch(console.error);
+
   return <Grid container justify="center">
     <Grid item xs={12} onClick={props.onClick}>
       <div className={classes.image}>
@@ -38,12 +46,14 @@ function ImageCard(props) {
 }
 
 ImageCard.defaultProps = {
-  onClick: () => { }
+  onClick: () => { },
+  onChange: () => { }
 }
 
 ImageCard.propTypes = {
   _id: PropTypes.string.isRequired,
   onClick: PropTypes.func,
+  onChange: PropTypes.func,
 }
 
 export default ImageCard;

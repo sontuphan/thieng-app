@@ -9,7 +9,7 @@ import Chip from '@material-ui/core/Chip';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 
-import { ExpandMoreRounded, ExpandLessRounded } from '@material-ui/icons';
+import { ArrowUpwardRounded, ArrowDownwardRounded } from '@material-ui/icons';
 
 import { ImageCard } from 'components/cards';
 
@@ -20,27 +20,34 @@ import utils from 'helpers/utils';
 function GalleryCard(props) {
   // Define hooks
   const [checked, setChecked] = useState(false);
+  const [backgroundColor, setBackgroundColor] = useState('#ffffff');
+  const [textColor, setTextColor] = useState('#000000');
   const [height, setHeight] = useState(40);
   const myRef = useRef();
   const classes = useStyles();
   const data = useData(props.itemId);
   useEffect(() => {
-    if (myRef.current)
-      return setHeight(myRef.current.offsetWidth / 2);
+    if (myRef.current) return setHeight(myRef.current.offsetWidth / 2);
   }, [data]);
   // Define functions
   if (!data) return null;
   const onCollapse = () => setChecked((prev) => !prev);
-  const imageProps = !checked ? onCollapse :
-    props.onClick ? { onClick: props.onClick } : { component: Link, to: `/item/${data._id}` }
+  const imageProps = props.onClick ? { onClick: props.onClick } : { component: Link, to: `/item/${data._id}` }
+  const onColors = ({ backgroundColors, textColors }) => {
+    setBackgroundColor(backgroundColors[3]);
+    setTextColor(textColors[3]);
+  }
   // Render component
   return <Grid container spacing={2}>
     <Grid item xs={12} ref={myRef}>
       <Collapse in={checked} collapsedHeight={height}>
-        <Paper elevation={0} className={classes.paper}>
+        <Paper elevation={0} className={classes.paper} style={{ backgroundColor: backgroundColor }}>
           <Grid container justify="center" spacing={2}>
             <Grid item xs={6} {...imageProps}>
-              <ImageCard _id={data.thumbnailId || data.fileIds[0]} />
+              <ImageCard
+                _id={data.thumbnailId || data.fileIds[0]}
+                onChange={onColors}
+              />
             </Grid>
             <Grid item xs={6}>
               <Grid container spacing={2}>
@@ -52,20 +59,20 @@ function GalleryCard(props) {
                   </Grid>
                 </Grid>
                 <Grid item xs={12} className={classes.cursor}>
-                  <Typography variant="h3">{data.name}</Typography>
+                  <Typography variant="h3" style={{ color: textColor }}>{data.name}</Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <Grid container spacing={1} alignItems="center" justify="flex-end">
                     <Grid item>
-                      <Typography>{utils.prettyNumber(data.price, 'long')} ₫</Typography>
+                      <Typography style={{ color: textColor }}>{utils.prettyNumber(data.price, 'long')} ₫</Typography>
                     </Grid>
-                    <Grid item>
+                    {props.amount ? <Grid item>
                       <Chip className={classes.chip} color="primary" label={props.amount} size="small" />
-                    </Grid>
+                    </Grid> : null}
                   </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography>{data.description1}</Typography>
+                  <Typography style={{ color: textColor }}>{data.description1}</Typography>
                 </Grid>
               </Grid>
             </Grid>
@@ -73,14 +80,20 @@ function GalleryCard(props) {
         </Paper>
       </Collapse>
     </Grid>
-    <Grid item xs={12} className={classes.expansion}>
-      <Grid container spacing={2} justify="flex-end">
-        <Grid item>
-          <IconButton size="small" onClick={onCollapse}>
-            {checked ? <ExpandLessRounded /> : <ExpandMoreRounded />}
-          </IconButton>
+    <Grid item xs={12} className={checked ? classes.expansionMore : classes.expansionLess}>
+      <div
+        className={classes.subexpansion}
+        style={{ backgroundImage: `linear-gradient(to bottom, ${backgroundColor + '00'}, ${backgroundColor + '19'}, ${backgroundColor + 'ff'}, ${backgroundColor + 'ff'})` }}
+      >
+        <Grid container spacing={2} justify="flex-end">
+          <Grid item className={classes.padding}>
+            <IconButton size="small" onClick={onCollapse}>
+              {checked ? <ArrowUpwardRounded fontSize="small" style={{ color: textColor }} />
+                : <ArrowDownwardRounded fontSize="small" style={{ color: textColor }} />}
+            </IconButton>
+          </Grid>
         </Grid>
-      </Grid>
+      </div>
     </Grid>
   </Grid >
 }
