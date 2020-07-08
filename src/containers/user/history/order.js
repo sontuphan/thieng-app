@@ -39,7 +39,7 @@ class MyOrder extends Component {
   renderItems = (order) => {
     const { items } = order;
     if (!items) return null;
-    return items.map((item, i) => <Grid item xs={12} md={6} key={i}>
+    return items.map((item, i) => <Grid item xs={12} md={6} lg={4} key={i}>
       <GalleryCard
         itemId={item.itemId}
         amount={item.amount ? 'x' + item.amount : null}
