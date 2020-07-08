@@ -49,7 +49,7 @@ Utils.prettyNumber = (num, type = 'long') => {
   }
 }
 
-Utils.prettyDatetime = (datetime)=>{
+Utils.prettyDatetime = (datetime) => {
   return dateformat(datetime, 'HH:MM, dd/mm/yyyy');
 }
 
@@ -109,6 +109,38 @@ Utils.discountTagToNumber = (tag) => {
   const tester = /\d?%/;
   if (!tester.test(tag)) return false;
   return Number(tag.split('%')[0]);
+}
+
+Utils.translatePaymentMethod = (paymentMethod) => {
+  switch (paymentMethod) {
+    case 'cod':
+      return 'Giao hàng nhận tiền (COD)';
+    case 'momo':
+      return 'Ví điện tử Momo';
+    case 'credit':
+      return 'Thẻ ghi nợ (Credit)';
+    case 'bank':
+      return 'Thẻ ngân hàng';
+    default:
+      return 'Giao hàng nhận tiền (COD)';
+  }
+}
+
+Utils.translateOrderStatus = (status) => {
+  switch (status) {
+    case 'waiting':
+      return 'Chờ xử lý';
+    case 'packaging':
+      return 'Đang đóng gói';
+    case 'delivering':
+      return 'Đang vận chuyển';
+    case 'canceled':
+      return 'Đã hủy';
+    case 'done':
+      return 'Hoàn thành';
+    default:
+      return 'Lỗi';
+  }
 }
 
 export default Utils;

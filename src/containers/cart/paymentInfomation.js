@@ -28,6 +28,13 @@ import styles from './styles';
 import utils from 'helpers/utils';
 
 
+const PAYMENT_METHODS = [
+  { value: 'cod', icon: <LocalAtmRounded fontSize="small" />, disabled: false },
+  { value: 'momo', icon: <Momo fontSize="small" />, disabled: true },
+  { value: 'credit', icon: <CreditCardRounded fontSize="small" />, disabled: true },
+  { value: 'bank', icon: <AccountBalanceRounded fontSize="small" />, disabled: true },
+]
+
 class PaymentInfomation extends Component {
   constructor() {
     super();
@@ -57,7 +64,7 @@ class PaymentInfomation extends Component {
 
   getBill = () => {
     const { cart: { data } } = this.props;
-    const amount = data.reduce((total, {amount,price}) => total + amount * price, 0);
+    const amount = data.reduce((total, { amount, price }) => total + amount * price, 0);
     return `${utils.prettyNumber(amount, 'long')} ₫`;
   }
 
@@ -116,46 +123,16 @@ class PaymentInfomation extends Component {
             onChange={this.onPayment}
             classes={{ root: classes.selectIcon }}
           >
-            <MenuItem value={'cod'}>
+            {PAYMENT_METHODS.map((method, i) => <MenuItem value={method.value} key={i} disabled={method.disabled}>
               <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
                 <Grid item className={classes.icon}>
-                  <LocalAtmRounded fontSize="small" />
+                  {method.icon}
                 </Grid>
                 <Grid item className={classes.stretch}>
-                  <Typography>Giao hàng nhận tiền (COD)</Typography>
+                  <Typography>{utils.translatePaymentMethod(method.value)}</Typography>
                 </Grid>
               </Grid>
-            </MenuItem>
-            <MenuItem value={'momo'} disabled>
-              <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
-                <Grid item className={classes.icon}>
-                  <Momo fontSize="small" />
-                </Grid>
-                <Grid item className={classes.stretch}>
-                  <Typography>Momo</Typography>
-                </Grid>
-              </Grid>
-            </MenuItem>
-            <MenuItem value={'credit'} disabled>
-              <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
-                <Grid item className={classes.icon}>
-                  <CreditCardRounded fontSize="small" />
-                </Grid>
-                <Grid item className={classes.stretch}>
-                  <Typography>Thẻ ghi nợ (Credit)</Typography>
-                </Grid>
-              </Grid>
-            </MenuItem>
-            <MenuItem value={'bank'} disabled>
-              <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
-                <Grid item className={classes.icon}>
-                  <AccountBalanceRounded fontSize="small" />
-                </Grid>
-                <Grid item className={classes.stretch}>
-                  <Typography>Thẻ ngân hàng</Typography>
-                </Grid>
-              </Grid>
-            </MenuItem>
+            </MenuItem>)}
           </Select>
         </FormControl>
       </Grid>

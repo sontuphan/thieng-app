@@ -8,8 +8,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { } from '@material-ui/icons';
-
 import { UserCard, GalleryCard } from 'components/cards';
 
 import styles from './styles';
@@ -41,15 +39,14 @@ class MyOrder extends Component {
   renderItems = (order) => {
     const { items } = order;
     if (!items) return null;
-    console.log(order)
     return items.map((item, i) => <Grid item xs={12} md={6} key={i}>
       <GalleryCard
         itemId={item.itemId}
         amount={item.amount ? 'x' + item.amount : null}
         body={<Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography><strong>Tình thạng: </strong>{order.status}</Typography>
-            <Typography><strong>Thanh toán: </strong>{order.paymentMethod}</Typography>
+            <Typography><strong>Tình thạng: </strong>{utils.translateOrderStatus(order.status)}</Typography>
+            <Typography><strong>Thanh toán: </strong>{utils.translatePaymentMethod(order.paymentMethod)}</Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography><strong>Người nhận: </strong>{order.receiverName}</Typography>

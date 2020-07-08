@@ -27,24 +27,18 @@ import { getOrder } from 'modules/bucket.reducer';
 import { updateOrderStatus } from 'modules/order.reducer';
 
 import styles from './styles';
+import utils from 'helpers/utils';
 
 const ACTIONS = [
-  { value: 'waiting', name: 'Chờ xử lý', icon: <ScheduleRounded /> },
-  { value: 'packaging', name: 'Đang đóng gói', icon: <UnarchiveRounded /> },
-  { value: 'delivering', name: 'Đang vận chuyển', icon: <FlightRounded /> },
-  { value: 'canceled', name: 'Đã hủy', icon: <BlockRounded /> },
-  { value: 'done', name: 'Hoàn thành', icon: <ThumbUpAltRounded /> },
+  { value: 'waiting', icon: <ScheduleRounded /> },
+  { value: 'packaging', icon: <UnarchiveRounded /> },
+  { value: 'delivering', icon: <FlightRounded /> },
+  { value: 'canceled', icon: <BlockRounded /> },
+  { value: 'done', icon: <ThumbUpAltRounded /> },
 ]
 
 
 class Order extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      step: 0
-    }
-  }
 
   componentDidMount() {
     this.loadData();
@@ -75,7 +69,7 @@ class Order extends Component {
       startIcon={action.icon}
       onClick={updateStatus}
     >
-      <Typography>{action.name}</Typography>
+      <Typography>{utils.translateOrderStatus(action.value)}</Typography>
     </Button>
   }
 
