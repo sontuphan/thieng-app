@@ -38,10 +38,26 @@ class MyOrder extends Component {
     });
   }
 
-  renderItems = (items) => {
+  renderItems = (order) => {
+    const { items } = order;
     if (!items) return null;
+    console.log(order)
     return items.map((item, i) => <Grid item xs={12} md={6} key={i}>
-      <GalleryCard itemId={item.itemId} amount={item.amount ? 'x' + item.amount : null} />
+      <GalleryCard
+        itemId={item.itemId}
+        amount={item.amount ? 'x' + item.amount : null}
+        body={<Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Typography><strong>Tình thạng: </strong>{order.status}</Typography>
+            <Typography><strong>Thanh toán: </strong>{order.paymentMethod}</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography><strong>Người nhận: </strong>{order.receiverName}</Typography>
+            <Typography><strong>Số điện thoại: </strong>{order.receiverPhone}</Typography>
+            <Typography><strong>Địa chỉ: </strong>{order.receiverAddress}</Typography>
+          </Grid>
+        </Grid>}
+      />
     </Grid>)
   }
 
@@ -61,7 +77,7 @@ class MyOrder extends Component {
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={2}>
-          {this.renderItems(order.items)}
+          {this.renderItems(order)}
         </Grid>
       </Grid>
     </Grid>

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useStore } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
@@ -19,6 +20,7 @@ import utils from 'helpers/utils';
 
 function GalleryCard(props) {
   // Define hooks
+  const { ui } = useStore().getState();
   const [checked, setChecked] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState('#ffffff');
   const [textColor, setTextColor] = useState('#000000');
@@ -28,7 +30,7 @@ function GalleryCard(props) {
   const data = useData(props.itemId);
   useEffect(() => {
     if (myRef.current) return setHeight(myRef.current.offsetWidth / 2);
-  }, [data]);
+  }, [data, ui]);
   // Define functions
   if (!data) return null;
   const onCollapse = () => setChecked((prev) => !prev);
@@ -44,10 +46,7 @@ function GalleryCard(props) {
         <Paper elevation={0} className={classes.paper} style={{ backgroundColor: backgroundColor }}>
           <Grid container justify="center" spacing={2}>
             <Grid item xs={6} {...imageProps}>
-              <ImageCard
-                _id={data.thumbnailId || data.fileIds[0]}
-                onChange={onColors}
-              />
+              <ImageCard _id={data.thumbnailId || data.fileIds[0]} onChange={onColors} />
             </Grid>
             <Grid item xs={6}>
               <Grid container spacing={2}>
@@ -76,6 +75,10 @@ function GalleryCard(props) {
                 </Grid>
               </Grid>
             </Grid>
+            <Grid item xs={12} style={{ color: textColor }}>
+              {props.body}
+            </Grid>
+            <Grid item xs={12} /> {/* Safe zone trick*/}
           </Grid>
         </Paper>
       </Collapse>
@@ -102,11 +105,13 @@ GalleryCard.defaultProps = {
   onClick: null,
   amount: '',
   // onClick is null then using route
+  body: null,
 }
 
 GalleryCard.propTypes = {
   itemId: PropTypes.string.isRequired,
   amount: PropTypes.string,
+  body: PropTypes.object,
   onClick: PropTypes.func,
 }
 
