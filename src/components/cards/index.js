@@ -5,9 +5,10 @@ import ProductCard from './product';
 import NotiCard from './noti';
 import EventCard from './event';
 import UserCard from './user';
+import GalleryCard from './gallery';
 
 export {
   StatusCard, ImageCard, PortraitCard,
   ProductCard, NotiCard, EventCard,
-  UserCard,
+  UserCard, GalleryCard,
 }

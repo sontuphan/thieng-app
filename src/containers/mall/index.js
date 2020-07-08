@@ -58,7 +58,7 @@ class Mall extends Component {
   renderItems = (items) => {
     if (!items || !items.length) return null;
     return <Grid container spacing={2}>
-      {items.map(item => <Grid key={item._id} item xs={6} sm={4} md={3} lg={2}>
+      {items.map((item, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
         <ProductCard itemId={item._id} />
       </Grid>)}
     </Grid>
