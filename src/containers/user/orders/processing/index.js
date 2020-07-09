@@ -12,7 +12,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 import Slide from '@material-ui/core/Slide';
-import Zoom from '@material-ui/core/Zoom';
 
 import Row, { Header } from '../row';
 import Order from '../order';
@@ -85,7 +84,7 @@ class ProcesingOrders extends Component {
 
     return <Grid container spacing={2}>
       <Grid item xs={12} >
-        <Zoom in={!this.state.visible} mountOnEnter unmountOnExit>
+        <Slide direction="right" in={!this.state.visible} mountOnEnter unmountOnExit>
           <SearchField
             variant="contained"
             placeholder="Mã đơn hàng"
@@ -93,7 +92,7 @@ class ProcesingOrders extends Component {
             onClear={this.onClear}
             fullWidth
           />
-        </Zoom>
+        </Slide>
       </Grid>
       <Grid item xs={12}>
         <Slide direction="right" in={!this.state.visible} mountOnEnter unmountOnExit>
