@@ -10,11 +10,9 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { } from '@material-ui/icons';
-
 import { TopDrawer } from 'components/drawers';
 import Drain from 'components/drain';
-import SearchToolbar from './toolbar';
+import SearchField from 'components/search';
 import { ProductCard } from 'components/cards';
 
 import { toogleSearch, searchText } from 'modules/search.reducer';
@@ -41,14 +39,11 @@ class Search extends Component {
   onSearch = (value) => {
     const condition = { $text: { $search: value } }
     return this.setState({ waiting: true }, () => {
-      return setTimeout(() => {
-        return this.props.searchText(condition).then(() => {
-          return this.setState({ waiting: false });
-        }).catch(er => {
-          console.error(er);
-          return this.setState({ waiting: false });
-        });
-      }, 1000);
+      return this.props.searchText(condition).then(() => {
+        return this.setState({ waiting: false });
+      }).catch(er => {
+        return this.setState({ waiting: false });
+      });
     });
   }
 
@@ -91,7 +86,12 @@ class Search extends Component {
                   <Divider />
                 </Grid>
                 <Grid item xs={6}>
-                  <SearchToolbar onClick={this.onSearch} fullWidth />
+                  <SearchField
+                    variant='outlined'
+                    placeholder="Tên sản phẩm"
+                    onSearch={this.onSearch}
+                    fullWidth
+                  />
                 </Grid>
               </Grid>
             </Grid>

@@ -13,14 +13,10 @@ import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 import Slide from '@material-ui/core/Slide';
 import Zoom from '@material-ui/core/Zoom';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import TextField from '@material-ui/core/TextField';
-
-import { SearchRounded, HighlightOffRounded } from '@material-ui/icons';
 
 import Row, { Header } from '../row';
 import Order from '../order';
+import SearchField from 'components/search';
 
 import { getOrders } from 'modules/order.reducer';
 
@@ -68,19 +64,18 @@ class ProcesingOrders extends Component {
     return this.setState({ visible: false, orderId: null });
   }
 
-  onSearch = () => {
-    return this.loadData(5, 0);
+  onSearch = (value) => {
+    const condition = { ...DEFAULT_CONDITION, _id: value }
+    this.setState({ condition }, () => {
+      return this.loadData(5, 0);
+    });
   }
 
-  onChangeCondition = (e) => {
-    return this.setState({ condition: { ...this.state.condition, _id: e.target.value } });
-  }
-
-  onClearCondition = () => {
-    let { condition } = this.state;
+  onClear = () => {
+    let condition = { ...this.state.condition }
     delete condition._id;
-    return this.setState({ condition: { ...condition } }, () => {
-      return this.onSearch();
+    return this.setState({ condition }, () => {
+      return this.loadData(5, 0);
     });
   }
 
@@ -91,30 +86,11 @@ class ProcesingOrders extends Component {
     return <Grid container spacing={2}>
       <Grid item xs={12} >
         <Zoom in={!this.state.visible} mountOnEnter unmountOnExit>
-          <TextField
-            variant="outlined"
-            color="secondary"
+          <SearchField
+            variant="contained"
             placeholder="Mã đơn hàng"
-            size="small"
-            onChange={this.onChangeCondition}
-            value={this.state.condition._id || ''}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start" className={classes.startAdornment}>
-                  <IconButton size="small" onClick={this.onClearCondition} disabled={!this.state.condition._id}>
-                    <HighlightOffRounded />
-                  </IconButton>
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="start" className={classes.endAdornment}>
-                  <IconButton size="small" onClick={this.onSearch}>
-                    <SearchRounded />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            onKeyPress={e => e.key === 'Enter' && this.onSearch}
+            onSearch={this.onSearch}
+            onClear={this.onClear}
             fullWidth
           />
         </Zoom>
