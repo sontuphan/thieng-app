@@ -7,25 +7,72 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import Popover from '@material-ui/core/Popover';
+import Switch from '@material-ui/core/Switch';
 
-import { HourglassEmptyRounded, DoneAllRounded } from '@material-ui/icons';
+import {
+  ScheduleRounded, UnarchiveRounded, FlightRounded,
+  BlockRounded, ThumbUpAltRounded, SettingsRounded
+} from '@material-ui/icons';
 
 import Drain from 'components/drain';
-import ProcessingOrders from './processing';
-import DoneOrders from './done';
+import DataTable from './table';
 
 import styles from './styles';
+import utils from 'helpers/utils';
 
+
+const DEFAULT_STATUS = ['waiting', 'packaging', 'delivering', 'canceled', 'done'];
+const DEFAULT_ICONS = [<ScheduleRounded />, <UnarchiveRounded />, <FlightRounded />, <BlockRounded />, <ThumbUpAltRounded />]
 
 class UserOrders extends Component {
   constructor() {
     super();
 
     this.state = {
-      tabs: ['processing', 'done'],
-      tab: 'processing',
+      anchorEl: null,
+      status: [...DEFAULT_STATUS],
     }
+  }
+
+  onOpen = (e) => {
+    return this.setState({ anchorEl: e.currentTarget });
+  }
+
+  onClose = () => {
+    return this.setState({ anchorEl: null });
+  }
+
+  onChange = (e) => {
+    const checked = e.target.checked;
+    const value = e.target.name;
+    let status = this.state.status;
+    if (status.length > 1) status = status.filter(e => e !== value);
+    if (checked) status.push(value);
+    return this.setState({ status });
+  }
+
+  renderSwitches = () => {
+    const { classes } = this.props;
+    return DEFAULT_STATUS.map((status, i) => <Grid item key={i} xs={12}>
+      <Grid container spacing={2} alignItems="center" className={classes.noWrap}>
+        <Grid item>
+          {DEFAULT_ICONS[i]}
+        </Grid>
+        <Grid item className={classes.stretch}>
+          <Typography>{utils.translateOrderStatus(status)}</Typography>
+        </Grid>
+        <Grid item>
+          <Switch
+            checked={this.state.status.includes(status)}
+            onChange={this.onChange}
+            name={status}
+            color="primary"
+          />
+        </Grid>
+      </Grid>
+    </Grid>)
   }
 
   render() {
@@ -40,24 +87,24 @@ class UserOrders extends Component {
             <Divider />
           </Grid>
           <Grid item>
-            <Button
-              variant="outlined"
-              startIcon={<HourglassEmptyRounded />}
-              onClick={() => this.setState({ tab: 'processing' })}
-              color={this.state.tab === 'processing' ? 'primary' : 'default'}
+            <IconButton size="small" onClick={this.onOpen}>
+              <SettingsRounded fontSize="small" />
+            </IconButton>
+            <Popover
+              anchorEl={this.state.anchorEl}
+              open={Boolean(this.state.anchorEl)}
+              onClose={this.onClose}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+              PaperProps={{ className: classes.popover }}
             >
-              <Typography>Xử lý</Typography>
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              variant="outlined"
-              startIcon={<DoneAllRounded />}
-              onClick={() => this.setState({ tab: 'done' })}
-              color={this.state.tab === 'done' ? 'primary' : 'default'}
-            >
-              <Typography>Đã xong</Typography>
-            </Button>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Typography variant="h3">Bộ lọc</Typography>
+                </Grid>
+                {this.renderSwitches()}
+              </Grid>
+            </Popover>
           </Grid>
         </Grid>
       </Grid>
@@ -65,8 +112,7 @@ class UserOrders extends Component {
         <Drain small />
       </Grid>
       <Grid item xs={12}>
-        {this.state.tab === 'processing' ? <ProcessingOrders /> : null}
-        {this.state.tab === 'done' ? <DoneOrders /> : null}
+        <DataTable status={this.state.status} />
       </Grid>
     </Grid>
   }

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -21,39 +23,51 @@ import { getOrders } from 'modules/order.reducer';
 
 import styles from './styles';
 
-const DEFAULT_CONDITION = { $or: [{ status: 'canceled' }, { status: 'done' }] }
 
-
-class DoneOrders extends Component {
+class DataTable extends Component {
   constructor() {
     super();
 
     this.state = {
       visible: false,
       orderId: null,
-      condition: { ...DEFAULT_CONDITION }
     }
   }
 
   componentDidMount() {
     const { order: { pagination: { limit } } } = this.props;
-    this.loadData(limit, 0);
+    const condition = this.buildCondition();
+    this.loadData(condition, limit, 0);
   }
 
-  loadData = (limit, page) => {
+  componentDidUpdate(prevProps) {
+    const { order: { pagination: { limit } }, status } = this.props;
+    if (!isEqual(status, prevProps.status)) {
+      const condition = this.buildCondition();
+      this.loadData(condition, limit, 0);
+    }
+  }
+
+  buildCondition = () => {
+    const { status } = this.props;
+    return { $or: status.map(e => ({ status: e })) }
+  }
+
+  loadData = (condition, limit, page) => {
     const { getOrders } = this.props;
-    const { condition } = this.state;
     return getOrders(condition, limit, page);
   }
 
   onChangePage = (e, page) => {
     const { order: { pagination: { limit } } } = this.props;
-    return this.loadData(limit, page);
+    const condition = this.buildCondition();
+    return this.loadData(condition, limit, page);
   }
 
   onChangeRowsPerPage = (e) => {
     const limit = e.target.value;
-    return this.loadData(limit, 0);
+    const condition = this.buildCondition();
+    return this.loadData(condition, limit, 0);
   }
 
   onOpenOrder = (orderId) => {
@@ -65,18 +79,13 @@ class DoneOrders extends Component {
   }
 
   onSearch = (value) => {
-    const condition = { ...DEFAULT_CONDITION, _id: value }
-    this.setState({ condition }, () => {
-      return this.loadData(5, 0);
-    });
+    const condition = { ...this.buildCondition(), _id: value }
+    return this.loadData(condition, 5, 0);
   }
 
   onClear = () => {
-    let condition = { ...this.state.condition }
-    delete condition._id;
-    return this.setState({ condition }, () => {
-      return this.loadData(5, 0);
-    });
+    let condition = this.buildCondition();
+    return this.loadData(condition, 5, 0);
   }
 
   render() {
@@ -144,7 +153,15 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   getOrders,
 }, dispatch);
 
+DataTable.defaultProps = {
+  status: ['waiting', 'packaging', 'delivering', 'canceled', 'done']
+}
+
+DataTable.propTypes = {
+  status: PropTypes.array,
+}
+
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(DoneOrders)));
+)(withStyles(styles)(DataTable)));

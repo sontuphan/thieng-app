@@ -25,7 +25,14 @@ class SearchField extends Component {
 
   input = (e) => {
     let data = e.target.value;
-    return this.setState({ data });
+    return this.setState({ data: data || '' });
+  }
+
+  search = () => {
+    const { onSearch } = this.props;
+    const { data } = this.state;
+    if (!data) return this.clear();
+    return onSearch(data);
   }
 
   clear = () => {
@@ -36,42 +43,42 @@ class SearchField extends Component {
 
   renderContained = () => {
     const { classes } = this.props;
-    const { placeholder, onSearch, fullWidth } = this.props;
-    return (
-      <Paper elevation={0} className={classes.contained}>
-        <Grid container spacing={1} className={classes.noWrap}>
-          <Grid item>
-            <IconButton size="small" onClick={this.clear} disabled={!this.state.data}>
-              <HighlightOffRounded />
-            </IconButton>
-          </Grid>
-          <Grid item className={classes.startDivider}>
-            <Divider orientation="vertical" />
-          </Grid>
-          <Grid item className={classes.stretch}>
-            <InputBase
-              placeholder={placeholder}
-              onChange={this.input}
-              value={this.state.data}
-              fullWidth={fullWidth}
-            />
-          </Grid>
-          <Grid item className={classes.endDivider}>
-            <Divider orientation="vertical" />
-          </Grid>
-          <Grid item>
-            <IconButton size="small" onClick={() => onSearch(this.state.data)}>
-              <SearchRounded />
-            </IconButton>
-          </Grid>
+    const { placeholder, fullWidth } = this.props;
+
+    return <Paper elevation={0} className={classes.contained}>
+      <Grid container spacing={1} className={classes.noWrap}>
+        <Grid item>
+          <IconButton size="small" onClick={this.clear} disabled={!this.state.data}>
+            <HighlightOffRounded />
+          </IconButton>
         </Grid>
-      </Paper>
-    );
+        <Grid item className={classes.startDivider}>
+          <Divider orientation="vertical" />
+        </Grid>
+        <Grid item className={classes.stretch}>
+          <InputBase
+            placeholder={placeholder}
+            onChange={this.input}
+            value={this.state.data}
+            onKeyPress={e => e.key === 'Enter' ? this.search() : null}
+            fullWidth={fullWidth}
+          />
+        </Grid>
+        <Grid item className={classes.endDivider}>
+          <Divider orientation="vertical" />
+        </Grid>
+        <Grid item>
+          <IconButton size="small" onClick={this.search}>
+            <SearchRounded />
+          </IconButton>
+        </Grid>
+      </Grid>
+    </Paper>
   }
 
   renderOutlined = () => {
     const { classes } = this.props;
-    const { placeholder, onSearch, fullWidth } = this.props;
+    const { placeholder, fullWidth } = this.props;
     return <Grid container spacing={2}>
       <Grid item xs={12}>
         <TextField
@@ -91,13 +98,13 @@ class SearchField extends Component {
             ),
             endAdornment: (
               <InputAdornment position="start" className={classes.endAdornment}>
-                <IconButton size="small" onClick={() => onSearch(this.state.data)}>
+                <IconButton size="small" onClick={this.search}>
                   <SearchRounded />
                 </IconButton>
               </InputAdornment>
             ),
           }}
-          onKeyPress={e => e.key === 'Enter' ? onSearch(this.state.data) : null}
+          onKeyPress={e => e.key === 'Enter' ? this.search() : null}
           fullWidth={fullWidth}
         />
       </Grid>

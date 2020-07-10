@@ -28,7 +28,7 @@ const MENU = {
   warehouse: { name: 'Nhà kho', value: 'warehouse', icon: <ArchiveRounded />, disabled: false },
   message: { name: 'Tin nhắn', value: 'message', icon: <ChatRounded />, disabled: true },
   wallet: { name: 'Ví', value: 'wallet', icon: <AccountBalanceWalletRounded />, disabled: true },
-  history: { name: 'Lịch sử', value: 'history', icon: <TimelineRounded />, disabled: false },
+  history: { name: 'Lịch sử mua hàng', value: 'history', icon: <TimelineRounded />, disabled: false },
   settings: { name: 'Cài đặt', value: 'settings', icon: <SettingsRounded />, disabled: false },
 }
 
@@ -48,33 +48,11 @@ class Menu extends Component {
     </Button>
   }
 
-  render() {
-    const { items: { factory: { data } } } = this.props;
-
+  renderUser = () => {
     return <Grid container spacing={2} justify="center">
       <Grid item>
         <Badge badgeContent={checkTreeRootInLocalStorage() ? 1 : 0} color="primary">
           {this.renderButton(MENU.home)}
-        </Badge>
-      </Grid>
-      <Grid item>
-        <Badge badgeContent={0} color="primary">
-          {this.renderButton(MENU.store)}
-        </Badge>
-      </Grid>
-      <Grid item>
-        <Badge badgeContent={0} color="primary">
-          {this.renderButton(MENU.orders)}
-        </Badge>
-      </Grid>
-      <Grid item>
-        <Badge badgeContent={data.length} color="primary">
-          {this.renderButton(MENU.factory)}
-        </Badge>
-      </Grid>
-      <Grid item>
-        <Badge badgeContent={0} color="primary">
-          {this.renderButton(MENU.warehouse)}
         </Badge>
       </Grid>
       <Grid item>
@@ -98,16 +76,49 @@ class Menu extends Component {
         </Badge>
       </Grid>
     </Grid>
+  }
 
+  renderSeller = () => {
+    return <Grid container spacing={2} justify="center">
+      <Grid item>
+        <Badge badgeContent={0} color="primary">
+          {this.renderButton(MENU.store)}
+        </Badge>
+      </Grid>
+      <Grid item>
+        <Badge badgeContent={0} color="primary">
+          {this.renderButton(MENU.orders)}
+        </Badge>
+      </Grid>
+      <Grid item>
+        <Badge badgeContent={0} color="primary">
+          {this.renderButton(MENU.factory)}
+        </Badge>
+      </Grid>
+      <Grid item>
+        <Badge badgeContent={0} color="primary">
+          {this.renderButton(MENU.warehouse)}
+        </Badge>
+      </Grid>
+    </Grid>
+  }
+
+  render() {
+    return <Grid container spacing={2} justify="center">
+      <Grid item xs={12}>
+        {this.renderUser()}
+      </Grid>
+      <Grid item xs={12}>
+        {this.renderSeller()}
+      </Grid>
+    </Grid>
   }
 }
 
 const mapStateToProps = state => ({
-  items: state.items,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-
 }, dispatch);
 
 export default withRouter(connect(
