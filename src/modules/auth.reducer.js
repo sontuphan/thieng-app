@@ -8,6 +8,7 @@ import authentication from 'helpers/authentication';
  */
 
 const defaultState = {
+  visible: false,
   isValid: null,
   service: null,
   origin: null,
@@ -15,6 +16,33 @@ const defaultState = {
   email: null,
   displayname: null,
   avatar: null,
+}
+
+/**
+ * Toogle on/off authentication app
+ */
+export const TOOGLE_AUTH = 'TOOGLE_AUTH';
+export const TOOGLE_AUTH_OK = 'TOOGLE_AUTH_OK';
+export const TOOGLE_AUTH_FAIL = 'TOOGLE_AUTH_FAIL';
+
+export const toogleAuth = () => {
+  return (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: TOOGLE_AUTH });
+
+      let prevState = getState();
+      let prevVisible = prevState.auth.visible;
+
+      if (typeof prevVisible !== 'boolean') {
+        const er = 'Undifined cart state';
+        dispatch({ type: TOOGLE_AUTH_FAIL, reason: er });
+        return reject(er);
+      }
+
+      dispatch({ type: TOOGLE_AUTH_OK, data: { visible: !prevVisible } });
+      return resolve(!prevVisible);
+    });
+  }
 }
 
 /**
@@ -152,6 +180,10 @@ export const logOut = () => {
  */
 export default (state = defaultState, action) => {
   switch (action.type) {
+    case TOOGLE_AUTH_OK:
+      return { ...state, ...action.data };
+    case TOOGLE_AUTH_FAIL:
+      return { ...state, ...action.data };
     case REFRESH_SESSION_OK:
       return { ...state, ...action.data };
     case REFRESH_SESSION_FAIL:

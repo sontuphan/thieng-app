@@ -21,15 +21,17 @@ const content = `
   ra sứ mệnh dùng tre để gầy dựng đời sống bền vững cho người sản xuất, 
   người sử dụng lẫn môi trường:
 `
-const items = `
-• Sản phẩm thân thiện, bảo vệ với môi trường. Phát triển không gian xanh qua việc trồng tre gây rừng 
-• Gìn giữ khả năng thủ công - mỹ nghệ truyền thống & tạo thu nhập đến các nghệ nhân 
-• Truyền cảm hứng và gợi mở hướng phát triển 
-• Tôn vinh giá trị văn hoá Việt giữa đời sống hiện đại •
-`
+const items = [
+  'Sản phẩm thân thiện, bảo vệ với môi trường. Phát triển không gian xanh qua việc trồng tre gây rừng.',
+  'Gìn giữ khả năng thủ công - mỹ nghệ truyền thống & tạo thu nhập đến các nghệ nhân.',
+  'Truyền cảm hứng và gợi mở hướng phát triển.',
+  'Tôn vinh giá trị văn hoá Việt giữa đời sống hiện đại.'
+]
 const conclusion = `
-  Tất cả sẽ tạo ra một vòng tròn phát triển lành mạnh về sức khoẻ - kinh tế - tinh thần giữa cộng đồng.
+Tất cả sẽ tạo ra một vòng tròn phát triển lành mạnh về sức khoẻ - kinh tế - tinh thần giữa cộng đồng.
 `
+
+const bullet = <strong>•</strong>
 
 class Contact extends Component {
   constructor() {
@@ -55,7 +57,7 @@ class Contact extends Component {
   }
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
     return <Grid container spacing={2}>
       <Grid item xs={12} md={6}>
         <Grid container justify="center" spacing={2}>
@@ -66,7 +68,9 @@ class Contact extends Component {
             <Typography variant="h6">{content}</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography variant="h6">{items}</Typography>
+            {items.map((item, i) => <Typography key={i} variant="h6">
+              {bullet} {item}
+            </Typography>)}
           </Grid>
           <Grid item xs={10} md={8}>
             <Typography variant="h6">{conclusion}</Typography>

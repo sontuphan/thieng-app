@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
@@ -23,47 +23,33 @@ import {
 } from '@material-ui/icons';
 
 import styles from './styles';
-import LogIn from './login';
 import { TopDrawer } from 'components/drawers';
 
-import { refreshSession, logIn } from 'modules/auth.reducer';
+import { toogleAuth } from 'modules/auth.reducer';
 import { toogleNotification } from 'modules/notification.reducer';
 import { toogleSearch } from 'modules/search.reducer';
 import { toogleCart } from 'modules/cart.reducer';
+
+const ROUTES = [
+  // { text: "Bảng tin", link: '/newsfeed' },
+  { text: "Siêu thị", link: '/mall' },
+  // { text: "Đối tác", link: '/partner' },
+  { text: "Liên hệ", link: '/home#contact' },
+]
+
 
 class Header extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      routes: [
-        // { text: "Bảng tin", link: '/newsfeed' },
-        { text: "Siêu thị", link: '/mall' },
-        // { text: "Đối tác", link: '/partner' },
-        { text: "Liên hệ", link: '/home#contact' },
-      ],
       visibleDrawer: false,
-      visibleLogInModal: false,
     }
-  }
-
-  componentDidMount() {
-    this.props.refreshSession();
   }
 
   onToggleDrawer = (visible) => {
     if (typeof visible === 'boolean') return this.setState({ visibleDrawer: visible });
     return this.setState({ visibleDrawer: !this.state.visibleDrawer });
-  }
-
-  onToggleLogInModal = (visible) => {
-    if (typeof visible === 'boolean') return this.setState({ visibleLogInModal: visible });
-    return this.setState({ visibleLogInModal: !this.state.visibleLogInModal });
-  }
-
-  syncAuth = (er, re) => {
-    if (er) return console.error(er);
-    return this.props.logIn(re);
   }
 
   onSearch = () => {
@@ -85,9 +71,11 @@ class Header extends Component {
   }
 
   renderProfile = () => {
-    const { classes, auth, ui } = this.props;
+    const { classes } = this.props;
+    const { auth, ui, toogleAuth } = this.props;
+
     if (!auth.isValid) {
-      return <Button variant="contained" color="primary" startIcon={<PersonRounded />} onClick={this.onToggleLogInModal} >
+      return <Button variant="contained" color="primary" startIcon={<PersonRounded />} onClick={toogleAuth} >
         <Typography noWrap>Đăng nhập</Typography>
       </Button >
     }
@@ -110,10 +98,10 @@ class Header extends Component {
 
   renderRoute = () => {
     const { classes } = this.props;
-    const { routes, visibleDrawer } = this.state;
+    const { visibleDrawer } = this.state;
     if (this.props.ui.width >= 960) {
       return <Grid container alignItems="center" className={classes.noWrap} spacing={4}>
-        {routes.map(route => <Grid item key={route.link}>
+        {ROUTES.map((route, i) => <Grid item key={i}>
           <Link color="textPrimary" underline="none" component={RouterLink} to={route.link}>
             <Typography noWrap><span className="link">{route.text}</span></Typography>
           </Link>
@@ -133,8 +121,8 @@ class Header extends Component {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <List>
-                  {routes.map(route => <ListItem
-                    key={route.link}
+                  {ROUTES.map((route, i) => <ListItem
+                    key={i}
                     button
                     component={RouterLink}
                     to={route.link}
@@ -164,44 +152,37 @@ class Header extends Component {
   render() {
     const { classes } = this.props;
     const { cart: { data } } = this.props;
-    return <Fragment>
-      <Grid container className={classes.noWrap} spacing={2}>
-        {/* Logo */}
-        <Grid item className={classes.logo}>
-          <Link color="textPrimary" underline="none" component={RouterLink} to={'/home'}>
-            <Typography variant="h3">Thiêng Việt</Typography>
-          </Link>
-        </Grid>
-        {/* Menu */}
-        <Grid item className={classes.stretch}>
-          <Grid container alignItems="center" justify="flex-end" spacing={4}>
-            {/* Search app */}
-            <Grid item>
-              <IconButton size="small" color="secondary" onClick={this.onSearch}>
-                <SearchRounded />
-              </IconButton>
-            </Grid>
-            {/* Notification app */}
-            <Grid item>
-              <IconButton size="small" color="secondary" onClick={this.onNotification}>
-                <Badge badgeContent={data.length} color="primary">
-                  <NotificationsRounded />
-                </Badge>
-              </IconButton>
-            </Grid>
-            {/* Routers & Authentication*/}
-            <Grid item>
-              {this.renderRoute()}
-            </Grid>
+    return <Grid container className={classes.noWrap} spacing={2}>
+      {/* Logo */}
+      <Grid item className={classes.logo}>
+        <Link color="textPrimary" underline="none" component={RouterLink} to={'/home'}>
+          <Typography variant="h3">Thiêng Việt</Typography>
+        </Link>
+      </Grid>
+      {/* Menu */}
+      <Grid item className={classes.stretch}>
+        <Grid container alignItems="center" justify="flex-end" spacing={4}>
+          {/* Search app */}
+          <Grid item>
+            <IconButton size="small" color="secondary" onClick={this.onSearch}>
+              <SearchRounded />
+            </IconButton>
+          </Grid>
+          {/* Notification app */}
+          <Grid item>
+            <IconButton size="small" color="secondary" onClick={this.onNotification}>
+              <Badge badgeContent={data.length} color="primary">
+                <NotificationsRounded />
+              </Badge>
+            </IconButton>
+          </Grid>
+          {/* Routers & Authentication*/}
+          <Grid item>
+            {this.renderRoute()}
           </Grid>
         </Grid>
       </Grid>
-      <LogIn
-        visible={this.state.visibleLogInModal}
-        onToggle={this.onToggleLogInModal}
-        callback={this.syncAuth}
-      />
-    </Fragment>
+    </Grid>
   }
 }
 
@@ -212,8 +193,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  refreshSession, logIn,
-  toogleNotification, toogleSearch,
+  toogleAuth,
+  toogleNotification,
+  toogleSearch,
   toogleCart,
 }, dispatch);
 

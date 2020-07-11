@@ -2,7 +2,7 @@ export default theme => {
   console.log(theme)
   return {
     safe: {
-      margin: -4
+      margin: -theme.spacing(1) / 2
     }
   }
 };

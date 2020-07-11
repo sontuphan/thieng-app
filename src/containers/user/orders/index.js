@@ -100,7 +100,7 @@ class UserOrders extends Component {
             >
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Typography variant="h3">Bộ lọc</Typography>
+                  <Typography variant="h5">Bộ lọc</Typography>
                 </Grid>
                 {this.renderSwitches()}
               </Grid>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -68,7 +68,9 @@ class Mall extends Component {
     const { classes } = this.props;
     const { items: { mall: { data } } } = this.props;
     const { match: { params: { category } } } = this.props;
+    const item = configs.category.fullList.filter(e => e.value === category)[0]
 
+    if (!item) return <Redirect to='/mall/all' />
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
         <Drain large />
@@ -84,7 +86,7 @@ class Mall extends Component {
       <Grid item xs={11} md={10}>
         <Grid container className={classes.noWrap} alignItems="center" justify="flex-end" spacing={2}>
           <Grid item>
-            <Typography variant="h3">{configs.category.fullList.filter(e => e.value === category)[0].name}</Typography>
+            <Typography variant="h3">{item.name}</Typography>
           </Grid>
           <Grid item className={classes.stretch}>
             <Divider />

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
@@ -18,7 +21,10 @@ import { FaGoogle, FaFacebookF, FaApple, FaTwitter } from 'react-icons/fa';
 import styles from './styles';
 import configs from 'configs';
 
-class LogIn extends Component {
+import { toogleAuth, refreshSession, logIn } from 'modules/auth.reducer';
+
+
+class Authentication extends Component {
   constructor() {
     super();
 
@@ -27,39 +33,44 @@ class LogIn extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.refreshSession();
+  }
+
   logIn = (data) => {
     if (data.googleId) {
-      this.setState({ error: null });
-      this.props.onToggle();
-      let user = {
-        service: 'google',
-        accessToken: data.tokenId,
-        email: data.profileObj.email,
-        displayname: data.profileObj.name,
-        avatar: data.profileObj.imageUrl,
-      }
-      return this.props.callback(null, user);
+      return this.setState({ error: null }, () => {
+        this.props.toogleAuth();
+        const user = {
+          service: 'google',
+          accessToken: data.tokenId,
+          email: data.profileObj.email,
+          displayname: data.profileObj.name,
+          avatar: data.profileObj.imageUrl,
+        }
+        return this.props.logIn(user);
+      });
     }
     else if (data.graphDomain === 'facebook') {
-      this.setState({ error: null });
-      this.props.onToggle();
-      let user = {
-        service: 'facebook',
-        accessToken: data.accessToken,
-        email: data.email,
-        displayname: data.name,
-        avatar: data.picture.data.url,
-      }
-      return this.props.callback(null, user);
+      return this.setState({ error: null }, () => {
+        this.props.toogleAuth();
+        const user = {
+          service: 'facebook',
+          accessToken: data.accessToken,
+          email: data.email,
+          displayname: data.name,
+          avatar: data.picture.data.url,
+        }
+        return this.props.logIn(user);
+      });
     } else {
-      this.setState({ error: 'Some errors have occured. Please try again!' });
-      return this.props.callback('Login errors.', null);
+      return this.setState({ error: 'Đã có lỗi xảy ra, vui lòng thử lại!' });
     }
   }
 
   render() {
-    let { classes } = this.props;
-    let { visible, onToggle } = this.props;
+    const { classes } = this.props;
+    const { auth: { visible }, onToggle } = this.props;
 
     return <Dialog open={visible} onClose={onToggle} >
       <DialogTitle>
@@ -77,7 +88,7 @@ class LogIn extends Component {
       <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography>You can easily log in to the website with your favourite service and skip the inconvenience of registration.</Typography>
+            <Typography>Bạn có thể dễ dàng đăng nhập bằng dịch vụ ưa thích để tận hưởng đầy đủ các chức năng của ứng dụng.</Typography>
           </Grid>
           <Grid item xs={12}>
             {this.state.error ? <Typography color="primary">{this.state.error}</Typography> : null}
@@ -92,7 +103,7 @@ class LogIn extends Component {
                 onClick={props.onClick}
                 disabled={props.disabled}
                 fullWidth>
-                <Typography>Continue with Google</Typography>
+                <Typography>Tiếp tục với Google</Typography>
               </Button>}
               onSuccess={this.logIn}
               onFailure={this.logIn}
@@ -109,7 +120,7 @@ class LogIn extends Component {
                 startIcon={<FaFacebookF />}
                 onClick={props.onClick}
                 fullWidth>
-                <Typography>Continue with Facebook</Typography>
+                <Typography>Tiếp tục với Facebook</Typography>
               </Button>}
               callback={this.logIn} />
           </Grid>
@@ -121,7 +132,7 @@ class LogIn extends Component {
               onClick={() => { }}
               fullWidth
               disabled>
-              <Typography>Continue with Apple</Typography>
+              <Typography>Tiếp tục với Apple</Typography>
             </Button>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -132,7 +143,7 @@ class LogIn extends Component {
               onClick={() => { }}
               fullWidth
               disabled>
-              <Typography>Continue with Twitter</Typography>
+              <Typography>Tiếp tục với Twitter</Typography>
             </Button>
           </Grid>
         </Grid>
@@ -145,7 +156,7 @@ class LogIn extends Component {
               onClick={onToggle}
               startIcon={<RoomServiceRounded />}
             >
-              <Typography>Need help?</Typography>
+              <Typography>Cần giúp đỡ ?</Typography>
             </Button>
           </Grid>
         </Grid>
@@ -154,4 +165,16 @@ class LogIn extends Component {
   }
 }
 
-export default withStyles(styles)(LogIn);
+const mapStateToProps = state => ({
+  ui: state.ui,
+  auth: state.auth,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  toogleAuth, refreshSession, logIn
+}, dispatch);
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Authentication)));
