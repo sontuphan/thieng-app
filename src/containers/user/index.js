@@ -11,7 +11,7 @@ import Drain from 'components/drain';
 import Profile from './profile';
 import Panel from './panel';
 import Menu from './menu';
-import UserHome from './home';
+// import UserHome from './home';
 import UserStore from './store';
 import UserWarehouse from './warehouse';
 import UserFactory from './factory';

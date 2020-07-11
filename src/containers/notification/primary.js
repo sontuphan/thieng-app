@@ -16,8 +16,8 @@ import { EventCard } from 'components/cards';
 import Drain from 'components/drain';
 import { CircularProgressButton } from 'components/buttons';
 
-import { toogleCart } from 'modules/cart.reducer';
-import { toogleNotification, getEvents } from 'modules/notification.reducer';
+import { toggleCart } from 'modules/cart.reducer';
+import { toggleNotification, getEvents } from 'modules/notification.reducer';
 
 import styles from './styles';
 
@@ -44,8 +44,8 @@ class PrimaryNotification extends Component {
   }
 
   onCart = () => {
-    this.props.toogleNotification();
-    this.props.toogleCart();
+    this.props.toggleNotification();
+    this.props.toggleCart();
   }
 
   render() {
@@ -120,8 +120,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toogleCart,
-  toogleNotification,
+  toggleCart,
+  toggleNotification,
   getEvents,
 }, dispatch);
 

@@ -19,16 +19,21 @@ const defaultState = {
 }
 
 /**
- * Toogle on/off authentication app
+ * Toggle on/off authentication app
  */
 export const TOOGLE_AUTH = 'TOOGLE_AUTH';
 export const TOOGLE_AUTH_OK = 'TOOGLE_AUTH_OK';
 export const TOOGLE_AUTH_FAIL = 'TOOGLE_AUTH_FAIL';
 
-export const toogleAuth = () => {
+export const toggleAuth = (visible) => {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: TOOGLE_AUTH });
+
+      if (typeof visible === 'boolean') {
+        dispatch({ type: TOOGLE_AUTH_OK, data: { visible } });
+        return resolve(visible);
+      }
 
       let prevState = getState();
       let prevVisible = prevState.auth.visible;

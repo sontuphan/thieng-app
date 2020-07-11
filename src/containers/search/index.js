@@ -15,7 +15,7 @@ import Drain from 'components/drain';
 import SearchField from 'components/search';
 import { ProductCard } from 'components/cards';
 
-import { toogleSearch, searchText } from 'modules/search.reducer';
+import { toggleSearch, searchText } from 'modules/search.reducer';
 
 import styles from './styles';
 
@@ -30,9 +30,9 @@ class Search extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { location, toogleSearch } = this.props;
+    const { location, toggleSearch } = this.props;
     if (!isEqual(prevProps.location, location) && prevProps.search.visible) {
-      toogleSearch();
+      toggleSearch();
     }
   }
 
@@ -67,10 +67,10 @@ class Search extends Component {
 
   render() {
     const { classes } = this.props;
-    const { search: { visible }, toogleSearch } = this.props;
+    const { search: { visible }, toggleSearch } = this.props;
     return <Grid container spacing={2}>
       <Grid item xs={12}>
-        <TopDrawer visible={visible} onClose={toogleSearch}>
+        <TopDrawer visible={visible} onClose={toggleSearch}>
           <Grid container spacing={2} justify="center">
 
             <Grid item xs={12}>
@@ -119,7 +119,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toogleSearch, searchText,
+  toggleSearch, searchText,
 }, dispatch);
 
 export default withRouter(connect(

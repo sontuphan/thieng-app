@@ -16,7 +16,7 @@ import { NotiCard } from 'components/cards';
 import Drain from 'components/drain';
 
 import { getNotification } from 'modules/notification.reducer';
-import { toogleCart } from 'modules/cart.reducer';
+import { toggleCart } from 'modules/cart.reducer';
 
 import styles from './styles';
 
@@ -113,7 +113,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getNotification,
-  toogleCart,
+  toggleCart,
 }, dispatch);
 
 export default withRouter(connect(

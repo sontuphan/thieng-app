@@ -69,7 +69,7 @@ class EditorDialog extends Component {
     return this.props.onSave(file);
   }
 
-  onToogle = () => {
+  onToggle = () => {
     return this.setState({
       isColor: !this.state.isColor,
     });
@@ -110,7 +110,7 @@ class EditorDialog extends Component {
                   <Grid item>
                     <Switch
                       checked={this.state.isColor}
-                      onChange={this.onToogle}
+                      onChange={this.onToggle}
                     />
                   </Grid>
                 </Grid>

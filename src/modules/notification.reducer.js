@@ -18,13 +18,13 @@ const defaultState = {
 }
 
 /**
- * Toogle on/off notification app
+ * Toggle on/off notification app
  */
 export const TOOGLE_NOTIFICATION = 'TOOGLE_NOTIFICATION';
 export const TOOGLE_NOTIFICATION_OK = 'TOOGLE_NOTIFICATION_OK';
 export const TOOGLE_NOTIFICATION_FAIL = 'TOOGLE_NOTIFICATION_FAIL';
 
-export const toogleNotification = () => {
+export const toggleNotification = () => {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: TOOGLE_NOTIFICATION });

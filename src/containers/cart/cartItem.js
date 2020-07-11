@@ -16,7 +16,7 @@ import { CancelRounded } from '@material-ui/icons';
 import { ProductCard } from 'components/cards';
 import { NumericInput } from 'components/inputs';
 
-import { toogleCart, setCart } from 'modules/cart.reducer';
+import { toggleCart, setCart } from 'modules/cart.reducer';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -85,7 +85,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toogleCart,
+  toggleCart,
   setCart,
 }, dispatch);
 

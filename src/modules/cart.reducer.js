@@ -14,13 +14,13 @@ const defaultState = {
 }
 
 /**
- * Toogle on/off cart app
+ * Toggle on/off cart app
  */
 export const TOOGLE_CART = 'TOOGLE_CART';
 export const TOOGLE_CART_OK = 'TOOGLE_CART_OK';
 export const TOOGLE_CART_FAIL = 'TOOGLE_CART_FAIL';
 
-export const toogleCart = () => {
+export const toggleCart = () => {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: TOOGLE_CART });

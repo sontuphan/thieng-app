@@ -18,7 +18,7 @@ import CartItem from './cartItem';
 import DeliveryInfomation from './deliveryInfomation';
 import PaymentInfomation from './paymentInfomation';
 
-import { toogleCart, clearCart } from 'modules/cart.reducer';
+import { toggleCart, clearCart } from 'modules/cart.reducer';
 import { addOrder } from 'modules/order.reducer';
 
 import styles from './styles';
@@ -41,7 +41,7 @@ class Cart extends Component {
 
   onDone = () => {
     const { cart: { data } } = this.props;
-    const { toogleCart, addOrder, clearCart } = this.props;
+    const { toggleCart, addOrder, clearCart } = this.props;
     const info = { ...this.state }
     // Normalize data
     const group = data.reduce((g, i) => {
@@ -63,17 +63,17 @@ class Cart extends Component {
     }, (er, re) => {
       if (er) console.error(er);
       else clearCart();
-      return toogleCart();
+      return toggleCart();
     });
   }
 
   render() {
     const { classes } = this.props;
-    const { toogleCart, cart: { data, visible } } = this.props;
+    const { toggleCart, cart: { data, visible } } = this.props;
 
     return <Grid container spacing={2}>
       <Grid item xs={12}>
-        <BottomDrawer visible={visible} onClose={toogleCart}>
+        <BottomDrawer visible={visible} onClose={toggleCart}>
           <Grid container spacing={2} justify="center">
             <Grid item xs={11} md={10}>
               <Grid container spacing={2}>
@@ -134,7 +134,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toogleCart, clearCart,
+  toggleCart, clearCart,
   addOrder,
 }, dispatch);
 

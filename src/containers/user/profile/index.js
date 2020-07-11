@@ -70,6 +70,11 @@ class Profile extends Component {
     return this.setState({ user: { ...user, description: value } });
   }
 
+  logout = () => {
+    this.props.logOut();
+    return this.props.history.push('/home');
+  }
+
   render() {
     const { classes } = this.props;
     const { user } = this.state;
@@ -105,7 +110,7 @@ class Profile extends Component {
                   </Grid>
                   <Grid item>
                     <Tooltip title="Đăng xuất">
-                      <IconButton onClick={this.props.logOut} size="small">
+                      <IconButton onClick={this.logout} size="small">
                         <ExitToAppRounded fontSize="small" />
                       </IconButton>
                     </Tooltip>

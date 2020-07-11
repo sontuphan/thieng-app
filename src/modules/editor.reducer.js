@@ -25,7 +25,7 @@ const defaultState = {
 }
 
 /**
- * Toogle on/off image editor app
+ * Toggle on/off image editor app
  */
 export const RUN_EDITOR = 'RUN_EDITOR';
 export const RUN_EDITOR_OK = 'RUN_EDITOR_OK';

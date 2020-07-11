@@ -68,7 +68,7 @@ class App extends Component {
             <Redirect exact from="/mall" to="/mall/all" />
             <Route exact path="/mall/:category" component={Mall} />
             <Redirect exact from="/item" to="/mall" />
-            <Route exact path="/item/:id" component={Item} />
+            <PrivateRoute exact path="/item/:id" component={Item} />
             <Redirect exact from="/user/:email" to="/user/:email/store" />
             <PrivateRoute exact path="/user/:email/:page" component={User} />
             <Route exact path='*' component={NotFound} />

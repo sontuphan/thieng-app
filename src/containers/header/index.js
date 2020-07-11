@@ -18,17 +18,16 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Divider from '@material-ui/core/Divider';
 
 import {
-  MenuRounded, NotificationsRounded,
-  SearchRounded, PersonRounded
+  MenuRounded, NotificationsRounded, SearchRounded
 } from '@material-ui/icons';
 
 import styles from './styles';
 import { TopDrawer } from 'components/drawers';
 
-import { toogleAuth } from 'modules/auth.reducer';
-import { toogleNotification } from 'modules/notification.reducer';
-import { toogleSearch } from 'modules/search.reducer';
-import { toogleCart } from 'modules/cart.reducer';
+import { toggleAuth } from 'modules/auth.reducer';
+import { toggleNotification } from 'modules/notification.reducer';
+import { toggleSearch } from 'modules/search.reducer';
+import { toggleCart } from 'modules/cart.reducer';
 
 const ROUTES = [
   // { text: "Bảng tin", link: '/newsfeed' },
@@ -54,13 +53,15 @@ class Header extends Component {
 
   onSearch = () => {
     this.onToggleDrawer(false);
-    this.props.toogleSearch();
+    return this.props.toggleSearch();
   }
 
   onNotification = () => {
+    const { auth, toggleCart, toggleAuth } = this.props;
     this.onToggleDrawer(false);
-    // this.props.toogleNotification();
-    this.props.toogleCart();
+    if (!auth.isValid) return toggleAuth();
+    // this.props.toggleNotification();
+    return toggleCart();
   }
 
   onUser = () => {
@@ -72,10 +73,10 @@ class Header extends Component {
 
   renderProfile = () => {
     const { classes } = this.props;
-    const { auth, ui, toogleAuth } = this.props;
+    const { auth, ui, toggleAuth } = this.props;
 
     if (!auth.isValid) {
-      return <Button variant="contained" color="primary" startIcon={<PersonRounded />} onClick={toogleAuth} >
+      return <Button variant="outlined" color="primary" onClick={toggleAuth} >
         <Typography noWrap>Đăng nhập</Typography>
       </Button >
     }
@@ -193,10 +194,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toogleAuth,
-  toogleNotification,
-  toogleSearch,
-  toogleCart,
+  toggleAuth,
+  toggleNotification,
+  toggleSearch,
+  toggleCart,
 }, dispatch);
 
 export default withRouter(connect(

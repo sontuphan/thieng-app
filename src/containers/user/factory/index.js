@@ -44,7 +44,7 @@ class UserFactory extends Component {
     return this.props.getItems(condition, limit, page, 'factory');
   }
 
-  onToogle = (e) => {
+  onToggle = (e) => {
     return this.setState({ multipleChoice: e.target.checked });
   }
 
@@ -110,7 +110,7 @@ class UserFactory extends Component {
             <Switch
               color="primary"
               checked={this.state.multipleChoice}
-              onChange={this.onToogle}
+              onChange={this.onToggle}
             />
           </Grid>
         </Grid>

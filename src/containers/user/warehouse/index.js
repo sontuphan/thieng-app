@@ -42,7 +42,7 @@ class UserWarehouse extends Component {
     return getItems(condition, limit, page, 'warehouse');
   }
 
-  onToogle = (e) => {
+  onToggle = (e) => {
     return this.setState({ multipleChoice: e.target.checked });
   }
 
@@ -112,7 +112,7 @@ class UserWarehouse extends Component {
             <Switch
               color="primary"
               checked={this.state.multipleChoice}
-              onChange={this.onToogle}
+              onChange={this.onToggle}
             />
           </Grid>
         </Grid>

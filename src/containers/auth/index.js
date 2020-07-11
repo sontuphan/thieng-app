@@ -21,7 +21,7 @@ import { FaGoogle, FaFacebookF, FaApple, FaTwitter } from 'react-icons/fa';
 import styles from './styles';
 import configs from 'configs';
 
-import { toogleAuth, refreshSession, logIn } from 'modules/auth.reducer';
+import { toggleAuth, refreshSession, logIn } from 'modules/auth.reducer';
 
 
 class Authentication extends Component {
@@ -40,7 +40,7 @@ class Authentication extends Component {
   logIn = (data) => {
     if (data.googleId) {
       return this.setState({ error: null }, () => {
-        this.props.toogleAuth();
+        this.props.toggleAuth();
         const user = {
           service: 'google',
           accessToken: data.tokenId,
@@ -53,7 +53,7 @@ class Authentication extends Component {
     }
     else if (data.graphDomain === 'facebook') {
       return this.setState({ error: null }, () => {
-        this.props.toogleAuth();
+        this.props.toggleAuth();
         const user = {
           service: 'facebook',
           accessToken: data.accessToken,
@@ -70,16 +70,16 @@ class Authentication extends Component {
 
   render() {
     const { classes } = this.props;
-    const { auth: { visible }, onToggle } = this.props;
+    const { auth: { visible }, toggleAuth } = this.props;
 
-    return <Dialog open={visible} onClose={onToggle} >
+    return <Dialog open={visible} onClose={toggleAuth} >
       <DialogTitle>
         <Grid container spacing={2} alignItems="center" className={classes.noWrap}>
           <Grid item className={classes.stretch}>
             <Typography variant="h3">Đăng nhập</Typography>
           </Grid>
           <Grid item>
-            <IconButton color="secondary" size="small" onClick={onToggle}>
+            <IconButton color="secondary" size="small" onClick={toggleAuth}>
               <CloseRounded />
             </IconButton>
           </Grid>
@@ -153,7 +153,7 @@ class Authentication extends Component {
           <Grid item>
             <Button
               color="primary"
-              onClick={onToggle}
+              onClick={toggleAuth}
               startIcon={<RoomServiceRounded />}
             >
               <Typography>Cần giúp đỡ ?</Typography>
@@ -171,7 +171,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toogleAuth, refreshSession, logIn
+  toggleAuth, refreshSession, logIn
 }, dispatch);
 
 export default withRouter(connect(

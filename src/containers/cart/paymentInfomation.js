@@ -22,7 +22,7 @@ import {
 import Drain from 'components/drain';
 import { Momo } from 'components/icons';
 
-import { toogleCart, setCart } from 'modules/cart.reducer';
+import { toggleCart, setCart } from 'modules/cart.reducer';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -147,7 +147,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toogleCart,
+  toggleCart,
   setCart,
 }, dispatch);
 

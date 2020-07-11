@@ -13,7 +13,7 @@ import PrimaryNotification from './primary';
 import SecondaryNotification from './secondary';
 import FloatNotification from './float';
 
-import { toogleNotification } from 'modules/notification.reducer';
+import { toggleNotification } from 'modules/notification.reducer';
 
 import styles from './styles';
 
@@ -26,7 +26,7 @@ class Notification extends Component {
       <Grid item xs={12}>
         <TopDrawer
           visible={this.props.notification.visible}
-          onClose={this.props.toogleNotification}
+          onClose={this.props.toggleNotification}
         >
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
@@ -58,7 +58,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toogleNotification,
+  toggleNotification,
 }, dispatch);
 
 export default withRouter(connect(

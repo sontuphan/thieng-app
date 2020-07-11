@@ -23,7 +23,7 @@ import {
 
 import Drain from 'components/drain';
 
-import { toogleCart, setCart } from 'modules/cart.reducer';
+import { toggleCart, setCart } from 'modules/cart.reducer';
 import { getUser } from 'modules/bucket.reducer';
 import { updateUser } from 'modules/user.reducer';
 
@@ -262,7 +262,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toogleCart, setCart,
+  toggleCart, setCart,
   getUser,
   updateUser,
 }, dispatch);

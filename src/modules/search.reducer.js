@@ -20,13 +20,13 @@ const defaultState = {
 
 
 /**
- * Toogle on/off search app
+ * Toggle on/off search app
  */
 export const TOOGLE_SEARCH = 'TOOGLE_SEARCH';
 export const TOOGLE_SEARCH_OK = 'TOOGLE_SEARCH_OK';
 export const TOOGLE_SEARCH_FAIL = 'TOOGLE_SEARCH_FAIL';
 
-export const toogleSearch = () => {
+export const toggleSearch = () => {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: TOOGLE_SEARCH });
