@@ -29,7 +29,8 @@ class Authentication extends Component {
     super();
 
     this.state = {
-      error: null
+      error: null,
+      email: 'thiengviet@gmail.com',
     }
   }
 
@@ -66,6 +67,11 @@ class Authentication extends Component {
     } else {
       return this.setState({ error: 'Đã có lỗi xảy ra, vui lòng thử lại!' });
     }
+  }
+
+  onEmail = () => {
+    const { email } = this.state;
+    return window.open(`mailto:${email}`);
   }
 
   render() {
@@ -153,7 +159,7 @@ class Authentication extends Component {
           <Grid item>
             <Button
               color="primary"
-              onClick={toggleAuth}
+              onClick={this.onEmail}
               startIcon={<RoomServiceRounded />}
             >
               <Typography>Cần giúp đỡ ?</Typography>

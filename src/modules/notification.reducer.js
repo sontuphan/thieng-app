@@ -20,28 +20,28 @@ const defaultState = {
 /**
  * Toggle on/off notification app
  */
-export const TOOGLE_NOTIFICATION = 'TOOGLE_NOTIFICATION';
-export const TOOGLE_NOTIFICATION_OK = 'TOOGLE_NOTIFICATION_OK';
-export const TOOGLE_NOTIFICATION_FAIL = 'TOOGLE_NOTIFICATION_FAIL';
+export const TOGGLE_NOTIFICATION = 'TOGGLE_NOTIFICATION';
+export const TOGGLE_NOTIFICATION_OK = 'TOGGLE_NOTIFICATION_OK';
+export const TOGGLE_NOTIFICATION_FAIL = 'TOGGLE_NOTIFICATION_FAIL';
 
 export const toggleNotification = () => {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-      dispatch({ type: TOOGLE_NOTIFICATION });
+      dispatch({ type: TOGGLE_NOTIFICATION });
 
       let prevState = getState();
       let prevVisible = prevState.notification.visible;
 
       if (typeof prevVisible !== 'boolean') {
         dispatch({
-          type: TOOGLE_NOTIFICATION_FAIL,
+          type: TOGGLE_NOTIFICATION_FAIL,
           reason: 'Undifined cart state.',
         });
         return reject('Undifined cart state.');
       }
 
       dispatch({
-        type: TOOGLE_NOTIFICATION_OK,
+        type: TOGGLE_NOTIFICATION_OK,
         reason: null,
         data: {
           visible: !prevVisible,
@@ -175,9 +175,9 @@ export const setConfirmation = (visible, message = '', type = 'info') => {
  */
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case TOOGLE_NOTIFICATION_OK:
+    case TOGGLE_NOTIFICATION_OK:
       return { ...state, ...action.data };
-    case TOOGLE_NOTIFICATION_FAIL:
+    case TOGGLE_NOTIFICATION_FAIL:
       return { ...state, ...action.data };
     case GET_NOTIFICATION_OK:
       return { ...state, ...action.data };

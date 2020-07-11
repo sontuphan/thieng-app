@@ -21,17 +21,17 @@ const defaultState = {
 /**
  * Toggle on/off authentication app
  */
-export const TOOGLE_AUTH = 'TOOGLE_AUTH';
-export const TOOGLE_AUTH_OK = 'TOOGLE_AUTH_OK';
-export const TOOGLE_AUTH_FAIL = 'TOOGLE_AUTH_FAIL';
+export const TOGGLE_AUTH = 'TOGGLE_AUTH';
+export const TOGGLE_AUTH_OK = 'TOGGLE_AUTH_OK';
+export const TOGGLE_AUTH_FAIL = 'TOGGLE_AUTH_FAIL';
 
 export const toggleAuth = (visible) => {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-      dispatch({ type: TOOGLE_AUTH });
+      dispatch({ type: TOGGLE_AUTH });
 
       if (typeof visible === 'boolean') {
-        dispatch({ type: TOOGLE_AUTH_OK, data: { visible } });
+        dispatch({ type: TOGGLE_AUTH_OK, data: { visible } });
         return resolve(visible);
       }
 
@@ -40,11 +40,11 @@ export const toggleAuth = (visible) => {
 
       if (typeof prevVisible !== 'boolean') {
         const er = 'Undifined cart state';
-        dispatch({ type: TOOGLE_AUTH_FAIL, reason: er });
+        dispatch({ type: TOGGLE_AUTH_FAIL, reason: er });
         return reject(er);
       }
 
-      dispatch({ type: TOOGLE_AUTH_OK, data: { visible: !prevVisible } });
+      dispatch({ type: TOGGLE_AUTH_OK, data: { visible: !prevVisible } });
       return resolve(!prevVisible);
     });
   }
@@ -185,9 +185,9 @@ export const logOut = () => {
  */
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case TOOGLE_AUTH_OK:
+    case TOGGLE_AUTH_OK:
       return { ...state, ...action.data };
-    case TOOGLE_AUTH_FAIL:
+    case TOGGLE_AUTH_FAIL:
       return { ...state, ...action.data };
     case REFRESH_SESSION_OK:
       return { ...state, ...action.data };

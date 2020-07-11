@@ -16,25 +16,25 @@ const defaultState = {
 /**
  * Toggle on/off cart app
  */
-export const TOOGLE_CART = 'TOOGLE_CART';
-export const TOOGLE_CART_OK = 'TOOGLE_CART_OK';
-export const TOOGLE_CART_FAIL = 'TOOGLE_CART_FAIL';
+export const TOGGLE_CART = 'TOGGLE_CART';
+export const TOGGLE_CART_OK = 'TOGGLE_CART_OK';
+export const TOGGLE_CART_FAIL = 'TOGGLE_CART_FAIL';
 
 export const toggleCart = () => {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-      dispatch({ type: TOOGLE_CART });
+      dispatch({ type: TOGGLE_CART });
 
       let prevState = getState();
       let prevVisible = prevState.cart.visible;
 
       if (typeof prevVisible !== 'boolean') {
         const er = 'Undifined cart state';
-        dispatch({ type: TOOGLE_CART_FAIL, reason: er });
+        dispatch({ type: TOGGLE_CART_FAIL, reason: er });
         return reject(er);
       }
 
-      dispatch({ type: TOOGLE_CART_OK, data: { visible: !prevVisible } });
+      dispatch({ type: TOGGLE_CART_OK, data: { visible: !prevVisible } });
       return resolve(!prevVisible);
     });
   }
@@ -106,9 +106,9 @@ export const clearCart = () => {
  */
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case TOOGLE_CART_OK:
+    case TOGGLE_CART_OK:
       return { ...state, ...action.data };
-    case TOOGLE_CART_FAIL:
+    case TOGGLE_CART_FAIL:
       return { ...state, ...action.data };
     case SET_CART_OK:
       return { ...state, ...action.data };

@@ -22,26 +22,26 @@ const defaultState = {
 /**
  * Toggle on/off search app
  */
-export const TOOGLE_SEARCH = 'TOOGLE_SEARCH';
-export const TOOGLE_SEARCH_OK = 'TOOGLE_SEARCH_OK';
-export const TOOGLE_SEARCH_FAIL = 'TOOGLE_SEARCH_FAIL';
+export const TOGGLE_SEARCH = 'TOGGLE_SEARCH';
+export const TOGGLE_SEARCH_OK = 'TOGGLE_SEARCH_OK';
+export const TOGGLE_SEARCH_FAIL = 'TOGGLE_SEARCH_FAIL';
 
 export const toggleSearch = () => {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-      dispatch({ type: TOOGLE_SEARCH });
+      dispatch({ type: TOGGLE_SEARCH });
 
       let prevState = getState();
       let prevVisible = prevState.search.visible;
 
       if (typeof prevVisible !== 'boolean') {
         let er = 'Undifined search state';
-        dispatch({ type: TOOGLE_SEARCH_FAIL, reason: er });
+        dispatch({ type: TOGGLE_SEARCH_FAIL, reason: er });
         return reject(er);
       }
 
       dispatch({
-        type: TOOGLE_SEARCH_OK,
+        type: TOGGLE_SEARCH_OK,
         reason: null,
         data: { visible: !prevVisible }
       });
@@ -104,9 +104,9 @@ export default (state = defaultState, action) => {
       return { ...state, ...action.data };
     case SEARCH_TEXT_FAIL:
       return { ...state, ...action.data };
-    case TOOGLE_SEARCH_OK:
+    case TOGGLE_SEARCH_OK:
       return { ...state, ...action.data };
-    case TOOGLE_SEARCH_FAIL:
+    case TOGGLE_SEARCH_FAIL:
       return { ...state, ...action.data };
     default:
       return state;
