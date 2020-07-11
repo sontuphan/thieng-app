@@ -10,11 +10,12 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 
-import { SettingsRounded } from '@material-ui/icons';
+import { SettingsRounded, ExpandMoreRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
 import { ProductCard } from 'components/cards';
 import Menu from './menu';
+import { CircularProgressButton } from 'components/buttons';
 
 import { getItems } from 'modules/items.reducer';
 
@@ -23,10 +24,16 @@ import styles from './styles';
 
 
 class Mall extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      isLoading: false
+    }
+  }
 
   componentDidMount() {
     this.loadData(true);
-    window.addEventListener('scroll', this.onTheEnd);
   }
 
   componentDidUpdate(prevProps) {
@@ -36,23 +43,17 @@ class Mall extends Component {
     }
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.onTheEnd);
-  }
-
   loadData = (reset = false) => {
     let { items: { mall: { pagination: { limit, page } } } } = this.props;
     let condition = { status: 'selling' }
     const { match: { params: { category } } } = this.props;
     if (category !== 'all') condition.category = category;
     page = reset ? 0 : page + 1;
-    return this.props.getItems(condition, limit, page);
-  }
-
-  onTheEnd = () => {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      return this.loadData();
-    }
+    return this.setState({ isLoading: true }, () => {
+      return this.props.getItems(condition, limit, page).then(() => {
+        return this.setState({ isLoading: false });
+      }).catch(console.error);
+    });
   }
 
   renderItems = (items) => {
@@ -75,11 +76,9 @@ class Mall extends Component {
       <Grid item xs={12}>
         <Drain large />
       </Grid>
-
       <Grid item xs={11} md={10}>
         <Menu />
       </Grid>
-
       <Grid item xs={12}>
         <Drain small />
       </Grid>
@@ -101,11 +100,25 @@ class Mall extends Component {
       <Grid item xs={12}>
         <Drain small />
       </Grid>
-
       <Grid item xs={11} md={10}>
         {this.renderItems(data)}
       </Grid>
-
+      <Grid item xs={12}>
+        <Drain small />
+      </Grid>
+      <Grid item xs={12}>
+        <Grid container justify="center">
+          <Grid item>
+            <CircularProgressButton
+              endIcon={<ExpandMoreRounded />}
+              isLoading={this.state.isLoading}
+              onClick={this.loadData}
+            >
+              <Typography>Thêm</Typography>
+            </CircularProgressButton>
+          </Grid>
+        </Grid>
+      </Grid>
     </Grid>
   }
 }

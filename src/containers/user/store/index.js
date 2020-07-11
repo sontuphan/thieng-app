@@ -10,8 +10,12 @@ import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
+import { ExpandMoreRounded } from '@material-ui/icons';
+
+import Drain from 'components/drain';
 import { ProductCard } from 'components/cards';
 import Action from './action';
+import { CircularProgressButton } from 'components/buttons';
 
 import { getItems, updateItem } from 'modules/items.reducer';
 
@@ -26,6 +30,7 @@ class UserStore extends Component {
       visible: false,
       selected: [],
       multipleChoice: false,
+      isDeleteing: false,
       isLoading: false,
     }
   }
@@ -39,7 +44,11 @@ class UserStore extends Component {
     page = reset ? 0 : page + 1;
     const { getItems } = this.props;
     const condition = { status: 'selling' }
-    return getItems(condition, limit, page, 'store');
+    return this.setState({ isLoading: true }, () => {
+      return getItems(condition, limit, page, 'store').then(() => {
+        return this.setState({ isLoading: false });
+      }).catch(console.error);
+    });
   }
 
   onToggle = (e) => {
@@ -64,7 +73,7 @@ class UserStore extends Component {
   onDelete = () => {
     const { updateItem } = this.props;
     const { selected } = this.state;
-    this.setState({ isLoading: true });
+    this.setState({ isDeleteing: true });
     return async.eachSeries(selected, (itemId, cb) => {
       return updateItem({ _id: itemId, status: 'archived' }).then(re => {
         return cb();
@@ -74,7 +83,7 @@ class UserStore extends Component {
     }, (er) => {
       if (er) console.error(er);
       else this.loadData(true);
-      return this.setState({ isLoading: false });
+      return this.setState({ isDeleteing: false });
     });
   }
 
@@ -96,7 +105,7 @@ class UserStore extends Component {
 
   render() {
     const { classes } = this.props;
-    const { multipleChoice, isLoading } = this.state;
+    const { multipleChoice, isDeleteing } = this.state;
 
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
@@ -111,18 +120,30 @@ class UserStore extends Component {
             <Typography>Chọn nhiều sản phẩm</Typography>
           </Grid>
           <Grid item>
-            <Switch
-              color="primary"
-              checked={this.state.multipleChoice}
-              onChange={this.onToggle}
-            />
+            <Switch color="primary" checked={this.state.multipleChoice} onChange={this.onToggle} />
           </Grid>
         </Grid>
       </Grid>
       <Grid item xs={12}>
         {this.renderItems()}
       </Grid>
-      {multipleChoice ? <Action isLoading={isLoading} onDelete={this.onDelete} /> : null}
+      <Grid item xs={12}>
+        <Drain small />
+      </Grid>
+      <Grid item xs={12}>
+        <Grid container justify="center">
+          <Grid item>
+            <CircularProgressButton
+              endIcon={<ExpandMoreRounded />}
+              isLoading={this.state.isLoading}
+              onClick={this.loadData}
+            >
+              <Typography>Thêm</Typography>
+            </CircularProgressButton>
+          </Grid>
+        </Grid>
+      </Grid>
+      {multipleChoice ? <Action isLoading={isDeleteing} onDelete={this.onDelete} /> : null}
     </Grid>
   }
 }

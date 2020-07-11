@@ -9,11 +9,14 @@ import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
+import { ExpandMoreRounded } from '@material-ui/icons';
+
 import { BottomDrawer } from 'components/drawers';
 import { ProductCard } from 'components/cards';
 import Drain from 'components/drain';
 import Stall from 'containers/stall';
 import Action from './action';
+import { CircularProgressButton } from 'components/buttons';
 
 import { getItems } from 'modules/items.reducer';
 import { addItem, updateItem } from 'modules/items.reducer';
@@ -30,6 +33,7 @@ class UserFactory extends Component {
       visible: false,
       selected: [],
       multipleChoice: false,
+      isLoading: false,
     }
   }
 
@@ -41,7 +45,12 @@ class UserFactory extends Component {
     let { items: { factory: { pagination: { limit, page } } } } = this.props;
     let condition = { status: 'creating' }
     page = reset ? 0 : page + 1;
-    return this.props.getItems(condition, limit, page, 'factory');
+    const { getItems } = this.props;
+    return this.setState({ isLoading: true }, () => {
+      return getItems(condition, limit, page, 'factory').then(() => {
+        return this.setState({ isLoading: false });
+      }).catch(console.error);
+    });
   }
 
   onToggle = (e) => {
@@ -137,6 +146,22 @@ class UserFactory extends Component {
             </Grid>
           </Grid>
         </BottomDrawer>
+      </Grid>
+      <Grid item xs={12}>
+        <Drain small />
+      </Grid>
+      <Grid item xs={12}>
+        <Grid container justify="center">
+          <Grid item>
+            <CircularProgressButton
+              endIcon={<ExpandMoreRounded />}
+              isLoading={this.state.isLoading}
+              onClick={this.loadData}
+            >
+              <Typography>Thêm</Typography>
+            </CircularProgressButton>
+          </Grid>
+        </Grid>
       </Grid>
       <Action
         onAdd={() => this.setState({ editableId: '', visible: true })}

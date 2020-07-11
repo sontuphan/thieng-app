@@ -10,8 +10,12 @@ import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
+import { ExpandMoreRounded } from '@material-ui/icons';
+
+import Drain from 'components/drain';
 import { ProductCard } from 'components/cards';
 import Action from './action';
+import { CircularProgressButton } from 'components/buttons';
 
 import { getItems, updateItem } from 'modules/items.reducer';
 
@@ -26,6 +30,7 @@ class UserWarehouse extends Component {
       visible: false,
       selected: [],
       multipleChoice: false,
+      isRestoring: false,
       isLoading: false,
     }
   }
@@ -37,9 +42,13 @@ class UserWarehouse extends Component {
   loadData = (reset = false) => {
     let { items: { warehouse: { pagination: { limit, page } } } } = this.props;
     page = reset ? 0 : page + 1;
-    const { getItems } = this.props;
     const condition = { status: 'archived' }
-    return getItems(condition, limit, page, 'warehouse');
+    const { getItems } = this.props;
+    return this.setState({ isLoading: true }, () => {
+      return getItems(condition, limit, page, 'warehouse').then(() => {
+        return this.setState({ isLoading: false });
+      }).catch(console.error);
+    });
   }
 
   onToggle = (e) => {
@@ -62,7 +71,7 @@ class UserWarehouse extends Component {
   onRestore = () => {
     const { updateItem } = this.props;
     const { selected } = this.state;
-    this.setState({ isLoading: true });
+    this.setState({ isRestoring: true });
     return async.eachSeries(selected, (itemId, cb) => {
       return updateItem({ _id: itemId, status: 'selling' }).then(re => {
         return cb();
@@ -72,7 +81,7 @@ class UserWarehouse extends Component {
     }, (er) => {
       if (er) console.error(er);
       else this.loadData(true);
-      return this.setState({ isLoading: false });
+      return this.setState({ isRestoring: false });
     });
   }
 
@@ -94,7 +103,7 @@ class UserWarehouse extends Component {
 
   render() {
     const { classes } = this.props;
-    const { multipleChoice, isLoading } = this.state;
+    const { multipleChoice, isRestoring } = this.state;
 
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
@@ -120,7 +129,23 @@ class UserWarehouse extends Component {
       <Grid item xs={12}>
         {this.renderItems()}
       </Grid>
-      {multipleChoice ? <Action isLoading={isLoading} onRestore={this.onRestore} /> : null}
+      <Grid item xs={12}>
+        <Drain small />
+      </Grid>
+      <Grid item xs={12}>
+        <Grid container justify="center">
+          <Grid item>
+            <CircularProgressButton
+              endIcon={<ExpandMoreRounded />}
+              isLoading={this.state.isLoading}
+              onClick={this.loadData}
+            >
+              <Typography>Thêm</Typography>
+            </CircularProgressButton>
+          </Grid>
+        </Grid>
+      </Grid>
+      {multipleChoice ? <Action isLoading={isRestoring} onRestore={this.onRestore} /> : null}
     </Grid>
   }
 }
