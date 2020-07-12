@@ -17,14 +17,25 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import {
   FavoriteRounded, MoreHorizRounded, EditRounded,
-  DeleteRounded
+  DeleteRounded, CheckRounded,
 } from '@material-ui/icons';
 import { FaPoop } from 'react-icons/fa';
 
 import { getComment, getUser } from 'modules/bucket.reducer';
+import {
+  getFeeling, getFeelings,
+  addFeeling, updateFeeling, deleteFeeling
+} from 'modules/feelings.reducer';
+import { setConfirmation } from 'modules/notification.reducer';
 
 import styles from './styles';
 import utils from 'helpers/utils';
+
+const DEFAULT_FEELING = {
+  like: 0,
+  poop: 0
+}
+
 
 /**
  * LikeChip
@@ -34,6 +45,7 @@ function LikeChip(props) {
   return <Chip
     color="primary"
     size="small"
+    icon={props.active ? <CheckRounded /> : null}
     deleteIcon={<FavoriteRounded />}
     label={props.counting}
     onDelete={props.onClick}
@@ -42,24 +54,27 @@ function LikeChip(props) {
 }
 
 LikeChip.defaultProps = {
+  active: false,
   counting: 0,
   onClick: () => { },
 }
 
 LikeChip.propTypes = {
-  counting: PropTypes.number.isRequired,
-  onClick: PropTypes.func.isRequired,
+  active: PropTypes.bool,
+  counting: PropTypes.number,
+  onClick: PropTypes.func,
 }
 
 
 /**
- * DislikeChip
+ * PoopChip
  * @param {*} props 
  */
-function DislikeChip(props) {
+function PoopChip(props) {
   return <Chip
     color="secondary"
     size="small"
+    icon={props.active ? <CheckRounded /> : null}
     deleteIcon={<FaPoop style={{ height: 13, padding: "1px 0px 2px 0px" }} />}
     label={props.counting}
     onDelete={props.onClick}
@@ -67,14 +82,16 @@ function DislikeChip(props) {
   />
 }
 
-DislikeChip.defaultProps = {
+PoopChip.defaultProps = {
+  active: false,
   counting: 0,
   onClick: () => { },
 }
 
-DislikeChip.propTypes = {
-  counting: PropTypes.number.isRequired,
-  onClick: PropTypes.func.isRequired,
+PoopChip.propTypes = {
+  active: PropTypes.bool,
+  counting: PropTypes.number,
+  onClick: PropTypes.func,
 }
 
 
@@ -86,7 +103,8 @@ class SingleRichComment extends Component {
     super();
 
     this.state = {
-      anchorEl: null
+      anchorEl: null,
+      you: {},
     }
   }
 
@@ -101,9 +119,16 @@ class SingleRichComment extends Component {
   }
 
   loadData = () => {
-    const { commentId, getComment, getUser } = this.props;
+    const { commentId, auth } = this.props;
+    const { getComment, getUser, getFeeling, getFeelings } = this.props;
     return getComment(commentId).then(re => {
       return getUser(re.userId);
+    }).then(re => {
+      return getFeeling({ targetId: commentId, userId: auth._id });
+    }).then(re => {
+      return this.setState({ you: re }, () => {
+        return getFeelings(commentId);
+      });
     }).catch(console.error);
   }
 
@@ -113,6 +138,31 @@ class SingleRichComment extends Component {
 
   onClose = () => {
     return this.setState({ anchorEl: null });
+  }
+
+  onAction = (type) => {
+    const { commentId } = this.props;
+    if (!commentId) return console.log('Invalid ID');
+
+    const { you } = this.state;
+    const { addFeeling, updateFeeling, deleteFeeling } = this.props;
+    let action = null;
+    if (!you || !you.type) action = addFeeling;
+    else if (you && you.type === type) action = deleteFeeling;
+    else if (you && you.type !== type) action = updateFeeling;
+    else return console.log('Invalid types');
+
+    const feeling = { targetId: commentId, type }
+    const { auth, setConfirmation, getFeeling, getFeelings } = this.props;
+    return action(feeling).then(re => {
+      return getFeeling({ targetId: commentId, userId: auth._id }).then(re => {
+        return this.setState({ you: re }, () => {
+          return getFeelings(commentId);
+        });
+      }).catch(console.error);
+    }).catch(er => {
+      return setConfirmation(true, 'Không thể tưởng tác bình luận này', 'error');
+    });
   }
 
   onEdit = () => {
@@ -127,10 +177,12 @@ class SingleRichComment extends Component {
 
   render() {
     const { classes } = this.props;
-    const { bucket, commentId } = this.props;
-    const { onLike, onPoop } = this.props;
+    const { bucket, feelings: { data }, commentId } = this.props;
     const comment = bucket[commentId];
     if (!comment) return null;
+    const { you } = this.state;
+    const feeling = { ...DEFAULT_FEELING, ...data[commentId] };
+
     const user = bucket[comment.userId];
     if (!user) return null;
 
@@ -151,10 +203,18 @@ class SingleRichComment extends Component {
               <Grid item>
                 <Grid container className={classes.noWrap} alignItems="center" spacing={1}>
                   <Grid item>
-                    <LikeChip counting={comment.likeUserIds.length} onClick={onLike} />
+                    <LikeChip
+                      active={you && (you.type === 'like')}
+                      counting={feeling.like}
+                      onClick={() => this.onAction('like')}
+                    />
                   </Grid>
                   <Grid item>
-                    <DislikeChip counting={comment.dislikeUserIds.length} onClick={onPoop} />
+                    <PoopChip
+                      active={you && (you.type === 'poop')}
+                      counting={feeling.poop}
+                      onClick={() => this.onAction('poop')}
+                    />
                   </Grid>
                   <Grid item>
                     <IconButton size="small" onClick={this.onMore}>
@@ -191,24 +251,26 @@ class SingleRichComment extends Component {
 }
 
 SingleRichComment.defaultProps = {
-  onLike: () => { },
-  onPoop: () => { },
   onDelete: () => { },
 }
 
 SingleRichComment.propTypes = {
-  onLike: PropTypes.func,
-  onPoop: PropTypes.func,
   onDelete: PropTypes.func,
   commentId: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   bucket: state.bucket,
+  feelings: state.feelings,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getComment, getUser,
+  getComment,
+  getUser,
+  getFeeling, getFeelings,
+  addFeeling, updateFeeling, deleteFeeling,
+  setConfirmation,
 }, dispatch);
 
 export default withRouter(connect(

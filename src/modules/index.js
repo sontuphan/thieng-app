@@ -14,7 +14,7 @@ import cart from './cart.reducer';
 import notification from './notification.reducer';
 import editor from './editor.reducer';
 import order from './order.reducer';
-import comment from './order.reducer';
+import feelings from './feelings.reducer';
 
 export default (history) => combineReducers({
   router: connectRouter(history),
@@ -31,5 +31,5 @@ export default (history) => combineReducers({
   notification,
   editor,
   order,
-  comment,
+  feelings,
 });
