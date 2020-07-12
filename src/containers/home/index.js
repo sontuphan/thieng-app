@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import Image from 'material-ui-image';
+// import Image from 'material-ui-image';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -14,7 +14,10 @@ import Policy from './policy';
 import Contact from './contact';
 
 import styles from './styles';
-import peopleImg from 'static/images/people.svg';
+// import peopleImg from 'static/images/people.svg';
+import astronautGLB from 'static/images/Astronaut.glb';
+import astronautUSDZ from 'static/images/Astronaut.usdz';
+// import workshop from 'static/images/Workshop.hdr';
 
 
 const NAMES = ['Mirror', 'Lamp', 'Chair', 'Desk', 'Lamp']
@@ -60,6 +63,8 @@ class Home extends Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     return <Grid container spacing={2}>
       <Grid item xs={12}>
         <Drain />
@@ -68,7 +73,20 @@ class Home extends Component {
         <Welcome />
       </Grid>
       <Grid item xs={12} md={6}>
-        <Image src={peopleImg} aspectRatio={(568 / 485)} />
+        {/* <Image src={peopleImg} aspectRatio={(568 / 485)} /> */}
+        <model-viewer
+          src={astronautGLB}
+          ar
+          ar-modes="webxr scene-viewer quick-look"
+          ar-scale="auto"
+          quick-look-browsers="safari chrome"
+          camera-controls
+          auto-rotate
+          alt="A 3D model of an astronaut"
+          // skybox-image={workshop}
+          ios-src={astronautUSDZ}
+          class={classes.arViewer}
+        ></model-viewer>
       </Grid>
       <Grid item xs={12}>
         <Drain large />

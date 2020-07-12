@@ -10,5 +10,5 @@ body {
 }
 
 [contenteditable] {
-  outline: none;
+  outline: 0;
 }
