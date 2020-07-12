@@ -42,8 +42,8 @@ class UserStore extends Component {
   loadData = (reset = false) => {
     let { items: { store: { pagination: { limit, page } } } } = this.props;
     page = reset ? 0 : page + 1;
-    const { getItems } = this.props;
     const condition = { status: 'selling' }
+    const { getItems } = this.props;
     return this.setState({ isLoading: true }, () => {
       return getItems(condition, limit, page, 'store').then(() => {
         return this.setState({ isLoading: false });
@@ -136,7 +136,7 @@ class UserStore extends Component {
             <CircularProgressButton
               endIcon={<ExpandMoreRounded />}
               isLoading={this.state.isLoading}
-              onClick={this.loadData}
+              onClick={() => this.loadData(false)}
             >
               <Typography>Thêm</Typography>
             </CircularProgressButton>

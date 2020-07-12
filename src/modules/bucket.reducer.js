@@ -160,6 +160,44 @@ export const getOrder = (_id, reset = false) => {
   }
 }
 
+/**
+ * Get a comment
+ */
+export const GET_COMMENT = 'GET_COMMENT';
+export const GET_COMMENT_OK = 'GET_COMMENT_OK';
+export const GET_COMMENT_FAIL = 'GET_COMMENT_FAIL';
+
+export const getComment = (_id, reset = false) => {
+  return (dispatch, prevState) => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: GET_COMMENT });
+      // Check id
+      if (!_id) {
+        const er = 'Invalid ID';
+        dispatch({ type: GET_COMMENT_FAIL, reason: er });
+        return reject(er);
+      }
+      // Get offline
+      const { bucket } = prevState();
+      if (bucket[_id] && !reset) {
+        dispatch({ type: GET_ORDER_OK });
+        return resolve(bucket[_id]);
+      }
+      // Get online
+      const { api: { base } } = configs;
+      return api.get(`${base}/comment`, { _id }).then(re => {
+        const comment = re.data;
+        const data = comment ? { [comment._id]: comment } : {};
+        dispatch({ type: GET_COMMENT_OK, data });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: GET_COMMENT_FAIL, reason: er });
+        return reject(er);
+      });
+    });
+  }
+}
+
 
 /**
  * Reducder
@@ -181,6 +219,10 @@ export default (state = defaultState, action) => {
     case GET_ORDER_OK:
       return { ...state, ...action.data };
     case GET_ORDER_FAIL:
+      return { ...state, ...action.data };
+    case GET_COMMENT_OK:
+      return { ...state, ...action.data };
+    case GET_COMMENT_FAIL:
       return { ...state, ...action.data };
     default:
       return state;

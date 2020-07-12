@@ -64,7 +64,7 @@ export const searchText = (condition, limit, page) => {
       dispatch({ type: SEARCH_TEXT });
 
       if (!condition) {
-        const er = 'Invalid input';
+        const er = 'Invalid inputs';
         dispatch({ type: SEARCH_TEXT_FAIL, reason: er });
         return reject(er);
       }

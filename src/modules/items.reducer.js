@@ -7,7 +7,7 @@ import api from 'helpers/api';
  */
 const PAGINATION = {
   page: -1,
-  limit: 5,
+  limit: 12,
 }
 const defaultState = {
   mall: {

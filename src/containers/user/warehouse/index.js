@@ -138,7 +138,7 @@ class UserWarehouse extends Component {
             <CircularProgressButton
               endIcon={<ExpandMoreRounded />}
               isLoading={this.state.isLoading}
-              onClick={this.loadData}
+              onClick={() => this.loadData(false)}
             >
               <Typography>Thêm</Typography>
             </CircularProgressButton>

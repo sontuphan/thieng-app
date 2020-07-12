@@ -14,7 +14,6 @@ import Stall from 'containers/stall';
 import Recommendation from 'containers/recommendation';
 
 import { getItem } from 'modules/bucket.reducer';
-import { getComments } from 'modules/comments.reducer';
 
 import styles from './styles';
 
@@ -38,21 +37,10 @@ class Item extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!isEqual(prevProps.match, this.props.match)) {
+    const { match } = this.props;
+    if (!isEqual(prevProps.match, match)) {
       this.handleParams();
     }
-  }
-
-  onSend = () => {
-    return console.log('Submit comment');
-  }
-
-  onMore = () => {
-    return this.setState({ isLoading: true }, () => {
-      setTimeout(() => {
-        this.setState({ isLoading: false });
-      }, 3000);
-    });
   }
 
   render() {
@@ -61,7 +49,7 @@ class Item extends Component {
 
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
-        <Stall itemId={this.state._id} />
+        <Stall itemId={_id} />
       </Grid>
 
       <Grid item xs={12}>
@@ -71,7 +59,7 @@ class Item extends Component {
       <Grid item xs={12} md={6}>
         <Grid container justify="center" spacing={2}>
           <Grid item xs={10}>
-            <Recommendation itemId={this.state._id} quatity={6} />
+            <Recommendation itemId={_id} quatity={6} />
           </Grid>
           <Grid item xs={12}>
             <Drain small />
@@ -86,13 +74,7 @@ class Item extends Component {
             <Typography variant="h2">Nhận xét</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <RichComment
-              user={this.props.auth}
-              comments={this.props.comments.data}
-              onSend={this.onSend}
-              onMore={this.onMore}
-              isLoading={this.state.isLoading}
-            />
+            <RichComment targetId={_id} />
           </Grid>
         </Grid>
         <Grid item xs={12}>
@@ -105,12 +87,10 @@ class Item extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  comments: state.comments,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getItem,
-  getComments,
 }, dispatch);
 
 export default withRouter(connect(

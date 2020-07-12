@@ -33,4 +33,7 @@ export default theme => ({
   user: {
     cursor: 'pointer',
   },
+  listItem: {
+    minWidth: theme.spacing(4)
+  }
 });

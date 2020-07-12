@@ -151,7 +151,7 @@ export const setConfirmation = (visible, message = '', type = 'info') => {
       dispatch({ type: SET_CONFIRMATION });
 
       if (typeof visible !== 'boolean') {
-        const er = 'Invalid input'
+        const er = 'Invalid inputs'
         dispatch({ type: SET_CONFIRMATION_FAIL, reason: er });
         return reject(er);
       }
