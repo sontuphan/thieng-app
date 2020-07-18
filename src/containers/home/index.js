@@ -84,6 +84,8 @@ class Home extends Component {
           auto-rotate
           alt="A 3D model of an astronaut"
           // skybox-image={workshop}
+          shadow-intensity={1}
+          shadow-softness={1.25}
           ios-src={astronautUSDZ}
           class={classes.arViewer}
         ></model-viewer>

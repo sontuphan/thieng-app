@@ -41,7 +41,7 @@ export function Header(props) {
 function Row(props) {
   const classes = useStyles();
   const data = useData(props.orderId);
-  if (!data) return null;
+  if (!data || data instanceof Error) return null;
 
   const getTotalPrice = (items) => {
     return `${utils.prettyNumber(items.reduce((total, { amount, price }) => total + amount * price, 0), 'long')} ₫`;

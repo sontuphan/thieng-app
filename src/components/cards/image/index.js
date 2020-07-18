@@ -12,7 +12,7 @@ function ImageCard(props) {
   const classes = useStyles();
   const data = useData(props._id);
   // State changes
-  if (!data) return null;
+  if (!data || data instanceof Error) return null;
   utils.extractImageColors(data.source).then(re => {
     const backgroundColors = Object.keys(re).map(key => re[key].hex);
     const textColors = Object.keys(re).map(key => re[key].bodyTextColor);

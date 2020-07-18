@@ -32,7 +32,7 @@ function GalleryCard(props) {
     if (myRef.current) return setHeight(myRef.current.offsetWidth / 2);
   }, [data, ui]);
   // Define functions
-  if (!data) return null;
+  if (!data || data instanceof Error) return null;
   const onCollapse = () => setChecked((prev) => !prev);
   const imageProps = props.onClick ? { onClick: props.onClick } : { component: Link, to: `/item/${data._id}` }
   const onColors = ({ backgroundColors, textColors }) => {
@@ -46,7 +46,7 @@ function GalleryCard(props) {
         <Paper elevation={0} className={classes.paper} style={{ backgroundColor: backgroundColor }}>
           <Grid container justify="center" spacing={2}>
             <Grid item xs={6} {...imageProps}>
-              <ImageCard _id={data.thumbnailId || data.fileIds[0]} onChange={onColors} />
+              <ImageCard _id={data.thumbnailId || (data.fileIds && data.fileIds[0])} onChange={onColors} />
             </Grid>
             <Grid item xs={6}>
               <Grid container spacing={2}>
@@ -86,7 +86,7 @@ function GalleryCard(props) {
     <Grid item xs={12} className={checked ? classes.expansionMore : classes.expansionLess}>
       <div
         className={classes.subexpansion}
-        style={{ backgroundImage: `linear-gradient(to bottom, ${backgroundColor + '00'}, ${backgroundColor + '19'}, ${backgroundColor + 'ff'}, ${backgroundColor + 'ff'})` }}
+        style={{ backgroundImage: `linear-gradient(to bottom, ${backgroundColor + '00'}, ${backgroundColor + '19'}, ${backgroundColor + 'ef'}, ${backgroundColor + 'ff'})` }}
       >
         <Grid container spacing={2} justify="flex-end">
           <Grid item className={classes.padding}>

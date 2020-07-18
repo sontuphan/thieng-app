@@ -15,7 +15,7 @@ import styles from './styles';
 import utils from 'helpers/utils';
 
 const content = `
-  Say đắm chất liệu thiên nhiên & tin vào năng lực dân tộc, Với tinh thần 
+  Say đắm chất liệu thiên nhiên, tin vào năng lực dân tộc, và với tinh thần 
   "Thượng tôn tinh hoa đất Việt", Thiêng Việt mang tầm nhìn phát triển 
   những thế mạnh của quê hương trong đời sống hiện đại. Thiêng Việt đề 
   ra sứ mệnh dùng tre để gầy dựng đời sống bền vững cho người sản xuất, 

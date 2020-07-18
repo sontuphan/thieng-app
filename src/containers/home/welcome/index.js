@@ -46,13 +46,13 @@ class Welcome extends Component {
         <Typography variant="h6">{contentTwo} <strong>Thiêng Việt</strong>.</Typography>
       </Grid>
       <Grid item xs={12}>
-        <Drain />
+        <Drain small />
       </Grid>
       <Grid item xs={10} md={8}>
         <Divider />
       </Grid>
       <Grid item xs={12}>
-        <Drain />
+        <Drain small />
       </Grid>
       <Grid item xs={10} md={8}>
         <Typography variant="h2">Tôi là</Typography>

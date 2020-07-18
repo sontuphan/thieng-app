@@ -13,7 +13,7 @@ function UserCard(props) {
   const classes = useStyles();
   const data = useData(props.userId);
 
-  if (!data) return null;
+  if (!data || data instanceof Error) return null;
   return <Grid container alignItems="center" spacing={2} className={classes.noWrap}>
     <Grid item className={classes.link} component={RouterLink} to={'#'}>
       <Avatar alt={data.displayname} src={data.avatar} />

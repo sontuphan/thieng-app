@@ -21,7 +21,7 @@ function StatusCard(props) {
   const data = useData(props._id);
   let { auth } = props;
 
-  if (!data) return null;
+  if (!data || data instanceof Error) return null;
   return <Grid container spacing={2}>
     <Grid item xs={12}>
       <Paper elevation={0} className={classes.paper}>

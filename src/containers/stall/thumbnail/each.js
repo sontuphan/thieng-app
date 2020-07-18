@@ -24,7 +24,8 @@ function Each(props) {
   const classes = useStyles();
   const { fileId, selected, onClick } = props;
   const data = useData(fileId);
-  if (!data) return null;
+  if (!data || data instanceof Error) return null;
+  
   return <Badge
     overlap="rectangle"
     variant="dot"

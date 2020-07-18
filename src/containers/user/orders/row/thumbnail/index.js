@@ -7,7 +7,8 @@ import { useData } from './module';
 
 function OrderThumbnail(props, ref) {
   const data = useData(props.itemId);
-  if (!data) return null;
+  if (!data || data instanceof Error) return null;
+  
   const { className, style } = props; // from GroupAvatar
   return <Avatar className={className} style={style} alt={data.name} src={data.source} />
 };
