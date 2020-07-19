@@ -19,13 +19,35 @@ import UserOrders from './orders';
 import UserHistory from './history';
 import UserSettings from './settings';
 
+import { getUsers } from 'modules/user.reducer';
+
 import styles from './styles';
 
 
 class User extends Component {
 
+  constructor() {
+    super();
+
+    this.state = {
+      userId: ''
+    }
+  }
+
+  componentDidMount() {
+    this.loadData();
+  }
+
+  loadData = () => {
+    const { getUsers } = this.props;
+    const { match: { params: { email } } } = this.props;
+    return getUsers({ email }).then(([user]) => {
+      return this.setState({ userId: user._id });
+    }).catch(console.error);
+  }
+
   render() {
-    const { classes, auth } = this.props;
+    const { classes } = this.props;
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12} className={classes.header}>
         <Grid container justify="flex-end" spacing={2}>
@@ -36,7 +58,7 @@ class User extends Component {
         <Paper elevation={0} className={classes.paper}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              {auth._id ? <Profile userId={auth._id} /> : null}
+              <Profile userId={this.state.userId} />
             </Grid>
             <Grid item xs={12}>
               <Drain small />
@@ -72,7 +94,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-
+  getUsers,
 }, dispatch);
 
 export default withRouter(connect(

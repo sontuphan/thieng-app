@@ -60,7 +60,7 @@ class Profile extends Component {
   onEdit = () => {
     const { editable, user } = this.state;
     if (editable) this.props.updateUser(user).then(user => {
-      this.setState({ user });
+      return this.setState({ user });
     }).catch(console.error);
     return this.setState({ editable: !editable });
   }
@@ -78,6 +78,7 @@ class Profile extends Component {
   render() {
     const { classes } = this.props;
     const { user } = this.state;
+    const { auth: { _id }, userId } = this.props;
 
     return <Grid container spacing={1}>
       <Grid item xs={12}>
@@ -96,7 +97,7 @@ class Profile extends Component {
                   <Grid item className={classes.stretch}>
                     <Typography variant="body2">{user.displayname}</Typography>
                   </Grid>
-                  <Grid item>
+                  {userId === _id ? <Grid item>
                     <Tooltip title="Chỉnh sửa lời giới thiệu">
                       <IconButton onClick={this.onEdit} size="small">
                         <ToggleIcon
@@ -107,14 +108,14 @@ class Profile extends Component {
                         />
                       </IconButton>
                     </Tooltip>
-                  </Grid>
-                  <Grid item>
+                  </Grid> : null}
+                  {userId === _id ? <Grid item>
                     <Tooltip title="Đăng xuất">
                       <IconButton onClick={this.logout} size="small">
                         <ExitToAppRounded fontSize="small" />
                       </IconButton>
                     </Tooltip>
-                  </Grid>
+                  </Grid> : null}
                 </Grid>
               </Grid>
               <Grid item xs={12}>
@@ -152,8 +153,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   logOut,
-  getUser,
-  updateUser,
+  getUser, updateUser,
 }, dispatch);
 
 export default withRouter(connect(

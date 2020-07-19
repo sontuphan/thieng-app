@@ -15,6 +15,38 @@ const defaultState = {
 }
 
 /**
+ * Get users
+ */
+export const GET_USERS = 'GET_USERS';
+export const GET_USERS_OK = 'GET_USERS_OK';
+export const GET_USERS_FAIL = 'GET_USERS_FAIL';
+
+export const getUsers = (condition, limit, page) => {
+  return (dispatch, prevState) => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: GET_USERS });
+
+      const { users: { data, pagination } } = prevState();
+      const accumulative = page === pagination.page + 1;
+      const { api: { base } } = configs;
+      return api.get(`${base}/public/users`, { condition, limit, page }).then(re => {
+        dispatch({
+          type: GET_USERS_OK,
+          data: {
+            data: accumulative ? data.concat(re.data) : re.data,
+            pagination: re.pagination
+          }
+        });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: GET_USERS_FAIL, reason: er });
+        return reject(er);
+      });
+    });
+  }
+}
+
+/**
  * Get user by code
  */
 export const UPDATE_USER = 'UPDATE_USER';
@@ -50,6 +82,10 @@ export const updateUser = (user) => {
  */
 export default (state = defaultState, action) => {
   switch (action.type) {
+    case GET_USERS_OK:
+      return { ...state, ...action.data };
+    case GET_USERS_FAIL:
+      return { ...state, ...action.data };
     case UPDATE_USER_OK:
       return { ...state, ...action.data };
     case UPDATE_USER_FAIL:

@@ -15,9 +15,12 @@ import Contact from './contact';
 
 import styles from './styles';
 // import peopleImg from 'static/images/people.svg';
-import astronautGLB from 'static/images/Astronaut.glb';
-import astronautUSDZ from 'static/images/Astronaut.usdz';
-// import workshop from 'static/images/Workshop.hdr';
+// import astronautGLB from 'static/images/Astronaut.glb';
+// import astronautUSDZ from 'static/images/Astronaut.usdz';
+import lanternGLB from 'static/images/lantern.glb';
+import lanternUSDZ from 'static/images/lantern.usdz';
+// import bg from 'static/images/Workshop.hdr';
+// import bg from 'static/images/bg.hdr';
 
 
 const NAMES = ['Mirror', 'Lamp', 'Chair', 'Desk', 'Lamp']
@@ -75,7 +78,7 @@ class Home extends Component {
       <Grid item xs={12} md={6}>
         {/* <Image src={peopleImg} aspectRatio={(568 / 485)} /> */}
         <model-viewer
-          src={astronautGLB}
+          src={lanternGLB}
           ar
           ar-modes="webxr scene-viewer quick-look"
           ar-scale="auto"
@@ -83,10 +86,10 @@ class Home extends Component {
           camera-controls
           auto-rotate
           alt="A 3D model of an astronaut"
-          // skybox-image={workshop}
+          // skybox-image={bg}
           shadow-intensity={1}
           shadow-softness={1.25}
-          ios-src={astronautUSDZ}
+          ios-src={lanternUSDZ}
           class={classes.arViewer}
         ></model-viewer>
       </Grid>

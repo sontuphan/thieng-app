@@ -18,6 +18,7 @@ import Action from './action';
 import { CircularProgressButton } from 'components/buttons';
 
 import { getItems, updateItem } from 'modules/items.reducer';
+import { getUsers } from 'modules/user.reducer';
 
 import styles from './styles';
 
@@ -40,12 +41,15 @@ class UserStore extends Component {
   }
 
   loadData = (reset = false) => {
-    let { items: { store: { pagination: { limit, page } } } } = this.props;
-    page = reset ? 0 : page + 1;
-    const condition = { status: 'selling' }
-    const { getItems } = this.props;
+    const { getUsers, getItems } = this.props;
     return this.setState({ isLoading: true }, () => {
-      return getItems(condition, limit, page, 'store').then(() => {
+      const { match: { params: { email } } } = this.props;
+      return getUsers({ email }, 1, 0).then(([user]) => {
+        let { items: { store: { pagination: { limit, page } } } } = this.props;
+        page = reset ? 0 : page + 1;
+        const condition = { status: 'selling', userId: user._id }
+        return getItems(condition, limit, page, 'store')
+      }).then(() => {
         return this.setState({ isLoading: false });
       }).catch(console.error);
     });
@@ -56,18 +60,15 @@ class UserStore extends Component {
   }
 
   onClick = (itemId) => {
-    const { multipleChoice } = this.state;
-    if (multipleChoice) {
-      return () => {
-        let { selected } = this.state;
-        let index = selected.indexOf(itemId);
-        if (index === -1) selected.push(itemId);
-        else if (index === selected.length - 1) selected.pop();
-        else selected[index] = selected.pop();
-        return this.setState({ selected });
-      }
+    if (!this.state.multipleChoice) return null;
+    return () => {
+      let { selected } = this.state;
+      const index = selected.indexOf(itemId);
+      if (index === -1) selected.push(itemId);
+      else if (index === selected.length - 1) selected.pop();
+      else selected[index] = selected.pop();
+      return this.setState({ selected });
     }
-    return null;
   }
 
   onDelete = () => {
@@ -155,6 +156,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getItems, updateItem,
+  getUsers,
 }, dispatch);
 
 export default withRouter(connect(
