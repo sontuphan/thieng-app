@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
+import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -19,12 +20,21 @@ import UserOrders from './orders';
 import UserHistory from './history';
 import UserSettings from './settings';
 
-import { getUsers } from 'modules/user.reducer';
-
 import styles from './styles';
 
 
 class User extends Component {
+
+  componentDidMount() {
+    this.validateOwner();
+  }
+
+  validateOwner = () => {
+    const { match: { params: { userId } }, auth } = this.props;
+    if (isEqual(userId, auth._id)) return null;
+    return this.props.history.replace(`/guest/${userId}/store`);
+  }
+
   render() {
     const { classes } = this.props;
     const { auth: { _id } } = this.props;
@@ -55,14 +65,14 @@ class User extends Component {
       </Grid>
       <Grid item xs={11} md={10}>
         <Switch>
-          {/* <Route exact path="/user/:email/home" component={UserHome} /> */}
-          <Route exact path="/user/:email/store" component={UserStore} />
-          <Route exact path="/user/:email/warehouse" component={UserWarehouse} />
-          <Route exact path="/user/:email/factory" component={UserFactory} />
-          <Route exact path="/user/:email/orders" component={UserOrders} />
-          {/* <Route exact path="/user/:email/message" component={null} /> */}
-          <Route exact path="/user/:email/history" component={UserHistory} />
-          <Route exact path="/user/:email/settings" component={UserSettings} />
+          {/* <Route exact path="/user/:userId/home" component={UserHome} /> */}
+          <Route exact path="/user/:userId/store" component={UserStore} />
+          <Route exact path="/user/:userId/warehouse" component={UserWarehouse} />
+          <Route exact path="/user/:userId/factory" component={UserFactory} />
+          <Route exact path="/user/:userId/orders" component={UserOrders} />
+          {/* <Route exact path="/user/:userId/message" component={null} /> */}
+          <Route exact path="/user/:userId/history" component={UserHistory} />
+          <Route exact path="/user/:userId/settings" component={UserSettings} />
         </Switch>
       </Grid>
     </Grid>
@@ -75,7 +85,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getUsers,
 }, dispatch);
 
 export default withRouter(connect(

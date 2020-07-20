@@ -38,8 +38,8 @@ class Editor extends Component {
   }
 
   loadData = () => {
-    const { match: { params: { email } } } = this.props;
-    this.props.getProjects(email).then(re => {
+    const { match: { params: { userId } } } = this.props;
+    this.props.getProjects(userId).then(re => {
       let newData = this.state.projects.concat(re.data);
       return this.setState({ projects: newData });
     }).catch(er => {

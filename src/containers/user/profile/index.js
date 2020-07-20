@@ -40,7 +40,6 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    this.validateOwner();
     this.loadData();
   }
 
@@ -49,12 +48,6 @@ class Profile extends Component {
     if (!isEqual(prevProps.userId, userId)) {
       this.loadData();
     }
-  }
-
-  validateOwner = () => {
-    const { match: { params: { email } }, auth } = this.props;
-    if (email === auth.email) return null;
-    return this.props.history.push('/guest/' + email);
   }
 
   loadData = () => {

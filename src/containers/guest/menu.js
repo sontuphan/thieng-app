@@ -24,14 +24,14 @@ const MENU = {
 class Menu extends Component {
 
   renderButton = ({ name, value, icon, disabled }) => {
-    const { match: { params: { email, page } } } = this.props;
+    const { match: { params: { userId, page } } } = this.props;
     return <Grid item>
       <Button
         variant="outlined"
         color={page === value ? 'primary' : 'default'}
         startIcon={icon}
         component={RouterLink}
-        to={`/guest/${email}/${value}`}
+        to={`/guest/${userId}/${value}`}
         disabled={disabled}
       >
         <Typography>{name}</Typography>

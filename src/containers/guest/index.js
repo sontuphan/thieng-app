@@ -14,38 +14,14 @@ import Menu from './menu';
 // import UserHome from './home';
 import GuestStore from './store';
 
-import { getUsers } from 'modules/user.reducer';
-import { setConfirmation } from 'modules/notification.reducer';
-
 import styles from './styles';
 
 
 class Guest extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      userId: ''
-    }
-  }
-
-  componentDidMount() {
-    this.loadData();
-  }
-
-  loadData = () => {
-    const { match: { params: { email } } } = this.props;
-    const { getUsers, setConfirmation } = this.props;
-    return getUsers({ email }, 1, 0).then(([user]) => {
-      return this.setState({ userId: user._id });
-    }).catch(er => {
-      return setConfirmation(true, 'Không thể tải dữ liệu', 'error');
-    });
-  }
 
   render() {
     const { classes } = this.props;
-    const { userId } = this.state;
+    const { match: { params: { userId } } } = this.props;
     if (!userId) return null;
 
     return <Grid container justify="center" spacing={2}>
@@ -74,9 +50,9 @@ class Guest extends Component {
       </Grid>
       <Grid item xs={11} md={10}>
         <Switch>
-          {/* <Route exact path="/user/:email/home" component={UserHome} /> */}
-          <Route exact path="/guest/:email/store" component={GuestStore} />
-          {/* <Route exact path="/user/:email/message" component={null} /> */}
+          {/* <Route exact path="/user/:userId/home" component={UserHome} /> */}
+          <Route exact path="/guest/:userId/store" component={GuestStore} />
+          {/* <Route exact path="/user/:userId/message" component={null} /> */}
         </Switch>
       </Grid>
     </Grid>
@@ -89,8 +65,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getUsers,
-  setConfirmation,
 }, dispatch);
 
 export default withRouter(connect(

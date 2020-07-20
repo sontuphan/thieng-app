@@ -15,10 +15,10 @@ function UserCard(props) {
 
   if (!data || data instanceof Error) return null;
   return <Grid container alignItems="center" spacing={2} className={classes.noWrap}>
-    <Grid item className={classes.link} component={RouterLink} to={'#'}>
+    <Grid item className={classes.link} component={RouterLink} to={`/user/${data._id}`}>
       <Avatar alt={data.displayname} src={data.avatar} />
     </Grid>
-    <Grid item xs={8} className={classes.stretch} component={RouterLink} to={'#'}>
+    <Grid item xs={8} className={classes.stretch} component={RouterLink} to={`/user/${data._id}`}>
       <Typography style={{ color: props.color }} noWrap>{data.displayname}</Typography>
     </Grid>
   </Grid>

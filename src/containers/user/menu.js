@@ -35,13 +35,13 @@ const MENU = {
 class Menu extends Component {
 
   renderButton = ({ name, value, icon, disabled }) => {
-    const { match: { params: { email, page } } } = this.props;
+    const { match: { params: { userId, page } } } = this.props;
     return <Button
       variant="outlined"
       color={page === value ? 'primary' : 'default'}
       startIcon={icon}
       component={RouterLink}
-      to={`/user/${email}/${value}`}
+      to={`/user/${userId}/${value}`}
       disabled={disabled}
     >
       <Typography>{name}</Typography>

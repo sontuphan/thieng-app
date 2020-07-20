@@ -18,7 +18,6 @@ import Action from './action';
 import { CircularProgressButton } from 'components/buttons';
 
 import { getItems, updateItem } from 'modules/items.reducer';
-import { getUsers } from 'modules/user.reducer';
 
 import styles from './styles';
 
@@ -153,7 +152,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getItems, updateItem,
-  getUsers,
 }, dispatch);
 
 export default withRouter(connect(

@@ -15,7 +15,6 @@ import { ProductCard } from 'components/cards';
 import { CircularProgressButton } from 'components/buttons';
 
 import { getItems, updateItem } from 'modules/items.reducer';
-import { getUsers } from 'modules/user.reducer';
 
 import styles from './styles';
 
@@ -35,14 +34,11 @@ class GuestStore extends Component {
 
   loadData = (reset = false) => {
     return this.setState({ isLoading: true }, () => {
-      const { getItems, getUsers } = this.props;
-      const { match: { params: { email } } } = this.props;
-      return getUsers({ email }, 1, 0).then(([user]) => {
-        let { items: { store: { pagination: { limit, page } } } } = this.props;
-        page = reset ? 0 : page + 1;
-        const condition = { status: 'selling', userId: user._id }
-        return getItems(condition, limit, page, 'store')
-      }).then(() => {
+      const { match: { params: { userId } }, getItems } = this.props;
+      let { items: { store: { pagination: { limit, page } } } } = this.props;
+      page = reset ? 0 : page + 1;
+      const condition = { status: 'selling', userId: userId }
+      return getItems(condition, limit, page, 'store').then(() => {
         return this.setState({ isLoading: false });
       }).catch(console.error);
     });
@@ -102,7 +98,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getItems, updateItem,
-  getUsers,
 }, dispatch);
 
 export default withRouter(connect(

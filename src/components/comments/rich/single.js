@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import isEqual from 'react-fast-compare';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -189,12 +190,14 @@ class SingleRichComment extends Component {
     return <Grid container spacing={2}>
       <Grid item xs={12}>
         <Grid container spacing={1} className={classes.noWrap}>
-          <Grid item>
+          <Grid item component={RouterLink} to={`/user/${user._id}`}>
             <Avatar className={classes.user} alt={user.avatar} src={user.avatar} />
           </Grid>
           <Grid item className={classes.stretch}>
             <div className={classes.paper}>
-              <Typography><strong className={classes.name}>{user.displayname}</strong> - {comment.contents}</Typography>
+              <Typography>
+                <RouterLink className={classes.name} to={`/user/${user._id}`}>{user.displayname}</RouterLink> - {comment.contents}
+                </Typography>
             </div>
             <Grid container className={classes.noWrap} justify="space-between" alignItems="center" spacing={1}>
               <Grid item>

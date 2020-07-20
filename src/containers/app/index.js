@@ -70,10 +70,10 @@ class App extends Component {
             <Route exact path="/mall/:category" component={Mall} />
             <Redirect exact from="/item" to="/mall" />
             <PrivateRoute exact path="/item/:id" component={Item} />
-            <Redirect exact from="/user/:email" to="/user/:email/store" />
-            <PrivateRoute exact path="/user/:email/:page" component={User} />
-            <Redirect exact from="/guest/:email" to="/guest/:email/store" />
-            <Route exact path="/guest/:email/:page" component={Guest} />
+            <Redirect exact from="/user/:userId" to="/user/:userId/store" />
+            <PrivateRoute exact path="/user/:userId/:page" component={User} />
+            <Redirect exact from="/guest/:userId" to="/guest/:userId/store" />
+            <Route exact path="/guest/:userId/:page" component={Guest} />
             <Route exact path='*' component={NotFound} />
           </Switch>
 
