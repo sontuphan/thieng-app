@@ -57,7 +57,7 @@ class Newsfeed extends Component {
   }
 
   readParams = () => {
-    let { match: { params: { page } } } = this.props;
+    const { match: { params: { page } } } = this.props;
     this.setState({ page });
   }
 

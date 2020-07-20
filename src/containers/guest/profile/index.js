@@ -9,19 +9,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
-import ToggleIcon from 'material-ui-toggle-icon';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
 
-import {
-  CreateRounded, BorderColorRounded, ExitToAppRounded,
-} from '@material-ui/icons';
+import { } from '@material-ui/icons';
 
 import { TextInput } from 'components/inputs';
 
-import { logOut } from 'modules/auth.reducer';
 import { getUser } from 'modules/bucket.reducer';
-import { updateUser } from 'modules/user.reducer';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -34,13 +27,11 @@ class Profile extends Component {
     this.state = {
       likes: 12853,
       products: 32,
-      editable: false,
       user: {},
     }
   }
 
   componentDidMount() {
-    this.validateOwner();
     this.loadData();
   }
 
@@ -51,35 +42,11 @@ class Profile extends Component {
     }
   }
 
-  validateOwner = () => {
-    const { match: { params: { email } }, auth } = this.props;
-    if (email === auth.email) return null;
-    return this.props.history.push('/guest/' + email);
-  }
-
   loadData = () => {
     const { userId, getUser } = this.props;
     return getUser(userId).then(user => {
       if (user) return this.setState({ user });
     }).catch(console.error);
-  }
-
-  onEdit = () => {
-    const { editable, user } = this.state;
-    if (editable) this.props.updateUser(user).then(user => {
-      return this.setState({ user });
-    }).catch(console.error);
-    return this.setState({ editable: !editable });
-  }
-
-  onChange = (value) => {
-    const { user } = this.state;
-    return this.setState({ user: { ...user, description: value } });
-  }
-
-  logout = () => {
-    this.props.logOut();
-    return this.props.history.push('/home');
   }
 
   render() {
@@ -103,25 +70,6 @@ class Profile extends Component {
                   <Grid item className={classes.stretch}>
                     <Typography variant="body2">{user.displayname}</Typography>
                   </Grid>
-                  <Grid item>
-                    <Tooltip title="Chỉnh sửa lời giới thiệu">
-                      <IconButton onClick={this.onEdit} size="small">
-                        <ToggleIcon
-                          className={classes.toggleIcon}
-                          on={this.state.editable}
-                          onIcon={<BorderColorRounded fontSize="small" color="primary" />}
-                          offIcon={<CreateRounded fontSize="small" />}
-                        />
-                      </IconButton>
-                    </Tooltip>
-                  </Grid>
-                  <Grid item>
-                    <Tooltip title="Đăng xuất">
-                      <IconButton onClick={this.logout} size="small">
-                        <ExitToAppRounded fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                  </Grid>
                 </Grid>
               </Grid>
               <Grid item xs={12}>
@@ -144,10 +92,6 @@ class Profile extends Component {
   }
 }
 
-Profile.defaultProps = {
-
-}
-
 Profile.propTypes = {
   userId: PropTypes.string.isRequired
 }
@@ -158,8 +102,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  logOut,
-  getUser, updateUser,
+  getUser,
 }, dispatch);
 
 export default withRouter(connect(

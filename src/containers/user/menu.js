@@ -34,7 +34,7 @@ const MENU = {
 
 class Menu extends Component {
 
-  renderButton = ({ name, value, icon, disabled, owned }) => {
+  renderButton = ({ name, value, icon, disabled }) => {
     const { match: { params: { email, page } } } = this.props;
     return <Button
       variant="outlined"
@@ -104,9 +104,6 @@ class Menu extends Component {
   }
 
   render() {
-    const { match: { params: { email } } } = this.props;
-    if (this.props.auth.email !== email) return null;
-    
     return <Grid container spacing={2} justify="center">
       <Grid item xs={12}>
         {this.renderUser()}

@@ -18,6 +18,7 @@ import Home from 'containers/home';
 import Mall from 'containers/mall';
 import Item from 'containers/item';
 import User from 'containers/user';
+import Guest from 'containers/guest';
 import NotFound from 'containers/404';
 // Apllications
 import Authentication from 'containers/auth';
@@ -71,6 +72,8 @@ class App extends Component {
             <PrivateRoute exact path="/item/:id" component={Item} />
             <Redirect exact from="/user/:email" to="/user/:email/store" />
             <PrivateRoute exact path="/user/:email/:page" component={User} />
+            <Redirect exact from="/guest/:email" to="/guest/:email/store" />
+            <Route exact path="/guest/:email/:page" component={Guest} />
             <Route exact path='*' component={NotFound} />
           </Switch>
 

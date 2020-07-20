@@ -12,34 +12,53 @@ import Profile from './profile';
 import Panel from './panel';
 import Menu from './menu';
 // import UserHome from './home';
-import UserStore from './store';
-import UserWarehouse from './warehouse';
-import UserFactory from './factory';
-import UserOrders from './orders';
-import UserHistory from './history';
-import UserSettings from './settings';
+import GuestStore from './store';
 
 import { getUsers } from 'modules/user.reducer';
+import { setConfirmation } from 'modules/notification.reducer';
 
 import styles from './styles';
 
 
-class User extends Component {
+class Guest extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      userId: ''
+    }
+  }
+
+  componentDidMount() {
+    this.loadData();
+  }
+
+  loadData = () => {
+    const { match: { params: { email } } } = this.props;
+    const { getUsers, setConfirmation } = this.props;
+    return getUsers({ email }, 1, 0).then(([user]) => {
+      return this.setState({ userId: user._id });
+    }).catch(er => {
+      return setConfirmation(true, 'Không thể tải dữ liệu', 'error');
+    });
+  }
+
   render() {
     const { classes } = this.props;
-    const { auth: { _id } } = this.props;
+    const { userId } = this.state;
+    if (!userId) return null;
 
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12} className={classes.header}>
         <Grid container justify="flex-end" spacing={2}>
-          <Panel />
+          <Panel userId={userId} />
         </Grid>
       </Grid>
       <Grid item xs={12} md={10}>
         <Paper elevation={0} className={classes.paper}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Profile userId={_id} />
+              <Profile userId={userId} />
             </Grid>
             <Grid item xs={12}>
               <Drain small />
@@ -56,13 +75,8 @@ class User extends Component {
       <Grid item xs={11} md={10}>
         <Switch>
           {/* <Route exact path="/user/:email/home" component={UserHome} /> */}
-          <Route exact path="/user/:email/store" component={UserStore} />
-          <Route exact path="/user/:email/warehouse" component={UserWarehouse} />
-          <Route exact path="/user/:email/factory" component={UserFactory} />
-          <Route exact path="/user/:email/orders" component={UserOrders} />
+          <Route exact path="/guest/:email/store" component={GuestStore} />
           {/* <Route exact path="/user/:email/message" component={null} /> */}
-          <Route exact path="/user/:email/history" component={UserHistory} />
-          <Route exact path="/user/:email/settings" component={UserSettings} />
         </Switch>
       </Grid>
     </Grid>
@@ -76,9 +90,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getUsers,
+  setConfirmation,
 }, dispatch);
 
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(User)));
+)(withStyles(styles)(Guest)));

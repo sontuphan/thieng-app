@@ -9,8 +9,8 @@ import api from 'helpers/api';
 const defaultState = {
   data: [],
   pagination: {
-    page: 0,
-    limit: 0
+    page: -1,
+    limit: 5
   }
 }
 
