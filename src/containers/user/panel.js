@@ -47,7 +47,10 @@ class Panel extends Component {
     if (!user) return defaultSource;
     const file = bucket[user.panel];
     if (!file) return defaultSource;
-    return !file.source ? defaultSource : file.source;
+    if (!file.source) return defaultSource;
+    const protocol = file.source.substring(0, 4);
+    if (protocol !== 'http') return 'https://' + file.source;
+    return file.source;
   }
 
   onUpload = () => {
