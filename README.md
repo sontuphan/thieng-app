@@ -1,4 +1,4 @@
-# Thiêng Việt App
+# Thieng App
 
 ## Build docker
 
