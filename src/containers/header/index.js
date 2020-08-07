@@ -157,7 +157,7 @@ class Header extends Component {
       {/* Logo */}
       <Grid item className={classes.logo}>
         <Link color="textPrimary" underline="none" component={RouterLink} to={'/home'}>
-          <Typography variant="h3">Thiêng Việt x Descartes Network</Typography>
+          <Typography variant="h3">Thiêng Việt</Typography>
         </Link>
       </Grid>
       {/* Menu */}
