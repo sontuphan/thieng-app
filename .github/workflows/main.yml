@@ -27,4 +27,5 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATEKEY }}
           script: |
-            whoami
+            docker pull tuphanson/thieng-app
+            docker run -d --rm -it -w /home/thieng-app --name app tuphanson/thieng-app 
