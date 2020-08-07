@@ -21,6 +21,11 @@ jobs:
           repository: tuphanson/thieng-app
           tags: latest
       - name: Run docker
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATEKEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            whoami
