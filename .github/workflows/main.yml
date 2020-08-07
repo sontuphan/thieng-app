@@ -31,3 +31,4 @@ jobs:
             docker rm app
             docker pull tuphanson/thieng-app
             docker run -d --name app tuphanson/thieng-app
+            docker network connect --ip 172.18.0.4 thieng-net app
