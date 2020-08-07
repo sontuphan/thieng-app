@@ -28,4 +28,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATEKEY }}
           script: |
             docker pull tuphanson/thieng-app
-            docker run -d --rm -it -w /home/thieng-app --name app tuphanson/thieng-app 
+            docker run -d --rm --name app tuphanson/thieng-app
