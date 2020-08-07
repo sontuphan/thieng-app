@@ -5,7 +5,7 @@ WORKDIR /home/thieng-app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run build-prod
+RUN npm run prod
 
 EXPOSE 3000
 CMD [ "npm", "run", "serve" ]

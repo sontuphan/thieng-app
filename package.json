@@ -42,12 +42,9 @@
   },
   "scripts": {
     "start": "REACT_APP_ENV=development react-scripts start",
-    "stag": "REACT_APP_ENV=staging react-scripts start",
-    "prod": "REACT_APP_ENV=production react-scripts start",
-    "build-stag": "REACT_APP_ENV=staging react-scripts build",
-    "build-prod": "REACT_APP_ENV=production react-scripts build",
+    "stag": "REACT_APP_ENV=staging react-scripts build",
+    "prod": "REACT_APP_ENV=production react-scripts build",
     "serve": "serve -s build -l 3000",
-    "publish": "s3cmd put -r -P build/ s3://thieng-store",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
