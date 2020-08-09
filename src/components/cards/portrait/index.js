@@ -69,38 +69,40 @@ class PortraitCard extends Component {
   }
 
   render() {
-    let { classes } = this.props;
+    const { classes } = this.props;
+    const { content, disabled, image } = this.props
 
     return <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Card className={classes.card} style={{ filter: this.props.disabled ? 'grayscale()' : null }}>
+        <Card className={classes.card} style={{ filter: disabled ? 'grayscale()' : null }}>
           <CardActionArea className={classes.cardAction}>
-            <CardMedia image={this.props.image} className={classes.cardMedia} />
+            <CardMedia image={image} className={classes.cardMedia} />
           </CardActionArea>
           <CardHeader className={classes.cardHeader}
             title={<Typography variant="body2" style={{ color: this.state.color }}>{this.props.title}</Typography>}
             disableTypography
           />
-          <CardContent className={classes.cardContent}>
-            <Grid container alignItems="center" spacing={1}>
-              <Grid item xs={12}>
-                {this.renderContent(this.props.content)}
-              </Grid>
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-              <Grid item xs={12}>
-                <Grid container justify="space-between" alignItems="center" spacing={1}>
-                  <IconButton color="secondary" size="small">
-                    <MessageRounded fontSize="small" />
-                  </IconButton>
-                  <IconButton color="secondary" size="small">
-                    <VisibilityRounded fontSize="small" />
-                  </IconButton>
+          {!content || !content.length ? null :
+            <CardContent className={classes.cardContent}>
+              <Grid container alignItems="center" spacing={1}>
+                <Grid item xs={12}>
+                  {this.renderContent(content)}
+                </Grid>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container justify="space-between" alignItems="center" spacing={1}>
+                    <IconButton color="secondary" size="small">
+                      <MessageRounded fontSize="small" />
+                    </IconButton>
+                    <IconButton color="secondary" size="small">
+                      <VisibilityRounded fontSize="small" />
+                    </IconButton>
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          </CardContent>
+            </CardContent>}
         </Card>
       </Grid>
     </Grid>

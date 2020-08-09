@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-// import Image from 'material-ui-image';
+import isEqual from 'react-fast-compare';
+import async from 'async';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -14,39 +15,35 @@ import Policy from './policy';
 import Contact from './contact';
 
 import styles from './styles';
-// import peopleImg from 'static/images/people.svg';
 import objectGLB from 'static/images/bamboo_box.glb';
 import objectUSDZ from 'static/images/bamboo_box.usdz';
 // import bg from 'static/images/bg.hdr';
 
+import { recommendItems } from 'modules/recommendation.reducer';
+import { getItem, getFile } from 'modules/bucket.reducer';
 
-const NAMES = ['Mirror', 'Lamp', 'Chair', 'Desk', 'Lamp']
-const PRODUCTS = NAMES.map(name => ({
-  displayname: name,
-  avatar: 'https://source.unsplash.com/featured/?interior',
-  content: [
-    {
-      icon: 'like',
-      key: 'Thích',
-      value: Math.floor(Math.random() * 10000)
-    },
-    {
-      icon: 'product',
-      key: 'Đã bán',
-      value: Math.floor(Math.random() * 100)
-    }
-  ]
-}))
 
 class Home extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      products: [],
+    }
+  }
 
   componentDidMount() {
     this.scrollToHash();
+    this.props.recommendItems({ status: 'selling' }, 10);
   }
 
   componentDidUpdate(prevProps) {
-    if (JSON.stringify(prevProps.location) !== JSON.stringify(this.props.location))
+    if (!isEqual(prevProps.location, this.props.location)) {
       this.scrollToHash();
+    }
+    if (!isEqual(prevProps.recommendation, this.props.recommendation)) {
+      this.loadData()
+    }
   }
 
   scrollToHash = () => {
@@ -58,12 +55,34 @@ class Home extends Component {
     return setTimeout(() => e.scrollIntoView(), 100);
   }
 
+  loadData = () => {
+    const { recommendation: { data }, getItem, getFile } = this.props;
+    if (!data || !data.length) return this.setState({ products: [] });
+
+    let products = [];
+    return async.eachSeries(data, (itemId, cb) => {
+      return getItem(itemId).then(item => {
+        products.push({ displayname: item.name });
+        return getFile(item.thumbnailId || item.fileIds[0])
+      }).then(file => {
+        products[products.length - 1].avatar = file.source;
+        return cb();
+      }).catch(er => {
+        return cb(er);
+      });
+    }, (er) => {
+      if (er) console.error(er);
+      return this.setState({ products });
+    });
+  }
+
   onMore = () => {
     return this.props.history.push('/mall');
   }
 
   render() {
     const { classes } = this.props;
+    const { products } = this.state;
 
     return <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -73,7 +92,6 @@ class Home extends Component {
         <Welcome />
       </Grid>
       <Grid item xs={12} md={6}>
-        {/* <Image src={peopleImg} aspectRatio={(568 / 485)} /> */}
         <model-viewer
           src={objectGLB}
           ios-src={objectUSDZ}
@@ -98,9 +116,9 @@ class Home extends Component {
       </Grid>
       <Grid item xs={12} md={6}>
         <Carousel
-          title="Top 10"
+          title={`Top ${products.length}`}
           subtitle="Sản phẩm"
-          objects={PRODUCTS}
+          objects={products}
           onMore={this.onMore}
         />
       </Grid>
@@ -115,11 +133,13 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-
+  ui: state.ui,
+  recommendation: state.recommendation,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-
+  recommendItems,
+  getItem, getFile,
 }, dispatch);
 
 export default withRouter(connect(

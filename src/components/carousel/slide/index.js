@@ -15,7 +15,9 @@ const CircularSwipeableViews = virtualize(SwipeableViews);
 class CarouselSlide extends Component {
 
   renderCircular = (params) => {
-    let obj = this.props.objects[mod(params.index, this.props.objects.length)];
+    const { objects } = this.props;
+    if (!objects || !objects.length) return null;
+    const obj = objects[mod(params.index, this.props.objects.length)];
     return <PortraitCard
       key={params.key}
       title={obj.displayname}
@@ -26,7 +28,7 @@ class CarouselSlide extends Component {
   }
 
   render() {
-    let { classes } = this.props;
+    const { classes } = this.props;
     return <CircularSwipeableViews
       resistance
       ignoreNativeScroll
