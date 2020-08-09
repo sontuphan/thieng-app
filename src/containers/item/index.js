@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -18,38 +17,14 @@ import { getItem } from 'modules/bucket.reducer';
 import styles from './styles';
 
 class Item extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      _id: null,
-      isLoading: false,
-    }
-  }
-
-  handleParams = () => {
-    const { match: { params: { id } } } = this.props;
-    return this.setState({ _id: id });
-  }
-
-  componentDidMount() {
-    return this.handleParams();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { match } = this.props;
-    if (!isEqual(prevProps.match, match)) {
-      this.handleParams();
-    }
-  }
 
   render() {
-    const { _id } = this.state;
-    if (!_id) return null;
+    const { match: { params: { id } } } = this.props;
+    if (!id) return null;
 
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
-        <Stall itemId={_id} />
+        <Stall itemId={id} />
       </Grid>
 
       <Grid item xs={12}>
@@ -59,7 +34,7 @@ class Item extends Component {
       <Grid item xs={12} md={6}>
         <Grid container justify="center" spacing={2}>
           <Grid item xs={10}>
-            <Recommendation itemId={_id} quatity={6} />
+            <Recommendation itemId={id} quatity={6} />
           </Grid>
           <Grid item xs={12}>
             <Drain small />
@@ -67,14 +42,13 @@ class Item extends Component {
         </Grid>
       </Grid>
 
-
       <Grid item xs={12} md={6}>
         <Grid container justify="center" spacing={2}>
           <Grid item xs={10} md={8}>
             <Typography variant="h2">Nhận xét</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <RichComment targetId={_id} />
+            <RichComment targetId={id} />
           </Grid>
         </Grid>
         <Grid item xs={12}>

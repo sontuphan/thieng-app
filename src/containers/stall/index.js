@@ -63,6 +63,16 @@ class Stall extends Component {
       return this.setState({ object, userId: object.userId });
     }).catch(console.error);
   }
+  calculatePrice = (object) => {
+    const { price, tags } = object || {};
+    if (!price) return 0;
+    let discount = 0;
+    tags.forEach(tag => {
+      if (tag.slice(-1) === '%')
+        discount = parseInt(tag.slice(0, -1)) / 100 || 0;
+    });
+    return price * (1 - discount);
+  }
 
   /**
    * Create a new item
@@ -100,7 +110,7 @@ class Stall extends Component {
   }
   onDiscount = (value) => {
     let { object } = this.state;
-    let existed = object.tags.some(tag => utils.discountTagToNumber(tag));
+    const existed = object.tags.some(tag => utils.discountTagToNumber(tag));
     if (existed) object.tags = object.tags.filter(tag => !utils.discountTagToNumber(tag));
     object.tags.push(`${value}%`);
     return this.setState({ object });
@@ -237,7 +247,7 @@ class Stall extends Component {
               <Grid item>
                 <TextInput
                   variant="h1"
-                  value={utils.prettyNumber(this.state.amount * object.price, 'long')}
+                  value={utils.prettyNumber(this.state.amount * this.calculatePrice(object), 'long')}
                   placeholder="0"
                   onBlur={this.onPrice}
                 />

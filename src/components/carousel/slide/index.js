@@ -15,20 +15,21 @@ const CircularSwipeableViews = virtualize(SwipeableViews);
 class CarouselSlide extends Component {
 
   renderCircular = (params) => {
-    const { objects } = this.props;
+    const { objects, index } = this.props;
     if (!objects || !objects.length) return null;
-    const obj = objects[mod(params.index, this.props.objects.length)];
+    const obj = objects[mod(params.index, objects.length)];
     return <PortraitCard
       key={params.key}
       title={obj.displayname}
       image={obj.avatar}
       content={obj.content}
-      disabled={this.props.index !== params.index}
+      disabled={index !== params.index}
     />
   }
 
   render() {
     const { classes } = this.props;
+    const { index, onChange } = this.props;
     return <CircularSwipeableViews
       resistance
       ignoreNativeScroll
@@ -36,8 +37,8 @@ class CarouselSlide extends Component {
       disableLazyLoading
       className={classes.root}
       slideClassName={classes.slide}
-      index={this.props.index}
-      onChangeIndex={this.props.onChange}
+      index={index}
+      onChangeIndex={onChange}
       overscanSlideAfter={1}
       overscanSlideBefore={1}
       slideRenderer={this.renderCircular}
