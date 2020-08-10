@@ -1,6 +1,3 @@
-import NotificationSchema from 'data/notification';
-import EventSchema from 'data/events';
-
 /**
  * Documents
  * @default defaultData
@@ -64,7 +61,7 @@ export const GET_NOTIFICATION_FAIL = 'GET_NOTIFICATION_FAIL';
 const _getNotification = () => {
   return {
     status: 'OK',
-    data: NotificationSchema
+    data: []
   };
 }
 
@@ -107,7 +104,7 @@ export const GET_EVENTS_FAIL = 'GET_EVENTS_FAIL';
 const _getEvents = () => {
   return {
     status: 'OK',
-    data: EventSchema
+    data: []
   };
 }
 
