@@ -21,6 +21,7 @@ import {
 
 import Drain from 'components/drain';
 import { Momo } from 'components/icons';
+import PaymentGuide from './paymentGuide';
 
 import { toggleCart, setCart } from 'modules/cart.reducer';
 
@@ -32,7 +33,7 @@ const PAYMENT_METHODS = [
   { value: 'cod', icon: <LocalAtmRounded fontSize="small" />, disabled: false },
   { value: 'momo', icon: <Momo fontSize="small" />, disabled: true },
   { value: 'credit', icon: <CreditCardRounded fontSize="small" />, disabled: true },
-  { value: 'bank', icon: <AccountBalanceRounded fontSize="small" />, disabled: true },
+  { value: 'bank', icon: <AccountBalanceRounded fontSize="small" />, disabled: false },
 ]
 
 class PaymentInfomation extends Component {
@@ -42,6 +43,7 @@ class PaymentInfomation extends Component {
     this.state = {
       promoCode: '',
       paymentMethod: 'cod',
+      visible: false,
     }
   }
 
@@ -59,7 +61,7 @@ class PaymentInfomation extends Component {
   onPayment = (e) => {
     let paymentMethod = e.target.value;
     if (!paymentMethod) paymentMethod = 'cod';
-    return this.setState({ paymentMethod }, this.returnData);
+    return this.setState({ paymentMethod, visible: paymentMethod === 'bank' }, this.returnData);
   }
 
   getBill = () => {
@@ -136,6 +138,11 @@ class PaymentInfomation extends Component {
           </Select>
         </FormControl>
       </Grid>
+      <PaymentGuide
+        value={this.getBill()}
+        visible={this.state.visible}
+        onClose={() => this.setState({ visible: false })}
+      />
     </Grid>
   }
 }

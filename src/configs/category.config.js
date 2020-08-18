@@ -1,9 +1,11 @@
 import React from 'react';
 
-import { FaTableTennis, FaTree, FaDice } from 'react-icons/fa';
-import { GiRockingChair, GiDesk, GiBedLamp, GiCookingPot, GiCeilingLight } from 'react-icons/gi';
-import { MdTexture } from 'react-icons/md';
-import { TiSortAlphabetically } from 'react-icons/ti';
+import {
+  WbIncandescentRounded, DashboardRounded, BeachAccessRounded,
+  SportsSoccerRounded, CasinoRounded, AirlineSeatIndividualSuiteRounded,
+  RestaurantMenuRounded, AllInclusiveRounded, WeekendRounded,
+  EmojiFoodBeverageRounded, HotTubRounded
+} from '@material-ui/icons';
 
 /**
  * Contructor
@@ -11,17 +13,18 @@ import { TiSortAlphabetically } from 'react-icons/ti';
 const configs = {}
 
 const pureList = [
-  { value: 'chairs', name: 'Ghế', icon: <GiRockingChair /> },
-  { value: 'desks', name: 'Bàn', icon: <GiDesk /> },
-  { value: 'kitchen', name: 'Nhà bếp', icon: <GiCookingPot /> },
-  { value: 'light', name: 'Đèn', icon: <GiCeilingLight /> },
-  { value: 'floor', name: 'Sàn gỗ', icon: <MdTexture /> },
-  { value: 'bedroom', name: 'Phòng ngủ', icon: <GiBedLamp /> },
-  { value: 'playground', name: 'Sân chơi', icon: <FaTableTennis /> },
-  { value: 'garden', name: 'Vườn', icon: <FaTree /> },
-  { value: 'others', name: 'Khác', icon: <FaDice /> },
+  { value: 'kitchen', name: 'Nhà bếp', icon: <RestaurantMenuRounded /> },
+  { value: 'garden', name: 'Vườn', icon: <BeachAccessRounded /> },
+  { value: 'light', name: 'Đèn', icon: <WbIncandescentRounded /> },
+  { value: 'bedroom', name: 'Phòng ngủ', icon: <AirlineSeatIndividualSuiteRounded /> },
+  { value: 'bathroom', name: 'Phòng tắm', icon: <HotTubRounded /> },
+  { value: 'playground', name: 'Sân chơi', icon: <SportsSoccerRounded /> },
+  { value: 'chairs', name: 'Ghế', icon: <WeekendRounded /> },
+  { value: 'desks', name: 'Bàn', icon: <EmojiFoodBeverageRounded /> },
+  { value: 'floor', name: 'Sàn gỗ', icon: <DashboardRounded /> },
+  { value: 'others', name: 'Khác', icon: <CasinoRounded /> },
 ]
-const fullList = [{ value: 'all', name: 'Tất cả', icon: <TiSortAlphabetically /> }].concat(pureList);
+const fullList = [{ value: 'all', name: 'Tất cả', icon: <AllInclusiveRounded /> }].concat(pureList);
 const shortList = fullList.filter((item, index) => index <= 5);
 
 

@@ -11,6 +11,9 @@ const theme = createMuiTheme({
     primary: 'linear-gradient(45deg, #FF9B21 0%, #FF3E3C 50%, #FF3E3C 100%)',
     secondary: '#F2F3F5',
   },
+  shape: {
+    borderRadius: 8,
+  },
   typography: {
     fontFamily: [
       '"Open Sans"',

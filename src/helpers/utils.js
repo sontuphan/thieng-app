@@ -120,7 +120,7 @@ Utils.translatePaymentMethod = (paymentMethod) => {
     case 'credit':
       return 'Thẻ ghi nợ (Credit)';
     case 'bank':
-      return 'Thẻ ngân hàng';
+      return 'Thẻ ngân hàng (Chuyển khoản)';
     default:
       return 'Giao hàng nhận tiền (COD)';
   }

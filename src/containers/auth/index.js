@@ -15,8 +15,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { CloseRounded, RoomServiceRounded } from '@material-ui/icons';
+import { CloseRounded } from '@material-ui/icons';
 import { FaGoogle, FaFacebookF, FaApple, FaTwitter } from 'react-icons/fa';
+
+import Support from 'components/support';
 
 import styles from './styles';
 import configs from 'configs';
@@ -30,7 +32,6 @@ class Authentication extends Component {
 
     this.state = {
       error: null,
-      email: 'thiengviet@gmail.com',
     }
   }
 
@@ -67,11 +68,6 @@ class Authentication extends Component {
     } else {
       return this.setState({ error: 'Đã có lỗi xảy ra, vui lòng thử lại!' });
     }
-  }
-
-  onEmail = () => {
-    const { email } = this.state;
-    return window.open(`mailto:${email}`);
   }
 
   render() {
@@ -155,15 +151,9 @@ class Authentication extends Component {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Grid container className={classes.action} spacing={2}>
-          <Grid item>
-            <Button
-              color="primary"
-              onClick={this.onEmail}
-              startIcon={<RoomServiceRounded />}
-            >
-              <Typography>Cần giúp đỡ ?</Typography>
-            </Button>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Support />
           </Grid>
         </Grid>
       </DialogActions>

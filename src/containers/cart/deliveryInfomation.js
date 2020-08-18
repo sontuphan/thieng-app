@@ -59,7 +59,7 @@ class DeliveryInformation extends Component {
         receiverName: user.displayname,
         receiverPhone: user.phone || '',
         receiverAddress: (user.addresses && user.addresses[selectedAddress]) || '',
-      });
+      }, this.returnData);
     }
   }
 
