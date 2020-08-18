@@ -66,7 +66,7 @@ class ParagraphInput extends Component {
 }
 
 ParagraphInput.defaultProps = {
-  value: [],
+  value: [''],
   placeholder: '',
   variant: 'body1',
   onChange: () => { },
