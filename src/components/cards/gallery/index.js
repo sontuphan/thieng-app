@@ -71,7 +71,7 @@ function GalleryCard(props) {
                   </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography style={{ color: textColor }}>{data.description1}</Typography>
+                  <Typography style={{ color: textColor }}>{data.descriptions[0]}</Typography>
                 </Grid>
               </Grid>
             </Grid>

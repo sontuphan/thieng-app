@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import Drain from 'components/drain';
-import { TextInput, NumericInput } from 'components/inputs';
+import { TextInput, NumericInput, ParagraphInput } from 'components/inputs';
 import Shelf from './shelf';
 import Tags from './tags';
 import Categories from './categories';
@@ -120,14 +120,9 @@ class Stall extends Component {
       object: { ...this.state.object, name: value }
     });
   }
-  onDescription1 = (value) => {
+  onDescriptions = (value) => {
     return this.setState({
-      object: { ...this.state.object, description1: value }
-    });
-  }
-  onDescription2 = (value) => {
-    return this.setState({
-      object: { ...this.state.object, description2: value }
+      object: { ...this.state.object, descriptions: value }
     });
   }
   onPrice = (value) => {
@@ -220,17 +215,11 @@ class Stall extends Component {
             />
           </Grid>
           <Grid item xs={10} md={8}>
-            <TextInput
-              value={object.description1}
-              onChange={this.onDescription1}
-              placeholder="Giới thiệu sản phẩm"
-            />
-          </Grid>
-          <Grid item xs={10} md={8}>
-            <TextInput
-              value={object.description2}
-              onChange={this.onDescription2}
-              placeholder="Mô tả kỹ thuật"
+            <ParagraphInput
+              value={object.descriptions}
+              onChange={this.onDescriptions}
+              placeholder="..."
+              readOnly={!this.props.editable}
             />
           </Grid>
           <Grid item xs={12}>
@@ -243,7 +232,7 @@ class Stall extends Component {
             >{utils.prettyNumber(object.price, 'long') || '0'} ₫</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Grid container spacing={2}>
+            <Grid container className={classes.noWrap} spacing={2}>
               <Grid item>
                 <TextInput
                   variant="h1"

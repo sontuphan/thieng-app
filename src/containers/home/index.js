@@ -15,8 +15,8 @@ import Policy from './policy';
 import Contact from './contact';
 
 import styles from './styles';
-import objectGLB from 'static/images/bamboo_box.glb';
-import objectUSDZ from 'static/images/bamboo_box.usdz';
+import objectGLB from 'static/images/bamboo.glb';
+import objectUSDZ from 'static/images/bamboo.usdz';
 // import bg from 'static/images/bg.hdr';
 
 import { recommendItems } from 'modules/recommendation.reducer';
