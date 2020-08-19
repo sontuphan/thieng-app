@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
+import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -15,6 +16,8 @@ import {
   ViewStreamRounded, TimelineRounded, ArchiveRounded,
   HomeWorkRounded,
 } from '@material-ui/icons';
+
+import { getUser } from 'modules/bucket.reducer';
 
 import styles from './styles';
 import { checkTreeRootInLocalStorage } from 'components/blueprint/tree/history';
@@ -33,6 +36,31 @@ const MENU = {
 }
 
 class Menu extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      role: 'user'
+    }
+  }
+
+  componentDidMount() {
+    this.loadData();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { auth } = this.props;
+    if (!isEqual(prevProps.auth, auth)) {
+      this.loadData();
+    }
+  }
+
+  loadData = () => {
+    const { auth: { _id }, getUser } = this.props;
+    return getUser(_id).then(user => {
+      if (user) return this.setState({ role: user.role });
+    }).catch(console.error);
+  }
 
   renderButton = ({ name, value, icon, disabled }) => {
     const { match: { params: { userId, page } } } = this.props;
@@ -79,6 +107,7 @@ class Menu extends Component {
   }
 
   renderSeller = () => {
+    if (this.state.role !== 'seller') return null;
     return <Grid container spacing={2} justify="center">
       <Grid item>
         <Badge badgeContent={0} color="primary">
@@ -120,6 +149,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  getUser,
 }, dispatch);
 
 export default withRouter(connect(

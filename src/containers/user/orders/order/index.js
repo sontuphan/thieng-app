@@ -24,7 +24,7 @@ import OrderDelivery from './delivery';
 import Drain from 'components/drain';
 
 import { getOrder } from 'modules/bucket.reducer';
-import { updateOrderStatus } from 'modules/order.reducer';
+import { updateOrderStatus, updateOrderPaymentStatus } from 'modules/order.reducer';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -54,6 +54,13 @@ class Order extends Component {
   loadData = (reset = false) => {
     const { orderId, getOrder } = this.props;
     if (orderId) return getOrder(orderId, reset);
+  }
+
+  onPaymentStatus = (order, paymentStatus) => {
+    const { updateOrderPaymentStatus } = this.props;
+    return updateOrderPaymentStatus({ _id: order._id, paymentStatus }).then(() => {
+      return this.loadData(true);
+    }).catch(console.error);
   }
 
   renderStatusButton = (order, action) => {
@@ -128,7 +135,10 @@ class Order extends Component {
           <Drain small />
         </Grid>
         <Grid item xs={12}>
-          <OrderPayment order={order} />
+          <OrderPayment
+            order={order}
+            onPaymentStatus={(paymentStatus) => this.onPaymentStatus(order, paymentStatus)}
+          />
         </Grid>
         <Grid item xs={12}>
           <Drain small />
@@ -154,7 +164,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getOrder,
-  updateOrderStatus,
+  updateOrderStatus, updateOrderPaymentStatus,
 }, dispatch);
 
 Order.defaultProps = {

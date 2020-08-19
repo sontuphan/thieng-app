@@ -14,9 +14,10 @@ const CircularSwipeableViews = virtualize(SwipeableViews);
 
 class CarouselSlide extends Component {
 
-  renderCircular = (params) => {
-    const { objects, index } = this.props;
-    if (!objects || !objects.length) return null;
+  renderCircular = (objects, params) => {
+    const { index } = this.props;
+    if (!objects || !objects.length)
+      return <div key={params.key} />; // Prevent react-swipeable-view warning
     const obj = objects[mod(params.index, objects.length)];
     return <PortraitCard
       key={params.key}
@@ -29,7 +30,7 @@ class CarouselSlide extends Component {
 
   render() {
     const { classes } = this.props;
-    const { index, onChange } = this.props;
+    const { index, objects, onChange } = this.props;
     return <CircularSwipeableViews
       resistance
       ignoreNativeScroll
@@ -41,7 +42,7 @@ class CarouselSlide extends Component {
       onChangeIndex={onChange}
       overscanSlideAfter={1}
       overscanSlideBefore={1}
-      slideRenderer={this.renderCircular}
+      slideRenderer={(params) => this.renderCircular(objects, params)}
     />
   }
 }

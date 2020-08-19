@@ -12,6 +12,7 @@ import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Switch from '@material-ui/core/Switch';
 
 import {
   HomeRounded, BusinessRounded, LocationCityRounded,
@@ -84,30 +85,33 @@ class UserSettings extends Component {
     return this.setState({ selectedAddress });
   }
 
+  onRole = (e) => {
+    let { user } = this.state;
+    if (e.target.checked) user.role = 'seller';
+    else user.role = 'user';
+    return this.setState({ user });
+  }
+
   render() {
     const { classes } = this.props;
     const { user, selectedAddress } = this.state;
+    console.log(user)
 
     return <Grid container justify="center" spacing={2}>
 
-      <Grid item xs={12}>
-        <Grid container className={classes.noWrap} alignItems="center" justify="flex-end" spacing={2}>
-          <Grid item>
-            <Typography variant="h3">Thông tin cá nhân</Typography>
-          </Grid>
-          <Grid item className={classes.stretch}>
-            <Divider />
-          </Grid>
-        </Grid>
-      </Grid>
-
-      <Grid item xs={12}>
-        <Drain small />
-      </Grid>
-
+      {/* Personal info */}
       <Grid item xs={12}>
         <Grid container spacing={2}>
-          {/* Email */}
+          <Grid item xs={12}>
+            <Grid container className={classes.noWrap} alignItems="center" justify="flex-end" spacing={2}>
+              <Grid item>
+                <Typography variant="h3">Thông tin cá nhân</Typography>
+              </Grid>
+              <Grid item className={classes.stretch}>
+                <Divider />
+              </Grid>
+            </Grid>
+          </Grid>
           <Grid item xs={12} md={6}>
             <TextField
               label="Email"
@@ -119,7 +123,6 @@ class UserSettings extends Component {
               readOnly
             />
           </Grid>
-          {/* Phone */}
           <Grid item xs={12} md={6}>
             <TextField
               label="Số điện thoại"
@@ -131,7 +134,6 @@ class UserSettings extends Component {
               fullWidth
             />
           </Grid>
-          {/* Address */}
           <Grid item xs={12}>
             <Grid container className={classes.noWrap} spacing={2}>
               <Grid item>
@@ -179,20 +181,56 @@ class UserSettings extends Component {
               </Grid>
             </Grid>
           </Grid>
-          {/* Action */}
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12}>
+        <Drain small />
+      </Grid>
+
+      {/* Service info */}
+      <Grid item xs={12}>
+        <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Grid container justify="flex-end" spacing={2}>
+            <Grid container className={classes.noWrap} alignItems="center" justify="flex-end" spacing={2}>
               <Grid item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<SaveRounded />}
-                  onClick={this.onSave}
-                >
-                  <Typography>Lưu</Typography>
-                </Button>
+                <Typography variant="h3">Thông tin dịch vụ</Typography>
+              </Grid>
+              <Grid item className={classes.stretch}>
+                <Divider />
               </Grid>
             </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item>
+                <Typography>Mở cửa hàng</Typography>
+              </Grid>
+              <Grid item>
+                <Switch
+                  color="primary"
+                  size="small"
+                  checked={user.role === 'seller'}
+                  onChange={this.onRole}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+
+      {/* Action */}
+      <Grid item xs={12}>
+        <Grid container justify="flex-end" spacing={2}>
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<SaveRounded />}
+              onClick={this.onSave}
+            >
+              <Typography>Lưu</Typography>
+            </Button>
           </Grid>
         </Grid>
       </Grid>

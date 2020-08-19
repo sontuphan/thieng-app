@@ -26,6 +26,7 @@ import Drain from 'components/drain';
 import { toggleCart, setCart } from 'modules/cart.reducer';
 import { getUser } from 'modules/bucket.reducer';
 import { updateUser } from 'modules/user.reducer';
+import { setConfirmation } from 'modules/notification.reducer';
 
 import styles from './styles';
 
@@ -71,17 +72,25 @@ class DeliveryInformation extends Component {
   }
 
   updatePhone = () => {
-    const { updateUser } = this.props;
+    const { updateUser, setConfirmation } = this.props;
     const { receiverPhone } = this.state;
-    return updateUser({ phone: receiverPhone });
+    return updateUser({ phone: receiverPhone }).then(re => {
+      return setConfirmation(true, 'Cập nhật thông tin thành công', 'success');
+    }).catch(er => {
+      return setConfirmation(true, 'Đã có lỗi xảy ra', 'error');
+    });
   }
 
   updateAddress = () => {
-    const { updateUser } = this.props;
+    const { updateUser, setConfirmation } = this.props;
     const { user, receiverAddress, selectedAddress } = this.state;
     let addresses = user.addresses;
     addresses[selectedAddress] = receiverAddress;
-    return updateUser({ addresses });
+    return updateUser({ addresses }).then(re => {
+      return setConfirmation(true, 'Cập nhật thông tin thành công', 'success');
+    }).catch(er => {
+      return setConfirmation(true, 'Đã có lỗi xảy ra', 'error');
+    });
   }
 
   returnData = () => {
@@ -265,6 +274,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   toggleCart, setCart,
   getUser,
   updateUser,
+  setConfirmation,
 }, dispatch);
 
 DeliveryInformation.defaultProps = {

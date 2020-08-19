@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 
 import {
-  ReceiptRounded,
+  ReceiptRounded, CheckCircleRounded, ErrorRounded,
   LocalAtmRounded, CreditCardRounded, AccountBalanceRounded,
 } from '@material-ui/icons';
 
@@ -20,6 +20,7 @@ import { Momo } from 'components/icons';
 import Drain from 'components/drain';
 
 import utils from 'helpers/utils';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   noWrap: {
@@ -38,8 +39,9 @@ const useStyles = makeStyles(theme => ({
 
 function OrderPayment(props) {
   const classes = useStyles();
-  const { order } = props;
+  const { order, onPaymentStatus } = props;
   if (!order.items) return null;
+
   return <Grid container alignItems="center" spacing={2}>
     <Grid item xs={12}>
       <Grid container className={classes.noWrap} alignItems="center" spacing={2} >
@@ -137,15 +139,45 @@ function OrderPayment(props) {
         </Select>
       </FormControl>
     </Grid>
+    {/* Status */}
+    <Grid item xs={12}>
+      <Grid container alignItems="center" justify="flex-end" className={classes.noWrap} spacing={2}>
+        <Grid item>
+          <Typography color="textSecondary">Trạng thái</Typography>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="outlined"
+            color={!order.paymentStatus ? 'primary' : 'default'}
+            startIcon={<ErrorRounded />}
+            onClick={() => onPaymentStatus(false)}
+          >
+            <Typography>Chưa thanh toán</Typography>
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="outlined"
+            color={order.paymentStatus ? 'primary' : 'default'}
+            startIcon={<CheckCircleRounded />}
+            onClick={() => onPaymentStatus(true)}
+          >
+            <Typography>Đã thanh toán</Typography>
+          </Button>
+        </Grid>
+      </Grid>
+    </Grid>
   </Grid>
 }
 
 OrderPayment.defaultProps = {
   order: {},
+  onPaymentStatus: () => { },
 }
 
 OrderPayment.propTypes = {
   order: PropTypes.object,
+  onPaymentStatus: PropTypes.func,
 }
 
 export default OrderPayment;

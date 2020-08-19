@@ -17,7 +17,6 @@ import Contact from './contact';
 import styles from './styles';
 import objectGLB from 'static/images/bamboo.glb';
 import objectUSDZ from 'static/images/bamboo.usdz';
-// import bg from 'static/images/bg.hdr';
 
 import { recommendItems } from 'modules/recommendation.reducer';
 import { getItem, getFile } from 'modules/bucket.reducer';
@@ -38,10 +37,11 @@ class Home extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!isEqual(prevProps.location, this.props.location)) {
+    const { location, recommendation } = this.props;
+    if (!isEqual(prevProps.location, location)) {
       this.scrollToHash();
     }
-    if (!isEqual(prevProps.recommendation, this.props.recommendation)) {
+    if (!isEqual(prevProps.recommendation, recommendation)) {
       this.loadData()
     }
   }
@@ -95,7 +95,6 @@ class Home extends Component {
         <model-viewer
           src={objectGLB}
           ios-src={objectUSDZ}
-          // skybox-image={bg}
           ar
           ar-modes="webxr scene-viewer quick-look"
           ar-scale="auto"

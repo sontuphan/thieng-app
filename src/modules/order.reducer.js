@@ -151,6 +151,30 @@ export const updateOrderStatus = (order) => {
   };
 }
 
+/**
+ * Update order payment status
+ */
+export const UPDATE_ORDER_PAYMENT_STATUS = 'UPDATE_ORDER_PAYMENT_STATUS';
+export const UPDATE_ORDER_PAYMENT_STATUS_OK = 'UPDATE_ORDER_PAYMENT_STATUS_OK';
+export const UPDATE_ORDER_PAYMENT_STATUS_FAIL = 'UPDATE_ORDER_PAYMENT_STATUS_FAIL';
+
+export const updateOrderPaymentStatus = (order) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: UPDATE_ORDER_PAYMENT_STATUS_FAIL });
+
+      const { api: { base } } = configs;
+      return api.put(`${base}/private/order/payment-status`, { order }).then(re => {
+        dispatch({ type: UPDATE_ORDER_PAYMENT_STATUS_OK, reason: null });
+        return resolve(re.data);
+      }).catch(er => {
+        dispatch({ type: UPDATE_ORDER_PAYMENT_STATUS_FAIL, reason: er });
+        return reject(er);
+      });
+    });
+  };
+}
+
 
 /**
  * Reducder
@@ -176,6 +200,10 @@ export default (state = defaultState, action) => {
     case UPDATE_ORDER_STATUS_OK:
       return { ...state, ...action.data };
     case UPDATE_ORDER_STATUS_FAIL:
+      return { ...state, ...action.data };
+    case UPDATE_ORDER_PAYMENT_STATUS_OK:
+      return { ...state, ...action.data };
+    case UPDATE_ORDER_PAYMENT_STATUS_FAIL:
       return { ...state, ...action.data };
     default:
       return state;

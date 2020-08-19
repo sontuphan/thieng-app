@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 
-import { MailRounded, Facebook } from '@material-ui/icons';
+import { MailRounded, Facebook, PhoneRounded } from '@material-ui/icons';
 
 import styles from './styles';
 
@@ -20,7 +20,13 @@ class Footer extends Component {
     this.state = {
       email: 'thiengviet@gmail.com',
       facebook: 'https://www.facebook.com/Tre-Thi%C3%AAng-Vi%E1%BB%87t-101229158264093/',
+      phone: '078.3333.689'
     }
+  }
+
+  onPhone = () => {
+    const { phone } = this.state;
+    return window.open(`tel:${phone}`);
   }
 
   onEmail = () => {
@@ -39,6 +45,11 @@ class Footer extends Component {
     return <Grid container alignItems="center" className={classes.footer} spacing={2}>
       <Grid item xs={12} md={6}>
         <Grid container alignItems="center" justify={width >= 960 ? 'flex-start' : 'center'} spacing={2}>
+          <Grid item>
+            <IconButton onClick={this.onPhone} color="secondary">
+              <PhoneRounded />
+            </IconButton>
+          </Grid>
           <Grid item>
             <IconButton onClick={this.onEmail} color="secondary">
               <MailRounded />
