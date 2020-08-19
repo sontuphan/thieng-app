@@ -113,7 +113,7 @@ class UserFactory extends Component {
             <Divider />
           </Grid>
           <Grid item>
-            <Typography>Chọn nhiều sản phẩm</Typography>
+            <Typography color="textSecondary">Tùy chọn</Typography>
           </Grid>
           <Grid item>
             <Switch

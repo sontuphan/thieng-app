@@ -114,7 +114,7 @@ class UserStore extends Component {
             <Divider />
           </Grid>
           <Grid item>
-            <Typography>Chọn nhiều sản phẩm</Typography>
+            <Typography color="textSecondary">Tùy chọn</Typography>
           </Grid>
           <Grid item>
             <Switch color="primary" checked={this.state.multipleChoice} onChange={this.onToggle} />

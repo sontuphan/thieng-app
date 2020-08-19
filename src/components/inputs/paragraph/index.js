@@ -34,7 +34,9 @@ class ParagraphInput extends Component {
 
   render() {
     const { classes } = this.props;
-    const { value, variant, placeholder, readOnly, disabled } = this.props;
+    const { variant, placeholder, readOnly, disabled } = this.props;
+    let { value } = this.props;
+    if (value.length === 0) value = [''];
 
     return <Grid container spacing={2}>
       {value.map((text, index) => <Grid item key={index} xs={12}>
