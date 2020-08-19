@@ -76,7 +76,7 @@ class Shelf extends Component {
     return utils.extractImageColors(files[showing].source).then(palette => {
       const color = palette.Vibrant.bodyTextColor;
       return this.setState({ color });
-    }).catch(console.log);
+    }).catch(console.error);
   }
 
   onStep = (step) => {

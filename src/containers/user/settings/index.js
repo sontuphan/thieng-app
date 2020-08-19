@@ -95,7 +95,6 @@ class UserSettings extends Component {
   render() {
     const { classes } = this.props;
     const { user, selectedAddress } = this.state;
-    console.log(user)
 
     return <Grid container justify="center" spacing={2}>
 
