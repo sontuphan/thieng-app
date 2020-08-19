@@ -183,7 +183,7 @@ class Stall extends Component {
 
   render() {
     const { classes } = this.props;
-    const { object, userId } = this.state;
+    const { object, userId, step } = this.state;
 
     if (!object || !userId) return null;
     return <Grid container spacing={2}>
@@ -191,6 +191,7 @@ class Stall extends Component {
       <Grid item xs={12} md={6}>
         <Shelf
           userId={userId}
+          step={step}
           fileIds={[...object.fileIds]} /* Tricky copy array to update component */
           editable={this.props.editable}
           onAdd={this.onAddFile}
@@ -212,13 +213,14 @@ class Stall extends Component {
               value={object.name}
               onChange={this.onName}
               placeholder="Tên sản phẩm"
+              readOnly={!this.props.editable}
             />
           </Grid>
           <Grid item xs={10} md={8}>
             <ParagraphInput
               value={object.descriptions}
               onChange={this.onDescriptions}
-              placeholder="..."
+              placeholder="Viết gì đó vào đây nào 😀"
               readOnly={!this.props.editable}
             />
           </Grid>
@@ -232,19 +234,13 @@ class Stall extends Component {
             >{utils.prettyNumber(object.price, 'long') || '0'} ₫</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Grid container className={classes.noWrap} spacing={2}>
-              <Grid item>
-                <TextInput
-                  variant="h1"
-                  value={utils.prettyNumber(this.state.amount * this.calculatePrice(object), 'long')}
-                  placeholder="0"
-                  onBlur={this.onPrice}
-                />
-              </Grid>
-              <Grid item>
-                <Typography variant="h1">₫</Typography>
-              </Grid>
-            </Grid>
+            <TextInput
+              variant="h1"
+              value={utils.prettyNumber(this.state.amount * this.calculatePrice(object), 'long') + ' ₫'}
+              placeholder="0"
+              onBlur={this.onPrice}
+              readOnly={!this.props.editable}
+            />
           </Grid>
           <Grid item xs={12}>
             <Drain />

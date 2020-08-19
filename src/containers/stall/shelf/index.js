@@ -47,17 +47,16 @@ class Shelf extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { fileIds } = this.props;
+    const { showing, files } = this.state;
     if (!isEqual(prevProps.fileIds, fileIds)) {
       this.loadFiles();
     }
-    const { showing, files } = this.state;
     if (!isEqual(prevState.files, files)) {
-      this.setState({ showing: Math.max(0, Math.min(files.length - 1, showing)) });
+      if (showing === prevState.files.length - 1) this.onStep(files.length - 1);
+      else this.onStep(Math.max(0, Math.min(files.length - 1, showing)));
     }
     if (!isEqual(prevState.showing, showing)) {
-      utils.getAccessibleTextColor(files[showing].source).then(color => {
-        return this.setState({ color });
-      });
+      this.loadBodyTextColor();
     }
   }
 
@@ -67,8 +66,17 @@ class Shelf extends Component {
       return getFile(fileId).then(re => cb(null, re)).catch(er => cb(er, null));
     }, (er, re) => {
       if (er) return console.error(er);
-      return this.setState({ files: re });
+      return this.setState({ files: re }, this.loadBodyTextColor);
     });
+  }
+
+  loadBodyTextColor = () => {
+    const { showing, files } = this.state;
+    if (!files || !files.length || !files[showing]) return console.error('No image');
+    return utils.extractImageColors(files[showing].source).then(palette => {
+      const color = palette.Vibrant.bodyTextColor;
+      return this.setState({ color });
+    }).catch(console.log);
   }
 
   onStep = (step) => {
@@ -221,6 +229,7 @@ class Shelf extends Component {
 
 Shelf.defaultProps = {
   fileIds: [],
+  step: 0,
   onAdd: () => { },
   onEdit: () => { },
   editable: false,

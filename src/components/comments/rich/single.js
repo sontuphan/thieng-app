@@ -18,9 +18,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import {
   FavoriteRounded, MoreHorizRounded, EditRounded,
-  DeleteRounded, CheckRounded,
+  DeleteRounded, CheckRounded, ThumbDownRounded,
 } from '@material-ui/icons';
-import { FaPoop } from 'react-icons/fa';
 
 import { getComment, getUser } from 'modules/bucket.reducer';
 import {
@@ -34,7 +33,7 @@ import utils from 'helpers/utils';
 
 const DEFAULT_FEELING = {
   like: 0,
-  poop: 0
+  dislike: 0
 }
 
 
@@ -68,28 +67,28 @@ LikeChip.propTypes = {
 
 
 /**
- * PoopChip
+ * DislikeChip
  * @param {*} props 
  */
-function PoopChip(props) {
+function DislikeChip(props) {
   return <Chip
     color="secondary"
     size="small"
     icon={props.active ? <CheckRounded /> : null}
-    deleteIcon={<FaPoop style={{ height: 13, padding: "1px 0px 2px 0px" }} />}
+    deleteIcon={<ThumbDownRounded />}
     label={props.counting}
     onDelete={props.onClick}
     onClick={props.onClick}
   />
 }
 
-PoopChip.defaultProps = {
+DislikeChip.defaultProps = {
   active: false,
   counting: 0,
   onClick: () => { },
 }
 
-PoopChip.propTypes = {
+DislikeChip.propTypes = {
   active: PropTypes.bool,
   counting: PropTypes.number,
   onClick: PropTypes.func,
@@ -213,10 +212,10 @@ class SingleRichComment extends Component {
                     />
                   </Grid>
                   <Grid item>
-                    <PoopChip
-                      active={you && (you.type === 'poop')}
-                      counting={feeling.poop}
-                      onClick={() => this.onAction('poop')}
+                    <DislikeChip
+                      active={you && (you.type === 'dislike')}
+                      counting={feeling.dislike}
+                      onClick={() => this.onAction('dislike')}
                     />
                   </Grid>
                   <Grid item>

@@ -48,8 +48,6 @@ class Panel extends Component {
     const file = bucket[user.panel];
     if (!file) return defaultSource;
     if (!file.source) return defaultSource;
-    const protocol = file.source.substring(0, 4);
-    if (protocol !== 'http') return 'https://' + file.source;
     return file.source;
   }
 

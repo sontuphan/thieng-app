@@ -30,7 +30,8 @@ class PortraitCard extends Component {
   }
 
   componentDidMount() {
-    utils.getAccessibleTextColor(this.props.image).then(color => {
+    utils.extractImageColors(this.props.image).then(palette => {
+      const color = palette.Vibrant.bodyTextColor;
       this.setState({ color });
     });
   }

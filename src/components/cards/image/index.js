@@ -11,8 +11,15 @@ function ImageCard(props) {
   // Define hooks
   const classes = useStyles();
   const data = useData(props._id);
+  // Return default if errors
+  if (!data || data instanceof Error) return <Grid container justify="center">
+    <Grid item xs={12} onClick={props.onClick}>
+      <div className={classes.image}>
+        <div className={classes.imagePNG} />
+      </div>
+    </Grid>
+  </Grid>
   // State changes
-  if (!data || data instanceof Error) return null;
   utils.extractImageColors(data.source).then(re => {
     const backgroundColors = Object.keys(re).map(key => re[key].hex);
     const textColors = Object.keys(re).map(key => re[key].bodyTextColor);

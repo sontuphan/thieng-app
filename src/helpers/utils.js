@@ -1,5 +1,4 @@
 import * as Vibrant from 'node-vibrant';
-import Color from 'color';
 import dateformat from 'dateformat';
 
 
@@ -71,23 +70,12 @@ Utils.checkDevice = () => {
 Utils.extractImageColors = (image) => {
   return new Promise((resolve, reject) => {
     if (!image) return reject('No image detected.');
-    let vibrant = new Vibrant(image);
-    vibrant.getPalette().then(palette => {
+    const cors = image.substring(0, 4) === 'http';
+    const src = cors ? 'https://cors-anywhere.herokuapp.com/' + image : image;
+    return Vibrant.from(src).getPalette().then(palette => {
       return resolve(palette);
     }).catch(er => {
       return reject(er);
-    });
-  });
-}
-
-Utils.getAccessibleTextColor = (backgroundImage) => {
-  return new Promise((resolve, reject) => {
-    let vibrant = new Vibrant(backgroundImage);
-    vibrant.getPalette().then(palette => {
-      let shouldBeBlack = Color(palette.Muted.hex).isLight();
-      return resolve(shouldBeBlack ? '#000000' : '#ffffff');
-    }).catch(() => {
-      return resolve('#ffffff');
     });
   });
 }

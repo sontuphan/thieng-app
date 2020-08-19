@@ -12,9 +12,8 @@ import Divider from '@material-ui/core/Divider';
 
 import {
   FavoriteRounded, DoneAllRounded, FiberManualRecordRounded,
-  ContactSupportRounded, MessageRounded,
+  ContactSupportRounded, MessageRounded,ThumbDownRounded,
 } from '@material-ui/icons';
-import { FaPoop } from 'react-icons/fa';
 
 import styles from './styles';
 
@@ -26,7 +25,7 @@ class NotiCard extends Component {
       case 'like':
         return <FavoriteRounded color="secondary" fontSize="small" />
       case 'dislike':
-        return <FaPoop color="secondary" />
+        return <ThumbDownRounded color="secondary" />
       case 'comment':
         return <MessageRounded color="secondary" fontSize="small" />
       default:
@@ -39,7 +38,7 @@ class NotiCard extends Component {
       case 'like':
         return 'likes';
       case 'dislike':
-        return 'poops'
+        return 'dislike'
       case 'comment':
         return 'comments on';
       default:

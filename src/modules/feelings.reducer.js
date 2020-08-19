@@ -7,7 +7,7 @@ import api from 'helpers/api';
  */
 
 const defaultState = {
-  data: {}, // key: targetId, value: {like: 0, poop: 0}
+  data: {}, // key: targetId, value: {like: 0, dislike: 0}
   you: {},
 }
 
