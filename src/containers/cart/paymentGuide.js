@@ -19,6 +19,11 @@ import Support from 'components/support';
 import styles from './styles';
 import guide from 'static/images/guide.png';
 
+const MESSAGE = `Quý khách vui lòng thực hiện đầy đủ quá trình thanh toán. 
+  Sau đó, quý khách có thể tắt thông báo này vào tiếp tục các bước còn lại. 
+  Để xác nhận chuyển khoản thành công, Thiêng Việt sẽ liên lạc lại để thông 
+  báo cho quý khách.`
+
 class PaymentGuide extends Component {
 
   render() {
@@ -94,7 +99,7 @@ class PaymentGuide extends Component {
             <Divider />
           </Grid>
           <Grid item xs={12}>
-            <Typography>Quý khách vui lòng thực hiện đầy đủ các bước. Sau khi chuyển khoảng thành công, nhân viên của Thiêng Việt sẽ liên lạc lại để xác nhận thông tin thanh toán cho quý khách.</Typography>
+            <Typography>{MESSAGE}</Typography>
           </Grid>
         </Grid>
       </DialogContent>

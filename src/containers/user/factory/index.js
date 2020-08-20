@@ -18,8 +18,8 @@ import Stall from 'containers/stall';
 import Action from './action';
 import { CircularProgressButton } from 'components/buttons';
 
-import { getItems } from 'modules/items.reducer';
-import { addItem, updateItem } from 'modules/items.reducer';
+import { getItem } from 'modules/bucket.reducer';
+import { getItems, addItem, updateItem } from 'modules/items.reducer';
 
 import styles from './styles';
 
@@ -74,14 +74,18 @@ class UserFactory extends Component {
 
   onAdd = (value) => {
     return this.props.addItem(value).then(re => {
-      return this.loadData(true);
-    }).then(() => this.setState({ visible: false })).catch(console.error);
+      this.loadData(true);
+      return this.setState({ visible: false });
+    }).catch(console.error);
   }
 
   onUpdate = (value) => {
-    return this.props.updateItem(value).then(re => {
-      return this.loadData(true);
-    }).then(() => this.setState({ visible: false })).catch(console.error);
+    const { updateItem, getItem } = this.props;
+    return updateItem(value).then(item => {
+      return getItem(item._id, true);
+    }).then(re => {
+      return this.setState({ visible: false });
+    }).catch(console.error);
   }
 
   renderItems = () => {
@@ -177,8 +181,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getItems,
-  addItem, updateItem,
+  getItem,
+  getItems, addItem, updateItem,
 }, dispatch);
 
 export default withRouter(connect(

@@ -47,9 +47,13 @@ class PaymentInfomation extends Component {
     }
   }
 
+  componentDidMount() {
+    this.returnData();
+  }
+
   returnData = () => {
-    const data = this.state;
-    return this.props.onChange(data);
+    const { promoCode, paymentMethod } = this.state;
+    return this.props.onChange({ promoCode, paymentMethod });
   }
 
   onCode = (e) => {

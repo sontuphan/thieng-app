@@ -79,7 +79,7 @@ class Stall extends Component {
    */
   onAddFile = () => {
     return this.props.runEditor().then(re => {
-      if (!re) return console.log('No file added');
+      if (!re) return console.error('No file added');
       let { object } = this.state;
       if (!object.fileIds) object.fileIds = [];
       object.fileIds.push(re._id);
@@ -168,17 +168,23 @@ class Stall extends Component {
     return this.setState({ amount });
   }
   onBuy = () => {
-    const { setCart } = this.props;
+    const { setCart, history, location } = this.props;
     const { amount, object } = this.state;
     return setCart({
       _id: object._id,
       price: object.price,
       userId: object.userId,
       amount,
-    });
+    }).then(() => {
+      return history.push(location.pathname + '#header');
+    }).catch(console.error);
   }
   onCancel = () => {
-    return console.log('onCancel');
+    const { setCart, history, location } = this.props;
+    const { object } = this.state;
+    return setCart({ _id: object._id, amount: 0, }).then(() => {
+      return history.push(location.pathname + '#header');
+    }).catch(console.error);
   }
 
   render() {

@@ -46,7 +46,7 @@ function GalleryCard(props) {
         <Paper elevation={0} className={classes.paper} style={{ backgroundColor: backgroundColor }}>
           <Grid container justify="center" spacing={2}>
             <Grid item xs={6} {...imageProps}>
-              <ImageCard _id={data.thumbnailId || (data.fileIds && data.fileIds[0])} onChange={onColors} />
+              <ImageCard _id={data.thumbnailId} onChange={onColors} />
             </Grid>
             <Grid item xs={6}>
               <Grid container spacing={2}>

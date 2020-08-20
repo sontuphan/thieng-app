@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
+import isEqual from 'react-fast-compare';
+import TweenOne from 'rc-tween-one';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -43,6 +45,18 @@ class Header extends Component {
 
     this.state = {
       visibleDrawer: false,
+      blink: false,
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { location } = this.props;
+    if (!isEqual(prevProps.location, location)) {
+      if (location.hash === '#header') this.setState({ blink: true }, () => {
+        return setTimeout(() => {
+          this.setState({ blink: false });
+        }, 5000);
+      });
     }
   }
 
@@ -153,7 +167,9 @@ class Header extends Component {
   render() {
     const { classes } = this.props;
     const { cart: { data } } = this.props;
-    return <Grid container className={classes.noWrap} spacing={2}>
+    const { blink } = this.state;
+
+    return <Grid container className={classes.noWrap} spacing={2} id="header">
       {/* Logo */}
       <Grid item className={classes.logo}>
         <Link color="textPrimary" underline="none" component={RouterLink} to={'/home'}>
@@ -172,9 +188,13 @@ class Header extends Component {
           {/* Notification app */}
           <Grid item>
             <IconButton size="small" color="secondary" onClick={this.onNotification}>
-              <Badge badgeContent={data.length} color="primary">
-                <NotificationsRounded />
-              </Badge>
+              {blink ? <TweenOne animation={{ scale: 1.25, yoyo: true, repeat: -1 }} >
+                <Badge badgeContent={data.length} color="primary">
+                  <NotificationsRounded />
+                </Badge>
+              </TweenOne> : <Badge badgeContent={data.length} color="primary">
+                  <NotificationsRounded />
+                </Badge>}
             </IconButton>
           </Grid>
           {/* Routers & Authentication*/}

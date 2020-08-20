@@ -64,9 +64,9 @@ class DeliveryInformation extends Component {
     }
   }
 
-  loadData = () => {
+  loadData = (reset = false) => {
     const { auth: { _id }, getUser } = this.props;
-    return getUser(_id).then(user => {
+    return getUser(_id, reset).then(user => {
       if (user) return this.setState({ user });
     }).catch(console.error);
   }
@@ -75,6 +75,7 @@ class DeliveryInformation extends Component {
     const { updateUser, setConfirmation } = this.props;
     const { receiverPhone } = this.state;
     return updateUser({ phone: receiverPhone }).then(re => {
+      this.loadData(true);
       return setConfirmation(true, 'Cập nhật thông tin thành công', 'success');
     }).catch(er => {
       return setConfirmation(true, 'Đã có lỗi xảy ra', 'error');
@@ -87,6 +88,7 @@ class DeliveryInformation extends Component {
     let addresses = user.addresses;
     addresses[selectedAddress] = receiverAddress;
     return updateUser({ addresses }).then(re => {
+      this.loadData(true);
       return setConfirmation(true, 'Cập nhật thông tin thành công', 'success');
     }).catch(er => {
       return setConfirmation(true, 'Đã có lỗi xảy ra', 'error');
@@ -94,10 +96,8 @@ class DeliveryInformation extends Component {
   }
 
   returnData = () => {
-    const data = { ...this.state };
-    delete data.user;
-    delete data.selectedAddress;
-    return this.props.onChange(data);
+    const { receiverName, receiverPhone, receiverAddress, note } = this.state;
+    return this.props.onChange({ receiverName, receiverPhone, receiverAddress, note });
   }
 
   onName = (e) => {

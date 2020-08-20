@@ -142,7 +142,7 @@ class SingleRichComment extends Component {
 
   onAction = (type) => {
     const { commentId } = this.props;
-    if (!commentId) return console.log('Invalid ID');
+    if (!commentId) return console.error('Invalid ID');
 
     const { you } = this.state;
     const { addFeeling, updateFeeling, deleteFeeling } = this.props;
@@ -150,7 +150,7 @@ class SingleRichComment extends Component {
     if (!you || !you.type) action = addFeeling;
     else if (you && you.type === type) action = deleteFeeling;
     else if (you && you.type !== type) action = updateFeeling;
-    else return console.log('Invalid types');
+    else return console.error('Invalid types');
 
     const feeling = { targetId: commentId, type }
     const { auth, setConfirmation, getFeeling, getFeelings } = this.props;

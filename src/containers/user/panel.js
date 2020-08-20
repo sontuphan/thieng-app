@@ -54,7 +54,7 @@ class Panel extends Component {
   onUpload = () => {
     const { runEditor, updateUser } = this.props;
     return runEditor().then(file => {
-      if (!file) return console.log('No file added');
+      if (!file) return console.error('No file added');
       return updateUser({ panel: file._id });
     }).then(() => this.loadData(true)).catch(console.error);
   }

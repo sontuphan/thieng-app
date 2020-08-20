@@ -89,7 +89,10 @@ class Contact extends Component {
             <Typography variant="h6"><span className={classes.underline}>Địa chỉ:</span> Số 30, Đường 68 CL, Phường Cát Lái, Quận 2, Thành phố Hồ Chí Minh.</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
-            <Typography variant="h6"><span className={classes.underline}>Số điện thoại:</span>  078.3333.689</Typography>
+            <Typography variant="h6"><span className={classes.underline}>Số điện thoại:</span> 078.3333.689</Typography>
+          </Grid>
+          <Grid item xs={10} md={8}>
+            <Typography variant="h6"><span className={classes.underline}>Email:</span> thiengviet@gmail.com</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
             <Typography variant="h6">Đăng ký email để nhận thông báo về các chương trình khuyến mãi và quà tặng từ Thiêng Việt.</Typography>

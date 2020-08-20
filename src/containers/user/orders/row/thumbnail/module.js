@@ -10,7 +10,7 @@ export const useData = (itemId) => {
 
   useEffect(() => {
     if (itemId) getItem(itemId)(dispatch, store.getState).then(re => {
-      return getFile(re.thumbnailId || re.fileIds[0])(dispatch, store.getState);
+      return getFile(re.thumbnailId)(dispatch, store.getState);
     }).then(re => {
       return setData(re);
     }).catch(er => {

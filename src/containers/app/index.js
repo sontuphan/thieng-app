@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -47,6 +48,23 @@ class App extends Component {
     window.onresize = () => {
       return this.props.setScreen(window.innerWidth);
     }
+    this.scrollToHash();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { location } = this.props;
+    if (!isEqual(prevProps.location, location)) {
+      this.scrollToHash();
+    }
+  }
+
+  scrollToHash = () => {
+    const { location: { hash } } = this.props;
+    if (!hash) return console.warn('Invalid hashtag');
+    const id = hash.replace('#', '');
+    const e = window.document.getElementById(id);
+    if (!e) return console.error('Invalid component');
+    return setTimeout(() => e.scrollIntoView(), 300);
   }
 
   render() {

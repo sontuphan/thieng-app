@@ -32,27 +32,14 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.scrollToHash();
     this.props.recommendItems({ status: 'selling' }, 10);
   }
 
   componentDidUpdate(prevProps) {
-    const { location, recommendation } = this.props;
-    if (!isEqual(prevProps.location, location)) {
-      this.scrollToHash();
-    }
+    const { recommendation } = this.props;
     if (!isEqual(prevProps.recommendation, recommendation)) {
       this.loadData()
     }
-  }
-
-  scrollToHash = () => {
-    const { location: { hash } } = this.props;
-    if (!hash) return console.warn('Invalid hashtag');
-    const id = hash.replace('#', '');
-    const e = window.document.getElementById(id);
-    if (!e) return console.error('Invalid component');
-    return setTimeout(() => e.scrollIntoView(), 100);
   }
 
   loadData = () => {
@@ -63,7 +50,7 @@ class Home extends Component {
     return async.eachSeries(data, (itemId, cb) => {
       return getItem(itemId).then(item => {
         products.push({ displayname: item.name });
-        return getFile(item.thumbnailId || item.fileIds[0])
+        return getFile(item.thumbnailId)
       }).then(file => {
         products[products.length - 1].avatar = file.source;
         return cb();

@@ -1,20 +1,16 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useStore } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useStore, useSelector } from 'react-redux';
 import { getItem } from 'modules/bucket.reducer';
 
 export const useData = (itemId) => {
-  const [data, setData] = useState();
-  const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const store = useStore();
 
   useEffect(() => {
-    if (itemId) getItem(itemId)(dispatch, store.getState).then(re => {
-      return setData(re);
-    }).catch(er => {
-      return setError(er);
-    });
+    if (itemId) getItem(itemId)(dispatch, store.getState);
   }, [itemId, dispatch, store.getState]);
 
-  return data || error;
+  const data = useSelector(state => state.bucket[itemId])
+
+  return data;
 }

@@ -18,7 +18,7 @@ import utils from 'helpers/utils';
 function ProductCard(props) {
   const classes = useStyles();
   const data = useData(props.itemId);
-  if (!data || data instanceof Error) return null;
+  if (!data) return null;
   const imageProps = props.onClick ? { onClick: props.onClick } : { component: Link, to: `/item/${data._id}` }
 
   return <Grid container spacing={2}>
@@ -26,7 +26,7 @@ function ProductCard(props) {
       <Paper elevation={0} className={classes.paper}>
         <Grid container justify="center" spacing={1}>
           <Grid item xs={12} {...imageProps}>
-            <ImageCard _id={data.thumbnailId || (data.fileIds && data.fileIds[0])} />
+            <ImageCard _id={data.thumbnailId} />
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={1}>
