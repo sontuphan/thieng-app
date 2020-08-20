@@ -2,13 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
+import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 
-import { MailRounded, Facebook, PhoneRounded } from '@material-ui/icons';
+import {
+  MailRounded, Facebook, PhoneRounded,
+  PolicyRounded
+} from '@material-ui/icons';
+
+import Policy from './policy';
 
 import styles from './styles';
 
@@ -20,7 +27,20 @@ class Footer extends Component {
     this.state = {
       email: 'thiengviet@gmail.com',
       facebook: 'https://www.facebook.com/Tre-Thi%C3%AAng-Vi%E1%BB%87t-101229158264093/',
-      phone: '078.3333.689'
+      phone: '078.3333.689',
+      visible: false,
+    }
+  }
+
+  componentDidMount() {
+    const { location } = this.props;
+    if (location.hash === '#policy') this.setState({ visible: true });
+  }
+
+  componentDidUpdate(prevProps) {
+    const { location } = this.props;
+    if (!isEqual(prevProps.location, location)) {
+      if (location.hash === '#policy') this.setState({ visible: true });
     }
   }
 
@@ -38,34 +58,48 @@ class Footer extends Component {
     const { facebook } = this.state;
     return window.open(facebook, '_blank');
   }
-
   render() {
     const { classes, ui: { width } } = this.props;
+    const { visible } = this.state;
 
     return <Grid container alignItems="center" className={classes.footer} spacing={2}>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} md={4}>
         <Grid container alignItems="center" justify={width >= 960 ? 'flex-start' : 'center'} spacing={2}>
           <Grid item>
             <IconButton onClick={this.onPhone} color="secondary">
-              <PhoneRounded />
+              <PhoneRounded fontSize="small" />
             </IconButton>
           </Grid>
           <Grid item>
             <IconButton onClick={this.onEmail} color="secondary">
-              <MailRounded />
+              <MailRounded fontSize="small" />
             </IconButton>
           </Grid>
           <Grid item>
             <IconButton onClick={this.onFacebook} color="secondary">
-              <Facebook />
+              <Facebook fontSize="small" />
             </IconButton>
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} md={4}>
+        <Grid container justify="center" spacing={2}>
+          <Grid item>
+            <Typography color="textSecondary">Copyright © 2020 Thiêng Việt</Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} md={4} id="policy">
         <Grid container justify={width >= 960 ? 'flex-end' : 'center'} spacing={2}>
           <Grid item>
-            <Typography>Copyright © 2020 Thiêng Việt</Typography>
+            <Policy visible={visible} onClose={() => this.setState({ visible: false })} />
+            <Button
+              color="primary"
+              onClick={() => this.setState({ visible: true })}
+              startIcon={<PolicyRounded />}
+            >
+              <Typography color="textSecondary">Privacy Policy</Typography>
+            </Button>
           </Grid>
         </Grid>
       </Grid>

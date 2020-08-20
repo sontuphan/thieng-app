@@ -27,7 +27,6 @@ class Support extends Component {
           <Grid item>
             <Button
               color="primary"
-              onClick={this.onEmail}
               href={`mailto:${this.state.email}`}
               target="_blank"
               startIcon={<EmailRounded />}
