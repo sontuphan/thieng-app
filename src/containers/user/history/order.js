@@ -45,7 +45,7 @@ class MyOrder extends Component {
         amount={item.amount ? 'x' + item.amount : null}
         body={<Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography><strong>Tình thạng: </strong>{utils.translateOrderStatus(order.status)}</Typography>
+            <Typography><strong>Tình trạng: </strong>{utils.translateOrderStatus(order.status)}</Typography>
             <Typography><strong>Thanh toán: </strong>{utils.translatePaymentMethod(order.paymentMethod)}</Typography>
           </Grid>
           <Grid item xs={12}>
