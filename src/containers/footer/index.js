@@ -12,10 +12,11 @@ import Button from '@material-ui/core/Button';
 
 import {
   MailRounded, Facebook, PhoneRounded,
-  PolicyRounded
+  PolicyRounded, GavelRounded
 } from '@material-ui/icons';
 
 import Policy from './policy';
+import Terms from './terms';
 
 import styles from './styles';
 
@@ -28,19 +29,22 @@ class Footer extends Component {
       email: 'thiengviet@gmail.com',
       facebook: 'https://www.facebook.com/Tre-Thi%C3%AAng-Vi%E1%BB%87t-101229158264093/',
       phone: '078.3333.689',
-      visible: false,
+      visiblePolicy: false,
+      visibleTerms: false,
     }
   }
 
   componentDidMount() {
     const { location } = this.props;
-    if (location.hash === '#policy') this.setState({ visible: true });
+    if (location.hash === '#policy') this.setState({ visiblePolicy: true });
+    if (location.hash === '#terms') this.setState({ visibleTerms: true });
   }
 
   componentDidUpdate(prevProps) {
     const { location } = this.props;
     if (!isEqual(prevProps.location, location)) {
-      if (location.hash === '#policy') this.setState({ visible: true });
+      if (location.hash === '#policy') this.setState({ visiblePolicy: true });
+      if (location.hash === '#terms') this.setState({ visibleTerms: true });
     }
   }
 
@@ -58,9 +62,10 @@ class Footer extends Component {
     const { facebook } = this.state;
     return window.open(facebook, '_blank');
   }
+
   render() {
     const { classes, ui: { width } } = this.props;
-    const { visible } = this.state;
+    const { visiblePolicy, visibleTerms } = this.state;
 
     return <Grid container alignItems="center" className={classes.footer} spacing={2}>
       <Grid item xs={12} md={4}>
@@ -82,24 +87,34 @@ class Footer extends Component {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} md={4}>
-        <Grid container justify="center" spacing={2}>
-          <Grid item>
-            <Typography color="textSecondary">Copyright © 2020 Thiêng Việt</Typography>
-          </Grid>
-        </Grid>
-      </Grid>
       <Grid item xs={12} md={4} id="policy">
-        <Grid container justify={width >= 960 ? 'flex-end' : 'center'} spacing={2}>
+        <Grid container justify="center" spacing={2} className={classes.noWrap}>
           <Grid item>
-            <Policy visible={visible} onClose={() => this.setState({ visible: false })} />
+            <Policy visible={visiblePolicy} onClose={() => this.setState({ visiblePolicy: false })} />
             <Button
               color="primary"
-              onClick={() => this.setState({ visible: true })}
+              onClick={() => this.setState({ visiblePolicy: true })}
               startIcon={<PolicyRounded />}
             >
               <Typography color="textSecondary">Privacy Policy</Typography>
             </Button>
+          </Grid>
+          <Grid item>
+            <Terms visible={visibleTerms} onClose={() => this.setState({ visibleTerms: false })} />
+            <Button
+              color="primary"
+              onClick={() => this.setState({ visibleTerms: true })}
+              startIcon={<GavelRounded />}
+            >
+              <Typography color="textSecondary">{'Terms & Conditions'}</Typography>
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} md={4}>
+        <Grid container justify={width >= 960 ? 'flex-end' : 'center'} spacing={2}>
+          <Grid item>
+            <Typography color="textSecondary">Copyright © 2020 Thiêng Việt</Typography>
           </Grid>
         </Grid>
       </Grid>
