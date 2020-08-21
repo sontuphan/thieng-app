@@ -22,6 +22,7 @@ import { TextInput } from 'components/inputs';
 import { logOut } from 'modules/auth.reducer';
 import { getUser } from 'modules/bucket.reducer';
 import { updateUser } from 'modules/user.reducer';
+import { getNumberItems } from 'modules/stat.reducer';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -32,8 +33,7 @@ class Profile extends Component {
     super();
 
     this.state = {
-      likes: 12853,
-      products: 32,
+      products: 0,
       editable: false,
       user: {},
     }
@@ -51,9 +51,12 @@ class Profile extends Component {
   }
 
   loadData = () => {
-    const { userId, getUser } = this.props;
+    const { userId, getUser, getNumberItems } = this.props;
     return getUser(userId).then(user => {
-      if (user) return this.setState({ user });
+      this.setState({ user });
+      return getNumberItems({ userId });
+    }).then(noItems => {
+      this.setState({ products: noItems });
     }).catch(console.error);
   }
 
@@ -118,7 +121,7 @@ class Profile extends Component {
                 </Grid>
               </Grid>
               <Grid item xs={12}>
-                <Typography>{utils.prettyNumber(this.state.likes, 'long')} Thích - {utils.prettyNumber(this.state.products, 'long')} Sản phẩm</Typography>
+                <Typography>{utils.prettyNumber(this.state.products, 'long')} Sản phẩm</Typography>
               </Grid>
               <Grid item xs={12}>
                 <TextInput
@@ -153,6 +156,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   logOut,
   getUser, updateUser,
+  getNumberItems,
 }, dispatch);
 
 export default withRouter(connect(
