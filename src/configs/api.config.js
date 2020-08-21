@@ -8,8 +8,6 @@ const configs = {}
  */
 configs.development = {
   base: 'http://localhost:3001',
-  auth: '/authentication',
-  user: '/user',
 }
 
 /**
@@ -17,8 +15,6 @@ configs.development = {
  */
 configs.staging = {
   base: 'https://staging-api.thiengviet.com',
-  auth: '/authentication',
-  user: '/user',
 }
 
 /**
@@ -26,8 +22,6 @@ configs.staging = {
  */
 configs.production = {
   base: 'https://api.thiengviet.com',
-  auth: '/authentication',
-  user: '/user',
 }
 
 /**

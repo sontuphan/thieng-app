@@ -116,7 +116,9 @@ class Authentication extends Component {
             <FacebookLogin
               appId={configs.auth.facebook.appId}
               fields='name,email,picture'
-              redirectUri={window.location.origin}
+              redirectUri={window.location.origin + '/auth'}
+              state={window.location.href}
+              responseType="token"
               render={props => <Button
                 variant="outlined"
                 size="large"

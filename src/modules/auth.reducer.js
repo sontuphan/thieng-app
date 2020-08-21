@@ -73,8 +73,8 @@ export const refreshSession = () => {
       }
 
       if (data.service !== 'thieng') {
-        const { api: { base, auth } } = configs;
-        api.get(base + auth, {}).then(re => {
+        const { api: { base } } = configs;
+        api.get(base + '/authentication', {}).then(re => {
           authentication.set(re.data); // Set new thieng's token
           dispatch({
             type: REFRESH_SESSION_OK,
@@ -125,8 +125,8 @@ export const logIn = (data) => {
       dispatch({ type: LOG_IN });
 
       authentication.set(data);
-      const { api: { base, auth } } = configs;
-      api.get(base + auth, {}).then(re => {
+      const { api: { base } } = configs;
+      return api.get(base + '/authentication', {}).then(re => {
         authentication.set(re.data); // Set new thieng's token
         dispatch({
           type: LOG_IN_OK,

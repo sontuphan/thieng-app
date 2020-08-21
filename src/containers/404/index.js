@@ -24,7 +24,7 @@ import { toggleAuth } from 'modules/auth.reducer';
 class NotFound extends Component {
 
   redirect = () => {
-    const { location: { search } } = this.props
+    const { location: { search } } = this.props;
     const params = new URLSearchParams(search);
     const redirect = params.get('redirect');
     return redirect;

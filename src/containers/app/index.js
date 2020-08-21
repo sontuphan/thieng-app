@@ -20,6 +20,7 @@ import Mall from 'containers/mall';
 import Item from 'containers/item';
 import User from 'containers/user';
 import Guest from 'containers/guest';
+import CallbackAuth from 'containers/auth/callback';
 import NotFound from 'containers/404';
 // Apllications
 import Authentication from 'containers/auth';
@@ -92,6 +93,7 @@ class App extends Component {
             <PrivateRoute exact path="/user/:userId/:page" component={User} />
             <Redirect exact from="/guest/:userId" to="/guest/:userId/store" />
             <Route exact path="/guest/:userId/:page" component={Guest} />
+            <Route exact path="/auth" component={CallbackAuth} />
             <Route exact path='*' component={NotFound} />
           </Switch>
 
