@@ -21,13 +21,13 @@ class CallbackAuth extends Component {
   }
 
   componentDidMount() {
-    const { logIn, location: { hash }, history } = this.props;
+    const { logIn, location: { hash } } = this.props;
     const search = '?' + hash.substring(1);
     const params = new URLSearchParams(search);
     const token = params.get('access_token');
     const redirect_uri = params.get('state');
     return logIn({ service: 'facebook', accessToken: token }).then(re => {
-      return history.replace(redirect_uri);
+      window.location.href = redirect_uri;
     }).catch(er => {
       return this.setState({ error: JSON.stringify(er) });
     });

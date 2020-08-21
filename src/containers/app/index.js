@@ -70,6 +70,7 @@ class App extends Component {
 
   render() {
     const { classes } = this.props;
+
     return <ThemeProvider theme={theme}>
       <Grid container justify="center" spacing={2}>
         <Grid item xs={12} className={classes.safe} /> {/* Safe space */}
