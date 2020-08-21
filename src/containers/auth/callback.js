@@ -27,14 +27,14 @@ class CallbackAuth extends Component {
     const token = params.get('access_token');
     const redirect_uri = params.get('state');
     return logIn({ service: 'facebook', accessToken: token }).then(re => {
-      return history.push(redirect_uri);
+      return history.replace(redirect_uri);
     }).catch(er => {
       return this.setState({ error: JSON.stringify(er) });
     });
   }
 
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     const { error } = this.state;
 
     return <Grid container spacing={2}>
