@@ -44,7 +44,7 @@ class Mall extends Component {
   }
 
   loadData = (reset = false) => {
-    let { items: { mall: { pagination: { limit, page } } } } = this.props;
+    let { items: { pagination: { limit, page } } } = this.props;
     let condition = { status: 'selling' }
     const { match: { params: { category } } } = this.props;
     if (category !== 'all') condition.category = category;
@@ -67,7 +67,7 @@ class Mall extends Component {
 
   render() {
     const { classes } = this.props;
-    const { items: { mall: { data } } } = this.props;
+    const { items: { data } } = this.props;
     const { match: { params: { category } } } = this.props;
     const item = configs.category.fullList.filter(e => e.value === category)[0]
 
