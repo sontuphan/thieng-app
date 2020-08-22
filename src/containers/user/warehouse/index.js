@@ -27,7 +27,6 @@ class UserWarehouse extends Component {
     super();
 
     this.state = {
-      visible: false,
       selected: [],
       multipleChoice: false,
       isRestoring: false,
@@ -40,12 +39,12 @@ class UserWarehouse extends Component {
   }
 
   loadData = (reset = false) => {
-    let { items: { warehouse: { pagination: { limit, page } } } } = this.props;
+    let { items: { pagination: { limit, page } } } = this.props;
     page = reset ? 0 : page + 1;
-    const condition = { status: 'archived' }
-    const { getItems } = this.props;
+    const { getItems, auth: { _id } } = this.props;
+    const condition = { status: 'archived', userId: _id }
     return this.setState({ isLoading: true }, () => {
-      return getItems(condition, limit, page, 'warehouse').then(() => {
+      return getItems(condition, limit, page).then(() => {
         return this.setState({ isLoading: false });
       }).catch(console.error);
     });
@@ -68,25 +67,26 @@ class UserWarehouse extends Component {
     }
   }
 
-  onRestore = () => {
+  onMove = (status) => {
     const { updateItem } = this.props;
     const { selected } = this.state;
-    this.setState({ isRestoring: true });
-    return async.eachSeries(selected, (itemId, cb) => {
-      return updateItem({ _id: itemId, status: 'selling' }).then(re => {
-        return cb();
-      }).catch(er => {
-        return cb(er);
+    return this.setState({ isStore: status === 'selling', isFactory: status === 'creating' }, () => {
+      return async.eachSeries(selected, (itemId, cb) => {
+        return updateItem({ _id: itemId, status }).then(re => {
+          return cb();
+        }).catch(er => {
+          return cb(er);
+        });
+      }, (er) => {
+        if (er) console.error(er);
+        else this.loadData(true);
+        return this.setState({ selected: [], isStore: false, isFactory: false });
       });
-    }, (er) => {
-      if (er) console.error(er);
-      else this.loadData(true);
-      return this.setState({ isRestoring: false });
     });
   }
 
   renderItems = () => {
-    let { items: { warehouse: { data } } } = this.props;
+    let { items: { data } } = this.props;
     const { multipleChoice, selected } = this.state;
     if (!data || !data.length) return null;
     return <Grid container spacing={2}>
@@ -103,7 +103,7 @@ class UserWarehouse extends Component {
 
   render() {
     const { classes } = this.props;
-    const { multipleChoice, isRestoring } = this.state;
+    const { multipleChoice, isLoading, isStore, isFactory } = this.state;
 
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
@@ -120,7 +120,7 @@ class UserWarehouse extends Component {
           <Grid item>
             <Switch
               color="primary"
-              checked={this.state.multipleChoice}
+              checked={multipleChoice}
               onChange={this.onToggle}
             />
           </Grid>
@@ -137,7 +137,7 @@ class UserWarehouse extends Component {
           <Grid item>
             <CircularProgressButton
               endIcon={<ExpandMoreRounded />}
-              isLoading={this.state.isLoading}
+              isLoading={isLoading}
               onClick={() => this.loadData(false)}
             >
               <Typography>Thêm</Typography>
@@ -145,7 +145,12 @@ class UserWarehouse extends Component {
           </Grid>
         </Grid>
       </Grid>
-      {multipleChoice ? <Action isLoading={isRestoring} onRestore={this.onRestore} /> : null}
+      {multipleChoice ? <Action
+        isStore={isStore}
+        onStore={() => this.onMove('selling')}
+        isFactory={isFactory}
+        onFactory={() => this.onMove('creating')}
+      /> : null}
     </Grid>
   }
 }

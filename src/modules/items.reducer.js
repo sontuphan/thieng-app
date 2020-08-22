@@ -5,26 +5,11 @@ import api from 'helpers/api';
  * Documents
  * @default defaultData
  */
-const PAGINATION = {
-  page: -1,
-  limit: 12,
-}
 const defaultState = {
-  mall: {
-    data: [],
-    pagination: { ...PAGINATION }
-  },
-  factory: {
-    data: [],
-    pagination: { ...PAGINATION }
-  },
-  store: {
-    data: [],
-    pagination: { ...PAGINATION }
-  },
-  warehouse: {
-    data: [],
-    pagination: { ...PAGINATION }
+  data: [],
+  pagination: {
+    page: -1,
+    limit: 12,
   }
 }
 
@@ -35,22 +20,20 @@ export const GET_ITEMS = 'GET_ITEMS';
 export const GET_ITEMS_OK = 'GET_ITEMS_OK';
 export const GET_ITEMS_FAIL = 'GET_ITEMS_FAIL';
 
-export const getItems = (condition, limit, page, component = 'mall') => {
+export const getItems = (condition, limit, page) => {
   return (dispatch, prevState) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: GET_ITEMS });
 
-      const { items: { [component]: { data, pagination } } } = prevState();
+      const { items: { data, pagination } } = prevState();
       const accumulative = page === pagination.page + 1;
       const { api: { base } } = configs;
       return api.get(`${base}/public/items`, { condition, limit, page }).then(re => {
         dispatch({
           type: GET_ITEMS_OK,
           data: {
-            [component]: {
-              data: accumulative ? data.concat(re.data) : re.data,
-              pagination: re.pagination
-            }
+            data: accumulative ? data.concat(re.data) : re.data,
+            pagination: re.pagination
           }
         });
         return resolve(re.data);

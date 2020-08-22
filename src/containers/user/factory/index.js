@@ -38,16 +38,16 @@ class UserFactory extends Component {
   }
 
   componentDidMount() {
-    this.loadData();
+    this.loadData(true);
   }
 
   loadData = (reset = false) => {
-    let { items: { factory: { pagination: { limit, page } } } } = this.props;
-    let condition = { status: 'creating' }
+    let { items: { pagination: { limit, page } } } = this.props;
     page = reset ? 0 : page + 1;
-    const { getItems } = this.props;
+    const { getItems, auth: { _id } } = this.props;
+    const condition = { status: 'creating', userId: _id }
     return this.setState({ isLoading: true }, () => {
-      return getItems(condition, limit, page, 'factory').then(() => {
+      return getItems(condition, limit, page).then(() => {
         return this.setState({ isLoading: false });
       }).catch(console.error);
     });
@@ -84,12 +84,13 @@ class UserFactory extends Component {
     return updateItem(value).then(item => {
       return getItem(item._id, true);
     }).then(re => {
+      this.loadData(true);
       return this.setState({ visible: false });
     }).catch(console.error);
   }
 
   renderItems = () => {
-    const { items: { factory: { data } } } = this.props;
+    const { items: { data } } = this.props;
     const { multipleChoice, selected } = this.state;
     if (!data || !data.length) return null;
     return <Grid container spacing={2}>
@@ -167,10 +168,7 @@ class UserFactory extends Component {
           </Grid>
         </Grid>
       </Grid>
-      <Action
-        onAdd={() => this.setState({ editableId: '', visible: true })}
-        onDelete={() => { }}
-      />
+      <Action onAdd={() => this.setState({ editableId: '', visible: true })} />
     </Grid>
   }
 }

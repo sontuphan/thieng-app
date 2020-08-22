@@ -11,4 +11,7 @@ export default theme => ({
   icon: {
     height: 36,
   },
+  description: {
+    fontSize: 11,
+  }
 });

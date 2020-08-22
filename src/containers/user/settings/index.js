@@ -200,18 +200,67 @@ class UserSettings extends Component {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Grid container alignItems="center" spacing={2}>
-              <Grid item>
-                <Typography>Mở cửa hàng</Typography>
+          <Grid item xs={12} md={6} lg={4}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Grid container alignItems="center" spacing={2} className={classes.noWrap}>
+                  <Grid item className={classes.stretch}>
+                    <Typography>Mở cửa hàng</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Switch
+                      color="primary"
+                      size="small"
+                      checked={user.role === 'seller'}
+                      onChange={this.onRole}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Switch
-                  color="primary"
-                  size="small"
-                  checked={user.role === 'seller'}
-                  onChange={this.onRole}
-                />
+              <Grid item xs={12}>
+                <Typography color="textSecondary" className={classes.description}>Sau khi lưu thành công, bạn cần tải lại trang web để có thể thấy các thay đổi.</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Grid container alignItems="center" spacing={2} className={classes.noWrap}>
+                  <Grid item className={classes.stretch}>
+                    <Typography>Nhà thiết kế</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Switch
+                      color="primary"
+                      size="small"
+                      checked={false}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography color="textSecondary" className={classes.description}>Hiện tại chức năng này chưa đi vào hoạt động. Nếu bạn muốn hợp tác, vui lòng liên hệ qua email hoặc số điện thoại cho Thiêng Việt.</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Grid container alignItems="center" spacing={2} className={classes.noWrap}>
+                  <Grid item className={classes.stretch}>
+                    <Typography>Nhà vận chuyển</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Switch
+                      color="primary"
+                      size="small"
+                      checked={false}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography color="textSecondary" className={classes.description}>Hiện tại chức năng này chưa đi vào hoạt động. Nếu bạn muốn hợp tác, vui lòng liên hệ qua email hoặc số điện thoại cho Thiêng Việt.</Typography>
               </Grid>
             </Grid>
           </Grid>
