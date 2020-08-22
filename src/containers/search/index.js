@@ -37,7 +37,7 @@ class Search extends Component {
   }
 
   onSearch = (value) => {
-    const condition = { $text: { $search: value } }
+    const condition = { $text: { $search: value }, status: 'selling' }
     return this.setState({ waiting: true }, () => {
       return this.props.searchText(condition).then(() => {
         return this.setState({ waiting: false });

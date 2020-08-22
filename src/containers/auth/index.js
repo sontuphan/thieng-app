@@ -98,6 +98,8 @@ class Authentication extends Component {
           <Grid item xs={12} sm={6}>
             <GoogleLogin
               clientId={configs.auth.google.clientId}
+              // uxMode="redirect"
+              // redirectUri={window.location.origin + '/auth'}
               render={props => <Button
                 variant="outlined"
                 size="large"
