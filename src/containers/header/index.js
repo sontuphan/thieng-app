@@ -118,7 +118,7 @@ class Header extends Component {
       return <Grid container alignItems="center" className={classes.noWrap} spacing={4}>
         {ROUTES.map((route, i) => <Grid item key={i}>
           <Link color="textPrimary" underline="none" component={RouterLink} to={route.link}>
-            <Typography noWrap><span className="link">{route.text}</span></Typography>
+            <Typography noWrap className={classes.link}>{route.text}</Typography>
           </Link>
         </Grid>)}
         < Grid item >

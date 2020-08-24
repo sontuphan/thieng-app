@@ -14,5 +14,11 @@ export default theme => {
     stretch: {
       flex: '1 1 auto',
     },
+    link: {
+      transition: theme.transitions.create(),
+      '&:hover': {
+        color: theme.palette.primary.main
+      }
+    }
   }
 };

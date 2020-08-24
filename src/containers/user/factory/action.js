@@ -14,7 +14,7 @@ import { FloatCircularProgressButton } from 'components/buttons';
 const useStyles = makeStyles(theme => ({
   button: {
     flexWrap: 'nowrap',
-    margin: theme.spacing(1),
+    margin: `0px ${theme.spacing(1)}px`,
   },
   icon: {
     height: 27,
