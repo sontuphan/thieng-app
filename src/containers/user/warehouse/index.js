@@ -120,6 +120,7 @@ class UserWarehouse extends Component {
           <Grid item>
             <Switch
               color="primary"
+              size="small"
               checked={multipleChoice}
               onChange={this.onToggle}
             />

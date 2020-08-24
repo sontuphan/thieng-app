@@ -123,6 +123,7 @@ class UserFactory extends Component {
           <Grid item>
             <Switch
               color="primary"
+              size="small"
               checked={this.state.multipleChoice}
               onChange={this.onToggle}
             />

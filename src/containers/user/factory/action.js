@@ -42,7 +42,7 @@ function Action(props) {
           >
             <Grid container spacing={1} className={classes.button} alignItems="center">
               <Grid item>
-                <Typography>Thêm mới</Typography>
+                <Typography noWrap>Thêm mới</Typography>
               </Grid>
               <Grid item className={classes.icon}>
                 <AddRounded fontSize="small" />

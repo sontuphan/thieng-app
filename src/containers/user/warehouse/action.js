@@ -43,7 +43,7 @@ function Action(props) {
           >
             <Grid container spacing={1} className={classes.button} alignItems="center">
               <Grid item>
-                <Typography>Chuyển về xưởng</Typography>
+                <Typography noWrap>Chuyển về xưởng</Typography>
               </Grid>
               <Grid item className={classes.icon}>
                 <HomeWorkRounded fontSize="small" />
@@ -63,7 +63,7 @@ function Action(props) {
           >
             <Grid container spacing={1} className={classes.button} alignItems="center">
               <Grid item>
-                <Typography>Chuyển về cửa hàng</Typography>
+                <Typography noWrap>Chuyển về cửa hàng</Typography>
               </Grid>
               <Grid item className={classes.icon}>
                 <StorefrontRounded fontSize="small" />

@@ -117,7 +117,12 @@ class UserStore extends Component {
             <Typography color="textSecondary">Tùy chọn</Typography>
           </Grid>
           <Grid item>
-            <Switch color="primary" checked={multipleChoice} onChange={this.onToggle} />
+            <Switch
+              color="primary"
+              size="small"
+              checked={multipleChoice}
+              onChange={this.onToggle}
+            />
           </Grid>
         </Grid>
       </Grid>
