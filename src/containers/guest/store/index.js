@@ -35,17 +35,17 @@ class GuestStore extends Component {
   loadData = (reset = false) => {
     return this.setState({ isLoading: true }, () => {
       const { match: { params: { userId } }, getItems } = this.props;
-      let { items: { store: { pagination: { limit, page } } } } = this.props;
+      let { items: { pagination: { limit, page } } } = this.props;
       page = reset ? 0 : page + 1;
       const condition = { status: 'selling', userId: userId }
-      return getItems(condition, limit, page, 'store').then(() => {
+      return getItems(condition, limit, page).then(() => {
         return this.setState({ isLoading: false });
       }).catch(console.error);
     });
   }
 
   renderItems = () => {
-    const { items: { store: { data } } } = this.props;
+    const { items: { data } } = this.props;
     if (!data || !data.length) return null;
     return <Grid container spacing={2}>
       {data.map((obj, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
