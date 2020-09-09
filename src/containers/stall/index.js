@@ -23,7 +23,7 @@ import { setCart } from 'modules/cart.reducer';
 import { runEditor } from 'modules/editor.reducer';
 import {
   setInstorageFile, updateInstorageFile, pushInstorageFile,
-  updateFile,
+  updateFile, unsetInstorageFile,
 } from 'modules/file.reducer';
 
 import styles from './styles';
@@ -95,7 +95,9 @@ class Stall extends Component {
       object.fileIds.push(re._id);
       if (!object.thumbnailId) object.thumbnailId = re._id;
       return this.setState({ object });
-    }).catch(console.error);
+    }).catch(er => {
+      return this.props.unsetInstorageFile();
+    });
   }
   onEditFile = (index) => {
     let { object } = this.state;
@@ -324,7 +326,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   getFile, getItem,
   setCart,
   runEditor,
-  setInstorageFile, updateInstorageFile, pushInstorageFile, updateFile,
+  setInstorageFile, updateInstorageFile, pushInstorageFile, updateFile, unsetInstorageFile,
 }, dispatch);
 
 Stall.defaultProps = {

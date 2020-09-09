@@ -77,16 +77,16 @@ class EditorDialog extends Component {
 
   render() {
     const { classes } = this.props;
-    const { file: { source } } = this.props;
+    const { visible, file: { source }, onClose } = this.props;
 
-    return <Dialog maxWidth="md" open={this.props.visible} onClose={this.props.onClose} >
+    return <Dialog maxWidth="md" open={visible} onClose={onClose} >
       <DialogTitle>
         <Grid container spacing={2} alignItems="center" className={classes.noWrap}>
           <Grid item className={classes.stretch}>
             <Typography variant="h3">Chỉnh sửa ảnh</Typography>
           </Grid>
           <Grid item>
-            <IconButton color="secondary" size="small" onClick={this.props.onClose}>
+            <IconButton color="secondary" size="small" onClick={onClose}>
               <CloseRounded />
             </IconButton>
           </Grid>
@@ -140,7 +140,7 @@ class EditorDialog extends Component {
             <Button
               variant="contained"
               color="secondary"
-              onClick={this.onClose}
+              onClick={onClose}
             >
               <Typography>Hủy</Typography>
             </Button>
