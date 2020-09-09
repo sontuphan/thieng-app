@@ -21,7 +21,6 @@ import utils from 'helpers/utils';
 
 const DEFAULT_STATE = {
   isColor: false,
-  source: null,
   colors: null,
   color: null,
 }
@@ -34,19 +33,17 @@ class EditorDialog extends Component {
     this.state = { ...DEFAULT_STATE }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const { visible, file: { source, metadata } } = this.props;
-    if (!isEqual(prevProps.visible, visible) && visible) {
-      this.setState({
-        source,
+    const { visible: prevVisible, file: { source: prevSource } } = prevProps;
+    if (!isEqual(prevVisible, visible) && visible) {
+      if (visible) this.setState({
         color: metadata && metadata.color,
         isColor: Boolean(metadata && metadata.color),
       });
+      else this.setState({ ...DEFAULT_STATE });
     }
-    if (!isEqual(prevProps.visible, visible) && !visible) {
-      this.setState({ ...DEFAULT_STATE });
-    }
-    if (prevState.source !== this.state.source && this.state.source) {
+    if (prevSource !== source && source) {
       utils.extractImageColors(source).then(palette => {
         let colors = [
           palette.DarkVibrant.hex, palette.Vibrant.hex, palette.LightVibrant.hex,
@@ -63,8 +60,7 @@ class EditorDialog extends Component {
 
   onChange = () => {
     const { file } = this.props;
-    const { isColor, color, source } = this.state;
-    file.source = source;
+    const { isColor, color } = this.state;
     file.metadata = { color: isColor ? color : null };
     return this.props.onSave(file);
   }
@@ -81,6 +77,7 @@ class EditorDialog extends Component {
 
   render() {
     const { classes } = this.props;
+    const { file: { source } } = this.props;
 
     return <Dialog maxWidth="md" open={this.props.visible} onClose={this.props.onClose} >
       <DialogTitle>
@@ -98,7 +95,7 @@ class EditorDialog extends Component {
       <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8}>
-            <img width="100%" height="auto" alt={this.state.source} src={this.state.source} />
+            <img width="100%" height="auto" alt={source} src={source} />
           </Grid>
           <Grid item xs={12} md={4}>
             <Grid container spacing={2}>

@@ -86,6 +86,7 @@ class Shelf extends Component {
 
   onFile = (e) => {
     const file = e.target.files[0];
+    e.target.value = null; // Reset value
     if (!file) return console.error('Cannot read file');
     return this.props.onAdd(file);
   }

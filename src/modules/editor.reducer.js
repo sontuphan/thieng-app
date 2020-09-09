@@ -1,6 +1,6 @@
 /**
  * Documents
- * @default defaultData
+ * @default defaultState
  */
 const defaultState = {
   file: null,

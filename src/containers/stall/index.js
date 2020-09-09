@@ -86,7 +86,7 @@ class Stall extends Component {
       return this.props.runEditor(re);
     }).then(re => {
       return this.props.updateInstorageFile(re);
-    }).then(() => {
+    }).then(re => {
       return this.props.pushInstorageFile();
     }).then(re => {
       if (!re) return console.error('No file added');

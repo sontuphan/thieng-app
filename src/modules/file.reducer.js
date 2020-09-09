@@ -15,7 +15,7 @@ const defaultState = {
   metadata: {
     color: null
   },
-  file: null, // Raw file object
+  nativeFile: null, // Raw file object
 }
 
 /**
@@ -25,13 +25,13 @@ export const SET_INSTORAGE_FILE = 'SET_INSTORAGE_FILE';
 export const SET_INSTORAGE_FILE_OK = 'SET_INSTORAGE_FILE_OK';
 export const SET_INSTORAGE_FILE_FAIL = 'SET_INSTORAGE_FILE_FAIL';
 
-export const setInstorageFile = (file) => {
+export const setInstorageFile = (nativeFile) => {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: SET_INSTORAGE_FILE });
 
       let er = null;
-      const source = URL.createObjectURL(file);
+      const source = URL.createObjectURL(nativeFile);
       if (!source) er = 'No file';
       const { auth: { _id } } = getState();
       if (!_id) er = 'No authentication';
@@ -42,11 +42,11 @@ export const setInstorageFile = (file) => {
 
       const data = {
         _id: ObjectID.generate(),
-        name: file.name,
-        type: file.type,
+        name: nativeFile.name,
+        type: nativeFile.type,
         source,
         userId: _id,
-        file,
+        nativeFile,
       }
       dispatch({ type: SET_INSTORAGE_FILE_OK, data });
       return resolve(data);
@@ -113,7 +113,7 @@ export const updateInstorageFile = (data) => {
  * Upload the in-storage file to servers
  */
 export const PUSH_INSTORAGE_FILE = 'PUSH_INSTORAGE_FILE';
-export const PUSH_INSTORAGE_FILE_OK = 'UPLPUSH_INSTORAGE_FILE_OKOAD_INSTORAGE_FILE_OK';
+export const PUSH_INSTORAGE_FILE_OK = 'PUSH_INSTORAGE_FILE_OK';
 export const PUSH_INSTORAGE_FILE_FAIL = 'PUSH_INSTORAGE_FILE_FAIL';
 
 export const pushInstorageFile = () => {
@@ -121,21 +121,21 @@ export const pushInstorageFile = () => {
     return new Promise((resolve, reject) => {
       dispatch({ type: PUSH_INSTORAGE_FILE });
 
-      const { file: { source, file, metadata } } = getState();
-      if (!file) {
+      const { file: { source, nativeFile, metadata } } = getState();
+      if (!nativeFile) {
         let er = 'Invalid inputs';
         dispatch({ type: PUSH_INSTORAGE_FILE_FAIL, reason: er });
         return reject(er);
       }
 
       let data = new FormData();
-      const type = file.type.split('/')[0];
-      data.append(type, file);
+      const type = nativeFile.type.split('/')[0];
+      data.append(type, nativeFile);
       data.append('metadata', JSON.stringify(metadata));
       const { api: { base } } = configs;
       return api.post(`${base}/file/${type}`, data).then(re => {
         URL.revokeObjectURL(source);
-        dispatch({ type: PUSH_INSTORAGE_FILE_OK });
+        dispatch({ type: PUSH_INSTORAGE_FILE_OK, data: { ...defaultState } });
         return resolve(re.data);
       }).catch(er => {
         dispatch({ type: PUSH_INSTORAGE_FILE_FAIL, reason: er });
