@@ -50,7 +50,7 @@ class NotFound extends Component {
         <Grid container spacing={2} justify="flex-end" alignItems="center" className={classes.noWrap}>
           <Grid item>
             <Typography className={classes.message}>
-              {auth.isValid ? 'Bạn đang bị lạc ?' : 'Bạn chưa có tài khoản ?'}
+              {auth.isValid ? 'Bạn đang bị lạc ?' : 'Bạn chưa cần đăng nhập ?'}
             </Typography>
           </Grid>
           <Grid item>
@@ -65,7 +65,7 @@ class NotFound extends Component {
               <Typography>Về nhà</Typography>
             </Button> :
             <Button variant="contained" color="primary" startIcon={<LockOpenRounded />} onClick={toggleAuth}>
-              <Typography>Đăng ký</Typography>
+              <Typography>Đăng nhập</Typography>
             </Button>}
           </Grid>
         </Grid>

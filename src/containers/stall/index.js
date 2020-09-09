@@ -16,11 +16,15 @@ import Tags from './tags';
 import Categories from './categories';
 import Thumbnail from './thumbnail';
 import Discount from './discount';
+import { EditableButtonGroup, BuyableButtonGroup } from './buttons';
 
 import { getFile, getItem } from 'modules/bucket.reducer';
 import { setCart } from 'modules/cart.reducer';
 import { runEditor } from 'modules/editor.reducer';
-import { EditableButtonGroup, BuyableButtonGroup } from './buttons';
+import {
+  setInstorageFile, updateInstorageFile, pushInstorageFile,
+  updateFile,
+} from 'modules/file.reducer';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -77,8 +81,14 @@ class Stall extends Component {
   /**
    * Create a new item
    */
-  onAddFile = () => {
-    return this.props.runEditor().then(re => {
+  onAddFile = (file) => {
+    return this.props.setInstorageFile(file).then(re => {
+      return this.props.runEditor(re);
+    }).then(re => {
+      return this.props.updateInstorageFile(re);
+    }).then(() => {
+      return this.props.pushInstorageFile();
+    }).then(re => {
       if (!re) return console.error('No file added');
       let { object } = this.state;
       if (!object.fileIds) object.fileIds = [];
@@ -93,14 +103,9 @@ class Stall extends Component {
     return this.props.getFile(fileId).then(file => {
       return this.props.runEditor(file);
     }).then(re => {
-      if (!re.source) {
-        // Remove from object array
-        object.fileIds = object.fileIds.filter(fid => fid !== fileId);
-        // Check thumbnail
-        if (object.thumbnailId === fileId) object.thumbnailId = object.fileIds[0];
-      }
-      else object.fileIds[index] = re._id;
-      return this.setState({ object });
+      return this.props.updateFile(re);
+    }).then(() => {
+      // Nothing
     }).catch(console.error);
   }
   onThumbnail = (index) => {
@@ -319,6 +324,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   getFile, getItem,
   setCart,
   runEditor,
+  setInstorageFile, updateInstorageFile, pushInstorageFile, updateFile,
 }, dispatch);
 
 Stall.defaultProps = {

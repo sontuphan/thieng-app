@@ -12,6 +12,7 @@ import recommendation from './recommendation.reducer';
 import projects from './projects.reducer';
 import cart from './cart.reducer';
 import notification from './notification.reducer';
+import file from './file.reducer';
 import editor from './editor.reducer';
 import order from './order.reducer';
 import feelings from './feelings.reducer';
@@ -30,6 +31,7 @@ export default (history) => combineReducers({
   projects,
   cart,
   notification,
+  file,
   editor,
   order,
   feelings,

@@ -14,7 +14,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Switch from '@material-ui/core/Switch';
 
-import { DeleteRounded, CloseRounded } from '@material-ui/icons';
+import { CloseRounded } from '@material-ui/icons';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -80,7 +80,7 @@ class EditorDialog extends Component {
   }
 
   render() {
-    let { classes } = this.props;
+    const { classes } = this.props;
 
     return <Dialog maxWidth="md" open={this.props.visible} onClose={this.props.onClose} >
       <DialogTitle>
@@ -143,10 +143,9 @@ class EditorDialog extends Component {
             <Button
               variant="contained"
               color="secondary"
-              onClick={() => this.props.onDelete(this.props.file)}
-              startIcon={<DeleteRounded />}
+              onClick={this.onClose}
             >
-              <Typography>Xóa</Typography>
+              <Typography>Hủy</Typography>
             </Button>
           </Grid>
         </Grid>
@@ -168,7 +167,6 @@ EditorDialog.defaultProps = {
   },
   onClose: () => { },
   onSave: () => { },
-  onDelete: () => { },
 }
 
 EditorDialog.propTypes = {
@@ -176,7 +174,6 @@ EditorDialog.propTypes = {
   file: PropTypes.object,
   onClose: PropTypes.func,
   onSave: PropTypes.func,
-  onDelete: PropTypes.func,
 }
 
 export default withStyles(styles)(EditorDialog);

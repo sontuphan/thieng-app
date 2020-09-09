@@ -39,6 +39,7 @@ class Shelf extends Component {
       translate: 0,
       color: '#ffffff',
     }
+    this.ref = React.createRef();
   }
 
   componentDidMount() {
@@ -77,6 +78,16 @@ class Shelf extends Component {
       const color = palette.Vibrant.bodyTextColor;
       return this.setState({ color });
     }).catch(console.error);
+  }
+
+  onUpload = () => {
+    return this.ref.current.click();
+  }
+
+  onFile = (e) => {
+    const file = e.target.files[0];
+    if (!file) return console.error('Cannot read file');
+    return this.props.onAdd(file);
   }
 
   onStep = (step) => {
@@ -153,8 +164,14 @@ class Shelf extends Component {
                   </Tooltip>
                 </Grid> : null}
                 {editable ? <Grid item>
+                  <input
+                    type="file"
+                    ref={this.ref}
+                    style={{ display: 'none' }}
+                    onChange={this.onFile}
+                  />
                   <Tooltip title="Thêm ảnh mới">
-                    <IconButton onClick={this.props.onAdd}>
+                    <IconButton onClick={this.onUpload}>
                       <AddRounded style={{ color: this.state.color }} />
                     </IconButton>
                   </Tooltip>
