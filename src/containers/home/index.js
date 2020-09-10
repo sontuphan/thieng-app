@@ -110,7 +110,7 @@ class Home extends Component {
           <Grid item xs={10} md={8}>
             <Typography variant="h1">Top {products.length} sản phẩm</Typography >
           </Grid>
-          <Grid item xs={10} md={8}>
+          <Grid item xs={12}>
             <Slick>
               {products.map((product, index) => <SlickChild key={index}>
                 <Grid container spacing={2}>
