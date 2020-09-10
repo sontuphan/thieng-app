@@ -7,9 +7,11 @@ import async from 'async';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
 import Drain from 'components/drain';
 import Carousel from 'components/carousel';
+import Slick, { SlickChild } from 'components/slick';
 import Welcome from './welcome';
 import Policy from './policy';
 import Contact from './contact';
@@ -71,7 +73,32 @@ class Home extends Component {
     const { classes } = this.props;
     const { products } = this.state;
 
-    return <Grid container spacing={2}>
+    return <Grid container spacing={2} justify="center">
+      <Grid item xs={12}>
+        <Drain />
+      </Grid>
+      <Grid item xs={12} md={10}>
+        <Slick >
+          <SlickChild minWidth={150} maxWidth={200}>
+            <Typography>Hello world 1</Typography>
+          </SlickChild>
+          <SlickChild minWidth={150} maxWidth={200}>
+            <Typography>Hello world 2</Typography>
+          </SlickChild>
+          <SlickChild minWidth={150} maxWidth={200}>
+            <Typography>Hello world 3</Typography>
+          </SlickChild>
+          <SlickChild minWidth={150} maxWidth={200}>
+            <Typography>Hello world 4</Typography>
+          </SlickChild>
+          <SlickChild minWidth={150} maxWidth={200}>
+            <Typography>Hello world 5</Typography>
+          </SlickChild>
+          <SlickChild minWidth={150} maxWidth={200}>
+            <Typography>Hello world 6</Typography>
+          </SlickChild>
+        </Slick>
+      </Grid>
       <Grid item xs={12}>
         <Drain />
       </Grid>
