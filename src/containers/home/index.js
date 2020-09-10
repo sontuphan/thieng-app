@@ -102,10 +102,10 @@ class Home extends Component {
       <Grid item xs={12}>
         <Drain large />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <Policy />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <Grid container spacing={2}>
           <Grid item xs={10} md={8}>
             <Typography variant="h1">Top {products.length} sản phẩm</Typography >
