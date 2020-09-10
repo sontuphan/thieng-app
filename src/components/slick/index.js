@@ -8,7 +8,7 @@ import Slider from 'react-slick';
 
 import { ArrowBackRounded, ArrowForwardRounded } from '@material-ui/icons';
 
-// import { useStyles } from './styles';
+import { useStyles } from './styles';
 import { useData } from './module';
 
 
@@ -17,13 +17,15 @@ import { useData } from './module';
  * @param {*} props 
  */
 export function SlickChild(props) {
-  // const classes = useStyles();
+  const classes = useStyles();
 
-  return <Grid container spacing={2}>
-    <Grid item xs={12}>
-      {props.children}
+  return <div className={classes.gap}>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        {props.children}
+      </Grid>
     </Grid>
-  </Grid>
+  </div>
 }
 
 SlickChild.defaultProps = {
@@ -63,8 +65,8 @@ export default function Slick(props) {
   const { width } = useData(slickRef);
   const theme = useTheme();
 
-  const { minWidth, maxWidth } = props.children[0] && props.children[0].props;
-  const slidesToShow = width ? Math.floor(2 * width / (minWidth + maxWidth)) : 1;
+  const { minChildWidth, maxChildWidth } = props;
+  const slidesToShow = width ? Math.floor(2 * width / (minChildWidth + maxChildWidth)) : 1;
 
   const slickProps = {
     centerMode: true,
@@ -80,7 +82,7 @@ export default function Slick(props) {
 
   return <Grid container spacing={2}>
     <Grid item xs={12} ref={slickRef}>
-      <Slider {...slickProps}>
+      <Slider {...slickProps} >
         {props.children}
       </Slider>
     </Grid>
@@ -90,9 +92,13 @@ export default function Slick(props) {
 Slick.defaultProps = {
   arrows: false,
   slidesToScroll: 1,
+  minChildWidth: 250,
+  maxChildWidth: 300,
 }
 
 Slick.propTypes = {
   arrows: PropTypes.bool,
   slidesToScroll: PropTypes.number,
+  minChildWidth: PropTypes.number,
+  maxChildWidth: PropTypes.number,
 }

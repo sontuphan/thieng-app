@@ -10,8 +10,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import Drain from 'components/drain';
-import Carousel from 'components/carousel';
 import Slick, { SlickChild } from 'components/slick';
+import { PortraitCard } from 'components/cards';
 import Welcome from './welcome';
 import Policy from './policy';
 import Contact from './contact';
@@ -51,8 +51,8 @@ class Home extends Component {
     let products = [];
     return async.eachSeries(data, (itemId, cb) => {
       return getItem(itemId).then(item => {
-        products.push({ displayname: item.name });
-        return getFile(item.thumbnailId)
+        products.push({ _id: item._id, displayname: item.name });
+        return getFile(item.thumbnailId);
       }).then(file => {
         products[products.length - 1].avatar = file.source;
         return cb();
@@ -65,8 +65,8 @@ class Home extends Component {
     });
   }
 
-  onMore = () => {
-    return this.props.history.push('/mall');
+  redirect = (to) => {
+    return this.props.history.push(to);
   }
 
   render() {
@@ -76,28 +76,6 @@ class Home extends Component {
     return <Grid container spacing={2} justify="center">
       <Grid item xs={12}>
         <Drain />
-      </Grid>
-      <Grid item xs={12} md={10}>
-        <Slick >
-          <SlickChild minWidth={150} maxWidth={200}>
-            <Typography>Hello world 1</Typography>
-          </SlickChild>
-          <SlickChild minWidth={150} maxWidth={200}>
-            <Typography>Hello world 2</Typography>
-          </SlickChild>
-          <SlickChild minWidth={150} maxWidth={200}>
-            <Typography>Hello world 3</Typography>
-          </SlickChild>
-          <SlickChild minWidth={150} maxWidth={200}>
-            <Typography>Hello world 4</Typography>
-          </SlickChild>
-          <SlickChild minWidth={150} maxWidth={200}>
-            <Typography>Hello world 5</Typography>
-          </SlickChild>
-          <SlickChild minWidth={150} maxWidth={200}>
-            <Typography>Hello world 6</Typography>
-          </SlickChild>
-        </Slick>
       </Grid>
       <Grid item xs={12}>
         <Drain />
@@ -124,16 +102,26 @@ class Home extends Component {
       <Grid item xs={12}>
         <Drain large />
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={10}>
         <Policy />
       </Grid>
-      <Grid item xs={12} md={6}>
-        <Carousel
-          title={`Top ${products.length}`}
-          subtitle="Sản phẩm"
-          objects={products}
-          onMore={this.onMore}
-        />
+      <Grid item xs={10}>
+        <Typography variant="h1">Top {products.length} sản phẩm</Typography >
+      </Grid>
+      <Grid item xs={12}>
+        <Slick>
+          {products.map((product, index) => <SlickChild key={index}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <PortraitCard
+                  title={product.displayname}
+                  image={product.avatar}
+                  onClick={() => this.redirect(`/item/${product._id}`)}
+                />
+              </Grid>
+            </Grid>
+          </SlickChild>)}
+        </Slick>
       </Grid>
       <Grid item xs={12}>
         <Drain large />

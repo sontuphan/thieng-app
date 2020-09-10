@@ -71,11 +71,15 @@ class PortraitCard extends Component {
 
   render() {
     const { classes } = this.props;
-    const { content, disabled, image } = this.props
+    const { content, disabled, image, onClick } = this.props
 
     return <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Card className={classes.card} style={{ filter: disabled ? 'grayscale()' : null }}>
+        <Card
+          className={classes.card}
+          style={{ filter: disabled ? 'grayscale()' : null }}
+          onClick={onClick}
+        >
           <CardActionArea className={classes.cardAction}>
             <CardMedia image={image} className={classes.cardMedia} />
           </CardActionArea>
@@ -113,7 +117,8 @@ class PortraitCard extends Component {
 PortraitCard.defaultProps = {
   title: '',
   content: null,
-  disabled: false
+  disabled: false,
+  onClick: () => { },
 }
 
 PortraitCard.propTypes = {
@@ -121,6 +126,7 @@ PortraitCard.propTypes = {
   image: PropTypes.string.isRequired,
   content: PropTypes.array,
   disabled: PropTypes.bool,
+  onClick: PropTypes.func,
 }
 
 export default withStyles(styles)(PortraitCard);

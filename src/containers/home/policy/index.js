@@ -29,13 +29,13 @@ const SecondContent= `
 class Policy extends Component {
   render() {
     return <Grid container justify="center" spacing={2}>
-      <Grid item xs={10} md={8}>
+      <Grid item xs={12}>
         <Typography variant="h1">Phong cách</Typography>
       </Grid>
-      <Grid item xs={10} md={8}>
+      <Grid item xs={12}>
         <Typography variant="h6">{FirstContent}</Typography>
       </Grid>
-      <Grid item xs={10} md={8}>
+      <Grid item xs={12}>
         <Typography variant="h6">{SecondContent}</Typography>
       </Grid>
       <Grid item xs={12}>
