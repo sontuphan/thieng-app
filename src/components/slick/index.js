@@ -69,9 +69,10 @@ export default function Slick(props) {
   const slidesToShow = width ? Math.floor(2 * width / (minChildWidth + maxChildWidth)) : 1;
 
   const slickProps = {
-    centerMode: true,
+    centerMode: props.centerMode,
     dots: true,
     infinite: true,
+    autoplay: props.autoplay,
     arrows: props.arrows,
     speed: theme.transitions.duration.standard,
     slidesToScroll: props.slidesToScroll,
@@ -91,6 +92,8 @@ export default function Slick(props) {
 
 Slick.defaultProps = {
   arrows: false,
+  autoplay: false,
+  centerMode: false,
   slidesToScroll: 1,
   minChildWidth: 250,
   maxChildWidth: 300,
@@ -98,6 +101,8 @@ Slick.defaultProps = {
 
 Slick.propTypes = {
   arrows: PropTypes.bool,
+  autoplay: PropTypes.bool,
+  centerMode: PropTypes.bool,
   slidesToScroll: PropTypes.number,
   minChildWidth: PropTypes.number,
   maxChildWidth: PropTypes.number,
