@@ -102,26 +102,30 @@ class Home extends Component {
       <Grid item xs={12}>
         <Drain large />
       </Grid>
-      <Grid item xs={10}>
+      <Grid item xs={6}>
         <Policy />
       </Grid>
-      <Grid item xs={10}>
-        <Typography variant="h1">Top {products.length} sản phẩm</Typography >
-      </Grid>
-      <Grid item xs={12}>
-        <Slick>
-          {products.map((product, index) => <SlickChild key={index}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <PortraitCard
-                  title={product.displayname}
-                  image={product.avatar}
-                  onClick={() => this.redirect(`/item/${product._id}`)}
-                />
-              </Grid>
-            </Grid>
-          </SlickChild>)}
-        </Slick>
+      <Grid item xs={6}>
+        <Grid container spacing={2}>
+          <Grid item xs={10} md={8}>
+            <Typography variant="h1">Top {products.length} sản phẩm</Typography >
+          </Grid>
+          <Grid item xs={10} md={8}>
+            <Slick>
+              {products.map((product, index) => <SlickChild key={index}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <PortraitCard
+                      title={product.displayname}
+                      image={product.avatar}
+                      onClick={() => this.redirect(`/item/${product._id}`)}
+                    />
+                  </Grid>
+                </Grid>
+              </SlickChild>)}
+            </Slick>
+          </Grid>
+        </Grid>
       </Grid>
       <Grid item xs={12}>
         <Drain large />
