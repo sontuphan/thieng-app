@@ -7,11 +7,14 @@ import async from 'async';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
 import Drain from 'components/drain';
 import Slick, { SlickChild } from 'components/slick';
-import { PortraitCard } from 'components/cards';
 import Welcome from './welcome';
 import Policy from './policy';
 import Contact from './contact';
@@ -20,6 +23,7 @@ import styles from './styles';
 import objectGLB from 'static/images/bamboo.glb';
 import objectUSDZ from 'static/images/bamboo.usdz';
 
+import utils from 'helpers/utils';
 import { recommendItems } from 'modules/recommendation.reducer';
 import { getItem, getFile } from 'modules/bucket.reducer';
 
@@ -29,7 +33,7 @@ class Home extends Component {
     super();
 
     this.state = {
-      products: [],
+      items: [],
     }
   }
 
@@ -46,22 +50,22 @@ class Home extends Component {
 
   loadData = () => {
     const { recommendation: { data }, getItem, getFile } = this.props;
-    if (!data || !data.length) return this.setState({ products: [] });
+    if (!data || !data.length) return this.setState({ items: [] });
 
-    let products = [];
+    let items = [];
     return async.eachSeries(data, (itemId, cb) => {
       return getItem(itemId).then(item => {
-        products.push({ _id: item._id, displayname: item.name });
-        return getFile(item.thumbnailId);
+        items.push(item);
+        return getFile(item.thumbnailId || item.fileIds[0]);
       }).then(file => {
-        products[products.length - 1].avatar = file.source;
+        items[items.length - 1].thumbnail = file.source;
         return cb();
       }).catch(er => {
         return cb(er);
       });
     }, (er) => {
       if (er) console.error(er);
-      return this.setState({ products });
+      return this.setState({ items });
     });
   }
 
@@ -71,7 +75,7 @@ class Home extends Component {
 
   render() {
     const { classes } = this.props;
-    const { products } = this.state;
+    const { items } = this.state;
 
     return <Grid container spacing={2} justify="center">
       <Grid item xs={12}>
@@ -108,18 +112,31 @@ class Home extends Component {
       <Grid item xs={12}>
         <Grid container spacing={2} justify="center">
           <Grid item>
-            <Typography variant="h1">Top {products.length} sản phẩm</Typography >
+            <Typography variant="h1">Top {items.length} sản phẩm</Typography >
           </Grid>
           <Grid item xs={12}>
             <Slick autoplay centerMode>
-              {products.map((product, index) => <SlickChild key={index}>
+              {items.map((item, index) => <SlickChild key={index}>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    <PortraitCard
-                      title={product.displayname}
-                      image={product.avatar}
-                      onClick={() => this.redirect(`/item/${product._id}`)}
-                    />
+                    <Card>
+                      <CardActionArea onClick={() => this.redirect(`/item/${item._id}`)}>
+                        <CardMedia image={item.thumbnail} className={classes.media} />
+                        <CardContent>
+                          <Grid container spacing={2} justify="flex-end">
+                            <Grid item xs={12}>
+                              <Typography variant="h4">{item.name}</Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Typography>{item.descriptions[0]}</Typography>
+                            </Grid>
+                            <Grid item>
+                              <Typography variant="h5">{utils.prettyNumber(item.price, 'long')} ₫</Typography>
+                            </Grid>
+                          </Grid>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
                   </Grid>
                 </Grid>
               </SlickChild>)}

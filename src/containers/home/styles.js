@@ -4,5 +4,8 @@ export default theme => ({
     height: '100%',
     minHeight: 512,
     backgroundColor: 'unset'
+  },
+  media: {
+    height: 250,
   }
 });

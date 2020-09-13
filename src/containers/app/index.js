@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
-import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -13,6 +12,7 @@ import PrivateRoute from 'containers/auth/privateRoute';
 import Drain from 'components/drain';
 import Header from 'containers/header';
 import Footer from 'containers/footer';
+import UiUx from 'containers/uiux';
 // Pages
 import Home from 'containers/home';
 // import Newsfeed from 'containers/newsfeed';
@@ -34,39 +34,8 @@ import theme from 'static/styles/theme';
 import 'static/styles/index.css';
 import styles from './styles';
 
-// UI redux helper
-import { setScreen } from 'modules/ui.reducer';
-
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    props.setScreen(window.innerWidth);
-  }
-
-  componentDidMount() {
-    window.onresize = () => {
-      return this.props.setScreen(window.innerWidth);
-    }
-    this.scrollToHash();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { location } = this.props;
-    if (!isEqual(prevProps.location, location)) {
-      this.scrollToHash();
-    }
-  }
-
-  scrollToHash = () => {
-    const { location: { hash } } = this.props;
-    if (!hash) return console.warn('Invalid hashtag');
-    const id = hash.replace('#', '');
-    const e = window.document.getElementById(id);
-    if (!e) return console.error('Invalid component');
-    return setTimeout(() => e.scrollIntoView(), 300);
-  }
 
   render() {
     const { classes } = this.props;
@@ -77,7 +46,9 @@ class App extends Component {
         <Grid item xs={11} md={10}>
           <Header />
         </Grid>
-        <Grid item xs={12} className={classes.safe} /> {/* Safe space */}
+        <Grid item xs={12} className={classes.safe} >
+          <UiUx />
+        </Grid>
         <Grid item xs={12}>
 
           {/* Pages */}
@@ -130,11 +101,9 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  ui: state.ui,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setScreen,
 }, dispatch);
 
 export default withRouter(connect(
