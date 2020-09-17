@@ -7,5 +7,11 @@ export default theme => ({
   },
   media: {
     height: 250,
-  }
+  },
+  card: {
+    transition: theme.transitions.create(),
+    '&:hover': {
+      boxShadow: theme.shadows[8],
+    },
+  },
 });

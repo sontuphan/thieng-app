@@ -119,7 +119,7 @@ class Home extends Component {
               {items.map((item, index) => <SlickChild key={index}>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    <Card>
+                    <Card elevation={4} className={classes.card}>
                       <CardActionArea onClick={() => this.redirect(`/item/${item._id}`)}>
                         <CardMedia image={item.thumbnail} className={classes.media} />
                         <CardContent>
