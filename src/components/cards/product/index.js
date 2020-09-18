@@ -31,12 +31,7 @@ function ProductCard(props) {
           <Grid item xs={12}>
             <Grid container spacing={1}>
               {data.tags.map(tag => <Grid item key={tag}>
-                <Chip
-                  className={classes.chip}
-                  color="primary"
-                  label={tag}
-                  size="small"
-                />
+                <Chip color="primary" label={tag} size="small" />
               </Grid>)}
             </Grid>
           </Grid>

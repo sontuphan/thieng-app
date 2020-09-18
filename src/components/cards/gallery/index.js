@@ -24,7 +24,7 @@ function GalleryCard(props) {
   const [checked, setChecked] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState('#ffffff');
   const [textColor, setTextColor] = useState('#000000');
-  const [height, setHeight] = useState(40);
+  const [height, setHeight] = useState(0);
   const myRef = useRef();
   const classes = useStyles();
   const data = useData(props.itemId);
@@ -42,9 +42,9 @@ function GalleryCard(props) {
   // Render component
   return <Grid container spacing={2}>
     <Grid item xs={12} ref={myRef}>
-      <Collapse in={checked} collapsedHeight={height}>
-        <Paper elevation={0} className={classes.paper} style={{ backgroundColor: backgroundColor }}>
-          <Grid container justify="center" spacing={2}>
+      <Collapse in={checked} collapsedHeight={height} classes={{ container: classes.collapse }}>
+        <Paper elevation={4} className={classes.paper} style={{ backgroundColor: backgroundColor }}>
+          <Grid container spacing={2}>
             <Grid item xs={6} {...imageProps}>
               <ImageCard _id={data.thumbnailId} onChange={onColors} />
             </Grid>
@@ -53,7 +53,7 @@ function GalleryCard(props) {
                 <Grid item xs={12}>
                   <Grid container spacing={1}>
                     {data.tags.map((tag, i) => <Grid item key={i}>
-                      <Chip className={classes.chip} color="primary" label={tag} size="small" />
+                      <Chip color="primary" label={tag} size="small" />
                     </Grid>)}
                   </Grid>
                 </Grid>
@@ -66,7 +66,7 @@ function GalleryCard(props) {
                       <Typography style={{ color: textColor }}>{utils.prettyNumber(data.price, 'long')} ₫</Typography>
                     </Grid>
                     {props.amount ? <Grid item>
-                      <Chip className={classes.chip} color="primary" label={props.amount} size="small" />
+                      <Chip color="primary" label={props.amount} size="small" />
                     </Grid> : null}
                   </Grid>
                 </Grid>

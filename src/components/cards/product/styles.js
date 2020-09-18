@@ -6,9 +6,6 @@ export const useStyles = makeStyles(theme => ({
     top: theme.spacing(1),
     right: theme.spacing(1),
   },
-  chip: {
-    ...theme.typography.body1,
-  },
   paper: {
     position: 'relative',
     padding: theme.spacing(1),
