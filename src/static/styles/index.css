@@ -4,10 +4,12 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: #fafafa;
+
 }
 
 body {
-  font-family: "Nunito", sans-serif;
+  font-family: "Nunito";
 }
 
 [contenteditable] {

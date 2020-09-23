@@ -37,13 +37,13 @@ class Welcome extends Component {
   render() {
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={10} md={8}>
-        <Typography variant="h1">Chào mừng</Typography>
+        <Typography variant="h4">Chào mừng</Typography>
       </Grid>
       <Grid item xs={10} md={8}>
-        <Typography variant="h6"><strong>Tre</strong> {contentOne}</Typography>
+        <Typography><strong>Tre</strong> {contentOne}</Typography>
       </Grid>
       <Grid item xs={10} md={8}>
-        <Typography variant="h6">{contentTwo} <strong>Thiêng Việt</strong>.</Typography>
+        <Typography>{contentTwo} <strong>Thiêng Việt</strong>.</Typography>
       </Grid>
       <Grid item xs={12}>
         <Drain small />
@@ -55,7 +55,7 @@ class Welcome extends Component {
         <Drain small />
       </Grid>
       <Grid item xs={10} md={8}>
-        <Typography variant="h2">Tôi là</Typography>
+        <Typography variant="h6">Tôi là</Typography>
       </Grid>
       <Grid item xs={10} md={8}>
         <Grid container spacing={2}>
