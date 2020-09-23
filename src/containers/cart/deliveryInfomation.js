@@ -144,7 +144,7 @@ class DeliveryInformation extends Component {
           spacing={2}
         >
           <Grid item>
-            <Typography variant="h3">Giao hàng</Typography>
+            <Typography variant="h4">Giao hàng</Typography>
           </Grid>
           <Grid item className={classes.stretch} xs={12}>
             <Divider />

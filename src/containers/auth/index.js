@@ -78,7 +78,7 @@ class Authentication extends Component {
       <DialogTitle>
         <Grid container spacing={2} alignItems="center" className={classes.noWrap}>
           <Grid item className={classes.stretch}>
-            <Typography variant="h3">Đăng nhập</Typography>
+            <Typography variant="h6">Đăng nhập</Typography>
           </Grid>
           <Grid item>
             <IconButton color="secondary" size="small" onClick={toggleAuth}>
@@ -90,7 +90,7 @@ class Authentication extends Component {
       <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography>Bạn có thể dễ dàng đăng nhập bằng dịch vụ ưa thích để tận hưởng đầy đủ các chức năng của ứng dụng.</Typography>
+            <Typography>Bạn có thể dễ dàng đăng nhập bằng dịch vụ ưa thích để trải nghiệm đầy đủ các chức năng của ứng dụng.</Typography>
           </Grid>
           <Grid item xs={12}>
             {this.state.error ? <Typography color="primary">{this.state.error}</Typography> : null}

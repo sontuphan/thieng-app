@@ -33,7 +33,7 @@ class PaymentGuide extends Component {
       <DialogTitle>
         <Grid container spacing={2} alignItems="center" className={classes.noWrap}>
           <Grid item className={classes.stretch}>
-            <Typography variant="h3">Hướng dẫn chuyển khoản</Typography>
+            <Typography variant="h6">Hướng dẫn chuyển khoản</Typography>
           </Grid>
           <Grid item>
             <IconButton color="secondary" size="small" onClick={onClose}>

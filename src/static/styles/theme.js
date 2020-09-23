@@ -16,7 +16,7 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: 'Nunito',
-    fontSize: 12,
+    fontSize: 13,
     h1: { fontWeight: 300, textTransform: 'None' },
     h2: { fontWeight: 700, textTransform: 'None' },
     h3: { fontWeight: 300, textTransform: 'None' },

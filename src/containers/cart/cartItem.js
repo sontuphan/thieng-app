@@ -13,7 +13,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import { CancelRounded } from '@material-ui/icons';
 
-import { ProductCard } from 'components/cards';
+import { LiteItemCard } from 'components/cards/item';
 import { NumericInput } from 'components/inputs';
 
 import { toggleCart, setCart } from 'modules/cart.reducer';
@@ -48,7 +48,7 @@ class CartItem extends Component {
     if (!item) return null;
     return <Grid container justify="center" spacing={2}>
       <Grid item xs={12}>
-        <ProductCard itemId={item._id} />
+        <LiteItemCard itemId={item._id} />
       </Grid>
       <Grid item xs={12}>
         <NumericInput
@@ -70,7 +70,7 @@ class CartItem extends Component {
             <Divider />
           </Grid>
           <Grid item>
-            <Typography variant="h3">{utils.prettyNumber(item.amount * item.price, 'long')} ₫</Typography>
+            <Typography variant="body2">{utils.prettyNumber(item.amount * item.price, 'long')} ₫</Typography>
           </Grid>
         </Grid>
       </Grid>
