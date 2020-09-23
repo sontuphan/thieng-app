@@ -50,7 +50,7 @@ class App extends Component {
           <UiUx />
         </Grid>
         <Grid item xs={12}>
-
+          
           {/* Pages */}
           <Switch>
             <Redirect exact from="/" to="/home" />

@@ -23,9 +23,6 @@ class Home extends Component {
       <Grid item xs={12}>
         <Drain />
       </Grid>
-      <Grid item xs={12}>
-        <Drain />
-      </Grid>
       <Grid item xs={12} md={6}>
         <Welcome />
       </Grid>
