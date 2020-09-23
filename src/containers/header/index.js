@@ -8,7 +8,6 @@ import TweenOne from 'rc-tween-one';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import Link from '@material-ui/core/Link';
@@ -16,7 +15,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import {
-  NotificationsRounded, SearchRounded
+  NotificationsRounded, SearchRounded, AccountCircleRounded
 } from '@material-ui/icons';
 
 import styles from './styles';
@@ -77,9 +76,11 @@ class Header extends Component {
     const { classes } = this.props;
     const { auth, toggleAuth } = this.props;
 
-    if (!auth.isValid) return <Button variant="outlined" color="primary" onClick={toggleAuth} >
-      <Typography noWrap>Đăng nhập</Typography>
-    </Button >
+    if (!auth.isValid) return <Tooltip title={'Đăng ký / Đăng nhập'}>
+      <IconButton size="small" color="secondary" onClick={toggleAuth}>
+        <AccountCircleRounded />
+      </IconButton>
+    </Tooltip >
     return <Tooltip title={auth.displayname}>
       <Avatar alt={auth.avatar} src={auth.avatar} className={classes.avatar} onClick={this.onUser} />
     </Tooltip>

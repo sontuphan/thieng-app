@@ -33,12 +33,12 @@ class BaseCard extends Component {
 
 BaseCard.defaultProps = {
   elevation: false,
-  children: {},
+  children: null,
 }
 
 BaseCard.propTypes = {
   elevation: PropTypes.bool,
-  children: PropTypes.object,
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 }
 
 export default withRouter(withStyles(styles)(BaseCard));

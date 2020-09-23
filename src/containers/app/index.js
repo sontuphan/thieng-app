@@ -16,7 +16,6 @@ import UiUx from 'containers/uiux';
 // Pages
 import Home from 'containers/home';
 // import Newsfeed from 'containers/newsfeed';
-import Mall from 'containers/mall';
 import Item from 'containers/item';
 import User from 'containers/user';
 import Guest from 'containers/guest';
@@ -50,16 +49,14 @@ class App extends Component {
           <UiUx />
         </Grid>
         <Grid item xs={12}>
-          
           {/* Pages */}
           <Switch>
             <Redirect exact from="/" to="/home" />
-            <Route exact path="/home" component={Home} />
             {/* <Redirect exact path="/newsfeed" to="/newsfeed/for-me" /> */}
             {/* <Route exact path="/newsfeed/:page" component={Newsfeed} /> */}
-            <Redirect exact from="/mall" to="/mall/all" />
-            <Route exact path="/mall/:category" component={Mall} />
-            <Redirect exact from="/item" to="/mall" />
+            <Redirect exact from="/home" to="/home/all" />
+            <Route exact path="/home/:category" component={Home} />
+            <Redirect exact from="/item" to="/home" />
             <PrivateRoute exact path="/item/:id" component={Item} />
             <Redirect exact from="/user/:userId" to="/user/:userId/store" />
             <PrivateRoute exact path="/user/:userId/:page" component={User} />

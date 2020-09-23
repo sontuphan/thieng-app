@@ -7,13 +7,11 @@ import isEqual from 'react-fast-compare';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
 
-import { SettingsRounded, ExpandMoreRounded } from '@material-ui/icons';
+import { ExpandMoreRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
-import { ProductCard } from 'components/cards';
+import { LiteItemCard } from 'components/cards/item';
 import Menu from './menu';
 import { CircularProgressButton } from 'components/buttons';
 
@@ -58,49 +56,30 @@ class Mall extends Component {
 
   renderItems = (items) => {
     if (!items || !items.length) return null;
-    return <Grid container spacing={2}>
+    return <Grid container spacing={3}>
       {items.map((item, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
-        <ProductCard itemId={item._id} />
+        <LiteItemCard itemId={item._id} />
       </Grid>)}
-    </Grid>
+    </Grid >
   }
 
   render() {
-    const { classes } = this.props;
-    const { items: { data } } = this.props;
-    const { match: { params: { category } } } = this.props;
-    const item = configs.category.fullList.filter(e => e.value === category)[0]
+    // const { classes } = this.props;
+    const { items: { data }, match: { params: { category } } } = this.props;
+    const item = configs.category.fullList.filter(e => e.value === category)[0];
 
-    if (!item) return <Redirect to='/mall/all' />
-    return <Grid container justify="center" spacing={2}>
+    if (!item) return <Redirect to='/home/all' />
+    return <Grid container justify="center" spacing={2} id="mall">
       <Grid item xs={12}>
-        <Drain large />
+        <Drain large small />
       </Grid>
-      <Grid item xs={11} md={10}>
+      <Grid item xs={12}>
         <Menu />
       </Grid>
       <Grid item xs={12}>
         <Drain small />
       </Grid>
-      <Grid item xs={11} md={10}>
-        <Grid container className={classes.noWrap} alignItems="center" justify="flex-end" spacing={2}>
-          <Grid item>
-            <Typography variant="h3">{item.name}</Typography>
-          </Grid>
-          <Grid item className={classes.stretch}>
-            <Divider />
-          </Grid>
-          <Grid item>
-            <IconButton size="small">
-              <SettingsRounded fontSize="small" />
-            </IconButton>
-          </Grid>
-        </Grid>
-      </Grid>
       <Grid item xs={12}>
-        <Drain small />
-      </Grid>
-      <Grid item xs={11} md={10}>
         {this.renderItems(data)}
       </Grid>
       <Grid item xs={12}>

@@ -61,7 +61,7 @@ class NotFound extends Component {
             </Tooltip>
           </Grid>
           <Grid item>{auth.isValid ?
-            <Button variant="contained" color="primary" href="/mall" startIcon={<DirectionsRunRounded />} >
+            <Button variant="contained" color="primary" href="/home" startIcon={<DirectionsRunRounded />} >
               <Typography>Về nhà</Typography>
             </Button> :
             <Button variant="contained" color="primary" startIcon={<LockOpenRounded />} onClick={toggleAuth}>

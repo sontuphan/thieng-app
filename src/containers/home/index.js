@@ -8,42 +8,26 @@ import Grid from '@material-ui/core/Grid';
 
 import Drain from 'components/drain';
 import Welcome from './welcome';
+import Mall from './mall';
 
 import styles from './styles';
-import objectGLB from 'static/images/bamboo.glb';
-import objectUSDZ from 'static/images/bamboo.usdz';
 
 
 class Home extends Component {
 
   render() {
-    const { classes } = this.props;
-
     return <Grid container spacing={2} justify="center">
       <Grid item xs={12}>
         <Drain />
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={11} md={10}>
         <Welcome />
       </Grid>
-      <Grid item xs={12} md={6}>
-        <model-viewer
-          src={objectGLB}
-          ios-src={objectUSDZ}
-          ar
-          ar-modes="webxr scene-viewer quick-look"
-          ar-scale="auto"
-          quick-look-browsers="safari chrome"
-          camera-controls
-          auto-rotate
-          alt="A 3D model of an astronaut"
-          shadow-intensity={1}
-          shadow-softness={1.25}
-          class={classes.arViewer}
-        ></model-viewer>
-      </Grid>
       <Grid item xs={12}>
-        <Drain large />
+        <Drain small />
+      </Grid>
+      <Grid item xs={11} md={10}>
+        <Mall />
       </Grid>
     </Grid >
   }
