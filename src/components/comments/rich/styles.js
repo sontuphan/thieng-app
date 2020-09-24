@@ -27,7 +27,7 @@ export default theme => ({
   name: {
     fontWeight: 700,
     textDecoration: 'none',
-    color: '#000000',
+    color: theme.palette.text.primary,
     cursor: 'pointer',
     '&:hover': {
       textDecoration: 'underline',

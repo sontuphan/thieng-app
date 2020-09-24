@@ -196,7 +196,7 @@ class SingleRichComment extends Component {
             <div className={classes.paper}>
               <Typography>
                 <RouterLink className={classes.name} to={`/user/${user._id}`}>{user.displayname}</RouterLink> - {comment.contents}
-                </Typography>
+              </Typography>
             </div>
             <Grid container className={classes.noWrap} justify="space-between" alignItems="center" spacing={1}>
               <Grid item>

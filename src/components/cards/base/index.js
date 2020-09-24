@@ -32,12 +32,10 @@ class BaseCard extends Component {
 }
 
 BaseCard.defaultProps = {
-  elevation: false,
   children: null,
 }
 
 BaseCard.propTypes = {
-  elevation: PropTypes.bool,
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 }
 

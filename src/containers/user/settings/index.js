@@ -42,7 +42,7 @@ class UserSettings extends Component {
     this.loadData();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const { auth } = this.props;
     if (!isEqual(prevProps.auth, auth)) {
       this.loadData();
@@ -67,21 +67,21 @@ class UserSettings extends Component {
   }
 
   onAddress = (e) => {
-    let address = e.target.value;
+    const address = e.target.value;
     let { user, selectedAddress } = this.state;
     user.addresses[selectedAddress] = address;
     return this.setState({ user });
   }
 
   onPhone = (e) => {
-    let phone = e.target.value;
+    const phone = e.target.value;
     let { user } = this.state;
     user.phone = phone;
     return this.setState({ user });
   }
 
   onSelect = (e) => {
-    let selectedAddress = e.target.value;
+    const selectedAddress = e.target.value;
     return this.setState({ selectedAddress });
   }
 
@@ -104,7 +104,7 @@ class UserSettings extends Component {
           <Grid item xs={12}>
             <Grid container className={classes.noWrap} alignItems="center" justify="flex-end" spacing={2}>
               <Grid item>
-                <Typography variant="h3">Thông tin cá nhân</Typography>
+                <Typography variant="h6">Thông tin cá nhân</Typography>
               </Grid>
               <Grid item className={classes.stretch}>
                 <Divider />
@@ -193,7 +193,7 @@ class UserSettings extends Component {
           <Grid item xs={12}>
             <Grid container className={classes.noWrap} alignItems="center" justify="flex-end" spacing={2}>
               <Grid item>
-                <Typography variant="h3">Thông tin dịch vụ</Typography>
+                <Typography variant="h6">Thông tin dịch vụ</Typography>
               </Grid>
               <Grid item className={classes.stretch}>
                 <Divider />
