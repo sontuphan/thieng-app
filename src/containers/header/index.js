@@ -91,8 +91,8 @@ class Header extends Component {
     const { cart: { data } } = this.props;
     const { blink } = this.state;
 
-    return <Grid container spacing={2} id="header">
-      <Grid item xs={12}>
+    return <Grid container justify="center" spacing={2}>
+      <Grid item xs={11} md={10}>
         <BaseCard>
           <Grid container spacing={2} className={classes.noWrap} alignItems="center">
             {/* Logo */}

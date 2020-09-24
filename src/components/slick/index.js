@@ -29,13 +29,9 @@ export function SlickChild(props) {
 }
 
 SlickChild.defaultProps = {
-  minWidth: 250,
-  maxWidth: 300,
 }
 
 SlickChild.propTypes = {
-  minWidth: PropTypes.number,
-  maxWidth: PropTypes.number,
 }
 
 /**
@@ -66,7 +62,9 @@ export default function Slick(props) {
   const theme = useTheme();
 
   const { minChildWidth, maxChildWidth } = props;
-  const slidesToShow = width ? Math.floor(2 * width / (minChildWidth + maxChildWidth)) : 1;
+  const slidesToShow = 1;
+  if (props.slidesToShow) slidesToShow = props.slidesToShow;
+  else slidesToShow = Math.floor(2 * width / (minChildWidth + maxChildWidth));
 
   const slickProps = {
     centerMode: props.centerMode,
@@ -95,6 +93,7 @@ Slick.defaultProps = {
   autoplay: false,
   centerMode: false,
   slidesToScroll: 1,
+  slidesToShow: 0,
   minChildWidth: 250,
   maxChildWidth: 300,
 }
@@ -104,6 +103,7 @@ Slick.propTypes = {
   autoplay: PropTypes.bool,
   centerMode: PropTypes.bool,
   slidesToScroll: PropTypes.number,
+  slidesToShow: PropTypes.number,
   minChildWidth: PropTypes.number,
   maxChildWidth: PropTypes.number,
 }

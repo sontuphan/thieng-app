@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from 'react';
 
 export const useData = (slickRef) => {
-  const [data = {}, setData] = useState();
+  const [data = {width: 0}, setData] = useState();
 
   useLayoutEffect(() => {
     function updateSize() {

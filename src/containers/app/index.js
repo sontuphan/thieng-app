@@ -42,7 +42,7 @@ class App extends Component {
     return <ThemeProvider theme={theme}>
       <Grid container justify="center" spacing={2}>
         <Grid item xs={12} className={classes.safe} /> {/* Safe space */}
-        <Grid item xs={11} md={10}>
+        <Grid item xs={12}>
           <Header />
         </Grid>
         <Grid item xs={12} className={classes.safe} >

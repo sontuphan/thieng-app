@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import isEqual from 'react-fast-compare';
 
 // UI redux helper
-import { setScreen } from 'modules/ui.reducer';
+import { setScreen, setScroll } from 'modules/ui.reducer';
 
 
 class UiUx extends Component {
@@ -13,15 +13,13 @@ class UiUx extends Component {
   componentDidMount() {
     this.scrollToHash();
     this.listenResizeEvents();
+    // this.listenScrollEvents();
   }
 
   componentDidUpdate(prevProps) {
-    const { location } = this.props;
-    const { location: prevLocation } = prevProps;
-    if (!isEqual(prevLocation, location)) {
-      const ok = this.scrollToHash();
-      if (!ok) return this.scrollToTop();
-    }
+    const { location: { hash } } = this.props;
+    const { location: { hash: prevHash } } = prevProps;
+    if (!isEqual(prevHash, hash)) this.scrollToHash();
   }
 
   listenResizeEvents = () => {
@@ -32,24 +30,24 @@ class UiUx extends Component {
     }
   }
 
+  listenScrollEvents = () => {
+    const { setScroll } = this.props;
+    return window.onscroll = () => {
+      return setScroll(window.scrollY);
+    }
+  }
+
   scrollToTop = () => {
-    // return window.scrollTo(0, 0);
+    return window.scrollTo(0, 0);
   }
 
   scrollToHash = () => {
     const { location: { hash } } = this.props;
-    if (!hash) {
-      console.warn('Invalid hashtag');
-      return false;
-    }
+    if (!hash) return console.warn('Invalid hashtag');
     const id = hash.replace('#', '');
     const ele = window.document.getElementById(id);
-    if (!ele) {
-      console.error('Invalid component');
-      return false;
-    }
-    setTimeout(() => ele.scrollIntoView(), 300);
-    return true;
+    if (!ele) return console.error('Invalid component');
+    return setTimeout(() => ele.scrollIntoView(), 300);
   }
 
   render() {
@@ -62,7 +60,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setScreen,
+  setScreen, setScroll,
 }, dispatch);
 
 export default withRouter(connect(

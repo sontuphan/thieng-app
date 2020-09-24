@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Drain from 'components/drain';
 import Welcome from './welcome';
 import Mall from './mall';
+import Contact from './contact';
 
 import styles from './styles';
 
@@ -28,6 +29,12 @@ class Home extends Component {
       </Grid>
       <Grid item xs={11} md={10}>
         <Mall />
+      </Grid>
+      <Grid item xs={12}>
+        <Drain />
+      </Grid>
+      <Grid item xs={11} md={10}>
+        <Contact />
       </Grid>
     </Grid >
   }

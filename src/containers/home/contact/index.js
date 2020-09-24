@@ -60,20 +60,20 @@ class Contact extends Component {
     const { classes } = this.props;
     return <Grid container spacing={2}>
       <Grid item xs={12} md={6}>
-        <Grid container justify="center" spacing={2}>
-          <Grid item xs={10} md={8}>
-            <Typography variant="h1">Về chúng tôi</Typography>
+        <Grid container justify="flex-start" spacing={2}>
+          <Grid item xs={12} md={10}>
+            <Typography variant="h4">Về chúng tôi</Typography>
           </Grid>
-          <Grid item xs={10} md={8}>
-            <Typography variant="h6">{content}</Typography>
+          <Grid item xs={12} md={10}>
+            <Typography>{content}</Typography>
           </Grid>
-          <Grid item xs={10} md={8}>
-            {items.map((item, i) => <Typography key={i} variant="h6">
+          <Grid item xs={12} md={10}>
+            {items.map((item, i) => <Typography key={i}>
               {bullet} {item}
             </Typography>)}
           </Grid>
-          <Grid item xs={10} md={8}>
-            <Typography variant="h6">{conclusion}</Typography>
+          <Grid item xs={12} md={10}>
+            <Typography>{conclusion}</Typography>
           </Grid>
           <Grid item xs={12}>
             <Drain />
@@ -81,23 +81,23 @@ class Contact extends Component {
         </Grid>
       </Grid>
       <Grid item xs={12} md={6} id="contact">
-        <Grid container justify="center" spacing={2}>
-          <Grid item xs={10} md={8}>
-            <Typography variant="h1">Liên hệ</Typography>
+        <Grid container justify="flex-end" spacing={2}>
+          <Grid item xs={12} md={10}>
+            <Typography variant="h4">Liên hệ</Typography>
           </Grid>
-          <Grid item xs={10} md={8}>
-            <Typography variant="h6"><span className={classes.underline}>Địa chỉ:</span> Số 30, Đường 68 CL, Phường Cát Lái, Quận 2, Thành phố Hồ Chí Minh.</Typography>
+          <Grid item xs={12} md={10}>
+            <Typography ><span className={classes.underline}>Địa chỉ:</span> Số 30, Đường 68 CL, Phường Cát Lái, Quận 2, Thành phố Hồ Chí Minh.</Typography>
           </Grid>
-          <Grid item xs={10} md={8}>
-            <Typography variant="h6"><span className={classes.underline}>Số điện thoại:</span> 078.3333.689</Typography>
+          <Grid item xs={12} md={10}>
+            <Typography ><span className={classes.underline}>Số điện thoại:</span> 078.3333.689</Typography>
           </Grid>
-          <Grid item xs={10} md={8}>
-            <Typography variant="h6"><span className={classes.underline}>Email:</span> thiengviet@gmail.com</Typography>
+          <Grid item xs={12} md={10}>
+            <Typography><span className={classes.underline}>Email:</span> thiengviet@gmail.com</Typography>
           </Grid>
-          <Grid item xs={10} md={8}>
-            <Typography variant="h6">Đăng ký email để nhận thông báo về các chương trình khuyến mãi và quà tặng từ Thiêng Việt.</Typography>
+          <Grid item xs={12} md={10}>
+            <Typography>Đăng ký email để nhận thông báo về các chương trình khuyến mãi và quà tặng từ Thiêng Việt.</Typography>
           </Grid>
-          <Grid item xs={10} md={8}>
+          <Grid item xs={12} md={10}>
             <TextField
               label="Email"
               variant="outlined"
@@ -106,7 +106,7 @@ class Contact extends Component {
               fullWidth
             />
           </Grid>
-          <Grid item xs={10} md={8}>
+          <Grid item xs={12} md={10}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Button
