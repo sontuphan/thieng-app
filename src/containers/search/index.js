@@ -13,7 +13,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { TopDrawer } from 'components/drawers';
 import Drain from 'components/drain';
 import SearchField from 'components/search';
-import { ProductCard } from 'components/cards';
+import { LiteItemCard } from 'components/cards/item';
 
 import { toggleSearch, searchText } from 'modules/search.reducer';
 
@@ -59,7 +59,7 @@ class Search extends Component {
     return data.map((item, i) => <Grid item key={i} xs={6} sm={4} md={3} lg={2}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <ProductCard itemId={item._id} />
+          <LiteItemCard itemId={item._id} />
         </Grid>
       </Grid>
     </Grid>);
@@ -80,7 +80,7 @@ class Search extends Component {
             <Grid item xs={11} md={10}>
               <Grid container alignItems="center" className={classes.noWrap} spacing={2}>
                 <Grid item>
-                  <Typography variant="h3">Tìm kiếm</Typography>
+                  <Typography variant="h6">Tìm kiếm</Typography>
                 </Grid>
                 <Grid item className={classes.stretch} xs={12}>
                   <Divider />

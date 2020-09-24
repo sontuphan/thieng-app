@@ -12,7 +12,7 @@ import Divider from '@material-ui/core/Divider';
 import { ExpandMoreRounded } from '@material-ui/icons';
 
 import { BottomDrawer } from 'components/drawers';
-import { ProductCard } from 'components/cards';
+import { LiteItemCard } from 'components/cards/item';
 import Drain from 'components/drain';
 import Stall from 'containers/stall';
 import Action from './action';
@@ -95,7 +95,7 @@ class UserFactory extends Component {
     if (!data || !data.length) return null;
     return <Grid container spacing={2}>
       {data.map((obj, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
-        <ProductCard
+        <LiteItemCard
           itemId={obj._id}
           onClick={this.onClick(obj._id)}
           selective={multipleChoice}
@@ -112,7 +112,7 @@ class UserFactory extends Component {
       <Grid item xs={12}>
         <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
           <Grid item>
-            <Typography variant="h3">Xưởng</Typography>
+            <Typography variant="h6">Xưởng</Typography>
           </Grid>
           <Grid item className={classes.stretch}>
             <Divider />

@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 
 import { ShuffleRounded } from '@material-ui/icons';
 
-import { ProductCard } from 'components/cards';
+import { LiteItemCard } from 'components/cards/item';
 
 import { recommendItems } from 'modules/recommendation.reducer';
 
@@ -43,7 +43,7 @@ class Recommendation extends Component {
           <Grid item xs={12}>
             <Grid container justify="space-between" spacing={2}>
               <Grid item>
-                <Typography variant="h2">Gợi ý cho bạn</Typography>
+                <Typography variant="h4">Gợi ý cho bạn</Typography>
               </Grid>
               <Grid item>
                 <Button
@@ -58,7 +58,7 @@ class Recommendation extends Component {
             </Grid>
           </Grid>
           {data.map((item, i) => <Grid key={i} item xs={6} sm={4}>
-            <ProductCard itemId={item._id} />
+            <LiteItemCard itemId={item._id} />
           </Grid>)}
         </Grid>
       </Grid>

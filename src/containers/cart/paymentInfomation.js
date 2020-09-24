@@ -80,7 +80,7 @@ class PaymentInfomation extends Component {
       <Grid item xs={12}>
         <Grid container className={classes.noWrap} alignItems="center" spacing={2} >
           <Grid item>
-            <Typography variant="h4">Thanh toán</Typography>
+            <Typography variant="h6">Thanh toán</Typography>
           </Grid>
           <Grid item className={classes.stretch} xs={12}>
             <Divider />

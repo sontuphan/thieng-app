@@ -222,7 +222,7 @@ class Stall extends Component {
           </Grid>
           <Grid item xs={10} md={8}>
             <TextInput
-              variant="h1"
+              variant="h4"
               value={object.name}
               onChange={this.onName}
               placeholder="Tên sản phẩm"
@@ -242,13 +242,13 @@ class Stall extends Component {
           </Grid>
           <Grid item xs={10} md={8}>
             <Typography
-              variant="h4"
+              variant="h6"
               className={classes.originalPrice}
             >{utils.prettyNumber(object.price, 'long') || '0'} ₫</Typography>
           </Grid>
           <Grid item xs={10} md={8}>
             <TextInput
-              variant="h1"
+              variant="h4"
               value={utils.prettyNumber(this.state.amount * this.calculatePrice(object), 'long') + ' ₫'}
               placeholder="0"
               onBlur={this.onPrice}
@@ -290,7 +290,7 @@ class Stall extends Component {
       {this.props.editable ? <Grid item xs={12} md={6}>
         <Grid container justify="center" spacing={2}>
           <Grid item xs={10} md={8}>
-            <Typography variant="h2">Cài đặt khác</Typography>
+            <Typography variant="h5">Cài đặt khác</Typography>
           </Grid>
           <Grid item xs={12}>
             <Drain small />

@@ -11,7 +11,7 @@ import Divider from '@material-ui/core/Divider';
 import { ExpandMoreRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
-import { ProductCard } from 'components/cards';
+import { LiteItemCard } from 'components/cards/item';
 import { CircularProgressButton } from 'components/buttons';
 
 import { getItems, updateItem } from 'modules/items.reducer';
@@ -49,7 +49,7 @@ class GuestStore extends Component {
     if (!data || !data.length) return null;
     return <Grid container spacing={2}>
       {data.map((obj, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
-        <ProductCard itemId={obj._id} />
+        <LiteItemCard itemId={obj._id} />
       </Grid>)}
     </Grid>
   }
@@ -61,7 +61,7 @@ class GuestStore extends Component {
       <Grid item xs={12}>
         <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
           <Grid item>
-            <Typography variant="h3">Cửa hàng</Typography>
+            <Typography variant="h5">Cửa hàng</Typography>
           </Grid>
           <Grid item className={classes.stretch}>
             <Divider />
