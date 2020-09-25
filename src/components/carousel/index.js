@@ -31,57 +31,74 @@ function Carousel(props) {
   const theme = useTheme();
   const classes = useStyles();
 
+  // Compute the number of slides per view
   const { childWidth: [minChildWidth, maxChildWidth], spacing } = props;
   let slidesPerView = 1;
   if (props.slidesPerView) slidesPerView = props.slidesPerView;
   else slidesPerView = Math.floor(width / ((minChildWidth + maxChildWidth) / 2 + spacing));
+  // Compute pagination
+  const { pagination } = props;
+  const paginationProps = pagination ? {
+    pagination: { bulletActiveClass: classes.bullet, clickable: true }
+  } : null;
+  // Compute the number of slides per group and freeMode
+  let { slidesPerGroup } = props;
+  const freeMode = !slidesPerGroup ? true : false;
+  slidesPerGroup = Math.max(1, slidesPerGroup);
+  // onChange
+  const { onChange } = props;
+  const onSlideChange = e => {
+    return onchange(e.activeIndex)
+  }
+  // Other props
+  const { autoplay } = props;
 
+  // Total props
   const swiperProps = {
     // Layout
     slidesPerView,
     spaceBetween: spacing,
     // Parameters
     speed: theme.transitions.duration.standard,
+    freeMode,
+    slidesPerGroup,
     // Events
-    onSlideChange: (e) => {
-      console.log(e.activeIndex)
-    },
+    onSlideChange,
     // Components
-    autoplay: props.autoplay,
-    pagination: {
-      bulletActiveClass: classes.bullet,
-      clickable: true
-    }
+    autoplay,
+    ...paginationProps,
   }
+  console.log(swiperProps)
 
   return <Grid container spacing={2}>
     <Grid item xs={12} ref={swiperRef}>
       <Swiper {...swiperProps} >
         {props.children}
-        <div className="swiper-pagination">asd</div>
       </Swiper>
     </Grid>
   </Grid>
 }
 
 Carousel.defaultProps = {
-  arrows: false,
+  pagination: false,
   autoplay: false,
   centerMode: false,
-  slidesToScroll: 0, // Default: 0 - freely scroll
+  slidesPerGroup: 0, // Default: 0 - freely scroll
   slidesPerView: 0,
   spacing: 16,
   childWidth: [250, 300], // [min, max]
+  onChange: () => { },
 }
 
 Carousel.propTypes = {
-  arrows: PropTypes.bool,
+  pagination: PropTypes.bool,
   autoplay: PropTypes.bool,
   centerMode: PropTypes.bool,
-  slidesToScroll: PropTypes.number,
+  slidesPerGroup: PropTypes.number,
   slidesPerView: PropTypes.number,
   spacing: PropTypes.number,
   childWidth: PropTypes.array,
+  onChange: PropTypes.func,
 }
 
 export default Carousel;

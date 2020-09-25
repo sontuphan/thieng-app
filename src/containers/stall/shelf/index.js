@@ -79,7 +79,7 @@ class Shelf extends Component {
           {/* Images */}
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Carousel slidesPerView={1}>
+              <Carousel slidesPerView={1} slidesPerGroup={1} pagination>
                 {fileIds.map((fileId, i) => <CarouselChild key={i}>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
