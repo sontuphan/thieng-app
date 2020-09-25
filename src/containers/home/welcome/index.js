@@ -66,7 +66,7 @@ class Welcome extends Component {
           <Grid item xs={12}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <Button onClick={() => this.redirect('/home#contact')} variant="contained" color="primary" size="large" fullWidth>
+                <Button onClick={() => this.redirect('/home/all#contact')} variant="contained" color="primary" size="large" fullWidth>
                   <Typography>Nhà thiết kế</Typography>
                 </Button>
               </Grid>

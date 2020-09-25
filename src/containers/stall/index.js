@@ -200,6 +200,9 @@ class Stall extends Component {
 
     if (!object || !userId) return null;
     return <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Drain />
+      </Grid>
       {/* Shelf */}
       <Grid item xs={12} md={6}>
         <Shelf
@@ -214,9 +217,6 @@ class Stall extends Component {
       {/* Contents */}
       <Grid item xs={12} md={6}>
         <Grid container justify="center" spacing={2}>
-          <Grid item xs={12}>
-            <Drain />
-          </Grid>
           <Grid item xs={10} md={8}>
             <Tags tags={object.tags} />
           </Grid>
