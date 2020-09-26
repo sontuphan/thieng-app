@@ -31,7 +31,7 @@ const MENU = {
   warehouse: { name: 'Nhà kho', value: 'warehouse', icon: <ArchiveRounded />, disabled: false },
   message: { name: 'Tin nhắn', value: 'message', icon: <ChatRounded />, disabled: true },
   wallet: { name: 'Ví', value: 'wallet', icon: <AccountBalanceWalletRounded />, disabled: true },
-  history: { name: 'Lịch sử mua hàng', value: 'history', icon: <TimelineRounded />, disabled: false },
+  history: { name: 'Lịch sử', value: 'history', icon: <TimelineRounded />, disabled: false },
   settings: { name: 'Cài đặt', value: 'settings', icon: <SettingsRounded />, disabled: false },
 }
 

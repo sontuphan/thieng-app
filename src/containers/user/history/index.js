@@ -61,7 +61,7 @@ class UserHistory extends Component {
       <Grid item xs={12}>
         <Grid container className={classes.noWrap} alignItems="center" justify="flex-end" spacing={2}>
           <Grid item>
-            <Typography variant="h3">Lịch sử</Typography>
+            <Typography variant="h4">Lịch sử</Typography>
           </Grid>
           <Grid item className={classes.stretch}>
             <Divider />
@@ -80,8 +80,7 @@ class UserHistory extends Component {
             <Grid item xs={12}>
               <Drain small />
             </Grid>
-          </Fragment>
-          )}
+          </Fragment>)}
         </Grid>
       </Grid>
       <Grid item xs={12}>

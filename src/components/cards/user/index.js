@@ -16,21 +16,29 @@ function UserCard(props) {
   if (!data || data instanceof Error) return null;
   return <Grid container alignItems="center" spacing={2} className={classes.noWrap}>
     <Grid item className={classes.link} component={RouterLink} to={`/user/${data._id}`}>
-      <Avatar alt={data.displayname} src={data.avatar} />
+      <Avatar alt={data.displayname} src={data.avatar} className={classes[props.size]} />
     </Grid>
-    <Grid item xs={8} className={classes.stretch} component={RouterLink} to={`/user/${data._id}`}>
-      <Typography style={{ color: props.color }} noWrap>{data.displayname}</Typography>
+    <Grid item className={classes.stretch} component={RouterLink} to={`/user/${data._id}`}>
+      <Grid container spaing={2} justify={props.fullWidth ? "flex-end" : "flex-start"}>
+        <Grid item>
+          <Typography style={{ color: props.color }} noWrap>{data.displayname}</Typography>
+        </Grid>
+      </Grid>
     </Grid>
   </Grid>
 }
 
 UserCard.defaultProps = {
-  color: '#000000'
+  size: 'medium',
+  color: '#000000',
+  fullWidth: false,
 }
 
 UserCard.propTypes = {
   userId: PropTypes.string.isRequired,
+  size: PropTypes.string,
   color: PropTypes.string,
+  fullWidth: PropTypes.bool,
 }
 
 export default UserCard;
