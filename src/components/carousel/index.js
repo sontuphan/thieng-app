@@ -1,5 +1,5 @@
-import React from 'react';
-import { Swiper, SwiperSlide as CarouselChild } from 'swiper/react';
+import React, { forwardRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Pagination } from 'swiper';
 import PropTypes from 'prop-types';
 
@@ -18,7 +18,14 @@ SwiperCore.use([Pagination]);
  * CarouselChild
  * @param {*} props 
  */
-export { CarouselChild };
+const CarouselChild = forwardRef((props, ref) => {
+  return <SwiperSlide {...props} ref={ref} style={{ width: 'auto' }} />
+});
+
+CarouselChild.displayName = 'SwiperSlide';
+
+export { CarouselChild }
+
 
 /**
  * Carousel
@@ -41,7 +48,6 @@ function Carousel(props) {
     autoplay: props.autoplay,
     ...paginationProps,
   }
-  console.log(swiperProps)
 
   return <Grid container spacing={2}>
     <Grid item xs={12}>
@@ -56,8 +62,9 @@ Carousel.defaultProps = {
   pagination: false,
   autoplay: false,
   centerMode: false,
-  slidesPerGroup: 0, // Default: 0 - freely scroll
+  slidesPerGroup: 0, // Default: 0 means auto
   slidesPerView: 0,
+  freeMode: false,
   spacing: 16,
   onChange: () => { },
 }
@@ -68,6 +75,7 @@ Carousel.propTypes = {
   centerMode: PropTypes.bool,
   slidesPerGroup: PropTypes.number,
   slidesPerView: PropTypes.number,
+  freeMode: PropTypes.bool,
   spacing: PropTypes.number,
   onChange: PropTypes.func,
 }
