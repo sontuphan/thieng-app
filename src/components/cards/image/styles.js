@@ -1,22 +1,27 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
-  image: {
+  rounded: {
     width: '100%',
     paddingBottom: '100%',
     position: 'relative',
     overflow: 'hidden',
     borderRadius: theme.shape.borderRadius,
-    cursor: 'pointer',
   },
-  imageJPG: {
+  square: {
+    width: '100%',
+    paddingBottom: '100%',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  jpg: {
     position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
     height: '100%',
   },
-  imagePNG: {
+  png: {
     position: 'absolute',
     top: 0,
     left: 0,

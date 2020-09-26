@@ -15,7 +15,7 @@ import {
   ThreeDRotationRounded, ColorLensRounded, AddRounded
 } from '@material-ui/icons';
 
-import { UserCard, ImageCard, BaseCard } from 'components/cards';
+import { UserCard, ImageCard } from 'components/cards';
 import Carousel, { CarouselChild } from 'components/carousel';
 
 import styles from './styles';
@@ -68,63 +68,59 @@ class Shelf extends Component {
   }
 
   render() {
-    // const { classes } = this.props;
+    const { classes } = this.props;
     const { userId, editable, fileIds } = this.props;
     const { showing, files } = this.state;
     const file = files[showing] || {};
 
-    return <Grid container spacing={2}>
+    return <Grid container spacing={2} justify="center">
+      {/* Images */}
       <Grid item xs={12}>
-        <BaseCard>
-          {/* Images */}
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Carousel slidesPerView={1} slidesPerGroup={1} pagination>
-                {fileIds.map((fileId, i) => <CarouselChild key={i}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <ImageCard _id={fileId} />
-                    </Grid>
-                  </Grid>
-                </CarouselChild>)}
-              </Carousel>
-            </Grid>
-            {/* Author */}
-            <Grid item xs={6}>
-              <UserCard userId={userId} />
-            </Grid>
-            {/* Actions */}
-            <Grid item xs={6}>
-              <Grid container justify="flex-end" spacing={2}>
-                {this.props.on3D ? <Grid item>
-                  <IconButton onClick={this.props.on3D}>
-                    <ThreeDRotationRounded />
-                  </IconButton>
-                </Grid> : null}
-                {editable && file.source ? <Grid item>
-                  <Tooltip title="Chỉnh sửa ảnh">
-                    <IconButton onClick={() => this.props.onEdit(showing)}>
-                      <ColorLensRounded />
-                    </IconButton>
-                  </Tooltip>
-                </Grid> : null}
-                {editable ? <Grid item>
-                  <input
-                    type="file"
-                    ref={this.ref}
-                    style={{ display: 'none' }}
-                    onChange={this.onFile}
-                  />
-                  <Tooltip title="Thêm ảnh mới">
-                    <IconButton onClick={this.onUpload}>
-                      <AddRounded />
-                    </IconButton>
-                  </Tooltip>
-                </Grid> : null}
+        <div className={classes.hack}>
+          <Carousel slidesPerView={1} slidesPerGroup={1} pagination>
+            {fileIds.map((fileId, i) => <CarouselChild key={i}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <ImageCard _id={fileId} variant="square" />
+                </Grid>
               </Grid>
-            </Grid>
-          </Grid>
-        </BaseCard>
+            </CarouselChild>)}
+          </Carousel>
+        </div>
+      </Grid>
+      {/* Author */}
+      <Grid item xs={5}>
+        <UserCard userId={userId} />
+      </Grid>
+      {/* Actions */}
+      <Grid item xs={5}>
+        <Grid container justify="flex-end" spacing={2}>
+          {this.props.on3D ? <Grid item>
+            <IconButton onClick={this.props.on3D}>
+              <ThreeDRotationRounded />
+            </IconButton>
+          </Grid> : null}
+          {editable && file.source ? <Grid item>
+            <Tooltip title="Chỉnh sửa ảnh">
+              <IconButton onClick={() => this.props.onEdit(showing)}>
+                <ColorLensRounded />
+              </IconButton>
+            </Tooltip>
+          </Grid> : null}
+          {editable ? <Grid item>
+            <input
+              type="file"
+              ref={this.ref}
+              style={{ display: 'none' }}
+              onChange={this.onFile}
+            />
+            <Tooltip title="Thêm ảnh mới">
+              <IconButton onClick={this.onUpload}>
+                <AddRounded />
+              </IconButton>
+            </Tooltip>
+          </Grid> : null}
+        </Grid>
       </Grid>
     </Grid>
   }

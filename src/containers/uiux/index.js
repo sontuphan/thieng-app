@@ -4,7 +4,10 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import isEqual from 'react-fast-compare';
 
+import { withStyles } from '@material-ui/core/styles';
+
 // UI redux helper
+import styles from './styles';
 import { setScreen, setScroll } from 'modules/ui.reducer';
 
 
@@ -66,4 +69,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(UiUx));
+)(withStyles(styles)(UiUx)));

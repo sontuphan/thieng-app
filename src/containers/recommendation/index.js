@@ -13,9 +13,8 @@ import { ShuffleRounded } from '@material-ui/icons';
 
 import { LiteItemCard } from 'components/cards/item';
 
-import { recommendItems } from 'modules/recommendation.reducer';
-
 import styles from './styles';
+import { recommendItems } from 'modules/recommendation.reducer';
 
 
 class Recommendation extends Component {
@@ -34,34 +33,30 @@ class Recommendation extends Component {
   }
 
   render() {
-    // let { classes } = this.props;
+    const { classes } = this.props;
     const { recommendation: { data } } = this.props;
 
     return <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Grid container justify="space-between" spacing={2}>
-              <Grid item>
-                <Typography variant="h4">Gợi ý cho bạn</Typography>
-              </Grid>
-              <Grid item>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  startIcon={<ShuffleRounded />}
-                  onClick={this.onShuffle}
-                >
-                  <Typography>Khác</Typography>
-                </Button>
-              </Grid>
-            </Grid>
+        <Grid container alignItems="center" className={classes.noWrap} spacing={2}>
+          <Grid item className={classes.stretch}>
+            <Typography variant="h4">Gợi ý cho bạn</Typography>
           </Grid>
-          {data.map((item, i) => <Grid key={i} item xs={6} sm={4}>
-            <LiteItemCard itemId={item._id} />
-          </Grid>)}
+          <Grid item>
+            <Button
+              variant="outlined"
+              color="primary"
+              startIcon={<ShuffleRounded />}
+              onClick={this.onShuffle}
+            >
+              <Typography>Khác</Typography>
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
+      {data.map((item, i) => <Grid key={i} item xs={6} md={4}>
+        <LiteItemCard itemId={item._id} />
+      </Grid>)}
     </Grid>
   }
 }

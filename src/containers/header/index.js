@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import isEqual from 'react-fast-compare';
-import TweenOne from 'rc-tween-one';
 
 import { withStyles } from '@material-ui/core/styles';
+import TweenOne from 'rc-tween-one';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';

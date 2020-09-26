@@ -200,23 +200,30 @@ class Stall extends Component {
 
     if (!object || !userId) return null;
     return <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <Drain />
-      </Grid>
       {/* Shelf */}
       <Grid item xs={12} md={6}>
-        <Shelf
-          userId={userId}
-          step={step}
-          fileIds={[...object.fileIds]} /* Tricky copy array to update component */
-          editable={this.props.editable}
-          onAdd={this.onAddFile}
-          onEdit={this.onEditFile}
-        />
+        <Grid container spacing={2} justify="center">
+          <Grid item xs={12}>
+            <Drain />
+          </Grid>
+          <Grid item xs={12}>
+            <Shelf
+              userId={userId}
+              step={step}
+              fileIds={[...object.fileIds]} /* Tricky copy array to update component */
+              editable={this.props.editable}
+              onAdd={this.onAddFile}
+              onEdit={this.onEditFile}
+            />
+          </Grid>
+        </Grid>
       </Grid>
       {/* Contents */}
       <Grid item xs={12} md={6}>
         <Grid container justify="center" spacing={2}>
+          <Grid item xs={12}>
+            <Drain />
+          </Grid>
           <Grid item xs={10} md={8}>
             <Tags tags={object.tags} />
           </Grid>
