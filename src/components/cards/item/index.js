@@ -1,4 +1,7 @@
-import LiteItemCard from './lite';
-import RichItemCard from './rich';
+import LiteItemCard, { WrapperLiteItemCard } from './lite';
+import StandardItemCard, { WrapperStandardItemCard } from './standard';
 
-export { LiteItemCard, RichItemCard }
+export {
+  LiteItemCard, WrapperLiteItemCard,
+  StandardItemCard, WrapperStandardItemCard
+}

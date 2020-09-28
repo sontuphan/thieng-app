@@ -28,7 +28,7 @@ import { useStyles } from './styles';
 import { useData } from './module';
 import utils from 'helpers/utils';
 
-function RichItemCard(props) {
+function StandardItemCard(props) {
   // Define hooks
   const [checked, setChecked] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -50,7 +50,8 @@ function RichItemCard(props) {
   const onVisible = () => setVisible((prev) => !prev);
   const isInCart = () => {
     if (!data) return false;
-    const { cart: { data: carts } } = props;
+    const { data: carts } = props.cart || {};
+    if (!carts || carts.length <= 0) return false;
     return carts.map(({ _id }) => _id).includes(data._id);
   }
   // Render component
@@ -103,9 +104,10 @@ function RichItemCard(props) {
               </Grid>
             </Grid>
           </Grid>
-          <Collapse in={checked} collapsedHeight={0}>
+          <Collapse in={checked} collapsedHeight={theme.spacing(4)}>
             <Grid item xs={12} style={{ padding: theme.spacing(1) }}>
-              {props.body ? props.body : data.descriptions[0]}
+              {props.body ? props.body :
+                <Typography className={classes.longText} noWrap={!checked}>{data.descriptions[0]}</Typography>}
             </Grid>
           </Collapse>
           <Grid item xs={12}>
@@ -142,12 +144,12 @@ function RichItemCard(props) {
   </Grid >
 }
 
-RichItemCard.defaultProps = {
+StandardItemCard.defaultProps = {
   amount: 1,
   body: null,
 }
 
-RichItemCard.propTypes = {
+StandardItemCard.propTypes = {
   itemId: PropTypes.string.isRequired,
   amount: PropTypes.number,
   body: PropTypes.object,
@@ -164,4 +166,13 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RichItemCard);
+)(StandardItemCard);
+
+
+function WrapperStandardItemCard(props) {
+  return <Grid item xs={12} sm={6} md={6} lg={4}>
+    <StandardItemCard {...props} />
+  </Grid>
+}
+
+export { WrapperStandardItemCard };

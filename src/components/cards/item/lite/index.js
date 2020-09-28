@@ -67,3 +67,12 @@ LiteItemCard.propTypes = {
 }
 
 export default LiteItemCard;
+
+
+function WrapperLiteItemCard(props) {
+  return <Grid item xs={6} sm={4} md={3} lg={2}>
+    <LiteItemCard {...props} />
+  </Grid>
+}
+
+export { WrapperLiteItemCard };

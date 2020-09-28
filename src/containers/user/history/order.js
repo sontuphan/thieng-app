@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { UserCard } from 'components/cards';
-import { RichItemCard } from 'components/cards/item';
+import { StandardItemCard } from 'components/cards/item';
 
 import styles from './styles';
 import utils from 'helpers/utils';
@@ -41,7 +41,7 @@ class MyOrder extends Component {
     const { items } = order;
     if (!items) return null;
     return items.map((item, i) => <Grid item xs={12} md={6} lg={4} key={i}>
-      <RichItemCard
+      <StandardItemCard
         itemId={item.itemId}
         amount={item.amount}
         body={<Grid container spacing={2}>

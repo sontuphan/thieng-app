@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { ExpandMoreRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
-import { LiteItemCard } from 'components/cards/item';
+import { WrapperLiteItemCard, WrapperStandardItemCard } from 'components/cards/item';
 import Menu from './menu';
 import { CircularProgressButton } from 'components/buttons';
 
@@ -56,10 +56,13 @@ class Mall extends Component {
 
   renderItems = (items) => {
     if (!items || !items.length) return null;
-    return <Grid container spacing={3}>
-      {items.map((item, i) => <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
-        <LiteItemCard itemId={item._id} />
-      </Grid>)}
+    return <Grid container spacing={2}>
+      {items.map((item, i) => {
+        // const type = Math.floor(Math.random() * 5) % 5;
+        const type = 0;
+        if (!type) return <WrapperStandardItemCard key={i} itemId={item._id} />
+        return <WrapperLiteItemCard key={i} itemId={item._id} />
+      })}
     </Grid >
   }
 

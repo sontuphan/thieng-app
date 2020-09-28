@@ -7,4 +7,8 @@ export const useStyles = makeStyles(theme => ({
   action: {
     padding: `${theme.spacing(0)}px ${theme.spacing(1)}px !important`
   },
+  longText: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  }
 }));
