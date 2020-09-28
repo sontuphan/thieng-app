@@ -47,9 +47,9 @@ class Support extends Component {
         <Grid container className={classes.footer} justify="center" spacing={2}>
           <Grid item>
             <Typography
-              color="textSecondary"
               align="center"
               className={classes.text}
+              noWrap
             >Email: {this.state.email} - Điện thoại: {this.state.phone}</Typography>
           </Grid>
         </Grid>

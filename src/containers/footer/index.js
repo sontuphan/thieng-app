@@ -96,7 +96,7 @@ class Footer extends Component {
               onClick={() => this.setState({ visiblePolicy: true })}
               startIcon={<PolicyRounded />}
             >
-              <Typography color="textSecondary">Privacy Policy</Typography>
+              <Typography noWrap>Privacy Policy</Typography>
             </Button>
           </Grid>
           <Grid item>
@@ -106,7 +106,7 @@ class Footer extends Component {
               onClick={() => this.setState({ visibleTerms: true })}
               startIcon={<GavelRounded />}
             >
-              <Typography color="textSecondary">{'Terms & Conditions'}</Typography>
+              <Typography noWrap>Terms & Conditions</Typography>
             </Button>
           </Grid>
         </Grid>
@@ -114,7 +114,7 @@ class Footer extends Component {
       <Grid item xs={12} md={4}>
         <Grid container justify={width >= 960 ? 'flex-end' : 'center'} spacing={2}>
           <Grid item>
-            <Typography color="textSecondary">Copyright © 2020 Thiêng Việt</Typography>
+            <Typography>Copyright © 2020 Thiêng Việt</Typography>
           </Grid>
         </Grid>
       </Grid>

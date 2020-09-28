@@ -36,7 +36,7 @@ class PaymentGuide extends Component {
             <Typography variant="h6">Hướng dẫn chuyển khoản</Typography>
           </Grid>
           <Grid item>
-            <IconButton color="secondary" size="small" onClick={onClose}>
+            <IconButton size="small" onClick={onClose}>
               <CloseRounded />
             </IconButton>
           </Grid>

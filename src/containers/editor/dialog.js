@@ -86,7 +86,7 @@ class EditorDialog extends Component {
             <Typography variant="h3">Chỉnh sửa ảnh</Typography>
           </Grid>
           <Grid item>
-            <IconButton color="secondary" size="small" onClick={onClose}>
+            <IconButton size="small" onClick={onClose}>
               <CloseRounded />
             </IconButton>
           </Grid>

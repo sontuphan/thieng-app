@@ -81,7 +81,7 @@ class Authentication extends Component {
             <Typography variant="h6">Đăng nhập</Typography>
           </Grid>
           <Grid item>
-            <IconButton color="secondary" size="small" onClick={toggleAuth}>
+            <IconButton size="small" onClick={toggleAuth}>
               <CloseRounded />
             </IconButton>
           </Grid>
