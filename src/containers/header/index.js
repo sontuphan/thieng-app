@@ -5,7 +5,6 @@ import { Link as RouterLink, withRouter } from 'react-router-dom';
 import isEqual from 'react-fast-compare';
 
 import { withStyles } from '@material-ui/core/styles';
-import TweenOne from 'rc-tween-one';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
@@ -13,14 +12,17 @@ import Badge from '@material-ui/core/Badge';
 import Link from '@material-ui/core/Link';
 import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
+import TweenOne from 'rc-tween-one';
+import Image from 'material-ui-image';
 
 import {
   NotificationsRounded, SearchRounded, AccountCircleRounded
 } from '@material-ui/icons';
 
-import styles from './styles';
 import { BaseCard } from 'components/cards';
 
+import LOGO from 'static/images/favicon.png';
+import styles from './styles';
 import { toggleAuth } from 'modules/auth.reducer';
 import { toggleNotification } from 'modules/notification.reducer';
 import { toggleSearch } from 'modules/search.reducer';
@@ -88,7 +90,7 @@ class Header extends Component {
 
   render() {
     const { classes } = this.props;
-    const { cart: { data } } = this.props;
+    const { cart: { data }, ui: { width } } = this.props;
     const { blink } = this.state;
 
     return <Grid container justify="center" spacing={2}>
@@ -98,12 +100,20 @@ class Header extends Component {
             {/* Logo */}
             <Grid item className={classes.logo}>
               <Link color="textPrimary" underline="none" component={RouterLink} to={'/home'}>
-                <Typography variant="body2">Thiêng Store</Typography>
+                <Grid container spacing={1} className={classes.noWrap}>
+                  <Grid item style={{ width: 35 }}>
+                    <Image src={LOGO} aspectRatio={(27 / 27)} />
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="body2" noWrap>Thiêng Store</Typography>
+                    <Typography style={{ fontSize: 6 }} noWrap>Một sản phẩm của Thiêng Việt</Typography>
+                  </Grid>
+                </Grid>
               </Link>
             </Grid>
             {/* Menu */}
             <Grid item className={classes.stretch}>
-              <Grid container alignItems="center" justify="flex-end" spacing={4}>
+              <Grid container alignItems="center" justify="flex-end" spacing={width >= 960 ? 5 : 3}>
                 {/* Search app */}
                 <Grid item>
                   <IconButton size="small" color="secondary" onClick={this.onSearch}>
@@ -136,6 +146,7 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
+  ui: state.ui,
   auth: state.auth,
   cart: state.cart,
 });
