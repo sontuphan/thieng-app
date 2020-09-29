@@ -7,7 +7,7 @@ const configs = {}
  * Development configurations
  */
 configs.development = {
-  base: 'http://localhost:3001',
+  base: 'http://192.168.123.37:3001',
 }
 
 /**

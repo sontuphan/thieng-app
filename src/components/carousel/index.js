@@ -19,10 +19,19 @@ SwiperCore.use([Pagination]);
  * @param {*} props 
  */
 const CarouselChild = forwardRef((props, ref) => {
-  return <SwiperSlide {...props} ref={ref} style={{ width: 'auto' }} />
+  const { freeMode, ...rest } = props;
+  return <SwiperSlide {...rest} ref={ref} style={{ width: freeMode ? 'auto' : '100%' }} />
 });
 
 CarouselChild.displayName = 'SwiperSlide';
+
+CarouselChild.defaultProps = {
+  freeMode: false,
+}
+
+CarouselChild.propTypes = {
+  freeMode: PropTypes.bool,
+}
 
 export { CarouselChild }
 
@@ -42,13 +51,12 @@ function Carousel(props) {
     slidesPerView: !props.slidesPerView ? 'auto' : props.slidesPerView,
     spaceBetween: props.spacing,
     speed: theme.transitions.duration.standard,
-    freeMode: !props.slidesPerGroup ? true : false,
+    freeMode: props.freeMode,
     slidesPerGroup: Math.max(1, props.slidesPerGroup),
     onSlideChange: e => props.onChange(e.activeIndex),
-    autoplay: props.autoplay,
+    autoHeight: true,
     ...paginationProps,
   }
-
   return <Grid container spacing={2}>
     <Grid item xs={12}>
       <Swiper {...swiperProps} >
@@ -60,7 +68,6 @@ function Carousel(props) {
 
 Carousel.defaultProps = {
   pagination: false,
-  autoplay: false,
   centerMode: false,
   slidesPerGroup: 0, // Default: 0 means auto
   slidesPerView: 0,
@@ -71,7 +78,6 @@ Carousel.defaultProps = {
 
 Carousel.propTypes = {
   pagination: PropTypes.bool,
-  autoplay: PropTypes.bool,
   centerMode: PropTypes.bool,
   slidesPerGroup: PropTypes.number,
   slidesPerView: PropTypes.number,

@@ -5,4 +5,7 @@ export default theme => ({
   stretch: {
     flex: '1 1 auto',
   },
+  cursor: {
+    cursor: 'pointer'
+  }
 });

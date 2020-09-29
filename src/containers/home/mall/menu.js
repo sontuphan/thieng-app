@@ -17,7 +17,7 @@ import styles from './styles';
 class Menu extends Component {
 
   render() {
-    // const { classes } = this.props;
+    const { classes } = this.props;
     const { match: { params: { category } } } = this.props;
     const { category: { fullList } } = configs;
 
@@ -27,13 +27,14 @@ class Menu extends Component {
       </Grid>
       <Grid item xs={12}>
         <Carousel spaceBetween={16} freeMode >
-          {fullList.map((item, i) => <CarouselChild key={i}>
+          {fullList.map((item, i) => <CarouselChild key={i} freeMode>
             <Chip
               icon={item.icon}
               color={category === item.value ? 'primary' : 'default'}
               component={RouterLink}
               to={'/home/' + item.value}
               label={item.name}
+              className={classes.cursor}
             />
           </CarouselChild>)}
         </Carousel>

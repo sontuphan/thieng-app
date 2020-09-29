@@ -19,9 +19,8 @@ import {
   ShareRounded, RemoveShoppingCartRounded
 } from '@material-ui/icons';
 
-import { BaseCard, ImageCard } from 'components/cards';
+import { BaseCard, ImageCard, UserCard } from 'components/cards';
 import { NumericInput } from 'components/inputs';
-import { UserCard } from 'components/cards';
 
 import { setCart, toggleCart } from 'modules/cart.reducer';
 import { useStyles } from './styles';
@@ -104,10 +103,9 @@ function StandardItemCard(props) {
               </Grid>
             </Grid>
           </Grid>
-          <Collapse in={checked} collapsedHeight={theme.spacing(4)}>
+          <Collapse in={checked} collapsedHeight={0}>
             <Grid item xs={12} style={{ padding: theme.spacing(1) }}>
-              {props.body ? props.body :
-                <Typography className={classes.longText} noWrap={!checked}>{data.descriptions[0]}</Typography>}
+              {props.body ? props.body : <Typography>{data.descriptions[0]}</Typography>}
             </Grid>
           </Collapse>
           <Grid item xs={12}>
@@ -116,23 +114,23 @@ function StandardItemCard(props) {
           <Grid item xs={12} className={classes.action}>
             <Grid container spaing={2} justify="space-between">
               <Grid item>
-                <Tooltip title="Giỏ hàng">
+                <Tooltip title="Chia sẻ">
+                  <IconButton size="small" onClick={onVisible}>
+                    <ShareRounded fontSize="small" color={visible ? 'primary' : 'inherit'} />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+              <Grid item>
+                <Tooltip title={isInCart() ? 'Đã mua' : 'Giỏ hàng'}>
                   <IconButton size="small" onClick={props.toggleCart}>
                     {isInCart() ? <ShoppingCartRounded fontSize="small" color="primary" /> : <RemoveShoppingCartRounded fontSize="small" />}
                   </IconButton>
                 </Tooltip>
               </Grid>
               <Grid item>
-                <Tooltip title="Chi tiết">
+                <Tooltip title={checked ? 'Thu gọn' : 'Thêm'}>
                   <IconButton size="small" onClick={onCollapse}>
                     {checked ? <ExpandLessRounded fontSize="small" /> : <ExpandMoreRounded fontSize="small" />}
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-              <Grid item>
-                <Tooltip title="Chia sẻ">
-                  <IconButton size="small" onClick={onVisible}>
-                    <ShareRounded fontSize="small" color={visible ? 'primary' : 'inherit'} />
                   </IconButton>
                 </Tooltip>
               </Grid>
