@@ -6,7 +6,6 @@ import Grid from '@material-ui/core/Grid';
 
 import { useStyles } from './styles';
 import { useData } from './module';
-import utils from 'helpers/utils';
 
 function ImageCard(props) {
   // Define hooks
@@ -17,12 +16,6 @@ function ImageCard(props) {
   if (!data || data instanceof Error) return <div className={classes.full}>
     <div className={classes.png} />
   </div>
-  // State changes
-  utils.extractImageColors(data.source).then(re => {
-    const backgroundColors = Object.keys(re).map(key => re[key].hex);
-    const textColors = Object.keys(re).map(key => re[key].bodyTextColor);
-    return props.onChange({ backgroundColors, textColors });
-  }).catch(console.error);
 
   return <Grid container spacing={2}
     style={props.variant === 'square' ? data.type !== 'image/png' ? {
@@ -60,14 +53,12 @@ function ImageCard(props) {
 ImageCard.defaultProps = {
   variant: 'rounded',
   onClick: () => { },
-  onChange: () => { }
 }
 
 ImageCard.propTypes = {
   _id: PropTypes.string.isRequired,
   variant: PropTypes.oneOf(['square', 'rounded']),
   onClick: PropTypes.func,
-  onChange: PropTypes.func,
 }
 
 export default ImageCard;
