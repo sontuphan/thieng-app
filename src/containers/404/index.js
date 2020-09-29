@@ -65,7 +65,7 @@ class NotFound extends Component {
               <Typography>Về nhà</Typography>
             </Button> :
             <Button variant="contained" color="primary" startIcon={<LockOpenRounded />} onClick={toggleAuth}>
-              <Typography>Đăng nhập</Typography>
+              <Typography noWrap>Đăng nhập</Typography>
             </Button>}
           </Grid>
         </Grid>

@@ -109,7 +109,7 @@ function RichItemCard(props) {
             <Carousel pagination>
               <CarouselChild>
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} component={Link} to={`/item/${data._id}`}>
                     <ImageCard _id={data.thumbnailId} />
                   </Grid>
                 </Grid>
@@ -123,7 +123,7 @@ function RichItemCard(props) {
               </CarouselChild>
               {data.fileIds.map((fileId, index) => <CarouselChild key={index}>
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} component={Link} to={`/item/${data._id}`}>
                     <ImageCard _id={fileId} />
                   </Grid>
                 </Grid>
