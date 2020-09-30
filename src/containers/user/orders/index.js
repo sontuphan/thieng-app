@@ -69,6 +69,7 @@ class UserOrders extends Component {
             onChange={this.onChange}
             name={status}
             color="primary"
+            size="small"
           />
         </Grid>
       </Grid>
@@ -81,7 +82,7 @@ class UserOrders extends Component {
       <Grid item xs={12}>
         <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
           <Grid item>
-            <Typography variant="h3">Đơn hàng</Typography>
+            <Typography variant="h4">Đơn hàng</Typography>
           </Grid>
           <Grid item className={classes.stretch}>
             <Divider />
@@ -100,7 +101,7 @@ class UserOrders extends Component {
             >
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Typography variant="h5">Bộ lọc</Typography>
+                  <Typography variant="h6">Bộ lọc</Typography>
                 </Grid>
                 {this.renderSwitches()}
               </Grid>

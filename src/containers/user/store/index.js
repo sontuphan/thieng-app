@@ -108,13 +108,13 @@ class UserStore extends Component {
       <Grid item xs={12}>
         <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
           <Grid item>
-            <Typography variant="h6">Cửa hàng</Typography>
+            <Typography variant="h4">Cửa hàng</Typography>
           </Grid>
           <Grid item className={classes.stretch}>
             <Divider />
           </Grid>
           <Grid item>
-            <Typography color="textSecondary">Tùy chọn</Typography>
+            <Typography>Tùy chọn</Typography>
           </Grid>
           <Grid item>
             <Switch

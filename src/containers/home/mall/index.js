@@ -11,18 +11,13 @@ import Typography from '@material-ui/core/Typography';
 import { ExpandMoreRounded } from '@material-ui/icons';
 
 import Drain from 'components/drain';
-import {
-  WrapperLiteItemCard, LiteItemCard,
-  WrapperStandardItemCard, StandardItemCard,
-  WrapperRichItemCard, RichItemCard,
-} from 'components/cards/item';
-import Menu from './menu';
+import { WrapperRichItemCard, RichItemCard } from 'components/cards/item';
 import { CircularProgressButton } from 'components/buttons';
-
-import { getItems } from 'modules/items.reducer';
+import Menu from './menu';
 
 import configs from 'configs';
 import styles from './styles';
+import { getItems } from 'modules/items.reducer';
 
 
 class Mall extends Component {
@@ -61,19 +56,9 @@ class Mall extends Component {
   renderItems = (items) => {
     if (!items || !items.length) return null;
     return <Grid container spacing={2}>
-      {items.map((item, i) => {
-        // const type = i % 4;
-        const type = 0;
-        if (type === 0) return <WrapperRichItemCard key={i} >
-          <RichItemCard itemId={item._id} />
-        </WrapperRichItemCard>
-        if (type === 1) return <WrapperStandardItemCard key={i} >
-          <StandardItemCard itemId={item._id} />
-        </WrapperStandardItemCard>
-        return <WrapperLiteItemCard key={i}>
-          <LiteItemCard itemId={item._id} />
-        </WrapperLiteItemCard>
-      })}
+      {items.map((item, i) => <WrapperRichItemCard key={i} >
+        <RichItemCard itemId={item._id} />
+      </WrapperRichItemCard>)}
     </Grid >
   }
 
@@ -85,7 +70,7 @@ class Mall extends Component {
     if (!item) return <Redirect to='/home/all' />
     return <Grid container justify="center" spacing={2} id="mall">
       <Grid item xs={12}>
-        <Drain large small />
+        <Drain />
       </Grid>
       <Grid item xs={12}>
         <Menu />

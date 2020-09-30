@@ -112,13 +112,13 @@ class UserFactory extends Component {
       <Grid item xs={12}>
         <Grid container className={classes.noWrap} alignItems="center" spacing={2}>
           <Grid item>
-            <Typography variant="h6">Xưởng</Typography>
+            <Typography variant="h4">Xưởng</Typography>
           </Grid>
           <Grid item className={classes.stretch}>
             <Divider />
           </Grid>
           <Grid item>
-            <Typography color="textSecondary">Tùy chọn</Typography>
+            <Typography>Tùy chọn</Typography>
           </Grid>
           <Grid item>
             <Switch

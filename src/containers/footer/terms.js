@@ -21,7 +21,7 @@ function Terms(props) {
     <DialogTitle>
       <Grid container spacing={2} alignItems="center" className={classes.noWrap}>
         <Grid item className={classes.stretch}>
-          <Typography variant="h6">TERMS OF USE</Typography>
+          <Typography variant="body2">TERMS OF USE</Typography>
         </Grid>
         <Grid item>
           <IconButton size="small" onClick={onClose}>
@@ -195,25 +195,25 @@ function Terms(props) {
           <Typography variant="h5">DISPUTE RESOLUTION</Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h6">Informal Negotiations</Typography>
+          <Typography variant="body2">Informal Negotiations</Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography>To expedite resolution and control the cost of any dispute, controversy, or claim related to these Terms of Use (each a "Dispute" and collectively, the “Disputes”) brought by either you or us (individually, a “Party” and collectively, the “Parties”), the Parties agree to first attempt to negotiate any Dispute (except those Disputes expressly provided below) informally for at least thirty (30) days before initiating arbitration. Such informal negotiations commence upon written notice from one Party to the other Party.</Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h6">Binding Arbitration</Typography>
+          <Typography variant="body2">Binding Arbitration</Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography>Any dispute arising out of or in connection with this contract, including any question regarding its existence, validity, or termination, shall be referred to and finally resolved by the International Commercial Arbitration Court under the European Arbitration Chamber (Belgium, Brussels, Avenue Louise, 146) according to the Rules of this ICAC, which, as a result of referring to it, is considered as the part of this clause. The number of arbitrators shall be three (3). The seat, or legal place, of arbitration shall be Ho Chi Minh City, Vietnam. The language of the proceedings shall be Vietnamese. The governing law of the contract shall be the substantive law of Vietnam.</Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h6">Restrictions</Typography>
+          <Typography variant="body2">Restrictions</Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography>The Parties agree that any arbitration shall be limited to the Dispute between the Parties individually. To the full extent permitted by law, (a) no arbitration shall be joined with any other proceeding; (b) there is no right or authority for any Dispute to be arbitrated on a class-action basis or to utilize class action procedures; and (c) there is no right or authority for any Dispute to be brought in a purported representative capacity on behalf of the general public or any other persons.</Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h6">Exceptions to Informal Negotiations and Arbitration</Typography>
+          <Typography variant="body2">Exceptions to Informal Negotiations and Arbitration</Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography>The Parties agree that the following Disputes are not subject to the above provisions concerning informal negotiations and binding arbitration: (a) any Disputes seeking to enforce or protect, or concerning the validity of, any of the intellectual property rights of a Party; (b) any Dispute related to, or arising from, allegations of theft, piracy, invasion of privacy, or unauthorized use; and (c) any claim for injunctive relief. If this provision is found to be illegal or unenforceable, then neither Party will elect to arbitrate any Dispute falling within that portion of this provision found to be illegal or unenforceable and such Dispute shall be decided by a court of competent jurisdiction within the courts listed for jurisdiction above, and the Parties agree to submit to the personal jurisdiction of that court.</Typography>

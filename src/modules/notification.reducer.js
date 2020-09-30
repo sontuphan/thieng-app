@@ -142,8 +142,8 @@ export const SET_CONFIRMATION = 'SET_CONFIRMATION';
 export const SET_CONFIRMATION_OK = 'SET_CONFIRMATION_OK';
 export const SET_CONFIRMATION_FAIL = 'SET_CONFIRMATION_FAIL';
 
-export const setConfirmation = (visible, message = '', type = 'info') => {
-  return dispatch => {
+export const setConfirmation = (visible, message, type) => {
+  return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: SET_CONFIRMATION });
 
@@ -153,11 +153,16 @@ export const setConfirmation = (visible, message = '', type = 'info') => {
         return reject(er);
       }
 
+      const { notification: { confirmation: { message: prevMessage, type: prevType } } } = getState();
       dispatch({
         type: SET_CONFIRMATION_OK,
         reason: null,
         data: {
-          confirmation: { visible, message, type },
+          confirmation: {
+            visible,
+            message: message || prevMessage,
+            type: type || prevType
+          },
         }
       });
       return resolve(null);
