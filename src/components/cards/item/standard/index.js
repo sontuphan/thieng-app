@@ -16,7 +16,7 @@ import Divider from '@material-ui/core/Divider';
 
 import {
   ExpandLessRounded, ExpandMoreRounded, ShoppingCartRounded,
-  ShareRounded, RemoveShoppingCartRounded
+  ShareRounded, DoneRounded
 } from '@material-ui/icons';
 
 import { BaseCard, ImageCard, UserCard } from 'components/cards';
@@ -91,15 +91,38 @@ function StandardItemCard(props) {
               <Grid item xs={12}>
                 <NumericInput variant="outlined" size="small" value={amount} onChange={setAmount} />
               </Grid>
-              <Grid item xs={6}>
-                <Button variant="contained" color="primary" size="small" onClick={onBuy} fullWidth >
-                  <Typography>Mua</Typography>
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Button variant="contained" color="secondary" size="small" onClick={onCancel} fullWidth  >
-                  <Typography>Hủy</Typography>
-                </Button>
+              <Grid item xs={12}>
+                <Grid container spacing={1} className={classes.noWrap}>
+                  <Grid item className={classes.stretch}>
+                    {isInCart() ?
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        onClick={props.toggleCart}
+                        startIcon={<DoneRounded fontSize="small" />}
+                        fullWidth
+                      >
+                        <Typography noWrap>Đã mua</Typography>
+                      </Button>
+                      :
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        onClick={onBuy}
+                        startIcon={<ShoppingCartRounded fontSize="small" />}
+                        fullWidth
+                      >
+                        <Typography>Mua</Typography>
+                      </Button>}
+                  </Grid>
+                  <Grid item>
+                    <Button variant="contained" color="secondary" size="small" onClick={onCancel} fullWidth  >
+                      <Typography>Hủy</Typography>
+                    </Button>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -117,13 +140,6 @@ function StandardItemCard(props) {
                 <Tooltip title="Chia sẻ">
                   <IconButton size="small" onClick={onVisible}>
                     <ShareRounded fontSize="small" color={visible ? 'primary' : 'inherit'} />
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-              <Grid item>
-                <Tooltip title={isInCart() ? 'Đã mua' : 'Giỏ hàng'}>
-                  <IconButton size="small" onClick={props.toggleCart}>
-                    {isInCart() ? <ShoppingCartRounded fontSize="small" color="primary" /> : <RemoveShoppingCartRounded fontSize="small" />}
                   </IconButton>
                 </Tooltip>
               </Grid>

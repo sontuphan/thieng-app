@@ -41,7 +41,7 @@ function Description(props) {
   if (!descriptions.length) contents = <Typography color="textSecondary">Sản phẩm này chưa có mô tả.</Typography>
   else contents = descriptions.map((description, i) => <Typography key={i}>{description}</Typography>);
   return <Grid container spacing={2}>
-    <Grid item xs={12} ref={ref} style={{ minHeight: height }}>
+    <Grid item xs={12} ref={ref} style={{ height: height, overflow: 'scroll' }}>
       {contents}
     </Grid>
   </Grid>

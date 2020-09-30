@@ -15,11 +15,11 @@ class BaseCard extends Component {
 
   render() {
     const { classes } = this.props;
-    const { children } = this.props;
+    const { children, variant } = this.props;
 
     return <Grid container spacing={2} >
       <Grid item xs={12} elevation={2}>
-        <Paper className={classes.paper}>
+        <Paper className={variant === 'material' ? classes.materialPaper : classes.fluentPaper}>
           <Grid container spacing={2} >
             <Grid item xs={12}>
               {children}
@@ -33,10 +33,12 @@ class BaseCard extends Component {
 
 BaseCard.defaultProps = {
   children: null,
+  variant: 'material',
 }
 
 BaseCard.propTypes = {
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  variant: PropTypes.oneOf(['material', 'fluent'])
 }
 
 export default withRouter(withStyles(styles)(BaseCard));

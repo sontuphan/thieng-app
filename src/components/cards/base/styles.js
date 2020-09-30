@@ -1,5 +1,5 @@
 export default theme => ({
-  paper: {
+  materialPaper: {
     padding: theme.spacing(2),
     width: `calc(100% - ${theme.spacing(4)}px)`,
     transition: theme.transitions.create(),
@@ -7,4 +7,15 @@ export default theme => ({
       boxShadow: theme.shadows[4],
     },
   },
+  fluentPaper: {
+    padding: theme.spacing(2),
+    width: `calc(100% - ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create(),
+    '&:hover': {
+      boxShadow: theme.shadows[4],
+    },
+    backgroundColor: theme.palette.background.paper + '9',
+    backdropFilter: 'blur(4px)',
+    WebkitBackdropFilter: 'blur(4px)',
+  }
 });

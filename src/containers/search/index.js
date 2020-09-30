@@ -85,7 +85,7 @@ class Search extends Component {
                 <Grid item className={classes.stretch} xs={12}>
                   <Divider />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={8} md={6}>
                   <SearchField
                     variant='outlined'
                     placeholder="Tên sản phẩm"

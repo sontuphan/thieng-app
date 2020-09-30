@@ -54,6 +54,7 @@ function Carousel(props) {
     freeMode: props.freeMode,
     slidesPerGroup: Math.max(1, props.slidesPerGroup),
     onSlideChange: e => props.onChange(e.activeIndex),
+    direction: props.direction,
     autoHeight: true,
     ...paginationProps,
   }
@@ -74,6 +75,7 @@ Carousel.defaultProps = {
   freeMode: false,
   spacing: 16,
   onChange: () => { },
+  direction: 'horizontal',
 }
 
 Carousel.propTypes = {
@@ -84,6 +86,7 @@ Carousel.propTypes = {
   freeMode: PropTypes.bool,
   spacing: PropTypes.number,
   onChange: PropTypes.func,
+  direction: PropTypes.oneOf(['horizontal', 'vertical']),
 }
 
 export default Carousel;
