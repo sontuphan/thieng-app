@@ -41,7 +41,7 @@ function Description(props) {
   if (!descriptions.length) contents = <Typography color="textSecondary">Sản phẩm này chưa có mô tả.</Typography>
   else contents = descriptions.map((description, i) => <Typography key={i}>{description}</Typography>);
   return <Grid container spacing={2}>
-    <Grid item xs={12} ref={ref} style={{ height: height, overflow: 'scroll' }}>
+    <Grid item xs={12} ref={ref} style={{ height, overflow: 'auto' }}>
       {contents}
     </Grid>
   </Grid>
@@ -181,15 +181,6 @@ function RichItemCard(props) {
               </Grid>
             </Grid>
           </Grid>
-          {/* <Grid item xs={12}>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Button variant="contained" color="secondary" size="small" onClick={onCancel} fullWidth  >
-                  <Typography>Hủy</Typography>
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid> */}
         </Grid>
       </BaseCard>
     </Grid>
@@ -226,7 +217,7 @@ export default connect(
  * @param {*} props 
  */
 function WrapperRichItemCard(props) {
-  return <Grid item xs={12} sm={6} md={4} lg={3}>
+  return <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
     {props.children}
   </Grid>
 }
