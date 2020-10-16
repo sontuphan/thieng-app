@@ -13,13 +13,10 @@ import ToggleIcon from 'material-ui-toggle-icon';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import {
-  CreateRounded, BorderColorRounded, ExitToAppRounded,
-} from '@material-ui/icons';
+import { CreateRounded, BorderColorRounded, } from '@material-ui/icons';
 
 import { TextInput } from 'components/inputs';
 
-import { logOut } from 'modules/auth.reducer';
 import { getUser } from 'modules/bucket.reducer';
 import { updateUser } from 'modules/user.reducer';
 import { getNumberItems } from 'modules/stat.reducer';
@@ -73,11 +70,6 @@ class Profile extends Component {
     return this.setState({ user: { ...user, description: value } });
   }
 
-  logout = () => {
-    this.props.logOut();
-    return this.props.history.push('/home');
-  }
-
   render() {
     const { classes } = this.props;
     const { user } = this.state;
@@ -108,13 +100,6 @@ class Profile extends Component {
                           onIcon={<BorderColorRounded fontSize="small" color="primary" />}
                           offIcon={<CreateRounded fontSize="small" />}
                         />
-                      </IconButton>
-                    </Tooltip>
-                  </Grid>
-                  <Grid item>
-                    <Tooltip title="Đăng xuất">
-                      <IconButton onClick={this.logout} size="small">
-                        <ExitToAppRounded fontSize="small" />
                       </IconButton>
                     </Tooltip>
                   </Grid>
@@ -154,7 +139,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  logOut,
   getUser, updateUser,
   getNumberItems,
 }, dispatch);

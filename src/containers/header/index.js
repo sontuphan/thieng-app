@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
@@ -12,18 +12,25 @@ import Badge from '@material-ui/core/Badge';
 import Link from '@material-ui/core/Link';
 import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
+import Popover from '@material-ui/core/Popover';
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import TweenOne from 'rc-tween-one';
 import Image from 'material-ui-image';
 
 import {
-  NotificationsRounded, SearchRounded, AccountCircleRounded
+  NotificationsRounded, SearchRounded, AccountCircleRounded,
+  PersonRounded, StorefrontRounded, ExitToAppRounded,
 } from '@material-ui/icons';
 
 import { BaseCard } from 'components/cards';
 
 import LOGO from 'static/images/favicon.png';
 import styles from './styles';
-import { toggleAuth } from 'modules/auth.reducer';
+import { toggleAuth, logOut } from 'modules/auth.reducer';
 import { toggleNotification } from 'modules/notification.reducer';
 import { toggleSearch } from 'modules/search.reducer';
 import { toggleCart } from 'modules/cart.reducer';
@@ -33,8 +40,8 @@ class Header extends Component {
     super();
 
     this.state = {
-      visibleDrawer: false,
       blink: false,
+      anchorEl: null,
     }
   }
 
@@ -49,43 +56,77 @@ class Header extends Component {
     }
   }
 
-  onToggleDrawer = (visible) => {
-    if (typeof visible === 'boolean') return this.setState({ visibleDrawer: visible });
-    return this.setState({ visibleDrawer: !this.state.visibleDrawer });
-  }
-
   onSearch = () => {
-    this.onToggleDrawer(false);
     return this.props.toggleSearch();
   }
 
   onNotification = () => {
     const { auth, toggleCart, toggleAuth } = this.props;
-    this.onToggleDrawer(false);
     if (!auth.isValid) return toggleAuth();
     // this.props.toggleNotification();
     return toggleCart();
   }
 
-  onUser = () => {
-    let { auth } = this.props;
-    this.onToggleDrawer(false);
-    if (!auth._id) return console.error('Not signed in yet.');
-    return this.props.history.push('/user/' + auth._id + '/store');
+  onOpenUser = (e) => {
+    return this.setState({ anchorEl: e.currentTarget });
+  }
+
+  onCloseUser = () => {
+    return this.setState({ anchorEl: null });
+  }
+
+  logout = () => {
+    this.props.logOut();
+    this.onCloseUser();
+    return this.props.history.push('/home');
   }
 
   renderProfile = () => {
     const { classes } = this.props;
     const { auth, toggleAuth } = this.props;
+    const { anchorEl } = this.state;
 
     if (!auth.isValid) return <Tooltip title={'Đăng ký / Đăng nhập'}>
       <IconButton size="small" color="secondary" onClick={toggleAuth}>
         <AccountCircleRounded />
       </IconButton>
     </Tooltip >
-    return <Tooltip title={auth.displayname}>
-      <Avatar alt={auth.avatar} src={auth.avatar} className={classes.avatar} onClick={this.onUser} />
-    </Tooltip>
+    return <Fragment>
+      <Tooltip title={auth.displayname}>
+        <Avatar alt={auth.avatar} src={auth.avatar} className={classes.avatar} onClick={this.onOpenUser} />
+      </Tooltip>
+      <Popover
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={this.onCloseUser}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <List>
+          <ListItem button component={RouterLink} to={'/user/' + auth._id + '/store'}>
+            <ListItemIcon>
+              <PersonRounded color="secondary" />
+            </ListItemIcon>
+            <ListItemText primary="Trang cá nhân" />
+          </ListItem>
+          <ListItem button component={RouterLink} to={'/user/' + auth._id + '/store'}>
+            <ListItemIcon>
+              <StorefrontRounded color="secondary" />
+            </ListItemIcon>
+            <ListItemText primary="Trang bán hàng" />
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <ListItem button onClick={this.logout}>
+            <ListItemIcon>
+              <ExitToAppRounded color="secondary" />
+            </ListItemIcon>
+            <ListItemText primary="Đăng xuất" />
+          </ListItem>
+        </List>
+      </Popover>
+    </Fragment>
   }
 
   render() {
@@ -152,7 +193,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toggleAuth,
+  toggleAuth, logOut,
   toggleNotification,
   toggleSearch,
   toggleCart,
