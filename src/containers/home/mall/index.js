@@ -55,7 +55,7 @@ class Mall extends Component {
 
   renderItems = (items) => {
     if (!items || !items.length) return null;
-    return <Grid container spacing={2}>
+    return <Grid container spacing={3}>
       {items.map((item, i) => <WrapperRichItemCard key={i} >
         <RichItemCard itemId={item._id} />
       </WrapperRichItemCard>)}

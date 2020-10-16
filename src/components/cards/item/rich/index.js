@@ -170,7 +170,6 @@ function RichItemCard(props) {
                   :
                   <Button
                     startIcon={<ShoppingCartRounded fontSize="small" />}
-                    variant="contained"
                     color="primary"
                     size="small"
                     onClick={onBuy}
