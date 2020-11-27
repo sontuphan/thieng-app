@@ -6,14 +6,18 @@ import { Link } from 'react-router-dom';
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
+import Popover from '@material-ui/core/Popover';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import {
-  MoreHoriz, ShoppingCartRounded,
-  ShareRounded, DoneRounded
+  MoreHoriz, ShoppingCartRounded, ImportContactsRounded,
+  ShareRounded, CheckCircleRounded
 } from '@material-ui/icons';
 
 import Carousel, { CarouselChild } from 'components/carousel';
@@ -62,7 +66,7 @@ Description.propTypes = {
  */
 function RichItemCard(props) {
   // Define hooks
-  const [visible, setVisible] = useState(false);
+  const [anchorEl, setVisible] = useState(null);
   const [amount, setAmount] = useState(props.amount);
   const classes = useStyles();
   const data = useData(props.itemId);
@@ -71,7 +75,8 @@ function RichItemCard(props) {
     if (!amount) return console.error('Invalid amount');
     return props.setCart({ ...data, amount });
   }
-  const onVisible = () => setVisible((prev) => !prev);
+  const onVisible = (e) => setVisible(e.currentTarget);
+  const onUnvisible = () => setVisible(null);
   const isInCart = () => {
     if (!data) return false;
     const { data: carts } = props.cart || {};
@@ -90,18 +95,28 @@ function RichItemCard(props) {
                 <UserCard userId={data.userId || ''} size="small" />
               </Grid>
               <Grid item>
-                <Tooltip title={'Chia sẻ'}>
-                  <IconButton size="small" onClick={onVisible}>
-                    <ShareRounded color={visible ? 'primary' : 'inherit'} />
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-              <Grid item>
                 <Tooltip title={'Chức năng khác'}>
-                  <IconButton size="small">
+                  <IconButton size="small" onClick={onVisible}>
                     <MoreHoriz />
                   </IconButton>
                 </Tooltip>
+                <Popover
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={onUnvisible}
+                  onClick={onUnvisible}
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                >
+                  <List>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <ShareRounded color="secondary" />
+                      </ListItemIcon>
+                      <ListItemText primary="Chia sẻ" />
+                    </ListItem>
+                  </List>
+                </Popover>
               </Grid>
             </Grid>
           </Grid>
@@ -153,30 +168,30 @@ function RichItemCard(props) {
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={2} className={classes.noWrap} alignItems="center">
+              <Grid item>
+                <Tooltip title={'Xem mô tả sản phẩm'}>
+                  <IconButton color="secondary">
+                    <ImportContactsRounded fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
               <Grid item className={classes.stretch}>
                 <NumericInput variant="outlined" size="small" value={amount} onChange={setAmount} />
               </Grid>
               <Grid item>
                 {isInCart() ?
-                  <Button
-                    startIcon={<DoneRounded fontSize="small" />}
-                    color="secondary"
-                    size="small"
-                    onClick={props.toggleCart}
-                    fullWidth
-                  >
-                    <Typography noWrap>Đã mua</Typography>
-                  </Button>
+                  <Tooltip title={'Đã mua / Bấm để xem giỏ hàng'}>
+                    <IconButton color="primary" onClick={props.toggleCart}>
+                      <CheckCircleRounded fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
                   :
-                  <Button
-                    startIcon={<ShoppingCartRounded fontSize="small" />}
-                    color="primary"
-                    size="small"
-                    onClick={onBuy}
-                    fullWidth
-                  >
-                    <Typography noWrap>Mua</Typography>
-                  </Button>}
+                  <Tooltip title={'Thêm vào giỏ'}>
+                    <IconButton color="secondary" onClick={onBuy}>
+                      <ShoppingCartRounded fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                }
               </Grid>
             </Grid>
           </Grid>

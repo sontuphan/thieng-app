@@ -99,6 +99,7 @@ class Header extends Component {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={this.onCloseUser}
+        onClick={this.onCloseUser}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         transformOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
