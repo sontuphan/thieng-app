@@ -45,7 +45,11 @@ function Carousel(props) {
   const classes = useStyles();
 
   const paginationProps = props.pagination ? {
-    pagination: { bulletActiveClass: classes.bullet, clickable: true }
+    pagination: {
+      bulletActiveClass: classes.bullet,
+      clickable: true,
+      dynamicBullets: true
+    }
   } : null;
   const swiperProps = {
     slidesPerView: !props.slidesPerView ? 'auto' : props.slidesPerView,
